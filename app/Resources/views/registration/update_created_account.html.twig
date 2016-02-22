@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{ user.fullName }}
+
+    {{ form_start(edit_form) }}
+
+    <input class="btn btn-success" type="submit" value="Save"/>
+    {{ form_end(edit_form) }}
+{% endblock %}

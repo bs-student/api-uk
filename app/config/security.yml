@@ -1,0 +1,102 @@
+security:
+    encoders:
+            FOS\UserBundle\Model\UserInterface: sha512
+    role_hierarchy:
+
+        ROLE_NORMAL_USER:      [ROLE_USER]
+        ROLE_ADMIN:      [ROLE_ADMIN]
+#            ROLE_AUTHOR:      [ROLE_USER]
+#            ROLE_STAFFER:     [ROLE_USER,ROLE_AUTHOR]
+#            ROLE_SR_STAFFER:  [ROLE_USER,ROLE_AUTHOR]
+#            ROLE_EDITOR:      [ROLE_USER,ROLE_AUTHOR]
+#            ROLE_ADMIN:       [ROLE_USER,ROLE_AUTHOR,ROLE_EDITOR]
+#            ROLE_SUPER_ADMIN: [ROLE_USER,ROLE_AUTHOR,ROLE_EDITOR,ROLE_ADMIN]
+    providers:
+        fos_userbundle:
+                    id: fos_user.user_provider.username_email
+#        in_memory:
+#            memory: ~
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt|error)|css|images|js)/
+            security: false
+
+        api:
+                    pattern:    ^/api
+                    fos_oauth:  true
+                    stateless:  true
+
+        main:
+#                    guard:
+#                        authenticators:
+#                            - app.token_authenticator
+#                    pattern: ^/
+
+#                    oauth:
+#                        failure_path: /secure_area/connect
+#                        login_path: /secure_area/connect
+#                        check_path: /secure_area/connect
+#                        provider: fos_userbundle
+#                        resource_owners:
+#                            google:           "/secure_area/login/check-google"
+#                        oauth_user_provider:
+#                            service: hwi_oauth.user.provider.fosub_bridge
+                    form_login:
+                                provider: fos_userbundle
+                                csrf_provider: form.csrf_provider
+#                                csrf_provider: false
+                                always_use_default_target_path: false
+                                default_target_path:            /user/dashboard
+
+#                    oauth:
+#                            resource_owners:
+#                                facebook: "/login/check-facebook"
+#                                google: "/login/check-google"
+#                            login_path: /login
+#
+#                            failure_path: /login
+#                            oauth_user_provider:
+#                                service: hwi_oauth.user.provider.fosub_bridge
+#                            always_use_default_target_path: false
+#                            default_target_path:            /user/dashboard
+#                            target_path_parameter:          _target_path
+#                            use_referer:                    false
+                    anonymous:    true
+                    logout: true
+                    security: true
+#                        path:           /secure_area/logout
+#                        target:         /secure_area/connect #where to go after logout
+
+
+
+        oauth_authorize:
+            pattern:    ^/oauth/v2/auth
+            form_login:
+                provider: fos_userbundle
+                check_path: /oauth/v2/auth/login_check
+                login_path: /oauth/v2/auth/login
+            anonymous: true
+            # Add your favorite authentication process here
+
+
+#            anonymous:  false # can be omitted as its default value
+
+        oauth_token:
+            pattern:    ^/oauth/v2/token
+            security:   false
+#        default:
+#                    anonymous: ~
+#    access_control:
+#
+#            - { path: ^/secure_area/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#            - { path: ^/secure_area/connect, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#            - { path: ^/secure_area, roles: ROLE_USER }
+    access_control:
+
+            - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/user/, roles: 'ROLE_NORMAL_USER,ROLE_ADMIN' }
+            - { path: ^/admin/, roles: ROLE_ADMIN }
+#            - { path: ^/api, roles: [ ROLE_NORMAL_USER ] }

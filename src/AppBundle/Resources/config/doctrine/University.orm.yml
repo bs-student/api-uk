@@ -1,0 +1,43 @@
+AppBundle\Entity\University:
+    type: entity
+    table: universities
+    repositoryClass: AppBundle\Repository\UniversityRepository
+
+    oneToMany:
+        campuses:
+          targetEntity: Campus
+          mappedBy: university
+          cascade: [persist,remove]
+
+    manyToOne:
+        referral:
+          targetEntity: Referral
+          joinColumn:
+            name: referral_id
+            referencedColumnName: id
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        universityName:
+            column: university_name
+            nullable: true
+            type: string
+            length: '255'
+        universityUrl:
+            column: university_url
+            nullable: true
+            type: string
+            length: '255'
+        universityStatus:
+            column: university_status
+            nullable: false
+            type: string
+            length: '20'
+            options:
+                default: 'Activated'
+
+    lifecycleCallbacks: {  }

@@ -1,0 +1,30 @@
+campus:
+    path:     /
+    defaults: { _controller: "AppBundle:CRUD/Campus:index" }
+
+campus_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:CRUD/Campus:show" }
+
+campus_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:CRUD/Campus:new" }
+
+campus_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:CRUD/Campus:create" }
+    methods:  POST
+
+campus_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:CRUD/Campus:edit" }
+
+campus_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:CRUD/Campus:update" }
+    methods:  [POST, PUT]
+
+campus_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:CRUD/Campus:delete" }
+    methods:  [POST, DELETE]

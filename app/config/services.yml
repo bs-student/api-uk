@@ -1,0 +1,65 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+#    hwi_oauth.user.provider.fosub_bridge.class: AppBundle\Provider\OAuthUserProvider
+    sujit.user_manager.class : AppBundle\Manager\UserManager
+    sujit.my_mailer.class : AppBundle\Mailer\Mailer
+
+#    user.repository.class: AppBundle\Repository\UserRepository
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+#    hwi_oauth.user.provider.fosub_bridge:
+#        class : "%hwi_oauth.user.provider.fosub_bridge.class%"
+#        arguments: ["@fos_user.user_manager"]
+
+    sujit.my_mailer :
+        class: "%sujit.my_mailer.class%"
+        arguments: ["@mailer", "@router","@templating",{"confirmation.template":"%fos_user.registration.confirmation.template%","resetting.template":"%fos_user.resetting.email.template%","from_email":{"confirmation":"%fos_user.registration.confirmation.from_email%","resetting":"%fos_user.resetting.email.from_email%"}}]
+
+
+    sujit.user_manager :
+        class: "%sujit.user_manager.class%"
+        arguments: ["@security.encoder_factory", "@fos_user.util.username_canonicalizer","@fos_user.util.email_canonicalizer","@fos_user.entity_manager", "%fos_user.model.user.class%"]
+
+
+    app.form.registration:
+            class: AppBundle\Form\Type\RegistrationType
+            tags:
+                - { name: form.type, alias: app_user_registration }
+    app.form.handler.registration:
+            class: AppBundle\Form\Handler\RegistrationFormHandler
+            arguments: ["@fos_user.registration.form", "@request", "@fos_user.user_manager", "@fos_user.mailer", "@fos_user.util.token_generator"]
+            scope: request
+            public: false
+
+
+    app.validator.username_exist:
+            class: AppBundle\Validator\UsernameValidator
+            arguments: ["@doctrine.orm.entity_manager"]
+
+            tags:
+                - { name: validator.constraint_validator, alias: app.validator.username_exist }
+
+
+    app.user.repository:
+            class: Doctrine\ORM\EntityRepository
+            factory: [@doctrine.orm.entity_manager, getRepository]
+            arguments:
+                - AppBundle\Entity\User
+
+#    myservice:
+#            class: MyBundle\Service\MyService
+#            arguments:
+#                - "@myrepository"
+
+
+    app.oauth.social_plugin_grant_extension:
+            class: AppBundle\OAuth\SocialPluginGrantExtension
+            arguments: ["@app.user.repository"]
+            tags:
+                - { name: fos_oauth_server.grant_extension, uri: 'http://platform.local/grants/social_plugin' }
+

@@ -1,0 +1,69 @@
+AppBundle\Entity\User:
+    type: entity
+    table: users
+    repositoryClass: AppBundle\Repository\UserRepository
+
+
+    manyToOne:
+        referral:
+          targetEntity: Referral
+          joinColumn:
+            name: referral_id
+            referencedColumnName: id
+        campus:
+          targetEntity: Campus
+          inversedBy: users
+          joinColumn:
+            name: campus_id
+            referencedColumnName: id
+
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        fullName:
+            column: full_name
+            nullable: true
+            type: string
+            length: '255'
+        googleId:
+            column: google_id
+            nullable: true
+            type: string
+            length: '255'
+        googleEmail:
+            column: google_email
+            nullable: true
+            type: string
+            length: '255'
+        googleToken:
+            column: google_token
+            nullable: true
+            type: string
+            length: '255'
+        facebookId:
+            column: facebook_id
+            nullable: true
+            type: string
+            length: '255'
+        facebookEmail:
+            column: facebook_email
+            nullable: true
+            type: string
+            length: '255'
+        facebookToken:
+            column: facebook_token
+            nullable: true
+            type: string
+            length: '255'
+        registrationStatus:
+            column: registration_status
+            nullable: true
+            type: string
+            length: '255'
+
+    lifecycleCallbacks: {  }

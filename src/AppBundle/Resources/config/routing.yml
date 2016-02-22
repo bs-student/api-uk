@@ -1,0 +1,20 @@
+app_campus:
+    resource: "@AppBundle/Resources/config/routing/campus.yml"
+    prefix:   /campus
+
+app_state:
+    resource: "@AppBundle/Resources/config/routing/state.yml"
+    prefix:   /state
+
+app_country:
+    resource: "@AppBundle/Resources/config/routing/country.yml"
+    prefix:   /country
+
+app_university:
+    resource: "@AppBundle/Resources/config/routing/university.yml"
+    prefix:   /university
+
+app_referral:
+    resource: "@AppBundle/Resources/config/routing/referral.yml"
+    prefix:   /referral
+

@@ -1,0 +1,30 @@
+university:
+    path:     /
+    defaults: { _controller: "AppBundle:CRUD/University:index" }
+
+university_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:CRUD/University:show" }
+
+university_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:CRUD/University:new" }
+
+university_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:CRUD/University:create" }
+    methods:  POST
+
+university_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:CRUD/University:edit" }
+
+university_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:CRUD/University:update" }
+    methods:  [POST, PUT]
+
+university_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:CRUD/University:delete" }
+    methods:  [POST, DELETE]

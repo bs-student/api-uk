@@ -1,0 +1,30 @@
+country:
+    path:     /
+    defaults: { _controller: "AppBundle:CRUD/Country:index" }
+
+country_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:CRUD/Country:show" }
+
+country_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:CRUD/Country:new" }
+
+country_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:CRUD/Country:create" }
+    methods:  POST
+
+country_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:CRUD/Country:edit" }
+
+country_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:CRUD/Country:update" }
+    methods:  [POST, PUT]
+
+country_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:CRUD/Country:delete" }
+    methods:  [POST, DELETE]

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    Welcome To Student To Student HomePage
+    {% if user!="anon." %}
+        {{ user.getUsername() }}
+        <br/><br/><br/>
+        <a href="{{ path('user_homepage') }}">Profile</a><br/>
+
+    {% else %}
+        <br/><br/><br/><br/>
+        <a href="{{ path('fos_user_security_login') }}">Login</a><br/>
+        <a href="{{ path('hwi_oauth_connect') }}">Connect</a><br/>
+        <a href="{{ path('fos_user_registration_register') }}">Register</a><br/>
+        <a href="{{ path('fos_user_resetting_request') }}">Forgot Password</a><br/>
+
+    {% endif %}
+
+{% endblock %}

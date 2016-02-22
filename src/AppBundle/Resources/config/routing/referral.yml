@@ -1,0 +1,30 @@
+referral:
+    path:     /
+    defaults: { _controller: "AppBundle:CRUD/Referral:index" }
+
+referral_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:CRUD/Referral:show" }
+
+referral_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:CRUD/Referral:new" }
+
+referral_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:CRUD/Referral:create" }
+    methods:  POST
+
+referral_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:CRUD/Referral:edit" }
+
+referral_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:CRUD/Referral:update" }
+    methods:  [POST, PUT]
+
+referral_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:CRUD/Referral:delete" }
+    methods:  [POST, DELETE]
