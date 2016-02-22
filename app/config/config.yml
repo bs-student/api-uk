@@ -98,6 +98,15 @@ fos_user:
                     handler: app.form.handler.registration
         confirmation:
             enabled:    true # change to true for required email confirmation
+    resetting:
+
+            token_ttl: 3600
+
+            form:
+                type:               app_password_resetting # or 'fos_user_resetting' on Symfony < 2.8
+                handler:            app.form.handler.resetting
+#                name:               fos_user_resetting_form
+
 #hwi_oauth:
 #        firewall_name: main
 ##        connect:

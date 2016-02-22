@@ -31,24 +31,28 @@ class Mailer extends BaseClass
 //        die();
         $template = $this->parameters['confirmation.template'];
 //        $url = $this->router->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), true);
-        $url = "http://localhost:8080/SymfonyClient/app/#/core/signup/confirm/?code=".$user->getConfirmationToken();
+        $url = "http://localhost:8080/Student2StudentApp/app/#/security/confirm/".$user->getConfirmationToken();
         $rendered = $this->templating->render($template, array(
             'user' => $user,
             'confirmationUrl' =>  $url
         ));
+//        var_dump($this->parameters);
         $this->sendEmailMessage($rendered, $this->parameters['from_email']['confirmation'], $user->getEmail());
     }
 
-//    public function sendResettingEmailMessage(UserInterface $user)
-//    {
-//        $template = $this->parameters['resetting.template'];
+    public function sendResettingEmailMessage(UserInterface $user)
+    {
+
+        $template = $this->parameters['resetting.template'];
 //        $url = $this->router->generate('fos_user_resetting_reset', array('token' => $user->getConfirmationToken()), true);
-//        $rendered = $this->templating->render($template, array(
-//            'user' => $user,
-//            'confirmationUrl' => $url
-//        ));
-//        $this->sendEmailMessage($rendered, $this->parameters['from_email']['resetting'], $user->getEmail());
-//    }
+        $url = "http://localhost:8080/Student2StudentApp/app/#/security/reset/".$user->getConfirmationToken();
+        $rendered = $this->templating->render($template, array(
+            'user' => $user,
+            'confirmationUrl' => $url
+        ));
+//        var_dump($this->parameters);
+        $this->sendEmailMessage($rendered, $this->parameters['from_email']['resetting'], $user->getEmail());
+    }
 
 
 }

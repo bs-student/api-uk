@@ -28,8 +28,6 @@ class RegistrationFormHandler extends BaseHandler
 
         $submittedData = json_decode($this->request->getContent(),true);
 
-//        var_dump($submittedData);
-//        die();
         $submittedData['plainPassword']=array(
             'first'=>$submittedData['new_password'],
             'second'=>$submittedData['confirm_password']

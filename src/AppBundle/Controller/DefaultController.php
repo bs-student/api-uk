@@ -69,6 +69,13 @@ class DefaultController extends Controller
                 .$email."&username=".$user->getUsername()."&user=".$user->getGoogleId());*/
 
         }elseif($user->getRegistrationStatus()=="complete"){
+            $user_data = array(
+                'message' => "Login Successful",
+            );
+            $json = $this->get('jms_serializer')->serialize(['user' => $user_data],'json');
+//        $json = $this->get('jms_serializer')->serialize(['user' => $user],'json');
+            $response = new Response($json, 200);
+            return $response;
 //            return $this->redirect('http://localhost:8080/SymfonyClient/app/#/oauth/dashboard');
         }else{
             $user_data = array(

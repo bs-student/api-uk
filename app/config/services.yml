@@ -1,20 +1,12 @@
-# Learn more about services, parameters and containers at
-# http://symfony.com/doc/current/book/service_container.html
+
 parameters:
-#    parameter_name: value
-#    hwi_oauth.user.provider.fosub_bridge.class: AppBundle\Provider\OAuthUserProvider
+
     sujit.user_manager.class : AppBundle\Manager\UserManager
     sujit.my_mailer.class : AppBundle\Mailer\Mailer
 
-#    user.repository.class: AppBundle\Repository\UserRepository
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-#    hwi_oauth.user.provider.fosub_bridge:
-#        class : "%hwi_oauth.user.provider.fosub_bridge.class%"
-#        arguments: ["@fos_user.user_manager"]
+
 
     sujit.my_mailer :
         class: "%sujit.my_mailer.class%"
@@ -35,6 +27,17 @@ services:
             arguments: ["@fos_user.registration.form", "@request", "@fos_user.user_manager", "@fos_user.mailer", "@fos_user.util.token_generator"]
             scope: request
             public: false
+    app.form.resetting:
+            class: AppBundle\Form\Type\ResettingType
+            tags:
+                - { name: form.type, alias: app_password_resetting }
+
+    app.form.handler.resetting:
+                class: AppBundle\Form\Handler\ResettingFormHandler
+                arguments: ["@fos_user.resetting.form", "@request", "@fos_user.user_manager"]
+                scope: request
+                public: false
+
 
 
     app.validator.username_exist:
@@ -51,10 +54,6 @@ services:
             arguments:
                 - AppBundle\Entity\User
 
-#    myservice:
-#            class: MyBundle\Service\MyService
-#            arguments:
-#                - "@myrepository"
 
 
     app.oauth.social_plugin_grant_extension:
@@ -62,4 +61,5 @@ services:
             arguments: ["@app.user.repository"]
             tags:
                 - { name: fos_oauth_server.grant_extension, uri: 'http://platform.local/grants/social_plugin' }
+
 
