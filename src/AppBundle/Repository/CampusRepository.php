@@ -23,6 +23,21 @@ class CampusRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
+    public function getCampusesByUniversityId($universityId){
+        return $this->getEntityManager()
+            ->createQueryBuilder('c')
+            ->select('c.id,c.campusStatus, u.universityName, c.campusName, s.stateShortName,s.stateName, co.countryName')
+
+            ->from('AppBundle:Campus', 'c')
+            ->innerJoin('AppBundle:University', 'u','WITH', 'u.id = c.university')
+            ->innerJoin('AppBundle:State', 's','WITH', 's.id = c.state')
+            ->innerJoin('AppBundle:Country', 'co','WITH', 'co.id = s.country')
+            ->andwhere('c.university = :universityId')
+            ->setParameter('universityId', $universityId)
+            ->getQuery()
+            ->getResult();
+    }
+
 
 //    public function getCampusSearchResults($searchQuery){
 //

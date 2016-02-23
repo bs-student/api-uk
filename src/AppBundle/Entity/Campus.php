@@ -30,6 +30,11 @@ class Campus
 
     private $university;
 
+    /**
+     * @var string
+     *
+     */
+    private $campusStatus;
     private $state;
 
     private $users;
@@ -147,6 +152,33 @@ class Campus
     {
         return $this->users;
     }
+
+
+    /**
+     * Set campusStatus
+     *
+     * @param string $campusStatus
+     * @return Campus
+     */
+    public function setCampusStatus($campusStatus)
+    {
+        $this->campusStatus = $campusStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get campusStatus
+     *
+     * @return string
+     */
+    public function getCampusStatus()
+    {
+        return $this->campusStatus;
+    }
+
+
+
     public function __toString()
     {
         return strval($this->id);

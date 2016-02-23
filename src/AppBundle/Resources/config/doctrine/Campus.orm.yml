@@ -36,5 +36,12 @@ AppBundle\Entity\Campus:
             nullable: true
             type: string
             length: '255'
+        campusStatus:
+            column: campus_status
+            nullable: false
+            type: string
+            length: '20'
+            options:
+                default: 'Activated'
 
     lifecycleCallbacks: {  }

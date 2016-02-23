@@ -44,6 +44,13 @@ class CampusType extends AbstractType
 //            'error_bubbling'=>true
         ));
 
+        $builder->add('campusStatus','text',array(
+            'constraints' => array(
+                new NotBlank(),
+            ),
+//            'error_bubbling'=>true
+        ));
+
 
 
 //        $builder->add('save', 'button', array(

@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="992c5a8c-cd64-41e9-9383-a47a89a328fa" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/ResettingController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Form/Handler/ResettingFormHandler.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Form/Type/ResettingType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php" afterPath="$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/RegistrationController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/RegistrationController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Form/Handler/RegistrationFormHandler.php" afterPath="$PROJECT_DIR$/src/AppBundle/Form/Handler/RegistrationFormHandler.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/Api/CampusManagementApiController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Campus.orm.yml" afterPath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Campus.orm.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/Campus.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Campus.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Repository/CampusRepository.php" afterPath="$PROJECT_DIR$/src/AppBundle/Repository/CampusRepository.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Form/Type/CampusType.php" afterPath="$PROJECT_DIR$/src/AppBundle/Form/Type/CampusType.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/config.yml" afterPath="$PROJECT_DIR$/app/config/config.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/routing.yml" afterPath="$PROJECT_DIR$/app/config/routing.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/services.yml" afterPath="$PROJECT_DIR$/app/config/services.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Student2StudentApi.iws" />
@@ -35,97 +31,90 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ResettingController.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ResettingController.php">
+      <file leaf-file-name="UniversityManagementApiController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/UniversityManagementApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="151" column="0" selection-start="5589" selection-end="5589" vertical-scroll-proportion="0.6502857" vertical-offset="1879" max-vertical-offset="2754">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1105">
               <folding>
-                <element signature="e#294#351#0" expanded="true" />
+                <element signature="e#747#1788#0" expanded="false" />
+                <element signature="e#1945#2637#0" expanded="false" />
+                <element signature="e#2764#3598#0" expanded="false" />
+                <element signature="e#3792#7690#0" expanded="false" />
+                <element signature="e#7855#9632#0" expanded="false" />
+                <element signature="e#9814#10710#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChangePassword.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Form/Model/ChangePassword.php">
+      <file leaf-file-name="CampusManagementApiController.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/CampusManagementApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="6" selection-start="305" selection-end="305" vertical-scroll-proportion="-3.9230769" vertical-offset="0" max-vertical-offset="323">
+            <state line="10" column="32" selection-start="348" selection-end="348" vertical-scroll-proportion="-3.1382856" vertical-offset="2916" max-vertical-offset="3791">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RegistrationFormHandler.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Handler/RegistrationFormHandler.php">
+      <file leaf-file-name="CampusType.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/CampusType.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="0" selection-start="41" selection-end="112" vertical-scroll-proportion="-1.9615384" vertical-offset="0" max-vertical-offset="1122">
-              <folding>
-                <element signature="e#41#112#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ResettingType.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/ResettingType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="28" selection-start="1623" selection-end="1623" vertical-scroll-proportion="-27.115385" vertical-offset="43" max-vertical-offset="935">
-              <folding>
-                <element signature="e#293#333#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RegistrationType.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/RegistrationType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="270" selection-end="324" vertical-scroll-proportion="-5.230769" vertical-offset="0" max-vertical-offset="2346">
+            <state line="36" column="28" selection-start="952" selection-end="957" vertical-scroll-proportion="-13.076923" vertical-offset="153" max-vertical-offset="1445">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="routing.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
+      <file leaf-file-name="UniversityType.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/UniversityType.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="0" selection-start="856" selection-end="856" vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="1258">
+            <state line="48" column="11" selection-start="1064" selection-end="1242" vertical-scroll-proportion="-10.461538" vertical-offset="425" max-vertical-offset="1326">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="services.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config/services.yml">
+      <file leaf-file-name="CampusRepository.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/CampusRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="48" selection-start="1565" selection-end="1565" vertical-scroll-proportion="-18.2" vertical-offset="157" max-vertical-offset="1207">
-              <folding>
-                <marker date="1456151058018" expanded="true" signature="787:951" placeholder="app.form.registration:" />
-                <marker date="1456151058018" expanded="true" signature="956:1252" placeholder="app.form.handler.registration:" />
-                <marker date="1456151058018" expanded="true" signature="1257:1417" placeholder="app.form.resetting:" />
-                <marker date="1456151058018" expanded="true" signature="1422:1674" placeholder="app.form.handler.resetting:" />
-                <marker date="1456151058018" expanded="true" signature="1533:1609" placeholder="arguments:" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config_dev.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config/config_dev.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="918">
+            <state line="28" column="42" selection-start="808" selection-end="808" vertical-scroll-proportion="-6.8461537" vertical-offset="298" max-vertical-offset="1173">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ResettingFormHandler.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Handler/ResettingFormHandler.php">
+      <file leaf-file-name="Campus.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Campus.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="38" selection-start="1683" selection-end="1693" vertical-scroll-proportion="-27.76923" vertical-offset="213" max-vertical-offset="1088">
-              <folding>
-                <element signature="e#296#335#0" expanded="true" />
-              </folding>
+            <state line="176" column="34" selection-start="2869" selection-end="2869" vertical-scroll-proportion="-23.192308" vertical-offset="2372" max-vertical-offset="3247">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Campus.orm.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Campus.orm.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="44" column="26" selection-start="1010" selection-end="1010" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="University.orm.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/University.orm.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="40" column="36" selection-start="836" selection-end="1027" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="833">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="University.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/University.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="178" column="4" selection-start="2894" selection-end="3321" vertical-scroll-proportion="-14.692307" vertical-offset="2627" max-vertical-offset="3502">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -133,10 +122,8 @@
       <file leaf-file-name="RegistrationController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/RegistrationController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="311" column="93" selection-start="12327" selection-end="12408" vertical-scroll-proportion="-78.78432" vertical-offset="1184" max-vertical-offset="7429">
-              <folding>
-                <element signature="e#121#147#0" expanded="true" />
-              </folding>
+            <state line="330" column="5" selection-start="12623" selection-end="12877" vertical-scroll-proportion="-24.192308" vertical-offset="4692" max-vertical-offset="7225">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -160,12 +147,17 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php" />
         <option value="$PROJECT_DIR$/app/config/routing.yml" />
-        <option value="$PROJECT_DIR$/app/config/config.yml" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Form/Handler/RegistrationFormHandler.php" />
         <option value="$PROJECT_DIR$/app/config/services.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Form/Type/ResettingType.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Form/Handler/ResettingFormHandler.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/ResettingController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Form/Handler/ResettingFormHandler.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Form/Handler/RegistrationFormHandler.php" />
+        <option value="$PROJECT_DIR$/app/config/config.yml" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Campus.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Campus.orm.yml" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Repository/CampusRepository.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Form/Type/CampusType.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/CampusManagementApiController.php" />
       </list>
     </option>
   </component>
@@ -629,6 +621,136 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="routing" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="doctrine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Repository" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="OAuth" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -747,7 +869,55 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Entity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Api" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -790,9 +960,12 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../Student2StudentApp" />
+    <property name="LayoutCode.rearrangeEntriesPHP" value="false" />
+    <property name="FullScreen" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\src\AppBundle\Controller\Api" />
       <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\src\AppBundle\Form\Handler" />
       <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\src\AppBundle\Form\Type" />
       <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\src\AppBundle\Controller" />
@@ -813,7 +986,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -828,11 +1001,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -852,6 +1025,90 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ResettingController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="151" column="0" selection-start="5589" selection-end="5589" vertical-scroll-proportion="0.0" vertical-offset="2567" max-vertical-offset="2754">
+          <folding>
+            <element signature="e#294#351#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Form/Model/ChangePassword.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="6" selection-start="305" selection-end="305" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="442">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Handler/RegistrationFormHandler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="41" selection-end="112" vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="1122">
+          <folding>
+            <element signature="e#41#112#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/ResettingType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="28" selection-start="1623" selection-end="1623" vertical-scroll-proportion="0.0" vertical-offset="867" max-vertical-offset="1054">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/RegistrationType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="270" selection-end="324" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="2346">
+          <folding>
+            <element signature="e#38#78#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="0" selection-start="856" selection-end="856" vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="1258">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/services.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="48" selection-start="1565" selection-end="1565" vertical-scroll-proportion="0.0" vertical-offset="157" max-vertical-offset="1207">
+          <folding>
+            <marker date="1456151058018" expanded="true" signature="-1:-1" placeholder="app.form.registration:" />
+            <marker date="1456151058018" expanded="true" signature="-1:-1" placeholder="app.form.handler.registration:" />
+            <marker date="1456151058018" expanded="true" signature="-1:-1" placeholder="app.form.resetting:" />
+            <marker date="1456151058018" expanded="true" signature="-1:-1" placeholder="app.form.handler.resetting:" />
+            <marker date="1456151058018" expanded="true" signature="-1:-1" placeholder="arguments:" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/config_dev.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="918">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Handler/ResettingFormHandler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="38" selection-start="1683" selection-end="1693" vertical-scroll-proportion="0.0" vertical-offset="1054" max-vertical-offset="1207">
+          <folding>
+            <element signature="e#296#335#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/RegistrationController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="311" column="93" selection-start="12327" selection-end="12408" vertical-scroll-proportion="0.0" vertical-offset="5287" max-vertical-offset="7514">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/config/parameters.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="26" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="306">
@@ -866,39 +1123,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/parameters.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="26" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/OAuth/SocialPluginGrantExtension.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="53" selection-start="331" selection-end="331" vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="816">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="13" selection-start="1525" selection-end="1525" vertical-scroll-proportion="-17.653847" vertical-offset="306" max-vertical-offset="1836">
-          <folding />
-        </state>
+        <state line="12" column="53" selection-start="331" selection-end="331" vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="816" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/config/security.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1819">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1819" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/SecurityController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1309">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1309" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Controller/RegistrationController.php">
@@ -924,9 +1161,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="38" selection-start="1308" selection-end="1308" vertical-scroll-proportion="0.56" vertical-offset="0" max-vertical-offset="901">
-          <folding />
-        </state>
+        <state line="39" column="38" selection-start="1308" selection-end="1308" vertical-scroll-proportion="0.56" vertical-offset="0" max-vertical-offset="901" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Resources/config/routing/resetting.xml">
@@ -938,42 +1173,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Form/Type/ResettingFormType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Form/Type/RegistrationFormType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="39" selection-start="1124" selection-end="1124" vertical-scroll-proportion="0.47542858" vertical-offset="43" max-vertical-offset="918">
-          <folding />
-        </state>
+        <state line="36" column="39" selection-start="1124" selection-end="1124" vertical-scroll-proportion="0.47542858" vertical-offset="43" max-vertical-offset="918" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Controller/ChangePasswordController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1173">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1173" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Controller/SecurityController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="39" selection-start="1875" selection-end="1875" vertical-scroll-proportion="0.3984375" vertical-offset="306" max-vertical-offset="1275">
-          <folding />
-        </state>
+        <state line="47" column="39" selection-start="1875" selection-end="1875" vertical-scroll-proportion="0.3984375" vertical-offset="306" max-vertical-offset="1275" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Form/Handler/ResettingFormHandler.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1037">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Form/Handler/RegistrationFormHandler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1343">
           <folding />
         </state>
       </provider>
@@ -985,6 +1205,92 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/services.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="48" selection-start="1565" selection-end="1565" vertical-scroll-proportion="0.0" vertical-offset="157" max-vertical-offset="1207">
+          <folding>
+            <marker date="1456151058018" expanded="true" signature="-1:-1" placeholder="app.form.registration:" />
+            <marker date="1456151058018" expanded="true" signature="-1:-1" placeholder="app.form.handler.registration:" />
+            <marker date="1456151058018" expanded="true" signature="-1:-1" placeholder="app.form.resetting:" />
+            <marker date="1456151058018" expanded="true" signature="-1:-1" placeholder="app.form.handler.resetting:" />
+            <marker date="1456151058018" expanded="true" signature="-1:-1" placeholder="arguments:" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/ResettingType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="28" selection-start="1623" selection-end="1623" vertical-scroll-proportion="0.0" vertical-offset="867" max-vertical-offset="1054">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Form/Model/ChangePassword.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="6" selection-start="305" selection-end="305" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="442">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ResettingController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="137" column="26" selection-start="5120" selection-end="5120" vertical-scroll-proportion="-12.730769" vertical-offset="1879" max-vertical-offset="2754">
+          <folding>
+            <element signature="e#294#351#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/RegistrationType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="95" column="39" selection-start="2442" selection-end="2448" vertical-scroll-proportion="-13.384615" vertical-offset="1267" max-vertical-offset="2346">
+          <folding>
+            <element signature="e#38#78#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Handler/ResettingFormHandler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="12" selection-start="1117" selection-end="1117" vertical-scroll-proportion="-16.0" vertical-offset="179" max-vertical-offset="1088">
+          <folding>
+            <element signature="e#296#335#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Form/Handler/RegistrationFormHandler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="6" selection-start="575" selection-end="575" vertical-scroll-proportion="0.25257143" vertical-offset="0" max-vertical-offset="1428">
+          <folding>
+            <element signature="e#301#347#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Handler/RegistrationFormHandler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="10" selection-start="1064" selection-end="1064" vertical-scroll-proportion="-12.076923" vertical-offset="247" max-vertical-offset="1122">
+          <folding>
+            <element signature="e#41#112#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="13" selection-start="1525" selection-end="1525" vertical-scroll-proportion="-27.461538" vertical-offset="51" max-vertical-offset="1836">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/routing.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="36" column="0" selection-start="856" selection-end="856" vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="1258">
@@ -992,82 +1298,108 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/RegistrationController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="311" column="93" selection-start="12327" selection-end="12408" vertical-scroll-proportion="-78.78432" vertical-offset="1184" max-vertical-offset="7429">
-          <folding>
-            <element signature="e#121#147#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/RegistrationType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="270" selection-end="324" vertical-scroll-proportion="-5.230769" vertical-offset="0" max-vertical-offset="2346">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Handler/RegistrationFormHandler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="41" selection-end="112" vertical-scroll-proportion="-1.9615384" vertical-offset="0" max-vertical-offset="1122">
-          <folding>
-            <element signature="e#41#112#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/config/config.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="46" selection-start="3276" selection-end="3276" vertical-scroll-proportion="0.0" vertical-offset="1373" max-vertical-offset="3417">
+        <state line="107" column="0" selection-start="3395" selection-end="3395" vertical-scroll-proportion="0.0" vertical-offset="731" max-vertical-offset="3417">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/services.yml">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/UserType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="48" selection-start="1565" selection-end="1565" vertical-scroll-proportion="-18.2" vertical-offset="157" max-vertical-offset="1207">
-          <folding>
-            <marker date="1456151058018" expanded="true" signature="787:951" placeholder="app.form.registration:" />
-            <marker date="1456151058018" expanded="true" signature="956:1252" placeholder="app.form.handler.registration:" />
-            <marker date="1456151058018" expanded="true" signature="1257:1417" placeholder="app.form.resetting:" />
-            <marker date="1456151058018" expanded="true" signature="1422:1674" placeholder="app.form.handler.resetting:" />
-            <marker date="1456151058018" expanded="true" signature="1533:1609" placeholder="arguments:" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/ResettingType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="28" selection-start="1623" selection-end="1623" vertical-scroll-proportion="-27.115385" vertical-offset="43" max-vertical-offset="935">
-          <folding>
-            <element signature="e#293#333#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Form/Model/ChangePassword.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="6" selection-start="305" selection-end="305" vertical-scroll-proportion="-3.9230769" vertical-offset="0" max-vertical-offset="323">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.23314285" vertical-offset="204" max-vertical-offset="1853">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Handler/ResettingFormHandler.php">
+    <entry file="file://$PROJECT_DIR$/app/config/parameters.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="38" selection-start="1683" selection-end="1693" vertical-scroll-proportion="-27.76923" vertical-offset="213" max-vertical-offset="1088">
+        <state line="12" column="0" selection-start="347" selection-end="347" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/routing/state.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/University.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="178" column="4" selection-start="2894" selection-end="3321" vertical-scroll-proportion="-14.692307" vertical-offset="2627" max-vertical-offset="3502">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/University.orm.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="36" selection-start="836" selection-end="1027" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="833">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Campus.orm.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="26" selection-start="1010" selection-end="1010" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/CampusRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="42" selection-start="808" selection-end="808" vertical-scroll-proportion="-6.8461537" vertical-offset="298" max-vertical-offset="1173">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/UniversityType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="11" selection-start="1064" selection-end="1242" vertical-scroll-proportion="-10.461538" vertical-offset="425" max-vertical-offset="1326">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Campus.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="176" column="34" selection-start="2869" selection-end="2869" vertical-scroll-proportion="-23.192308" vertical-offset="2372" max-vertical-offset="3247">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/CampusType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="28" selection-start="952" selection-end="957" vertical-scroll-proportion="-13.076923" vertical-offset="153" max-vertical-offset="1445">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/UniversityManagementApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1105">
           <folding>
-            <element signature="e#296#335#0" expanded="true" />
+            <element signature="e#747#1788#0" expanded="false" />
+            <element signature="e#1945#2637#0" expanded="false" />
+            <element signature="e#2764#3598#0" expanded="false" />
+            <element signature="e#3792#7690#0" expanded="false" />
+            <element signature="e#7855#9632#0" expanded="false" />
+            <element signature="e#9814#10710#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ResettingController.php">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/RegistrationController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="151" column="0" selection-start="5589" selection-end="5589" vertical-scroll-proportion="0.6502857" vertical-offset="1879" max-vertical-offset="2754">
-          <folding>
-            <element signature="e#294#351#0" expanded="true" />
-          </folding>
+        <state line="330" column="5" selection-start="12623" selection-end="12877" vertical-scroll-proportion="-24.192308" vertical-offset="4692" max-vertical-offset="7225">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/CampusManagementApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="32" selection-start="348" selection-end="348" vertical-scroll-proportion="-3.1382856" vertical-offset="2916" max-vertical-offset="3791">
+          <folding />
         </state>
       </provider>
     </entry>
