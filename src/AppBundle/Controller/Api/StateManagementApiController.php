@@ -30,9 +30,7 @@ class StateManagementApiController extends Controller
         $em = $this->getDoctrine()->getManager();
 
 
-        $states = $em->getRepository('AppBundle:State')->findBy(array(
-            'country'=> $request_data->countryId
-        ));
+        $states = $em->getRepository('AppBundle:State')->findByCountryId($request_data->countryId);
 
         $json = $this->get('jms_serializer')->serialize($states, 'json');
         $response = new Response($json, 200);

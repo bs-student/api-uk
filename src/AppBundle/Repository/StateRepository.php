@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class StateRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByCountryId($countryId){
+        return $this->getEntityManager()
+            ->createQueryBuilder('s')
+            ->select('s.id,s.stateName, s.stateShortName')
+            ->from('AppBundle:State', 's')
+            ->andwhere('s.country = :countryId')
+            ->setParameter('countryId', $countryId)
+            ->getQuery()
+            ->getResult();
+    }
 }

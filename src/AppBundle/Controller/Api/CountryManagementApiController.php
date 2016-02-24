@@ -27,7 +27,7 @@ class CountryManagementApiController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $countries = $em->getRepository('AppBundle:Country')->findAll();
+        $countries = $em->getRepository('AppBundle:Country')->findAllCountry();
 
         $json = $this->get('jms_serializer')->serialize($countries, 'json');
         $response = new Response($json, 200);

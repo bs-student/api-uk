@@ -36,7 +36,7 @@ class CampusManagementApiController extends Controller
 
         $campuses = $campusRepo->getCampusesByUniversityId($universityId);
 
-        return $this->createJsonResponse('campuses',$campuses);
+        return $this->createJsonResponse('campuses', $campuses);
 
 
     }
@@ -88,30 +88,30 @@ class CampusManagementApiController extends Controller
 
                     $array = array(
                         'successTitle' => "Campus Updated Successfully",
-                        'successBody'=>"Campus has been updated. please check the list for update result."
+                        'successBody' => "Campus has been updated. please check the list for update result."
                     );
-                    return $this->createJsonResponse('success',$array);
+                    return $this->createJsonResponse('success', $array);
 
                 } else {
 
                     $array = array(
                         'errorTitle' => "Campus Could not be Updated",
-                        'errorBody'=>"Sorry there is a problem with the form data. Please check and submit again.",
-                        'campusStatus'=>$oldCampusStatus,
-                        'campusName'=>$oldCampusName,
-                        'campusId'=>$oldCampusId
+                        'errorBody' => "Sorry there is a problem with the form data. Please check and submit again.",
+                        'campusStatus' => $oldCampusStatus,
+                        'campusName' => $oldCampusName,
+                        'campusId' => $oldCampusId
                     );
-                    return $this->createJsonResponse('error',$array);
+                    return $this->createJsonResponse('error', $array);
 
                 }
 
 
-            }else{
-                return $this->createJsonResponse('error',array('errorTitle'=>"Error on submitting Data",'errorBody'=>"Please check the fields and try again."));
+            } else {
+                return $this->createJsonResponse('error', array('errorTitle' => "Error on submitting Data", 'errorBody' => "Please check the fields and try again."));
             }
 
         } else {
-            return $this->createJsonResponse('error',array('errorTitle'=>"Error on submitting Data",'errorBody'=>"Please check the fields and try again."));
+            return $this->createJsonResponse('error', array('errorTitle' => "Error on submitting Data", 'errorBody' => "Please check the fields and try again."));
         }
 
 
@@ -120,55 +120,44 @@ class CampusManagementApiController extends Controller
     /**
      * Save new Universities.
      *
-     * @Route("/api/university/save_new_university", name="save_new_university")
+     * @Route("/api/campus/add", name="save_new_campus")
      * @Method({"POST"})
      */
     public function saveNewUniversityAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $serializer = $this->container->get('jms_serializer');
+        $universityRepo = $em->getRepository("AppBundle:University");
         $stateRepo = $em->getRepository("AppBundle:State");
         $request_data = json_decode($request->getContent(), true);
 
-        $message_array = array();
-        foreach ($request_data as $university) {
+        $error = false;
+        if (array_key_exists('universityId', $request_data)) {
+            $universityEntity = $universityRepo->findOneById($request_data['universityId']);
 
-            $university['universityStatus'] = "Activated";
-            $universityEntity = new University();
-
-            foreach ($university['campuses'] as $campus) {
-                $campusName = null;
-                $state = null;
-                $campusEntity = new Campus();
-                if (array_key_exists('campusName', $campus)) $campusEntity->setCampusName($campus['campusName']);
-                if (array_key_exists('state', $campus)) $campusEntity->setState($stateRepo->findOneById($campus['state']));
-
-                $universityEntity->addCampus($campusEntity);
+            $campus = null;
+            $state = null;
+            $campusEntity = new Campus();
+            if (array_key_exists('campusName', $request_data)){
+                $campusEntity->setCampusName($request_data['campusName']);
+                $campusEntity->setCampusStatus("Activated");
+            } else{
+                $error = true;
             }
-
-            $universityForm = $this->createForm(new UniversityType(), $universityEntity);
-
-            $universityForm->submit($university);
-
-            if ($universityForm->isValid()) {
+            if (array_key_exists('state', $request_data)) {
+                $campusEntity->setState($stateRepo->findOneById($request_data['state']));
+            }else{
+                $error =true;
+            }
+            $universityEntity->addCampus($campusEntity);
+            if(!$error){
                 $em->persist($universityEntity);
                 $em->flush();
-
-                array_push($message_array, array(
-                    'success' => 'University Successfully Created'
-                ));
-            } else {
-                $em->clear();
-                $universityFormErrorJson = $serializer->serialize($universityForm, 'json');
-                array_push($message_array, json_decode($universityFormErrorJson, true));
+                return $this->createJsonResponse('success',array('successTitle'=>"Campus Created Successfully",'successBody'=>"Campus has been added to the University"));
+            }else{
+                return $this->createJsonResponse('error',array('errorTitle'=>"Campus was not created",'errorBody'=>"Sorry, please check the form and submit again"));
             }
-
         }
-
-        $json = $serializer->serialize($message_array, 'json');
-        $response = new Response($json, 200);
-        return $response;
-
 
     }
 
@@ -207,7 +196,8 @@ class CampusManagementApiController extends Controller
 
     }
 
-    public function createJsonResponse($key,$data){
+    public function createJsonResponse($key, $data)
+    {
         $serializer = $this->container->get('jms_serializer');
         $json = $serializer->serialize([$key => $data], 'json');
         $response = new Response($json, 200);
