@@ -273,11 +273,11 @@ class UserApiController extends Controller
                 'email' => $user->getEmail(),
                 'registrationStatus'=>$user->getRegistrationStatus(),
                 'userId'=> ($user->getGoogleId()!=null)?$user->getGoogleId():$user->getFacebookId(),
-                'campus' => $user->getCampus()->getCampusName(),
-                'university' => $user->getCampus()->getUniversity()->getUniversityName(),
-                'state' => $user->getCampus()->getState()->getStateName(),
-                'state_short_name' => $user->getCampus()->getState()->getStateShortName(),
-                'country' => $user->getCampus()->getState()->getCountry()->getCountryName()
+                'campusName' => $user->getCampus()->getCampusName(),
+                'universityName' => $user->getCampus()->getUniversity()->getUniversityName(),
+                'stateName' => $user->getCampus()->getState()->getStateName(),
+                'stateShortName' => $user->getCampus()->getState()->getStateShortName(),
+                'countryName' => $user->getCampus()->getState()->getCountry()->getCountryName()
             );
             $json = $this->get('jms_serializer')->serialize(['user' => $user_data], 'json');
             $response = new Response($json, 200);
