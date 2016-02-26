@@ -15,12 +15,29 @@ class DefaultController extends Controller
     {
 //        $data = $this->getDoctrine()->getManager()->getRepository("AppBundle:Campus")->getCampus();
 
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        $user_token= $this->get('security.token_storage')->getToken();
+//        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user_token = $this->get('security.token_storage')->getToken();
+
+        $data = array(
+//            'key'=>$user_token->getProviderKey(),
+            'user'=>$user_token->getUsername(),
+            'roles'=>$user_token->getRoles(),
+            'authenticated'=>$user_token->isAuthenticated(),
+            'attributes'=>$user_token->getAttributes()
+
+        );
+        if($user_token->getUsername()=="anon."){
+            $data['key']=$user_token->getKey();
+        }else{
+            $data['key']=$user_token->getProviderKey();
+        }
+
+//        var_dump($user_token->getAttributes());
+//        die();
        /* var_dump($user->getCampus()->getState()->getCountry()->getCountryName());
         die();*/
 
-        $json = $this->get('jms_serializer')->serialize(['user' => $user_token],'json');
+        $json = $this->get('jms_serializer')->serialize(['user' => $data],'json');
         $response = new Response($json, 200);
         return $response;
 

@@ -47,7 +47,7 @@ class UserApiController extends Controller
         $data = null;
         $content = $request->getContent();
 
-            $data = json_decode($content, true); // 2nd param to get as array
+        $data = json_decode($content, true); // 2nd param to get as array
 
 
         //Pull User by Service ID
@@ -77,9 +77,9 @@ class UserApiController extends Controller
 
         //Submit Data
         $submitted_data = array(
-            'username'=>$data['username'],
-            'referral'=>$data['referral'],
-            'campus'=>$data['campus']
+            'username' => $data['username'],
+            'referral' => $data['referral'],
+            'campus' => $data['campus']
         );
 
         //Add additional Data as needed
@@ -127,16 +127,16 @@ class UserApiController extends Controller
 
         if ($email_exist) {
 
-            if(empty($tempArray['children']['email'])){
-                $tempArray['children']['email']['errors']= array($email_exist_message);
-            }else{
+            if (empty($tempArray['children']['email'])) {
+                $tempArray['children']['email']['errors'] = array($email_exist_message);
+            } else {
                 array_push($tempArray['children']['email']['errors'], $email_exist_message);
             }
         }
         if ($username_exist) {
-            if(empty($tempArray['children']['username'])){
-                $tempArray['children']['username']['errors']= array($username_exist_message);
-            }else{
+            if (empty($tempArray['children']['username'])) {
+                $tempArray['children']['username']['errors'] = array($username_exist_message);
+            } else {
                 array_push($tempArray['children']['username']['errors'], $username_exist_message);
             }
 
@@ -152,7 +152,7 @@ class UserApiController extends Controller
                 $json = $serializer->serialize(['success' => "User is successfully updated"], 'json');
                 $response = new Response($json, 200);
                 return $response;
-            }else{
+            } else {
 
                 $response = new Response(json_encode($tempArray), 200);
                 return $response;
@@ -246,8 +246,8 @@ class UserApiController extends Controller
                 'username' => $user->getUsername(),
                 'fullName' => $user->getFullName(),
                 'email' => $user->getEmail(),
-                'registrationStatus'=>$user->getRegistrationStatus(),
-                'userId'=> ($user->getGoogleId()!=null)?$user->getGoogleId():$user->getFacebookId(),
+                'registrationStatus' => $user->getRegistrationStatus(),
+                'userId' => ($user->getGoogleId() != null) ? $user->getGoogleId() : $user->getFacebookId(),
             );
             $json = $this->get('jms_serializer')->serialize(['user' => $user_data], 'json');
             $response = new Response($json, 200);
@@ -268,11 +268,12 @@ class UserApiController extends Controller
         $user = $this->container->get('security.context')->getToken()->getUser();
         if ($user) {
             $user_data = array(
+                'id' => $user->getId(),
                 'username' => $user->getUsername(),
                 'fullName' => $user->getFullName(),
                 'email' => $user->getEmail(),
-                'registrationStatus'=>$user->getRegistrationStatus(),
-                'userId'=> ($user->getGoogleId()!=null)?$user->getGoogleId():$user->getFacebookId(),
+                'registrationStatus' => $user->getRegistrationStatus(),
+                'userId' => ($user->getGoogleId() != null) ? $user->getGoogleId() : $user->getFacebookId(),
                 'campusName' => $user->getCampus()->getCampusName(),
                 'universityName' => $user->getCampus()->getUniversity()->getUniversityName(),
                 'stateName' => $user->getCampus()->getState()->getStateName(),
@@ -353,5 +354,112 @@ class UserApiController extends Controller
             $response = new Response($json, 200);
             return $response;
         }
+    }
+
+    /**
+     * @Route("/api/update_user_full_name", name="user_update_full_name")
+     * @Method({"POST"})
+     */
+    public function updateUserFullNameData(Request $request)
+    {
+//        $user = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $userRepo = $em->getRepository('AppBundle:User');
+        $serializer = $this->container->get('jms_serializer');
+
+        $request_data = json_decode($request->getContent(), true);
+        $user = $userRepo->findOneBy(array("id" => $request_data['id']));
+
+        if ($user != null) {
+            $oldFullName = $user->getFullName();
+            $updateForm = $this->createForm(new UserType(), $user);
+            $updateForm->remove('username');
+            $updateForm->remove('email');
+            $updateForm->remove('referral');
+            $updateForm->remove('campus');
+
+            $updateForm->submit($request_data);
+
+
+            if ($updateForm->isValid()) {
+                $em->persist($user);
+                $em->flush();
+                return $this->createJsonResponse('success', array('successTitle' => 'Full Name is Updated', 'successBody' => 'Your full name is successfully updated.'));
+            } else {
+                return $this->createJsonResponse('error', array(
+                    'errorTitle' => 'Full Name is not Updated',
+                    'errorBody' => 'Sorry. Please check the form and submit again.',
+                    'form' => $serializer->serialize($updateForm, 'json'),
+                    'fullName' => $oldFullName
+                ));
+            }
+        }
+    }
+
+
+    /**
+     * @Route("/api/update_user_university_campus", name="user_update_university_campus")
+     * @Method({"POST"})
+     */
+    public function updateUserUniversityCampusAction(Request $request)
+    {
+//        $user = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $userRepo = $em->getRepository('AppBundle:User');
+        $serializer = $this->container->get('jms_serializer');
+
+        $request_data = json_decode($request->getContent(), true);
+
+        $user = $userRepo->findOneBy(array("id" => $request_data['id']));
+
+        if ($user != null) {
+
+            $oldUniversityName= $user->getCampus()->getUniversity()->getUniversityName();
+            $oldCampusName = $user->getCampus()->getCampusName();
+            $oldStateShortName = $user->getCampus()->getState()->getStateShortName();
+            $oldCountryName = $user->getCampus()->getState()->getCountry()->getCountryname();
+
+            $updateForm = $this->createForm(new UserType(), $user);
+            $updateForm->remove('fullName');
+            $updateForm->remove('username');
+            $updateForm->remove('email');
+            $updateForm->remove('referral');
+
+
+            $updateForm->submit($request_data);
+
+
+            if ($updateForm->isValid()) {
+                $em->persist($user);
+                $em->flush();
+                return $this->createJsonResponse('success', array(
+                    'successTitle' => 'University is Successfully Changed',
+                    'successBody' => 'Your university is successfully changed.',
+                    'universityName'=>$user->getCampus()->getUniversity()->getUniversityName(),
+                    'campusName'=>$user->getCampus()->getCampusName(),
+                    'stateShortName' =>$user->getCampus()->getState()->getStateShortName(),
+                    'countryName'=>$user->getCampus()->getState()->getCountry()->getCountryname()
+                ));
+            } else {
+
+                return $this->createJsonResponse('error', array(
+                    'errorTitle' => 'University was not changed.',
+                    'errorBody' => 'Sorry. Please check the form and submit again.',
+                    'form' => $serializer->serialize($updateForm, 'json'),
+                    'universityName'=>$oldUniversityName,
+                    'campusName'=>$oldCampusName,
+                    'stateShortName' =>$oldStateShortName,
+                    'countryName'=>$oldCountryName
+                ));
+            }
+        }
+    }
+
+    public function createJsonResponse($key, $data)
+    {
+        $serializer = $this->container->get('jms_serializer');
+        $json = $serializer->serialize([$key => $data], 'json');
+        $response = new Response($json, 200);
+        return $response;
     }
 }

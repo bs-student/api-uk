@@ -38,6 +38,16 @@ services:
                 scope: request
                 public: false
 
+    app.form.change_password:
+                class: AppBundle\Form\Type\ChangePasswordType
+                tags:
+                    - { name: form.type, alias: app_password_changing }
+
+    app.form.handler.change_password:
+                class: AppBundle\Form\Handler\ChangePasswordFormHandler
+                arguments: ["@fos_user.change_password.form", "@request", "@fos_user.user_manager"]
+                scope: request
+                public: false
 
 
     app.validator.username_exist:
