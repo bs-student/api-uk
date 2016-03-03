@@ -39,7 +39,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-
+#    date:
+#        timezone: Asia/Dhaka
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"

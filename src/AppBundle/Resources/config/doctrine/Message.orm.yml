@@ -1,0 +1,40 @@
+AppBundle\Entity\Message:
+    type: entity
+    table: messages
+    repositoryClass: AppBundle\Repository\MessageRepository
+
+
+    manyToOne:
+        book:
+          targetEntity: Book
+          inversedBy: messages
+          joinColumn:
+            name: book_id
+            referencedColumnName: id
+        user:
+          targetEntity: User
+          inversedBy: messages
+          joinColumn:
+            name: user_id
+            referencedColumnName: id
+
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        messageBody:
+            column: message_body
+            nullable: true
+            type: string
+            length: '255'
+        messageDateTime:
+            column: message_datetime
+            type: datetime
+
+
+
+    lifecycleCallbacks: {  }

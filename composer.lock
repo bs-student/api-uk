@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8f2b2432aae3e93333c04bd2a81b5336",
-    "content-hash": "ee781cc4a824acfcf96ecb8f3db83fc7",
+    "hash": "9d70a43b97930a7634c1f4cf93b2946d",
+    "content-hash": "f81026ab94cf3297719b16a00e0e868b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -767,7 +767,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSOAuthServerBundle/zipball/fbf3107442c4f71f41806ae75954883ffddb3d3f",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSOAuthServerBundle/zipball/0b25cdaae8983c630bb62d14b6993219b1dadb8d",
                 "reference": "fbf3107442c4f71f41806ae75954883ffddb3d3f",
                 "shasum": ""
             },
@@ -1033,6 +1033,101 @@
                 "User management"
             ],
             "time": "2015-06-01 00:57:03"
+        },
+        {
+            "name": "guzzle/guzzle",
+            "version": "v3.9.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle3.git",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.3",
+                "symfony/event-dispatcher": "~2.1"
+            },
+            "replace": {
+                "guzzle/batch": "self.version",
+                "guzzle/cache": "self.version",
+                "guzzle/common": "self.version",
+                "guzzle/http": "self.version",
+                "guzzle/inflection": "self.version",
+                "guzzle/iterator": "self.version",
+                "guzzle/log": "self.version",
+                "guzzle/parser": "self.version",
+                "guzzle/plugin": "self.version",
+                "guzzle/plugin-async": "self.version",
+                "guzzle/plugin-backoff": "self.version",
+                "guzzle/plugin-cache": "self.version",
+                "guzzle/plugin-cookie": "self.version",
+                "guzzle/plugin-curlauth": "self.version",
+                "guzzle/plugin-error-response": "self.version",
+                "guzzle/plugin-history": "self.version",
+                "guzzle/plugin-log": "self.version",
+                "guzzle/plugin-md5": "self.version",
+                "guzzle/plugin-mock": "self.version",
+                "guzzle/plugin-oauth": "self.version",
+                "guzzle/service": "self.version",
+                "guzzle/stream": "self.version"
+            },
+            "require-dev": {
+                "doctrine/cache": "~1.3",
+                "monolog/monolog": "~1.0",
+                "phpunit/phpunit": "3.7.*",
+                "psr/log": "~1.0",
+                "symfony/class-loader": "~2.1",
+                "zendframework/zend-cache": "2.*,<2.3",
+                "zendframework/zend-log": "2.*,<2.3"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Guzzle 5 has moved to a new package name. The package you have installed, Guzzle 3, is deprecated."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle": "src/",
+                    "Guzzle\\Tests": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Guzzle Community",
+                    "homepage": "https://github.com/guzzle/guzzle/contributors"
+                }
+            ],
+            "description": "PHP HTTP client. This library is deprecated in favor of https://packagist.org/packages/guzzlehttp/guzzle",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "rest",
+                "web service"
+            ],
+            "time": "2015-03-18 18:23:50"
         },
         {
             "name": "hwi/oauth-bundle",
@@ -1627,6 +1722,116 @@
                 "http client"
             ],
             "time": "2015-06-25 17:26:56"
+        },
+        {
+            "name": "leaseweb/api-caller-bundle",
+            "version": "v1.2.1",
+            "target-dir": "Lsw/ApiCallerBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LeaseWeb/LswApiCallerBundle.git",
+                "reference": "424bbf8f9a63ecab90f11138edd61c58b677e66a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/LeaseWeb/LswApiCallerBundle/zipball/424bbf8f9a63ecab90f11138edd61c58b677e66a",
+                "reference": "424bbf8f9a63ecab90f11138edd61c58b677e66a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": ">=2.1",
+                "symfony/security-bundle": ">=2.1"
+            },
+            "require-dev": {
+                "doctrine/doctrine-bundle": "*",
+                "swiftmailer/swiftmailer": "*",
+                "symfony/validator": "2.1.*",
+                "symfony/yaml": "2.1.*",
+                "twig/twig": "*",
+                "willdurand/propel-typehintable-behavior": "dev-master"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Lsw\\ApiCallerBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maurits van der Schee",
+                    "email": "m.vanderschee@leaseweb.com"
+                }
+            ],
+            "description": "cURL API call functionality with full Web Debug Toolbar integration",
+            "homepage": "http://www.leaseweblabs.com",
+            "keywords": [
+                "Symfony2",
+                "api",
+                "curl"
+            ],
+            "time": "2015-12-17 12:05:04"
+        },
+        {
+            "name": "leaseweb/guzzle-bundle",
+            "version": "v1.0.2",
+            "target-dir": "Lsw/GuzzleBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LeaseWeb/LswGuzzleBundle.git",
+                "reference": "7cf171b5533a114860087ff33d3b02e756744a54"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/LeaseWeb/LswGuzzleBundle/zipball/7cf171b5533a114860087ff33d3b02e756744a54",
+                "reference": "7cf171b5533a114860087ff33d3b02e756744a54",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/guzzle": "*",
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": ">=2.1"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Lsw\\GuzzleBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maurits van der Schee",
+                    "email": "m.vanderschee@leaseweb.com"
+                }
+            ],
+            "description": "Guzzle API call functionality with full Web Debug Toolbar integration",
+            "homepage": "http://www.leaseweblabs.com",
+            "keywords": [
+                "Guzzle",
+                "Symfony2",
+                "api",
+                "curl"
+            ],
+            "time": "2014-03-25 15:38:12"
         },
         {
             "name": "monolog/monolog",

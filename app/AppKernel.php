@@ -26,6 +26,8 @@ class AppKernel extends Kernel
             new Nelmio\CorsBundle\NelmioCorsBundle(),
 
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
+            new Lsw\ApiCallerBundle\LswApiCallerBundle(),
+//            new Lsw\GuzzleBundle\LswGuzzleBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

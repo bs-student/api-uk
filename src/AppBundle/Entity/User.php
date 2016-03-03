@@ -6,11 +6,21 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Campus;
 use AppBundle\Entity\Referral;
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * User
  */
 class User extends BaseUser
 {
+
+    public function __construct()
+    {
+        $this->$buyBooks = new ArrayCollection();
+        $this->$sellBooks = new ArrayCollection();
+        $this->$messages = new ArrayCollection();
+        parent::__construct();
+    }
+
     /**
      * @var integer
      */
@@ -71,6 +81,12 @@ class User extends BaseUser
     private $referral;
 
     private $campus;
+
+    private $buyBooks;
+
+    private $sellBooks;
+
+    private $messages;
 
 
     /**
@@ -317,7 +333,7 @@ class User extends BaseUser
     }
 
     /**
-     * Get facebookToken
+     * Set salt
      *
      * @param string $salt
      * @return User
@@ -325,5 +341,107 @@ class User extends BaseUser
     public function setSalt($salt) {
         $this->salt = $salt;
         return $this;
+    }
+
+
+
+
+    /**
+     * Add buyBooks
+     *
+     * @param \AppBundle\Entity\Book $buyBooks
+     * @return User
+     */
+    public function addBuyBook(\AppBundle\Entity\Book $buyBooks)
+    {
+        $this->buyBooks[] = $buyBooks;
+
+        return $this;
+    }
+
+    /**
+     * Remove buyBooks
+     *
+     * @param \AppBundle\Entity\Book $buyBooks
+     */
+    public function removeBuyBook(\AppBundle\Entity\Book $buyBooks)
+    {
+        $this->buyBooks->removeElement($buyBooks);
+    }
+
+    /**
+     * Get buyBooks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBuyBooks()
+    {
+        return $this->buyBooks;
+    }
+
+    /**
+     * Add sellBooks
+     *
+     * @param \AppBundle\Entity\Book $sellBooks
+     * @return User
+     */
+    public function addSellBook(\AppBundle\Entity\Book $sellBooks)
+    {
+        $this->sellBooks[] = $sellBooks;
+
+        return $this;
+    }
+
+    /**
+     * Remove sellBooks
+     *
+     * @param \AppBundle\Entity\Book $sellBooks
+     */
+    public function removeSellBook(\AppBundle\Entity\Book $sellBooks)
+    {
+        $this->sellBooks->removeElement($sellBooks);
+    }
+
+    /**
+     * Get sellBooks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSellBooks()
+    {
+        return $this->sellBooks;
+    }
+
+    /**
+     * Add messages
+     *
+     * @param \AppBundle\Entity\Message $messages
+     * @return User
+     */
+    public function addMessage(\AppBundle\Entity\Message $messages)
+    {
+        $this->messages[] = $messages;
+
+        return $this;
+    }
+
+    /**
+     * Remove messages
+     *
+     * @param \AppBundle\Entity\Message $messages
+     */
+    public function removeMessage(\AppBundle\Entity\Message $messages)
+    {
+        $this->messages->removeElement($messages);
+    }
+
+    /**
+     * Get messages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }

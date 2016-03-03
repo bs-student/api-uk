@@ -17,6 +17,16 @@ AppBundle\Entity\User:
             name: campus_id
             referencedColumnName: id
 
+    oneToMany:
+        buyBooks:
+          targetEntity: Book
+          mappedBy: bookBuyer
+        sellBooks:
+          targetEntity: Book
+          mappedBy: bookSeller
+        messages:
+          targetEntity: Message
+          mappedBy: user
 
     id:
         id:

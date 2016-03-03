@@ -1,0 +1,88 @@
+AppBundle\Entity\Book:
+    type: entity
+    table: 	books
+    repositoryClass: AppBundle\Repository\BookRepository
+
+    oneToMany:
+        messages:
+          targetEntity: Message
+          mappedBy: book
+
+    manyToOne:
+        bookBuyer:
+            targetEntity: User
+            inversedBy: buyBooks
+            joinColumn:
+              name: buok_buyer
+              referencedColumnName: id
+        bookSeller:
+            targetEntity: User
+            inversedBy: sellBooks
+            joinColumn:
+              name: buok_seller
+              referencedColumnName: id
+
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        bookTitle:
+            column: book_title
+            nullable: true
+            type: string
+            length: '255'
+        bookDirectorAuthorArtist:
+            column: book_director_author_artist
+            nullable: true
+            type: string
+            length: '255'
+        bookEdition:
+            column: book_edition
+            nullable: true
+            type: string
+            length: '255'
+        bookIsbn10:
+            column: book_isbn_10
+            nullable: true
+            type: string
+            length: '255'
+        bookIsbn13:
+            column: book_isbn_13
+            nullable: true
+            type: string
+            length: '255'
+        bookPublisher:
+            column: book_publisher
+            nullable: true
+            type: string
+            length: '255'
+        bookPublishDate:
+            column: book_publish_date
+            type: datetime
+        bookBinding:
+            column: book_binding
+            nullable: true
+            type: string
+            length: '255'
+        bookPage:
+            column: book_page
+            nullable: true
+            type: string
+            length: '255'
+        bookPriceAmazon:
+            column: book_price_amazon
+            nullable: true
+            type: string
+            length: '255'
+        bookLanguage:
+            column: book_language
+            nullable: true
+            type: string
+            length: '255'
+
+
+    lifecycleCallbacks: {  }
