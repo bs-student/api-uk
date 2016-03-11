@@ -1,0 +1,124 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Book</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Booktitle</th>
+                <td>{{ entity.bookTitle }}</td>
+            </tr>
+            <tr>
+                <th>Bookdirectorauthorartist</th>
+                <td>{{ entity.bookDirectorAuthorArtist }}</td>
+            </tr>
+            <tr>
+                <th>Bookedition</th>
+                <td>{{ entity.bookEdition }}</td>
+            </tr>
+            <tr>
+                <th>Bookisbn10</th>
+                <td>{{ entity.bookIsbn10 }}</td>
+            </tr>
+            <tr>
+                <th>Bookisbn13</th>
+                <td>{{ entity.bookIsbn13 }}</td>
+            </tr>
+            <tr>
+                <th>Bookpublisher</th>
+                <td>{{ entity.bookPublisher }}</td>
+            </tr>
+            <tr>
+                <th>Bookpublishdate</th>
+                <td>{{ entity.bookPublishDate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Bookbinding</th>
+                <td>{{ entity.bookBinding }}</td>
+            </tr>
+            <tr>
+                <th>Bookpage</th>
+                <td>{{ entity.bookPage }}</td>
+            </tr>
+            <tr>
+                <th>Bookpricesell</th>
+                <td>{{ entity.bookPriceSell }}</td>
+            </tr>
+            <tr>
+                <th>Booklanguage</th>
+                <td>{{ entity.bookLanguage }}</td>
+            </tr>
+            <tr>
+                <th>Bookdescription</th>
+                <td>{{ entity.bookDescription }}</td>
+            </tr>
+            <tr>
+                <th>Bookcondition</th>
+                <td>{{ entity.bookCondition }}</td>
+            </tr>
+            <tr>
+                <th>Bookishighlighted</th>
+                <td>{{ entity.bookIsHighlighted }}</td>
+            </tr>
+            <tr>
+                <th>Bookhasnotes</th>
+                <td>{{ entity.bookHasNotes }}</td>
+            </tr>
+            <tr>
+                <th>Bookcomment</th>
+                <td>{{ entity.bookComment }}</td>
+            </tr>
+            <tr>
+                <th>Bookcontactmethod</th>
+                <td>{{ entity.bookContactMethod }}</td>
+            </tr>
+            <tr>
+                <th>Bookcontacthomenumber</th>
+                <td>{{ entity.bookContactHomeNumber }}</td>
+            </tr>
+            <tr>
+                <th>Bookcontactcellnumber</th>
+                <td>{{ entity.bookContactCellNumber }}</td>
+            </tr>
+            <tr>
+                <th>Bookcontactemail</th>
+                <td>{{ entity.bookContactEmail }}</td>
+            </tr>
+            <tr>
+                <th>Bookisavailablepublic</th>
+                <td>{{ entity.bookIsAvailablePublic }}</td>
+            </tr>
+            <tr>
+                <th>Bookpaymentmethodcashonexchange</th>
+                <td>{{ entity.bookPaymentMethodCaShOnExchange }}</td>
+            </tr>
+            <tr>
+                <th>Bookpaymentmethodcheque</th>
+                <td>{{ entity.bookPaymentMethodCheque }}</td>
+            </tr>
+            <tr>
+                <th>Bookavailabledate</th>
+                <td>{{ entity.bookAvailableDate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('book') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('book_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

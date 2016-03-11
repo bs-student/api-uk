@@ -1,0 +1,87 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Book list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Booktitle</th>
+                <th>Bookdirectorauthorartist</th>
+                <th>Bookedition</th>
+                <th>Bookisbn10</th>
+                <th>Bookisbn13</th>
+                <th>Bookpublisher</th>
+                <th>Bookpublishdate</th>
+                <th>Bookbinding</th>
+                <th>Bookpage</th>
+                <th>Bookpricesell</th>
+                <th>Booklanguage</th>
+                <th>Bookdescription</th>
+                <th>Bookcondition</th>
+                <th>Bookishighlighted</th>
+                <th>Bookhasnotes</th>
+                <th>Bookcomment</th>
+                <th>Bookcontactmethod</th>
+                <th>Bookcontacthomenumber</th>
+                <th>Bookcontactcellnumber</th>
+                <th>Bookcontactemail</th>
+                <th>Bookisavailablepublic</th>
+                <th>Bookpaymentmethodcashonexchange</th>
+                <th>Bookpaymentmethodcheque</th>
+                <th>Bookavailabledate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('book_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.bookTitle }}</td>
+                <td>{{ entity.bookDirectorAuthorArtist }}</td>
+                <td>{{ entity.bookEdition }}</td>
+                <td>{{ entity.bookIsbn10 }}</td>
+                <td>{{ entity.bookIsbn13 }}</td>
+                <td>{{ entity.bookPublisher }}</td>
+                <td>{% if entity.bookPublishDate %}{{ entity.bookPublishDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.bookBinding }}</td>
+                <td>{{ entity.bookPage }}</td>
+                <td>{{ entity.bookPriceSell }}</td>
+                <td>{{ entity.bookLanguage }}</td>
+                <td>{{ entity.bookDescription }}</td>
+                <td>{{ entity.bookCondition }}</td>
+                <td>{{ entity.bookIsHighlighted }}</td>
+                <td>{{ entity.bookHasNotes }}</td>
+                <td>{{ entity.bookComment }}</td>
+                <td>{{ entity.bookContactMethod }}</td>
+                <td>{{ entity.bookContactHomeNumber }}</td>
+                <td>{{ entity.bookContactCellNumber }}</td>
+                <td>{{ entity.bookContactEmail }}</td>
+                <td>{{ entity.bookIsAvailablePublic }}</td>
+                <td>{{ entity.bookPaymentMethodCaShOnExchange }}</td>
+                <td>{{ entity.bookPaymentMethodCheque }}</td>
+                <td>{% if entity.bookAvailableDate %}{{ entity.bookAvailableDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('book_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('book_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('book_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}
