@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Api;
 
+use AppBundle\Entity\Book;
 use AppBundle\Entity\Campus;
 use AppBundle\Form\Type\UniversityType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,7 +17,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Response;
 use Lsw\ApiCallerBundle\Call\HttpGetJson;
 use Lsw\ApiCallerBundle\Call\HttpGetHtml;
-
+use AppBundle\Form\Type\BookType;
 class BookManagementApiController extends Controller
 {
 
@@ -67,6 +68,28 @@ class BookManagementApiController extends Controller
         }
 
         return $this->getBooksByAsinAmazon($asin);
+
+    }
+
+    /**
+     * @Route("/api/book/search_by_isbn_amazon", name="books_search_by_isbn_amazon")
+     *
+     * @Method({"POST"})
+     *
+     */
+    public function searchByIsbnAmazonApi(Request $request)
+    {
+
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+
+        if (array_key_exists('isbn', $data)) {
+            $isbn = $data['isbn'];
+        } else {
+            $isbn = "";
+        }
+
+        return $this->getBooksByIsbnAmazon($isbn);
 
     }
 
@@ -126,7 +149,51 @@ class BookManagementApiController extends Controller
         return $this->createJsonResponse('cartUrl',(string)$simpleXml->Cart->PurchaseURL);
 
     }
+    /**
+     * @Route("/api/book/add_new_sell_book", name="add_new_sell_book")
+     *
+     * @Method({"POST"})
+     *
+     */
+    public function addNewSellBookAction(Request $request)
+    {
 
+
+
+        $serializer = $this->container->get('jms_serializer');
+        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
+        $em = $this->getDoctrine()->getManager();
+//        $bookRepo = $em->getRepository("AppBundle:Book");
+
+        $content = $request->get('book');
+        $bookData = json_decode($content, true);
+
+
+        if(array_key_exists('bookPublishDate',$bookData)){
+            $publishDate = new \DateTime($bookData['bookPublishDate']);
+            $bookData['bookPublishDate'] =$publishDate;
+        }
+        if(array_key_exists('bookAvailableDate',$bookData)){
+            $availableDate = new \DateTime($bookData['bookAvailableDate']);
+            $bookData['bookAvailableDate'] =$availableDate;
+        }
+
+        $bookData['bookSeller']=$userId;
+
+        $book = new Book();
+        $bookForm = $this->createForm(new BookType(), $book);
+
+        $bookForm->submit($bookData);
+        if($bookForm->isValid()){
+            $em->persist($book);
+            $em->flush();
+            return $this->createJsonResponse('success',array('successTitle'=>"Book Successfully added to sell List"));
+        }else{
+            $error= $serializer->serialize($bookForm,'json');
+            return new Response($error,200);
+        }
+
+    }
 
     function getBooksByKeywordAmazon($keyword, $page)
     {
@@ -140,6 +207,7 @@ class BookManagementApiController extends Controller
         $amazonCredentials['params']["SearchIndex"] = "Books";
         $amazonCredentials['params']["ResponseGroup"] = "Medium,Offers";
         $getUrl = $this->getUrlWithSignature($amazonCredentials);
+
 
         $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($getUrl, null, null));
 
@@ -160,6 +228,30 @@ class BookManagementApiController extends Controller
         $amazonCredentials['params']["ItemId"] = $asin;
         $amazonCredentials['params']["ResponseGroup"] = "Medium,Offers";
         $getUrl = $this->getUrlWithSignature($amazonCredentials);
+        $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($getUrl, null, null));
+
+        $booksArray = $this->parseMultipleBooksAmazonXmlResponse($xmlOutput);
+
+        return $this->createJsonResponse('result', $booksArray);
+
+    }
+
+    function getBooksByIsbnAmazon($isbn)
+    {
+
+
+        $amazonCredentials = $this->getAmazonSearchParams();
+
+        $amazonCredentials['params']['Operation'] = "ItemLookup";
+        $amazonCredentials['params']["ItemId"] = $isbn;
+        $amazonCredentials['params']["ResponseGroup"] = "Medium,Offers";
+        $amazonCredentials['params']["IdType"]="ISBN";
+        $amazonCredentials['params']["SearchIndex"]="All";
+
+        $getUrl = $this->getUrlWithSignature($amazonCredentials);
+//        var_dump($getUrl);
+//        die();
+
         $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($getUrl, null, null));
 
         $booksArray = $this->parseMultipleBooksAmazonXmlResponse($xmlOutput);
@@ -243,6 +335,8 @@ class BookManagementApiController extends Controller
         $params["Service"] = "AWSECommerceService";
         $params["Timestamp"] = gmdate("Y-m-d\TH:i:s\Z");
         $params["Version"] = $amazonApiInfo['version'];
+        $params["Power"] = "binding:hardcover or library or paperback";
+
 
 
         return array(
@@ -312,9 +406,8 @@ class BookManagementApiController extends Controller
             'bookAsin' => (string)$item->ASIN,
             'bookTitle' => (string)$item->ItemAttributes->Title,
             'bookDirectorAuthorArtist' => $book_director_author_artist,
-            'bookPrice' => $price,
+            'bookPriceAmazon' => $price,
             'bookIsbn' => (string)$item->ItemAttributes->ISBN,
-            'bookEisbn' => (string)$item->ItemAttributes->EISBN,
             'bookEan' => (string)$item->ItemAttributes->EAN,
             'bookEdition' => (string)$item->ItemAttributes->Edition,
             'bookPublisher' => (string)$item->ItemAttributes->Publisher,
@@ -323,7 +416,8 @@ class BookManagementApiController extends Controller
             'bookMediumImageUrl' => $book_image_medium_url,
             'bookDescription' => (string)$item->EditorialReviews->EditorialReview->Content,
             'bookPages' => (string)$item->ItemAttributes->NumberOfPages,
-            'bookOfferId'=>$offerId
+            'bookOfferId'=>$offerId,
+            'bookLanguage'=> (string)$item->ItemAttributes->Languages->Language->Name,
         );
     }
 

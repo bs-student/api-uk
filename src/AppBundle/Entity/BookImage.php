@@ -5,9 +5,9 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
- * Book
+ * BookImage
  */
-class Book
+class BookImage
 {
 
 
@@ -21,160 +21,23 @@ class Book
      * @var string
      *
      */
-    private $bookTitle;
+    private $imageName;
 
     /**
      * @var string
      *
      */
-    private $bookDirectorAuthorArtist;
+    private $imageUrl;
 
     /**
-     * @var string
+     * @var boolean
      *
      */
-    private $bookEdition;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookIsbn10;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookIsbn13;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookPublisher;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookPublishDate;
+    private $titleImage;
 
 
-    /**
-     * @var string
-     *
-     */
-    private $bookBinding;
+    private $book;
 
-    /**
-     * @var string
-     *
-     */
-    private $bookPage;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookPriceSell;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookLanguage;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookDescription;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookCondition;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookIsHighlighted;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookHasNotes;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookComment;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookContactMethod;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookContactHomeNumber;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookContactCellNumber;
-    /**
-     * @var string
-     *
-     */
-    private $bookContactEmail;
-    /**
-     * @var string
-     *
-     */
-    private $bookIsAvailablePublic;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookPaymentMethodCaShOnExchange;
-    /**
-     * @var string
-     *
-     */
-    private $bookPaymentMethodCheck;
-
-    /**
-     * @var string
-     *
-     */
-    private $bookTitleImageUrl;
-
-
-    private $bookBuyer;
-
-    private $bookSeller;
-
-    private $messages;
-
-
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->messages = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -187,336 +50,94 @@ class Book
     }
 
     /**
-     * Set bookTitle
+     * Set imageName
      *
-     * @param string $bookTitle
-     * @return Book
+     * @param string $imageName
+     * @return BookImage
      */
-    public function setBookTitle($bookTitle)
+    public function setImageName($imageName)
     {
-        $this->bookTitle = $bookTitle;
+        $this->imageName = $imageName;
 
         return $this;
     }
 
     /**
-     * Get bookTitle
+     * Get imageName
      *
      * @return string 
      */
-    public function getBookTitle()
+    public function getImageName()
     {
-        return $this->bookTitle;
+        return $this->imageName;
     }
 
     /**
-     * Set bookDirectorAuthorArtist
+     * Set imageUrl
      *
-     * @param string $bookDirectorAuthorArtist
-     * @return Book
+     * @param string $imageUrl
+     * @return BookImage
      */
-    public function setBookDirectorAuthorArtist($bookDirectorAuthorArtist)
+    public function setImageUrl($imageUrl)
     {
-        $this->bookDirectorAuthorArtist = $bookDirectorAuthorArtist;
+        $this->imageUrl = $imageUrl;
 
         return $this;
     }
 
     /**
-     * Get bookDirectorAuthorArtist
+     * Get imageUrl
      *
      * @return string 
      */
-    public function getBookDirectorAuthorArtist()
+    public function getImageUrl()
     {
-        return $this->bookDirectorAuthorArtist;
+        return $this->imageUrl;
     }
 
     /**
-     * Set bookEdition
+     * Set titleImage
      *
-     * @param string $bookEdition
-     * @return Book
+     * @param boolean $titleImage
+     * @return BookImage
      */
-    public function setBookEdition($bookEdition)
+    public function setTitleImage($titleImage)
     {
-        $this->bookEdition = $bookEdition;
+        $this->titleImage = $titleImage;
 
         return $this;
     }
 
     /**
-     * Get bookEdition
+     * Get titleImage
      *
-     * @return string 
+     * @return boolean 
      */
-    public function getBookEdition()
+    public function getTitleImage()
     {
-        return $this->bookEdition;
+        return $this->titleImage;
     }
 
     /**
-     * Set bookIsbn10
+     * Set book
      *
-     * @param string $bookIsbn10
-     * @return Book
+     * @param \AppBundle\Entity\Book $book
+     * @return BookImage
      */
-    public function setBookIsbn10($bookIsbn10)
+    public function setBook(\AppBundle\Entity\Book $book = null)
     {
-        $this->bookIsbn10 = $bookIsbn10;
+        $this->book = $book;
 
         return $this;
     }
 
     /**
-     * Get bookIsbn10
+     * Get book
      *
-     * @return string 
+     * @return \AppBundle\Entity\Book 
      */
-    public function getBookIsbn10()
+    public function getBook()
     {
-        return $this->bookIsbn10;
-    }
-
-    /**
-     * Set bookIsbn13
-     *
-     * @param string $bookIsbn13
-     * @return Book
-     */
-    public function setBookIsbn13($bookIsbn13)
-    {
-        $this->bookIsbn13 = $bookIsbn13;
-
-        return $this;
-    }
-
-    /**
-     * Get bookIsbn13
-     *
-     * @return string 
-     */
-    public function getBookIsbn13()
-    {
-        return $this->bookIsbn13;
-    }
-
-    /**
-     * Set bookPublisher
-     *
-     * @param string $bookPublisher
-     * @return Book
-     */
-    public function setBookPublisher($bookPublisher)
-    {
-        $this->bookPublisher = $bookPublisher;
-
-        return $this;
-    }
-
-    /**
-     * Get bookPublisher
-     *
-     * @return string 
-     */
-    public function getBookPublisher()
-    {
-        return $this->bookPublisher;
-    }
-
-    /**
-     * Set bookPublishDate
-     *
-     * @param \DateTime $bookPublishDate
-     * @return Book
-     */
-    public function setBookPublishDate($bookPublishDate)
-    {
-        $this->bookPublishDate = $bookPublishDate;
-
-        return $this;
-    }
-
-    /**
-     * Get bookPublishDate
-     *
-     * @return \DateTime 
-     */
-    public function getBookPublishDate()
-    {
-        return $this->bookPublishDate;
-    }
-
-    /**
-     * Set bookBinding
-     *
-     * @param string $bookBinding
-     * @return Book
-     */
-    public function setBookBinding($bookBinding)
-    {
-        $this->bookBinding = $bookBinding;
-
-        return $this;
-    }
-
-    /**
-     * Get bookBinding
-     *
-     * @return string 
-     */
-    public function getBookBinding()
-    {
-        return $this->bookBinding;
-    }
-
-    /**
-     * Set bookPage
-     *
-     * @param string $bookPage
-     * @return Book
-     */
-    public function setBookPage($bookPage)
-    {
-        $this->bookPage = $bookPage;
-
-        return $this;
-    }
-
-    /**
-     * Get bookPage
-     *
-     * @return string 
-     */
-    public function getBookPage()
-    {
-        return $this->bookPage;
-    }
-
-
-
-    /**
-     * Set bookLanguage
-     *
-     * @param string $bookLanguage
-     * @return Book
-     */
-    public function setBookLanguage($bookLanguage)
-    {
-        $this->bookLanguage = $bookLanguage;
-
-        return $this;
-    }
-
-    /**
-     * Get bookLanguage
-     *
-     * @return string 
-     */
-    public function getBookLanguage()
-    {
-        return $this->bookLanguage;
-    }
-
-    /**
-     * Add messages
-     *
-     * @param \AppBundle\Entity\Message $messages
-     * @return Book
-     */
-    public function addMessage(\AppBundle\Entity\Message $messages)
-    {
-        $this->messages[] = $messages;
-
-        return $this;
-    }
-
-    /**
-     * Remove messages
-     *
-     * @param \AppBundle\Entity\Message $messages
-     */
-    public function removeMessage(\AppBundle\Entity\Message $messages)
-    {
-        $this->messages->removeElement($messages);
-    }
-
-    /**
-     * Get messages
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getMessages()
-    {
-        return $this->messages;
-    }
-
-    /**
-     * Set bookBuyer
-     *
-     * @param \AppBundle\Entity\User $bookBuyer
-     * @return Book
-     */
-    public function setBookBuyer(\AppBundle\Entity\User $bookBuyer = null)
-    {
-        $this->bookBuyer = $bookBuyer;
-
-        return $this;
-    }
-
-    /**
-     * Get bookBuyer
-     *
-     * @return \AppBundle\Entity\User 
-     */
-    public function getBookBuyer()
-    {
-        return $this->bookBuyer;
-    }
-
-    /**
-     * Set bookSeller
-     *
-     * @param \AppBundle\Entity\User $bookSeller
-     * @return Book
-     */
-    public function setBookSeller(\AppBundle\Entity\User $bookSeller = null)
-    {
-        $this->bookSeller = $bookSeller;
-
-        return $this;
-    }
-
-    /**
-     * Get bookSeller
-     *
-     * @return \AppBundle\Entity\User 
-     */
-    public function getBookSeller()
-    {
-        return $this->bookSeller;
-    }
-
-    /**
-     * Set bookPriceSell
-     *
-     * @param string $bookPriceSell
-     * @return Book
-     */
-    public function setBookPriceSell($bookPriceSell)
-    {
-        $this->bookPriceSell = $bookPriceSell;
-
-        return $this;
-    }
-
-    /**
-     * Get bookPriceSell
-     *
-     * @return string 
-     */
-    public function getBookPriceSell()
-    {
-        return $this->bookPriceSell;
+        return $this->book;
     }
 }

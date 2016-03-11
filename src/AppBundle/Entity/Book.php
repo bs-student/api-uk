@@ -54,7 +54,7 @@ class Book
     private $bookPublisher;
 
     /**
-     * @var string
+     * @var date
      *
      */
     private $bookPublishDate;
@@ -76,13 +76,92 @@ class Book
      * @var string
      *
      */
-    private $bookPriceAmazon;
+    private $bookPriceSell;
 
     /**
      * @var string
      *
      */
     private $bookLanguage;
+
+    /**
+     * @var text
+     *
+     */
+    private $bookDescription;
+
+    /**
+     * @var string
+     *
+     */
+    private $bookCondition;
+
+    /**
+     * @var string
+     *
+     */
+    private $bookIsHighlighted;
+
+    /**
+     * @var string
+     *
+     */
+    private $bookHasNotes;
+
+    /**
+     * @var string
+     *
+     */
+    private $bookComment;
+
+    /**
+     * @var string
+     *
+     */
+    private $bookContactMethod;
+
+    /**
+     * @var string
+     *
+     */
+    private $bookContactHomeNumber;
+
+    /**
+     * @var string
+     *
+     */
+    private $bookContactCellNumber;
+    /**
+     * @var string
+     *
+     */
+    private $bookContactEmail;
+    /**
+     * @var string
+     *
+     */
+    private $bookIsAvailablePublic;
+
+    /**
+     * @var boolean
+     *
+     */
+    private $bookPaymentMethodCaShOnExchange;
+    /**
+     * @var boolean
+     *
+     */
+    private $bookPaymentMethodCheque;
+    /**
+     * @var date
+     *
+     */
+    private $bookAvailableDate;
+
+
+
+
+    private $bookImages;
 
     private $bookBuyer;
 
@@ -97,7 +176,8 @@ class Book
      */
     public function __construct()
     {
-        $this->messages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->messages = new ArrayCollection();
+        $this->bookImages = new ArrayCollection();
     }
 
     /**
@@ -317,28 +397,7 @@ class Book
         return $this->bookPage;
     }
 
-    /**
-     * Set bookPriceAmazon
-     *
-     * @param string $bookPriceAmazon
-     * @return Book
-     */
-    public function setBookPriceAmazon($bookPriceAmazon)
-    {
-        $this->bookPriceAmazon = $bookPriceAmazon;
 
-        return $this;
-    }
-
-    /**
-     * Get bookPriceAmazon
-     *
-     * @return string 
-     */
-    public function getBookPriceAmazon()
-    {
-        return $this->bookPriceAmazon;
-    }
 
     /**
      * Set bookLanguage
@@ -440,5 +499,383 @@ class Book
     public function getBookSeller()
     {
         return $this->bookSeller;
+    }
+
+    /**
+     * Set bookPriceSell
+     *
+     * @param string $bookPriceSell
+     * @return Book
+     */
+    public function setBookPriceSell($bookPriceSell)
+    {
+        $this->bookPriceSell = $bookPriceSell;
+
+        return $this;
+    }
+
+    /**
+     * Get bookPriceSell
+     *
+     * @return string 
+     */
+    public function getBookPriceSell()
+    {
+        return $this->bookPriceSell;
+    }
+
+    /**
+     * Set bookDescription
+     *
+     * @param string $bookDescription
+     * @return Book
+     */
+    public function setBookDescription($bookDescription)
+    {
+        $this->bookDescription = $bookDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get bookDescription
+     *
+     * @return string 
+     */
+    public function getBookDescription()
+    {
+        return $this->bookDescription;
+    }
+
+    /**
+     * Set bookCondition
+     *
+     * @param string $bookCondition
+     * @return Book
+     */
+    public function setBookCondition($bookCondition)
+    {
+        $this->bookCondition = $bookCondition;
+
+        return $this;
+    }
+
+    /**
+     * Get bookCondition
+     *
+     * @return string 
+     */
+    public function getBookCondition()
+    {
+        return $this->bookCondition;
+    }
+
+    /**
+     * Set bookIsHighlighted
+     *
+     * @param string $bookIsHighlighted
+     * @return Book
+     */
+    public function setBookIsHighlighted($bookIsHighlighted)
+    {
+        $this->bookIsHighlighted = $bookIsHighlighted;
+
+        return $this;
+    }
+
+    /**
+     * Get bookIsHighlighted
+     *
+     * @return string 
+     */
+    public function getBookIsHighlighted()
+    {
+        return $this->bookIsHighlighted;
+    }
+
+    /**
+     * Set bookHasNotes
+     *
+     * @param string $bookHasNotes
+     * @return Book
+     */
+    public function setBookHasNotes($bookHasNotes)
+    {
+        $this->bookHasNotes = $bookHasNotes;
+
+        return $this;
+    }
+
+    /**
+     * Get bookHasNotes
+     *
+     * @return string 
+     */
+    public function getBookHasNotes()
+    {
+        return $this->bookHasNotes;
+    }
+
+    /**
+     * Set bookComment
+     *
+     * @param string $bookComment
+     * @return Book
+     */
+    public function setBookComment($bookComment)
+    {
+        $this->bookComment = $bookComment;
+
+        return $this;
+    }
+
+    /**
+     * Get bookComment
+     *
+     * @return string 
+     */
+    public function getBookComment()
+    {
+        return $this->bookComment;
+    }
+
+    /**
+     * Set bookContactMethod
+     *
+     * @param string $bookContactMethod
+     * @return Book
+     */
+    public function setBookContactMethod($bookContactMethod)
+    {
+        $this->bookContactMethod = $bookContactMethod;
+
+        return $this;
+    }
+
+    /**
+     * Get bookContactMethod
+     *
+     * @return string 
+     */
+    public function getBookContactMethod()
+    {
+        return $this->bookContactMethod;
+    }
+
+    /**
+     * Set bookContactHomeNumber
+     *
+     * @param string $bookContactHomeNumber
+     * @return Book
+     */
+    public function setBookContactHomeNumber($bookContactHomeNumber)
+    {
+        $this->bookContactHomeNumber = $bookContactHomeNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get bookContactHomeNumber
+     *
+     * @return string 
+     */
+    public function getBookContactHomeNumber()
+    {
+        return $this->bookContactHomeNumber;
+    }
+
+    /**
+     * Set bookContactCellNumber
+     *
+     * @param string $bookContactCellNumber
+     * @return Book
+     */
+    public function setBookContactCellNumber($bookContactCellNumber)
+    {
+        $this->bookContactCellNumber = $bookContactCellNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get bookContactCellNumber
+     *
+     * @return string 
+     */
+    public function getBookContactCellNumber()
+    {
+        return $this->bookContactCellNumber;
+    }
+
+    /**
+     * Set bookContactEmail
+     *
+     * @param string $bookContactEmail
+     * @return Book
+     */
+    public function setBookContactEmail($bookContactEmail)
+    {
+        $this->bookContactEmail = $bookContactEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get bookContactEmail
+     *
+     * @return string 
+     */
+    public function getBookContactEmail()
+    {
+        return $this->bookContactEmail;
+    }
+
+    /**
+     * Set bookIsAvailablePublic
+     *
+     * @param string $bookIsAvailablePublic
+     * @return Book
+     */
+    public function setBookIsAvailablePublic($bookIsAvailablePublic)
+    {
+        $this->bookIsAvailablePublic = $bookIsAvailablePublic;
+
+        return $this;
+    }
+
+    /**
+     * Get bookIsAvailablePublic
+     *
+     * @return string 
+     */
+    public function getBookIsAvailablePublic()
+    {
+        return $this->bookIsAvailablePublic;
+    }
+
+    /**
+     * Set bookPaymentMethodCaShOnExchange
+     *
+     * @param string $bookPaymentMethodCaShOnExchange
+     * @return Book
+     */
+    public function setBookPaymentMethodCaShOnExchange($bookPaymentMethodCaShOnExchange)
+    {
+        $this->bookPaymentMethodCaShOnExchange = $bookPaymentMethodCaShOnExchange;
+
+        return $this;
+    }
+
+    /**
+     * Get bookPaymentMethodCaShOnExchange
+     *
+     * @return string 
+     */
+    public function getBookPaymentMethodCaShOnExchange()
+    {
+        return $this->bookPaymentMethodCaShOnExchange;
+    }
+
+    /**
+     * Set bookPaymentMethodCheck
+     *
+     * @param string $bookPaymentMethodCheck
+     * @return Book
+     */
+    public function setBookPaymentMethodCheck($bookPaymentMethodCheck)
+    {
+        $this->bookPaymentMethodCheck = $bookPaymentMethodCheck;
+
+        return $this;
+    }
+
+    /**
+     * Get bookPaymentMethodCheck
+     *
+     * @return string 
+     */
+    public function getBookPaymentMethodCheck()
+    {
+        return $this->bookPaymentMethodCheck;
+    }
+
+    /**
+     * Add bookImages
+     *
+     * @param \AppBundle\Entity\BookImage $bookImages
+     * @return Book
+     */
+    public function addBookImage(\AppBundle\Entity\BookImage $bookImages)
+    {
+        $this->bookImages[] = $bookImages;
+
+        return $this;
+    }
+
+    /**
+     * Remove bookImages
+     *
+     * @param \AppBundle\Entity\BookImage $bookImages
+     */
+    public function removeBookImage(\AppBundle\Entity\BookImage $bookImages)
+    {
+        $this->bookImages->removeElement($bookImages);
+    }
+
+    /**
+     * Get bookImages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBookImages()
+    {
+        return $this->bookImages;
+    }
+
+    /**
+     * Set bookPaymentMethodCheque
+     *
+     * @param boolean $bookPaymentMethodCheque
+     * @return Book
+     */
+    public function setBookPaymentMethodCheque($bookPaymentMethodCheque)
+    {
+        $this->bookPaymentMethodCheque = $bookPaymentMethodCheque;
+
+        return $this;
+    }
+
+    /**
+     * Get bookPaymentMethodCheque
+     *
+     * @return boolean 
+     */
+    public function getBookPaymentMethodCheque()
+    {
+        return $this->bookPaymentMethodCheque;
+    }
+
+    /**
+     * Set bookAvailableDate
+     *
+     * @param \DateTime $bookAvailableDate
+     * @return Book
+     */
+    public function setBookAvailableDate($bookAvailableDate)
+    {
+        $this->bookAvailableDate = $bookAvailableDate;
+
+        return $this;
+    }
+
+    /**
+     * Get bookAvailableDate
+     *
+     * @return \DateTime 
+     */
+    public function getBookAvailableDate()
+    {
+        return $this->bookAvailableDate;
     }
 }

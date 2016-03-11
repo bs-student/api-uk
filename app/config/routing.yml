@@ -26,6 +26,11 @@ app_campus:
     resource: "@AppBundle/Resources/config/routing/campus.yml"
     prefix:   /campus
 
+app_book:
+    resource: "@AppBundle/Resources/config/routing/book.yml"
+    prefix:   /book
+
+
 
 
 fos_user_security:

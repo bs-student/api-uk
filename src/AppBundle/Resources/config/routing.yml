@@ -1,3 +1,7 @@
+app_book:
+    resource: "@AppBundle/Resources/config/routing/book.yml"
+    prefix:   /book
+
 app_campus:
     resource: "@AppBundle/Resources/config/routing/campus.yml"
     prefix:   /campus
