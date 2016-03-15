@@ -236,7 +236,7 @@ class UniversityManagementApiController extends Controller
                 $campusEntity = new Campus();
                 if(array_key_exists('campusName',$campus))$campusEntity->setCampusName($campus['campusName']);
                 if(array_key_exists('state',$campus))$campusEntity->setState($stateRepo->findOneById($campus['state']));
-
+                $campusEntity->setCampusStatus('Activated');     //TODO Its not working
                 $universityEntity->addCampus($campusEntity);
             }
 

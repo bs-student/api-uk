@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Book;
+use AppBundle\Entity\BookImage;
 use AppBundle\Entity\Campus;
 use AppBundle\Form\Type\UniversityType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Lsw\ApiCallerBundle\Call\HttpGetJson;
 use Lsw\ApiCallerBundle\Call\HttpGetHtml;
 use AppBundle\Form\Type\BookType;
+use Symfony\Component\HttpFoundation\FileBag;
 class BookManagementApiController extends Controller
 {
 
@@ -160,40 +162,179 @@ class BookManagementApiController extends Controller
 
 
 
+
+//        var_dump($imageOutput);
+//        die();
+
         $serializer = $this->container->get('jms_serializer');
         $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
+        $fileDirHost = $this->container->getParameter('kernel.root_dir');
+        $fileDir = '/../web/bookImages/';
 //        $bookRepo = $em->getRepository("AppBundle:Book");
 
         $content = $request->get('book');
         $bookData = json_decode($content, true);
+//        $bookData['bookImages'] = new ArrayCollection();
 
 
-        if(array_key_exists('bookPublishDate',$bookData)){
-            $publishDate = new \DateTime($bookData['bookPublishDate']);
-            $bookData['bookPublishDate'] =$publishDate;
-        }
-        if(array_key_exists('bookAvailableDate',$bookData)){
-            $availableDate = new \DateTime($bookData['bookAvailableDate']);
-            $bookData['bookAvailableDate'] =$availableDate;
-        }
+        $titleImageDone=false;
 
-        $bookData['bookSeller']=$userId;
-
+        $files = $request->files;
+        $fileUploadError= false;
         $book = new Book();
-        $bookForm = $this->createForm(new BookType(), $book);
 
-        $bookForm->submit($bookData);
-        if($bookForm->isValid()){
-            $em->persist($book);
-            $em->flush();
-            return $this->createJsonResponse('success',array('successTitle'=>"Book Successfully added to sell List"));
-        }else{
-            $error= $serializer->serialize($bookForm,'json');
-            return new Response($error,200);
+        if(array_key_exists('bookLargeImageUrl',$bookData)){
+            $imageOutput = $this->get('api_caller')->call(new HttpGetHtml(json_decode($request->get('book'),true)['bookLargeImageUrl'], null, null));
+
+            $fileSaveName = gmdate("Y-d-m_h_i_s_").rand(0,99999999).".png";
+            $fp = fopen($fileDirHost.$fileDir.$fileSaveName,'x');
+            fwrite($fp, $imageOutput);
+            fclose($fp);
+
+            $bookImage = new BookImage();
+
+            $bookImage->setImageName("Amazon Book Image");
+            $bookImage->setImageUrl($fileDir.$fileSaveName);
+            $bookImage->setTitleImage(true);
+            $titleImageDone = true;
+
+//            $bookData['bookImages'][]=$bookImage;
+            $book->addBookImage($bookImage);
+
+
+
         }
+
+        $i=0;
+        foreach($files as $file){
+            if((($file->getSize())/1204)<=200){
+
+                $fileName = substr($file->getClientOriginalName(),0,strpos($file->getClientOriginalName(), pathinfo($file->getClientOriginalName())['extension']));
+                $fileSaveName = gmdate("Y-d-m_h_i_s_").rand(0,99999999).".".pathinfo($file->getClientOriginalName())['extension'];
+
+
+                $file->move($fileDirHost.$fileDir, $fileSaveName);
+                $bookImage = new BookImage();
+
+                $bookImage->setImageName($fileName);
+                $bookImage->setImageUrl($fileDir.$fileSaveName);
+
+                if(array_key_exists('bookTitleImage',$bookData) && !$titleImageDone){
+                    if($bookData['bookTitleImage']==null){
+                        $bookImage->setTitleImage(false);
+                    }elseif($i==$bookData['bookTitleImage']){
+                        $bookImage->setTitleImage(true);
+                    }
+                }else{
+                    $bookImage->setTitleImage(false);
+                }
+
+//                $bookData['bookImages'][]=$bookImage;
+                $book->addBookImage($bookImage);
+
+            }else{
+                $fileUploadError = true;
+            }
+            $i++;
+        }
+
+
+
+
+
+        if(!$fileUploadError){
+
+
+            if(array_key_exists('bookPublishDate',$bookData)){
+                $publishDate = new \DateTime($bookData['bookPublishDate']);
+                $bookData['bookPublishDate'] =$publishDate;
+            }
+            if(array_key_exists('bookAvailableDate',$bookData)){
+                $availableDate = new \DateTime($bookData['bookAvailableDate']);
+                $bookData['bookAvailableDate'] =$availableDate;
+            }
+
+            $bookData['bookSeller']=$userId;
+
+
+
+            $bookForm = $this->createForm(new BookType(), $book);
+
+
+            var_dump($bookForm->getData()->getBookImages());
+//            var_dump($bookData);
+            $bookForm->submit($bookData);//todo
+            var_dump($bookForm->getData()->getBookImages());
+//            var_dump($bookData);
+
+            if($bookForm->isValid()){
+                $em->persist($book);
+                $em->flush();
+                return $this->createJsonResponse('success',array('successTitle'=>"Book Successfully added to sell List"));
+            }else{
+//                var_dump($bookForm->getErrors(true));
+                $error= $serializer->serialize($bookForm,'json');
+                return new Response($error,200);
+            }
+        }else{
+            return $this->createJsonResponse('error',array('errorTitle'=>"Book was not Successfully Uploaded",'errorDescription'=>"Please select images less than or equal 200KB."));
+        }
+
+
 
     }
+
+//    public function addNewSellBookAction(Request $request)
+//    {
+//
+//        $serializer = $this->container->get('jms_serializer');
+//        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $content = $request->get('book');
+//        $bookData = json_decode($content, true);
+//
+//        $book = new Book();
+//
+//
+//        $bookImage1 = new BookImage();
+//        $bookImage1->setImageName("Amazon Book Image");
+//        $bookImage1->setImageUrl("http://url1.com");
+//
+//        $book->addBookImage($bookImage1);
+//
+//        $bookImage2 = new BookImage();
+//        $bookImage2->setImageName("Amazon Book Image");
+//        $bookImage2->setImageUrl("http://url1.com");
+//
+//        $book->addBookImage($bookImage2);
+//
+//
+//
+//        $bookData['bookSeller']=$userId;
+//
+//
+//
+//        $bookForm = $this->createForm(new BookType(), $book);
+//
+//
+//        var_dump($bookForm->getData()->getBookImages());
+//        $bookForm->submit($bookData);
+//        var_dump($bookForm->getData()->getBookImages());
+//
+//        if($bookForm->isValid()){
+//            $em->persist($book);
+//            $em->flush();
+//            return $this->createJsonResponse('success',array('successTitle'=>"Book Successfully added to sell List"));
+//        }else{
+//            $error= $serializer->serialize($bookForm,'json');
+//            return new Response($error,200);
+//        }
+//
+//
+//
+//    }
 
     function getBooksByKeywordAmazon($keyword, $page)
     {
@@ -402,6 +543,13 @@ class BookManagementApiController extends Controller
         } else {
             $book_image_medium_url = './images/misc/no_picture_100x125.jpg';
         }
+
+        if (!empty($item->LargeImage->URL)) {
+            $book_image_large_url = (string)$item->LargeImage->URL;
+        } else {
+            $book_image_large_url  = './images/misc/no_picture_100x125.jpg';
+        }
+
         return array(
             'bookAsin' => (string)$item->ASIN,
             'bookTitle' => (string)$item->ItemAttributes->Title,
@@ -414,6 +562,7 @@ class BookManagementApiController extends Controller
             'bookPublisherDate' => (string)$item->ItemAttributes->PublicationDate,
             'bookBinding' => (string)$item->ItemAttributes->Binding,
             'bookMediumImageUrl' => $book_image_medium_url,
+            'bookLargeImageUrl' => $book_image_large_url,
             'bookDescription' => (string)$item->EditorialReviews->EditorialReview->Content,
             'bookPages' => (string)$item->ItemAttributes->NumberOfPages,
             'bookOfferId'=>$offerId,

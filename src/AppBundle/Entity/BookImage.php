@@ -140,4 +140,8 @@ class BookImage
     {
         return $this->book;
     }
+    public function __toString()
+    {
+        return strval($this->id);
+    }
 }

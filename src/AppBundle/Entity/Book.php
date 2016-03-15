@@ -9,7 +9,14 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Book
 {
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->messages = new ArrayCollection();
+        $this->bookImages = new ArrayCollection();
+    }
 
     /**
      * @var integer
@@ -171,14 +178,7 @@ class Book
 
 
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->messages = new ArrayCollection();
-        $this->bookImages = new ArrayCollection();
-    }
+
 
     /**
      * Get id
@@ -808,8 +808,8 @@ class Book
      */
     public function addBookImage(\AppBundle\Entity\BookImage $bookImages)
     {
-        $this->bookImages[] = $bookImages;
-
+        $this->bookImages->add($bookImages);
+        $bookImages->setBook($this);
         return $this;
     }
 
@@ -877,5 +877,13 @@ class Book
     public function getBookAvailableDate()
     {
         return $this->bookAvailableDate;
+
     }
+
+    public function __toString()
+    {
+        return strval($this->id);
+    }
+
+
 }

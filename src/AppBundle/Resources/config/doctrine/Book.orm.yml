@@ -10,6 +10,7 @@ AppBundle\Entity\Book:
         bookImages:
           targetEntity: BookImage
           mappedBy: book
+          cascade: [persist,remove]
 
     manyToOne:
         bookBuyer:

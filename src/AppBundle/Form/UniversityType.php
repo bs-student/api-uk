@@ -18,6 +18,7 @@ class UniversityType extends AbstractType
             ->add('universityName')
             ->add('universityUrl')
             ->add('referral')
+            ->add('universityStatus')
             ->add('campuses')
         ;
     }

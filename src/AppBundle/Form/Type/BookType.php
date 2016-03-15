@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Date;
+
 class BookType extends AbstractType
 {
     /**
@@ -99,7 +100,14 @@ class BookType extends AbstractType
                 'constraints' => array(
                     new NotBlank(),
 
-                )));
+                )))
+        ->add('bookImages', 'collection', array(
+                'type'         => new BookImageType(),
+                'allow_add'    => true,
+//                'allow_delete'    => true,
+                'by_reference' =>false
+
+            ));
     }
 
 
@@ -121,6 +129,7 @@ class BookType extends AbstractType
 //            'error_mapping' => array(
 //                'usernameAlreadyExist' => 'username',
 //            ),
+//            'cascade_validation'=>true
 
         ));
     }
