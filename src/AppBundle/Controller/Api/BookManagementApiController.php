@@ -230,7 +230,7 @@ class BookManagementApiController extends Controller
                     $bookImage->setTitleImage(false);
                 }
 
-//                $bookData['bookImages'][]=$bookImage;
+//                $bookData['bookImages']=$bookImage;
                 $book->addBookImage($bookImage);
 
             }else{
@@ -258,14 +258,16 @@ class BookManagementApiController extends Controller
             $bookData['bookSeller']=$userId;
 
 
-
+            $book->setBookContactHomeNumber('132465');
             $bookForm = $this->createForm(new BookType(), $book);
+//            $bookForm->get('bookContactHomeNumber')->setData('123465');
+//            $bookForm->get('bookContactEmail')->setData('123465');
 
-
-            var_dump($bookForm->getData()->getBookImages());
+            var_dump($bookForm->getData());
 //            var_dump($bookData);
-            $bookForm->submit($bookData);//todo
-            var_dump($bookForm->getData()->getBookImages());
+            $bookForm->submit(array('bookTitle'=>"TItle"));//todo
+            var_dump($book);
+//            var_dump($bookForm->getNormData()->getBookImages());
 //            var_dump($bookData);
 
             if($bookForm->isValid()){
