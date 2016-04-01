@@ -21,13 +21,23 @@ use Symfony\Component\Security\Core\SecurityContext;
 class SecurityController extends BaseController {
 
     /**
-     * @Route("/login", name="fos_user_login")
-     * @Route("/login/", name="fos_user_login")
+     *  Show Homepage
+     */
+    public function indexAction()
+    {
+        return $this->_createJsonResponse('success',array(
+            "successTitle" => "Homepage",
+            "successDescription"=> "You have successfully accessed the Web Api"
+        ),200);
+    }
+
+    /**
+     *  Show Login Page & Show Errors too
+     *
      */
     public function loginAction()
     {
         $request = $this->container->get('request');
-
 
         /* @var $request \Symfony\Component\HttpFoundation\Request */
         $session = $request->getSession();
@@ -47,39 +57,73 @@ class SecurityController extends BaseController {
             // TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
             $error = $error->getMessage();
         }
-        // last username entered by the user
-        $lastUsername = (null === $session) ? '' : $session->get(SecurityContext::LAST_USERNAME);
 
-        $csrfToken = $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate');
-
-        return $this->renderLogin(array(
-            'last_username' => $lastUsername,
-            'error'         => $error,
-            'csrf_token' => $csrfToken,
-        ));
+        return $this->_createJsonResponse('error',array("errorTitle" => "Login Unsuccessful", "errorDescription" => $error),400);
     }
 
     /**
-     * Renders the login template with the given parameters. Overwrite this function in
-     * an extended controller to provide additional data for the login template.
+     *  Show if User log in successfully or not
      *
-     * @param array $data
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function renderLogin(array $data)
+    public function userDashboardAction()
     {
-        $json = $this->container->get('jms_serializer')->serialize(['page_data' => $data],'json');
-        $response = new Response($json, 200);
-        return $response;
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+        if($user->getRegistrationStatus()=="incomplete"){
+            if(filter_var($user->getEmail(), FILTER_VALIDATE_EMAIL)) {
+                //Mail Exists
+                $email="false";
+            }else{
+                //Mail NOT Exists
+                $email="true";
+            }
+            $userId=null;
+            if($user->getGoogleId()!=null){
+                $userId =$user->getGoogleId();
+            }
+            if($user->getFacebookId()!=null){
+                $userId =$user->getFacebookId();
+            }
+
+            $user_data = array(
+                'username'=>$user->getUsername(),
+                'email_needed'=>$email,
+                'userId'=>$userId
+
+            );
+
+            return $this->_createJsonResponse('success',array(
+                'successTitle' => "Login Successful",
+                'successDescription'=>"Please Complete your registration process.",
+                'successData'=>$user_data
+            ),200);
 
 
-        /*$template = sprintf('security/login.html.%s', $this->container->getParameter('fos_user.template.engine'));
 
-        return $this->container->get('templating')->renderResponse($template, $data);*/
+            /*return $this->redirect('http://localhost:8080/SymfonyClient/app/#/registration/complete?email='
+                .$email."&username=".$user->getUsername()."&user=".$user->getGoogleId());*/
 
+        }elseif($user->getRegistrationStatus()=="complete"){
+
+            return $this->_createJsonResponse('success',array(
+                'successTitle' => "Login Successful"
+            ),200);
+
+        }else{
+            return $this->_createJsonResponse('error',array(
+                'errorTitle' => "Login Unsuccessful",
+                'errorDescription' => "Please try to Login again."
+            ),400);
+        }
 
     }
 
+    public function _createJsonResponse($key, $data, $code)
+    {
+        $serializer = $this->container->get('jms_serializer');
+        $json = $serializer->serialize([$key => $data], 'json');
+        $response = new Response($json, $code);
+        return $response;
+    }
 
 } 

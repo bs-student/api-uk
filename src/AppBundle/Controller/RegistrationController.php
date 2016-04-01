@@ -27,57 +27,47 @@ class RegistrationController extends BaseController
 {
 
     /**
-     * @Route("/check_if_username_exist", name="check_if_username_exist")
-     *
-     * @Method("POST")
+     * Check  if Username is Exist in the Symtem
      */
     public function checkIfUsernameExistAction(Request $request)
     {
-        $serializer = $this->container->get('jms_serializer');
+
         $content = $request->getContent();
         $data = json_decode($content, true);
         $searchQuery = $data["query"];
 
         $em = $this->container->get('doctrine')->getManager();
         $usernameExist = $em->getRepository('AppBundle:User')->checkIfNewUsernameExist($searchQuery);
-        $json = $serializer->serialize(['usernameExist'=>$usernameExist], 'json');
-        $response = new Response($json, 200);
-        return $response;
+
+        return $this->_createJsonResponse('success',array('usernameExist' => $usernameExist),200);
+
 
     }
 
     /**
-     * @Route("/check_if_email_exist", name="check_if_email_exist")
-     *
-     * @Method("POST")
+     * Check  if Email is Exist in the Symtem
      */
     public function checkIfEmailExistAction(Request $request)
     {
-        $serializer = $this->container->get('jms_serializer');
+
         $content = $request->getContent();
         $data = json_decode($content, true);
         $searchQuery = $data["query"];
 
         $em = $this->container->get('doctrine')->getManager();
         $emailExist = $em->getRepository('AppBundle:User')->checkIfNewEmailExist($searchQuery);
-        $json = $serializer->serialize(['emailExist'=>$emailExist], 'json');
-        $response = new Response($json, 200);
-        return $response;
+
+        return $this->_createJsonResponse('success',array('emailExist' => $emailExist),200);
+
 
     }
 
     /**
-     * @Route("/register", name="fos_user_registration_register")
-     *
-     *
+     * Registers a Normal User
      */
     public function registerAction()
     {
-        /*$requestJson = $this->request->getContent();
-        $requestData = json_decode($requestJson, true);
-        var_dump($requestData);
-        die();*/
-        $serializer = $this->container->get('jms_serializer');
+
         $form = $this->container->get('fos_user.registration.form');
 
         $form->remove('googleId');
@@ -108,9 +98,9 @@ class RegistrationController extends BaseController
                 $route = 'fos_user_registration_confirmed';
             }
 
-            $message=array(
-                'messageTitle'=>"Registration Successful",
-                'messageBody'=>"A verification Email has been sent to your mail. Please check verify your email to confirm registration."
+            $message = array(
+                'successTitle' => "Registration Successful",
+                'successDescription' => "A verification Email has been sent to your mail. Please check verify your email to confirm registration."
             );
 
             $this->setFlash('fos_user_success', 'registration.flash.user_created');
@@ -121,30 +111,27 @@ class RegistrationController extends BaseController
                 $this->authenticateUser($user, $response);
             }
 
-            $json = $serializer->serialize(['success'=>$message], 'json');
-            $jsonResponse = new Response($json, 200);
-            return $jsonResponse;
+            return $this->_createJsonResponse('success',$message,201);
+
 
         }
+        return $this->_createJsonResponse('error',array(
+            'errorTitle'=>"User Registration Unsuccessful",
+            'errorDescription'=>"Sorry we were unable to register you. Reload the page and try again.",
+            'errorData'=>$form
+        ),400);
 
-        $json = $serializer->serialize($form, 'json');
-        $response = new Response($json, 200);
-        return $response;
 
-//        var_dump($form->createView());
 
-        /*return $this->container->get('templating')->renderResponse('registration/register.html.twig', array(
-            'form' => $form->createView(),
-        ));*/
+
     }
 
     /**
-     * @Route("/social_register", name="fos_user_social_registration")
-     * @Method("POST")
+     *  Register a Social Media User
      */
     public function socialRegisterAction(Request $request)
     {
-        $serializer = $this->container->get('jms_serializer');
+
         $em = $this->container->get('doctrine')->getManager();
         $userRepo = $em->getRepository('AppBundle:User');
 
@@ -218,18 +205,22 @@ class RegistrationController extends BaseController
 //                    if ($user->getRegistrationStatus() == "incomplete") {
 //                        //Check if Email is valid or just a serviceId
 
-                        $userData = array(
-                            'username' => $user->getUsername(),
-                            'email' => $user->getEmail(),
-                            'userId'=>$serviceId,
-                            'registrationStatus'=>$user->getRegistrationStatus(),
-                            'fullName'=>$user->getFullName()
-                        );
+                    $userData = array(
+                        'username' => $user->getUsername(),
+                        'email' => $user->getEmail(),
+                        'userId' => $serviceId,
+                        'registrationStatus' => $user->getRegistrationStatus(),
+                        'fullName' => $user->getFullName()
+                    );
 
-                        return $this->createJsonResponse('userData',$userData);
+                    return $this->_createJsonResponse('success',array(
+                        'successTitle'=>"User Successfully Updated",
+                        'successDescription'=>"We had you all along and now your login data is updated.",
+                        'successData'=>$userData
+                    ),200);
 
 //                    } else {
-//                        return $this->createJsonResponse('found',$serviceId);
+//                        return $this->_createJsonResponse('found',$serviceId);
 //
 //                    }
 
@@ -238,8 +229,8 @@ class RegistrationController extends BaseController
                     $user = new User();
                     //If Email is not provided then set serviceId as Email
                     if ($email == null) {
-                        $data['facebookEmail']=$serviceId;
-                        $data['email']=$serviceId;
+                        $data['facebookEmail'] = $serviceId;
+                        $data['email'] = $serviceId;
 
                     }
                     //Set Data
@@ -275,14 +266,25 @@ class RegistrationController extends BaseController
                         $userData = array(
                             'username' => $user->getUsername(),
                             'email' => $user->getEmail(),
-                            'userId'=>$serviceId,
-                            'registrationStatus'=>$user->getRegistrationStatus(),
-                            'fullName'=>$user->getFullName()
+                            'userId' => $serviceId,
+                            'registrationStatus' => $user->getRegistrationStatus(),
+                            'fullName' => $user->getFullName()
                         );
 
-                        return $this->createJsonResponse('userData',$userData);
+                        return $this->_createJsonResponse('success',array(
+                            'successTitle'=>"User Successfully Registered",
+                            'successData'=>$userData
+                        ),200);
+
+
                     } else {
-                        return $this->createJsonResponse('error',$registrationForm);
+
+                        return $this->_createJsonResponse('error',array(
+                            'errorTitle'=>"User Registration Unsuccessful",
+                            'errorDescription'=>"Form was not submitted properly. Fill Up the form and submit again.",
+                            'errorData'=>$registrationForm
+                        ),400);
+
                     }
 
 
@@ -293,51 +295,52 @@ class RegistrationController extends BaseController
 //                //Check if found user is incomplete Then send to second page of Registration
 //                if ($user->getRegistrationStatus() == "incomplete") {
 //                    //Check if Email is valid or just a serviceId
-                    $userData = array(
-                        'username' => $user->getUsername(),
-                        'email' => $user->getEmail(),
-                        'userId'=>$serviceId,
-                        'registrationStatus'=>$user->getRegistrationStatus(),
-                        'fullName'=>$user->getFullName()
-                    );
-                    return $this->createJsonResponse('userData',$userData);
+                $userData = array(
+                    'username' => $user->getUsername(),
+                    'email' => $user->getEmail(),
+                    'userId' => $serviceId,
+                    'registrationStatus' => $user->getRegistrationStatus(),
+                    'fullName' => $user->getFullName()
+                );
+
+                return $this->_createJsonResponse('success',array(
+                    'successTitle'=>"User was found in the System",
+                    'successData'=>$userData
+                ),200);
+
+//                return $this->_createJsonResponse('userData', $userData,200);
 
 //                } else {
-//                    return $this->createJsonResponse('found',$serviceId);
+//                    return $this->_createJsonResponse('found',$serviceId);
 //                }
 
             }
 
         } else {
-            return $this->createJsonResponse('error',"Form data was not submitted properly");
+            return $this->_createJsonResponse('error',array(
+                'errorTitle'=>"User Registration Unsuccessful",
+                'errorDescription'=>"Form data was not submitted properly. Fill Up the form and submit again."
+            ),400);
+
         }
 
 
     }
 
-   /* public function checkIfEmailIsValid($email){
-        if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return true;
-        }else{
-            return false;
-        }
-    }*/
+    /* public function checkIfEmailIsValid($email){
+         if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
+             return true;
+         }else{
+             return false;
+         }
+     }*/
 
-    public function createJsonResponse($key,$data){
-        $serializer = $this->container->get('jms_serializer');
-        $json = $serializer->serialize([$key => $data], 'json');
-        $response = new Response($json, 200);
-        return $response;
-    }
+
 
     /**
      * Tell the user to check his email provider
-     * @Route("/check-email", name="fos_user_registration_check_email")
-     * @Route("/check-email/", name="fos_user_registration_check_email")
      *
      */
-
-
     public function checkEmailAction()
     {
         $email = $this->container->get('session')->get('fos_user_send_confirmation_email/email');
@@ -355,9 +358,6 @@ class RegistrationController extends BaseController
 
     /**
      * Receive the confirmation token from user email provider, login the user
-     * @Route("/confirm/{token}", name="fos_user_registration_confirm")
-     * @Route("/confirm/{token}/", name="fos_user_registration_confirm")
-     * @Method({"GET"})
      */
     public function confirmAction($token)
     {
@@ -376,18 +376,16 @@ class RegistrationController extends BaseController
         $response = new RedirectResponse($this->container->get('router')->generate('fos_user_registration_confirmed'));
         $this->authenticateUser($user, $response);
 
-        $data=array(
-            'successTitle'=>"Registration Confirmed",
-            "successBody"=>"The Account has been Confirmed"
+        $data = array(
+            'successTitle' => "Registration Confirmed",
+            "successDescription" => "The Account has been Confirmed"
         );
-        return $this->createJsonResponse('success',$data);
+        return $this->_createJsonResponse('success', $data,200);
 
     }
 
     /**
      * Tell the user his account is now confirmed
-     * @Route("/confirmed", name="fos_user_registration_confirmed")
-     * @Route("/confirmed/", name="fos_user_registration_confirmed")
      */
     public function confirmedAction()
     {
@@ -395,43 +393,44 @@ class RegistrationController extends BaseController
         $serializer = $this->container->get('jms_serializer');
         if (!is_object($user) || !$user instanceof UserInterface) {
 
-            $data=array(
-                'errorTitle'=>"Access Denied",
-                "errorBody"=>"This user does not have access to this section"
+            $data = array(
+                'errorTitle' => "Access Denied",
+                "errorDescription" => "This user does not have access to this section"
             );
-            return $this->createJsonResponse('error',$data);
+            return $this->_createJsonResponse('error', $data,400);
 
-
-//            throw new AccessDeniedException('This user does not have access to this section.');
-        }else{
-            $data=array(
-                'successTitle'=>"Registration Confirmed",
-                "successBody"=>"The Account has been Confirmed"
+        } else {
+            $data = array(
+                'successTitle' => "Registration Confirmed",
+                "successDescription" => "The Account has been Confirmed"
             );
-            return $this->createJsonResponse('success',$data);
+            return $this->_createJsonResponse('success', $data, 200);
 
         }
 
-//        return $this->container->get('templating')->renderResponse('FOSUserBundle:Registration:confirmed.html.' . $this->getEngine(), array(
-//            'user' => $user,
-//        ));
     }
 
 
     /**
      * Tell the user his account is now confirmed
-     * @Route("/confirmation_token_expired", name="confirmation_token_expired")
-     * @Route("/confirmation_token_expired/", name="confirmation_token_expired")
      */
     public function confirmationTokenExpiredAction()
     {
-        $data=array(
-            'errorTitle'=>"Confirmation Failed",
-            "errorBody"=>"Sorry, The Confirmation token has been expired"
+        $data = array(
+            'errorTitle' => "Confirmation Failed",
+            "errorDescription" => "Sorry, The Confirmation token has been expired"
         );
-        return $this->createJsonResponse('error',$data);
+        return $this->_createJsonResponse('error', $data, 400);
+
+    }
 
 
-//        return $this->container->get('templating')->renderResponse('registration/expired_confirmation_token.html.' . $this->getEngine(), array());
+
+    public function _createJsonResponse($key, $data, $code)
+    {
+        $serializer = $this->container->get('jms_serializer');
+        $json = $serializer->serialize([$key => $data], 'json');
+        $response = new Response($json, $code);
+        return $response;
     }
 } 

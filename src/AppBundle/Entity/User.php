@@ -15,9 +15,9 @@ class User extends BaseUser
 
     public function __construct()
     {
-        $this->$buyBooks = new ArrayCollection();
-        $this->$sellBooks = new ArrayCollection();
-        $this->$messages = new ArrayCollection();
+        $this->buyBooks = new ArrayCollection();
+        $this->sellBooks = new ArrayCollection();
+        $this->messages = new ArrayCollection();
         parent::__construct();
     }
 

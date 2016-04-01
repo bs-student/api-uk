@@ -25,12 +25,9 @@ class BookManagementApiController extends Controller
 
 
     /**
-     * @Route("/api/book/search_by_keyword_amazon", name="books_search_by_keyword_amazon")
-     *
-     * @Method({"POST"})
-     *
+     * Search By Keyword Amazon Api
      */
-    public function searchByKeywordAmazonApi(Request $request)
+    public function searchByKeywordAmazonApiAction(Request $request)
     {
 
         $content = $request->getContent();
@@ -46,18 +43,15 @@ class BookManagementApiController extends Controller
         } else {
             $page = null;
         }
-        return $this->getBooksByKeywordAmazon($keyword, $page);
+        return $this->_getBooksByKeywordAmazon($keyword, $page);
 
     }
 
 
     /**
-     * @Route("/api/book/search_by_asin_amazon", name="books_search_by_asin_amazon")
-     *
-     * @Method({"POST"})
-     *
+     * Search By ASIN Amazon API
      */
-    public function searchByAsinAmazonApi(Request $request)
+    public function searchByAsinAmazonApiAction(Request $request)
     {
 
         $content = $request->getContent();
@@ -69,17 +63,14 @@ class BookManagementApiController extends Controller
             $asin = "";
         }
 
-        return $this->getBooksByAsinAmazon($asin);
+        return $this->_getBooksByAsinAmazon($asin);
 
     }
 
     /**
-     * @Route("/api/book/search_by_isbn_amazon", name="books_search_by_isbn_amazon")
-     *
-     * @Method({"POST"})
-     *
+     * Search Book By ISBN Amazon API
      */
-    public function searchByIsbnAmazonApi(Request $request)
+    public function searchByIsbnAmazonApiAction(Request $request)
     {
 
         $content = $request->getContent();
@@ -91,18 +82,15 @@ class BookManagementApiController extends Controller
             $isbn = "";
         }
 
-        return $this->getBooksByIsbnAmazon($isbn);
+        return $this->_getBooksByIsbnAmazon($isbn);
 
     }
 
 
     /**
-     * @Route("/api/book/search_by_isbn_campus_books", name="books_search_by_isbn_campus_books")
-     *
-     * @Method({"POST"})
-     *
+     * Search By ISBN Campus Books APi
      */
-    public function searchByIsbnCampusBooksApi(Request $request)
+    public function searchByIsbnCampusBooksApiAction(Request $request)
     {
 
         $content = $request->getContent();
@@ -114,17 +102,14 @@ class BookManagementApiController extends Controller
             $isbn = "";
         }
 
-        return $this->getBooksByIsbnCampusBooks($isbn);
+        return $this->_getBooksByIsbnCampusBooks($isbn);
 
     }
 
     /**
-     * @Route("/api/book/get_amazon_cart_create_url", name="get_amazon_cart_create_url")
-     *
-     * @Method({"POST"})
-     *
+     * Get Amazon Cart Create Url
      */
-    public function getAmazonCartCreateUrl(Request $request)
+    public function getAmazonCartCreateUrlAction(Request $request)
     {
 
         $content = $request->getContent();
@@ -136,7 +121,7 @@ class BookManagementApiController extends Controller
             $bookOfferId= "";
         }
 
-        $addToCartAmazonUrl = $this->addToCartAmazonUrl($bookOfferId);
+        $addToCartAmazonUrl = $this->_addToCartAmazonUrl($bookOfferId);
         $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($addToCartAmazonUrl, null, null));
 
 
@@ -147,35 +132,25 @@ class BookManagementApiController extends Controller
         $simpleXml = simplexml_load_string($fileContents);
 
 
-
-        return $this->createJsonResponse('cartUrl',(string)$simpleXml->Cart->PurchaseURL);
+        return $this->_createJsonResponse('success',array('successData'=>array('cartUrl'=>(string)$simpleXml->Cart->PurchaseURL)),200);
 
     }
     /**
-     * @Route("/api/book/add_new_sell_book", name="add_new_sell_book")
-     *
-     * @Method({"POST"})
-     *
+     * Sell New Book
      */
     public function addNewSellBookAction(Request $request)
     {
-
-
-
-
-//        var_dump($imageOutput);
-//        die();
 
         $serializer = $this->container->get('jms_serializer');
         $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
         $fileDirHost = $this->container->getParameter('kernel.root_dir');
         $fileDir = '/../web/bookImages/';
-//        $bookRepo = $em->getRepository("AppBundle:Book");
+
 
         $content = $request->get('book');
         $bookData = json_decode($content, true);
-//        $bookData['bookImages'] = new ArrayCollection();
+        $bookData['bookImages'] = array();
 
 
         $titleImageDone=false;
@@ -184,6 +159,7 @@ class BookManagementApiController extends Controller
         $fileUploadError= false;
         $book = new Book();
 
+        //Add Title Image from Amazon
         if(array_key_exists('bookLargeImageUrl',$bookData)){
             $imageOutput = $this->get('api_caller')->call(new HttpGetHtml(json_decode($request->get('book'),true)['bookLargeImageUrl'], null, null));
 
@@ -192,18 +168,12 @@ class BookManagementApiController extends Controller
             fwrite($fp, $imageOutput);
             fclose($fp);
 
-            $bookImage = new BookImage();
-
-            $bookImage->setImageName("Amazon Book Image");
-            $bookImage->setImageUrl($fileDir.$fileSaveName);
-            $bookImage->setTitleImage(true);
+            array_push($bookData['bookImages'],array(
+                'imageName'=>"Amazon Book Image",
+                'imageUrl'=>$fileDir.$fileSaveName,
+                'titleImage'=>true
+            ));
             $titleImageDone = true;
-
-//            $bookData['bookImages'][]=$bookImage;
-            $book->addBookImage($bookImage);
-
-
-
         }
 
         $i=0;
@@ -215,23 +185,29 @@ class BookManagementApiController extends Controller
 
 
                 $file->move($fileDirHost.$fileDir, $fileSaveName);
-                $bookImage = new BookImage();
 
-                $bookImage->setImageName($fileName);
-                $bookImage->setImageUrl($fileDir.$fileSaveName);
+
+                $bookImageArray=array();
+                $bookImageArray['imageName'] = $fileName;
+                $bookImageArray['imageUrl'] = $fileDir.$fileSaveName;
+
 
                 if(array_key_exists('bookTitleImage',$bookData) && !$titleImageDone){
+
                     if($bookData['bookTitleImage']==null){
-                        $bookImage->setTitleImage(false);
+                        $bookImageArray['titleImage'] = false;
+
                     }elseif($i==$bookData['bookTitleImage']){
-                        $bookImage->setTitleImage(true);
+                        $bookImageArray['titleImage'] = true;
+
+                    }else{
+                        $bookImageArray['titleImage'] = false;
                     }
                 }else{
-                    $bookImage->setTitleImage(false);
+                    $bookImageArray['titleImage'] = false;
                 }
 
-//                $bookData['bookImages']=$bookImage;
-                $book->addBookImage($bookImage);
+                array_push($bookData['bookImages'],$bookImageArray);
 
             }else{
                 $fileUploadError = true;
@@ -258,132 +234,71 @@ class BookManagementApiController extends Controller
             $bookData['bookSeller']=$userId;
 
 
-            $book->setBookContactHomeNumber('132465');
             $bookForm = $this->createForm(new BookType(), $book);
-//            $bookForm->get('bookContactHomeNumber')->setData('123465');
-//            $bookForm->get('bookContactEmail')->setData('123465');
 
-            var_dump($bookForm->getData());
-//            var_dump($bookData);
-            $bookForm->submit(array('bookTitle'=>"TItle"));//todo
-            var_dump($book);
-//            var_dump($bookForm->getNormData()->getBookImages());
-//            var_dump($bookData);
+
+            $bookForm->submit($bookData);
 
             if($bookForm->isValid()){
                 $em->persist($book);
                 $em->flush();
-                return $this->createJsonResponse('success',array('successTitle'=>"Book Successfully added to sell List"));
+                return $this->_createJsonResponse('success',array('successTitle'=>"Book Successfully added to sell List"),200);
             }else{
-//                var_dump($bookForm->getErrors(true));
-                $error= $serializer->serialize($bookForm,'json');
-                return new Response($error,200);
+                return $this->_createJsonResponse('error',array('errorTitle'=>"Could not add book","errorDescription"=>"Please check the form and submit again","errorData"=>$bookForm),200);
+
             }
         }else{
-            return $this->createJsonResponse('error',array('errorTitle'=>"Book was not Successfully Uploaded",'errorDescription'=>"Please select images less than or equal 200KB."));
+            return $this->_createJsonResponse('error',array('errorTitle'=>"Book was not Successfully Uploaded",'errorDescription'=>"Please select images less than or equal 200KB."),400);
         }
-
-
 
     }
 
-//    public function addNewSellBookAction(Request $request)
-//    {
-//
-//        $serializer = $this->container->get('jms_serializer');
-//        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $content = $request->get('book');
-//        $bookData = json_decode($content, true);
-//
-//        $book = new Book();
-//
-//
-//        $bookImage1 = new BookImage();
-//        $bookImage1->setImageName("Amazon Book Image");
-//        $bookImage1->setImageUrl("http://url1.com");
-//
-//        $book->addBookImage($bookImage1);
-//
-//        $bookImage2 = new BookImage();
-//        $bookImage2->setImageName("Amazon Book Image");
-//        $bookImage2->setImageUrl("http://url1.com");
-//
-//        $book->addBookImage($bookImage2);
-//
-//
-//
-//        $bookData['bookSeller']=$userId;
-//
-//
-//
-//        $bookForm = $this->createForm(new BookType(), $book);
-//
-//
-//        var_dump($bookForm->getData()->getBookImages());
-//        $bookForm->submit($bookData);
-//        var_dump($bookForm->getData()->getBookImages());
-//
-//        if($bookForm->isValid()){
-//            $em->persist($book);
-//            $em->flush();
-//            return $this->createJsonResponse('success',array('successTitle'=>"Book Successfully added to sell List"));
-//        }else{
-//            $error= $serializer->serialize($bookForm,'json');
-//            return new Response($error,200);
-//        }
-//
-//
-//
-//    }
 
-    function getBooksByKeywordAmazon($keyword, $page)
+    function _getBooksByKeywordAmazon($keyword, $page)
     {
 
 
-        $amazonCredentials = $this->getAmazonSearchParams();
+        $amazonCredentials = $this->_getAmazonSearchParams();
 
         $amazonCredentials['params']['Operation'] = "ItemSearch";
         $amazonCredentials['params']["ItemPage"] = $page;
         $amazonCredentials['params']["Keywords"] = $keyword;
         $amazonCredentials['params']["SearchIndex"] = "Books";
         $amazonCredentials['params']["ResponseGroup"] = "Medium,Offers";
-        $getUrl = $this->getUrlWithSignature($amazonCredentials);
+        $getUrl = $this->_getUrlWithSignature($amazonCredentials);
 
 
         $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($getUrl, null, null));
 
-        $booksArray = $this->parseMultipleBooksAmazonXmlResponse($xmlOutput);
+        $booksArray = $this->_parseMultipleBooksAmazonXmlResponse($xmlOutput);
 
-
-        return $this->createJsonResponse('result', $booksArray);
+        return $this->_createJsonResponse('success', array('successData'=>$booksArray),200);
 
     }
 
-    function getBooksByAsinAmazon($asin)
+    function _getBooksByAsinAmazon($asin)
     {
 
 
-        $amazonCredentials = $this->getAmazonSearchParams();
+        $amazonCredentials = $this->_getAmazonSearchParams();
 
         $amazonCredentials['params']['Operation'] = "ItemLookup";
         $amazonCredentials['params']["ItemId"] = $asin;
         $amazonCredentials['params']["ResponseGroup"] = "Medium,Offers";
-        $getUrl = $this->getUrlWithSignature($amazonCredentials);
+        $getUrl = $this->_getUrlWithSignature($amazonCredentials);
         $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($getUrl, null, null));
 
-        $booksArray = $this->parseMultipleBooksAmazonXmlResponse($xmlOutput);
+        $booksArray = $this->_parseMultipleBooksAmazonXmlResponse($xmlOutput);
 
-        return $this->createJsonResponse('result', $booksArray);
+        return $this->_createJsonResponse('success', array('successData'=>$booksArray),200);
 
     }
 
-    function getBooksByIsbnAmazon($isbn)
+    function _getBooksByIsbnAmazon($isbn)
     {
 
 
-        $amazonCredentials = $this->getAmazonSearchParams();
+        $amazonCredentials = $this->_getAmazonSearchParams();
 
         $amazonCredentials['params']['Operation'] = "ItemLookup";
         $amazonCredentials['params']["ItemId"] = $isbn;
@@ -391,29 +306,29 @@ class BookManagementApiController extends Controller
         $amazonCredentials['params']["IdType"]="ISBN";
         $amazonCredentials['params']["SearchIndex"]="All";
 
-        $getUrl = $this->getUrlWithSignature($amazonCredentials);
+        $getUrl = $this->_getUrlWithSignature($amazonCredentials);
 //        var_dump($getUrl);
 //        die();
 
         $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($getUrl, null, null));
 
-        $booksArray = $this->parseMultipleBooksAmazonXmlResponse($xmlOutput);
+        $booksArray = $this->_parseMultipleBooksAmazonXmlResponse($xmlOutput);
 
-        return $this->createJsonResponse('result', $booksArray);
+        return $this->_createJsonResponse('success', array('successData'=>$booksArray),200);
 
     }
 
-    public function addToCartAmazonUrl($bookOfferId){
-        $amazonSearchParams = $this->getAmazonSearchParams();
+    public function _addToCartAmazonUrl($bookOfferId){
+        $amazonSearchParams = $this->_getAmazonSearchParams();
         $amazonSearchParams['params']['Operation'] = "CartCreate";
         $amazonSearchParams['params']['Item.1.OfferListingId'] = $bookOfferId;
         $amazonSearchParams['params']['Item.1.Quantity'] = "1";
 
-        $cartUrl = $this->getUrlWithSignature($amazonSearchParams);
+        $cartUrl = $this->_getUrlWithSignature($amazonSearchParams);
         return $cartUrl;
     }
 
-    public function getBooksByIsbnCampusBooks($isbn)
+    public function _getBooksByIsbnCampusBooks($isbn)
     {
         $campusBooksApiInfo = $this->getParameter('campus_books_api_info');
         $apiKey = $campusBooksApiInfo['api_key'];
@@ -423,13 +338,14 @@ class BookManagementApiController extends Controller
         $url= $host.$uri."?key=".$apiKey."&isbn=".$isbn."&format=json";
 
         $jsonOutput = $this->get('api_caller')->call(new HttpGetHtml($url, null, null));
-        $response = new Response($jsonOutput, 200);
-        return $response;
 
+        $arrayData= (json_decode($jsonOutput,true));
+
+        return $this->_createJsonResponse('success',array('successData'=>$arrayData),200);
 
     }
 
-    public function getUrlWithSignature($amazonCredentials)
+    public function _getUrlWithSignature($amazonCredentials)
     {
         // sort the parameters
         ksort($amazonCredentials['params']);
@@ -455,7 +371,7 @@ class BookManagementApiController extends Controller
         return $url;
     }
 
-    public function getAmazonSearchParams()
+    public function _getAmazonSearchParams()
     {
 
 
@@ -489,7 +405,7 @@ class BookManagementApiController extends Controller
 
     }
 
-    public function parseMultipleBooksAmazonXmlResponse($xml)
+    public function _parseMultipleBooksAmazonXmlResponse($xml)
     {
 
         $fileContents = str_replace(array("\n", "\r", "\t"), '', $xml);
@@ -500,7 +416,7 @@ class BookManagementApiController extends Controller
 
         $booksArray = array();
         foreach ($simpleXml->Items->Item as $item) {
-            $booksArray[] = $this->createJsonFromItemAmazon($item);
+            $booksArray[] = $this->_createJsonFromItemAmazon($item);
         }
 
 
@@ -511,8 +427,7 @@ class BookManagementApiController extends Controller
 
     }
 
-
-    public function createJsonFromItemAmazon($item)
+    public function _createJsonFromItemAmazon($item)
     {
 
         if (!empty($item->Offers->Offer->OfferListing->Price->FormattedPrice)) {
@@ -561,7 +476,7 @@ class BookManagementApiController extends Controller
             'bookEan' => (string)$item->ItemAttributes->EAN,
             'bookEdition' => (string)$item->ItemAttributes->Edition,
             'bookPublisher' => (string)$item->ItemAttributes->Publisher,
-            'bookPublisherDate' => (string)$item->ItemAttributes->PublicationDate,
+            'bookPublishDate' => (string)$item->ItemAttributes->PublicationDate,
             'bookBinding' => (string)$item->ItemAttributes->Binding,
             'bookMediumImageUrl' => $book_image_medium_url,
             'bookLargeImageUrl' => $book_image_large_url,
@@ -572,12 +487,11 @@ class BookManagementApiController extends Controller
         );
     }
 
-
-    public function createJsonResponse($key, $data)
+    public function _createJsonResponse($key, $data,$code)
     {
         $serializer = $this->container->get('jms_serializer');
         $json = $serializer->serialize([$key => $data], 'json');
-        $response = new Response($json, 200);
+        $response = new Response($json, $code);
         return $response;
     }
 

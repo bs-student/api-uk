@@ -24,22 +24,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * Controller managing the resetting of the password
  *
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
- * @author Christophe Coevoet <stof@notk.org>
+ *
  */
 class ResettingController extends BaseController
 {
 
-
-
-
     /**
-     * Request reset user password: submit form and send email
-     * @Route("/resetting/send-email", name="fos_user_resetting_send_email")
-     * @Method("POST")
+     * Send Email For Resetting Password
      */
-
-
     public function sendEmailAction()
     {
 
@@ -51,17 +43,17 @@ class ResettingController extends BaseController
         if (null === $user) {
             $data = array(
                 'errorTitle'=>"Cannot Reset Password",
-                "errorBody"=>"Sorry No User found on that email Address"
+                "errorDescription"=>"Sorry No User found on that email Address"
             );
-            return $this->createJsonResponse('error',$data);
+            return $this->_createJsonResponse('error',$data,400);
         }
 
         if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
             $data = array(
                 'errorTitle'=>"Cannot Reset Password",
-                "errorBody"=>"Sorry the Reset Password was already requested"
+                "errorDescription"=>"Sorry the Reset Password was already requested"
             );
-            return $this->createJsonResponse('error',$data);
+            return $this->_createJsonResponse('error',$data,400);
 
         }
 
@@ -78,9 +70,9 @@ class ResettingController extends BaseController
 
         $data = array(
             'successTitle'=>"Reset Password Successful",
-            "successBody"=>"A mail has been sent to your email Address for resetting Password"
+            "successDescription"=>"A mail has been sent to your email Address for resetting Password"
         );
-        return $this->createJsonResponse('success',$data);
+        return $this->_createJsonResponse('success',$data,200);
     }
 
     /**
@@ -103,9 +95,7 @@ class ResettingController extends BaseController
     }
 
     /**
-     * Reset user password
-     * @Route("/resetting/reset/{token}", name="fos_user_resetting_reset")
-     * @Method({"POST","GET"})
+     * Reset Password with a token
      */
     public function resetAction($token=null)
     {
@@ -115,9 +105,9 @@ class ResettingController extends BaseController
         if (null === $user) {
             $data = array(
                 'errorTitle'=>"Cannot Reset Password",
-                "errorBody"=>"The user with 'confirmation token' does not exist for value '$token'"
+                "errorDescription"=>"The user with 'confirmation token' does not exist for value '$token'"
             );
-            return $this->createJsonResponse('error',$data);
+            return $this->_createJsonResponse('error',$data,400);
 //            throw new NotFoundHttpException(sprintf('The user with "confirmation token" does not exist for value "%s"', $token));
         }
 
@@ -137,27 +127,27 @@ class ResettingController extends BaseController
 
             $data = array(
                 'successTitle'=>"Reset Password Successful",
-                "successBody"=>"Password has been successfully changed"
+                "successDescription"=>"Password has been successfully changed"
             );
-            return $this->createJsonResponse('success',$data);
+            return $this->_createJsonResponse('success',$data,200);
 
         }else{
             $data = array(
                 'errorTitle'=>"Cannot Reset Password",
-                "errorBody"=>"Sorry, the password could not be changed"
+                "errorDescription"=>"Sorry, the password could not be changed"
             );
-            return $this->createJsonResponse('error',$data);
+            return $this->_createJsonResponse('error',$data,400);
         }
 
 
     }
 
-    public function createJsonResponse($key,$data){
+
+    public function _createJsonResponse($key,$data,$code){
         $serializer = $this->container->get('jms_serializer');
         $json = $serializer->serialize([$key => $data], 'json');
-        $response = new Response($json, 200);
+        $response = new Response($json, $code);
         return $response;
     }
-
 
 }

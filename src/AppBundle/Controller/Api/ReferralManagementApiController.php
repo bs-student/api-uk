@@ -17,19 +17,36 @@ class ReferralManagementApiController extends Controller
 {
 
     /**
-     * @Route("/api/referral/list", name="all_referrals")
-     *
-     *
-     *
+     * All Referrals
      */
-    public function indexAction()
+    public function referralListAction()
     {
         $em = $this->getDoctrine()->getManager();
 
         $referrals = $em->getRepository('AppBundle:Referral')->findAll();
 
-        $json = $this->get('jms_serializer')->serialize($referrals, 'json');
-        $response = new Response($json, 200);
+        return $this->_createJsonResponse('success',array('successData'=>$referrals),200);
+
+    }
+
+    /**
+     * All Referrals Admin
+     */
+    public function referralListAdminAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $referrals = $em->getRepository('AppBundle:Referral')->findAll();
+
+        return $this->_createJsonResponse('success',array('successData'=>$referrals),200);
+
+    }
+
+    public function _createJsonResponse($key, $data,$code)
+    {
+        $serializer = $this->container->get('jms_serializer');
+        $json = $serializer->serialize([$key => $data], 'json');
+        $response = new Response($json, $code);
         return $response;
     }
 

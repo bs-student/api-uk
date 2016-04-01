@@ -18,19 +18,22 @@ class CountryManagementApiController extends Controller
 {
 
     /**
-     * @Route("/api/country/list", name="all_countries")
-     *
-     *
-     *
+     * Get List of all Countries
      */
-    public function indexAction()
+    public function countryListAction()
     {
         $em = $this->getDoctrine()->getManager();
 
         $countries = $em->getRepository('AppBundle:Country')->findAllCountry();
 
-        $json = $this->get('jms_serializer')->serialize($countries, 'json');
-        $response = new Response($json, 200);
+        return $this->_createJsonResponse('success',array('successData'=>$countries),200);
+    }
+
+    public function _createJsonResponse($key, $data,$code)
+    {
+        $serializer = $this->container->get('jms_serializer');
+        $json = $serializer->serialize([$key => $data], 'json');
+        $response = new Response($json, $code);
         return $response;
     }
 

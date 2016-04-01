@@ -17,12 +17,9 @@ class StateManagementApiController extends Controller
 {
 
     /**
-     * @Route("/api/state/list_by_country", name="all_states_by_country")
-     *
-     * @Method({"POST"})
-     *
+     * Get all the states under a country
      */
-    public function indexAction(Request $request)
+    public function statesByCountryAction(Request $request)
     {
 
         $request_data = json_decode($request->getContent());
@@ -32,9 +29,17 @@ class StateManagementApiController extends Controller
 
         $states = $em->getRepository('AppBundle:State')->findByCountryId($request_data->countryId);
 
-        $json = $this->get('jms_serializer')->serialize($states, 'json');
-        $response = new Response($json, 200);
+        return $this->_createJsonResponse('success',array('successData'=>$states),200);
+
+    }
+
+    public function _createJsonResponse($key, $data,$code)
+    {
+        $serializer = $this->container->get('jms_serializer');
+        $json = $serializer->serialize([$key => $data], 'json');
+        $response = new Response($json, $code);
         return $response;
     }
+
 
 }

@@ -1,28 +1,235 @@
-app_book:
-    resource: "@AppBundle/Resources/config/routing/book.yml"
-    prefix:   /book
 
-app_bookimage:
-    resource: "@AppBundle/Resources/config/routing/bookimage.yml"
-    prefix:   /bookimage
 
-app_campus:
-    resource: "@AppBundle/Resources/config/routing/campus.yml"
-    prefix:   /campus
+# WEB CONTROLLER ROUTES
 
-app_state:
-    resource: "@AppBundle/Resources/config/routing/state.yml"
-    prefix:   /state
 
-app_country:
-    resource: "@AppBundle/Resources/config/routing/country.yml"
-    prefix:   /country
+#Security Controller
+home:
+    path:      /
+    defaults:  { _controller: AppBundle:Security:index }
 
-app_university:
-    resource: "@AppBundle/Resources/config/routing/university.yml"
-    prefix:   /university
+login:
+    path:      /login
+    defaults:  { _controller: AppBundle:Security:login }
 
-app_referral:
-    resource: "@AppBundle/Resources/config/routing/referral.yml"
-    prefix:   /referral
+user_homepage:
+    path:      /user/dashboard
+    defaults:  { _controller: AppBundle:Security:userDashboard }
+
+#Reasetting Controller
+reset_password:
+    path: /resetting/reset/{token}
+    defaults: {_controller: AppBundle:Resetting:reset}
+    methods: [POST,GET]
+
+resetting_password_send_email:
+    path: /resetting/send-email
+    defaults: {_controller: AppBundle:Resetting:sendEmail}
+    methods: [POST]
+
+#Registration Controller
+check_if_username_exist:
+    path: /check_if_username_exist
+    defaults:  {_controller: AppBundle:Registration:checkIfUsernameExist}
+    methods: [POST]
+
+check_if_email_exist:
+    path: /check_if_email_exist
+    defaults:  {_controller: AppBundle:Registration:checkIfEmailExist}
+    methods: [POST]
+
+user_registration:
+    path: /register
+    defaults:  {_controller: AppBundle:Registration:register}
+
+social_user_registration:
+    path: /social_register
+    defaults: {_controller: AppBundle:Registration:socialRegister}
+    methods: [POST,GET]
+
+fos_user_registration_check_email:
+    path: /check-email
+    defaults: {_controller: AppBundle:Registration:checkEmail}
+
+user_registration_confirm:
+    path: /confirm/{token}
+    defaults: {_controller: AppBundle:Registration:confirm}
+    methods: [GET]
+
+fos_user_registration_confirmed:
+    path: /confirmed
+    defaults: {_controller: AppBundle:Registration:confirmed}
+
+confirmation_token_expired:
+    path: /confirmation_token_expired
+    defaults: {_controller: AppBundle:Registration:confirmationTokenExpired}
+
+#ChangePasswordController
+change_password:
+    path: /profile/change-password
+    defaults: {_controller: AppBundle:ChangePassword:changePassword}
+    methods: [POST,GET]
+
+
+
+
+
+
+
+# API CONTROLLER ROUTES
+
+
+
+
+#UserApiController
+update_created_profile:
+    path: /api/user/update_created_profile
+    defaults: {_controller: AppBundle:Api/UserApi:updateCreatedProfile}
+    methods: [POST]
+
+#update_profile:
+#    path: /user/update_profile
+#    defaults:  {_controller: AppBundle:Api/UserApi:updateUser}
+#    methods: [GET,POST]
+
+current_user_short_details:
+    path: /api/current_user_short_details
+    defaults:  {_controller: AppBundle:Api/UserApi:currentUserShortDetails}
+
+current_user_full_details:
+    path: /api/current_user_full_details
+    defaults:  {_controller: AppBundle:Api/UserApi:currentUserFullDetails}
+
+admin_all_users:
+    path: /api/admin/all_users
+    defaults:  {_controller: AppBundle:Api/UserApi:adminAllUsers}
+
+admin_update_users:
+    path: /api/admin/update_user_data
+    defaults:  {_controller: AppBundle:Api/UserApi:adminUpdateUserData}
+    methods: [POST]
+
+user_update_full_name:
+    path: /api/update_user_full_name
+    defaults:  {_controller: AppBundle:Api/UserApi:updateUserFullNameData}
+    methods: [POST]
+
+user_update_university_campus:
+    path: /api/update_user_university_campus
+    defaults:  {_controller: AppBundle:Api/UserApi:updateUserUniversityCampus}
+    methods: [POST]
+
+
+
+#BookManagementApiController
+
+books_search_by_keyword_amazon:
+    path: /api/book/search_by_keyword_amazon
+    defaults:  {_controller: AppBundle:Api/BookManagementApi:searchByKeywordAmazonApi}
+    methods: [POST]
+
+books_search_by_asin_amazon:
+    path: /api/book/search_by_asin_amazon
+    defaults:  {_controller: AppBundle:Api/BookManagementApi:searchByAsinAmazonApi}
+    methods: [POST]
+
+books_search_by_isbn_amazon:
+    path: /api/book/search_by_isbn_amazon
+    defaults:  {_controller: AppBundle:Api/BookManagementApi:searchByIsbnAmazonApi}
+    methods: [POST]
+
+books_search_by_isbn_campus_books:
+    path: /api/book/search_by_isbn_campus_books
+    defaults:  {_controller: AppBundle:Api/BookManagementApi:searchByIsbnCampusBooksApi}
+    methods: [POST]
+
+get_amazon_cart_create_url:
+    path: /api/book/get_amazon_cart_create_url
+    defaults:  {_controller: AppBundle:Api/BookManagementApi:getAmazonCartCreateUrl}
+    methods: [POST]
+
+add_new_sell_book:
+    path: /api/book/add_new_sell_book
+    defaults:  {_controller: AppBundle:Api/BookManagementApi:addNewSellBook}
+    methods: [POST]
+
+
+#CampusManagementApiController
+
+campus_list_by_university:
+    path: /api/campus/list
+    defaults:  {_controller: AppBundle:Api/CampusManagementApi:campusListByUniversity}
+    methods: [POST]
+
+update_campus:
+    path: /api/campus/update
+    defaults:  {_controller: AppBundle:Api/CampusManagementApi:updateCampus}
+    methods: [POST]
+
+save_new_campus:
+    path: /api/campus/add
+    defaults:  {_controller: AppBundle:Api/CampusManagementApi:saveNewCampus}
+    methods: [POST]
+
+delete_university:
+    path: /api/university/delete
+    defaults:  {_controller: AppBundle:Api/CampusManagementApi:deleteUniversity}
+    methods: [POST]
+
+
+#CountryManagementApiController
+
+all_countries:
+    path: /api/country/list
+    defaults:  {_controller: AppBundle:Api/CountryManagementApi:countryList}
+
+#ReferralManagementApiController
+
+all_referrals_api:
+    path: /api/referral/list
+    defaults:  {_controller: AppBundle:Api/ReferralManagementApi:referralListAdmin}
+
+all_referrals:
+    path: /referral/list
+    defaults:  {_controller: AppBundle:Api/ReferralManagementApi:referralList}
+
+
+#StateManagementApiController
+
+all_states_by_country:
+    path: /api/state/list_by_country
+    defaults:  {_controller: AppBundle:Api/StateManagementApi:statesByCountry}
+    methods: [POST]
+
+#UniversityManagementApiController
+
+university_list:
+    path: /university/autocomplete_activated_search_list
+    defaults:  {_controller: AppBundle:Api/UniversityManagementApi:universityAutocompleteActivatedSearchList}
+    methods: [POST]
+
+university_name_list:
+    path: /api/university/autocomplete_university_name_search_list
+    defaults:  {_controller: AppBundle:Api/UniversityManagementApi:universityAutocompleteNameSearchList}
+    methods: [POST]
+
+university_search:
+    path: /api/university/search
+    defaults:  {_controller: AppBundle:Api/UniversityManagementApi:universitySearchAdmin}
+    methods: [POST]
+
+update_university:
+    path: /api/university/update_university
+    defaults:  {_controller: AppBundle:Api/UniversityManagementApi:updateUniversity}
+    methods: [POST]
+
+save_new_university:
+    path: /api/university/save_new_university
+    defaults:  {_controller: AppBundle:Api/UniversityManagementApi:saveNewUniversity}
+    methods: [POST]
+
+delete_university:
+    path: /api/university/delete
+    defaults:  {_controller: AppBundle:Api/UniversityManagementApi:deleteUniversity}
+    methods: [POST]
 

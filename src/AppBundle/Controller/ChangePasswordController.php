@@ -3,10 +3,6 @@
 /*
  * This file is part of the FOSUserBundle package.
  *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  */
 
 namespace AppBundle\Controller;
@@ -23,16 +19,12 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Controller managing the password change
  *
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
- * @author Christophe Coevoet <stof@notk.org>
  */
 class ChangePasswordController extends BaseController
 {
 
     /**
-     * Change user password
-     * @Route("/profile/change-password", name="fos_user_change_password")
-     * @Method({"POST","GET"})
+     * Change password
      */
     public function changePasswordAction()
     {
@@ -41,9 +33,9 @@ class ChangePasswordController extends BaseController
         if (!is_object($user) || !$user instanceof UserInterface) {
             $data = array(
                 'errorTitle'=>"Access Denied",
-                "errorBody"=>"Sorry, This user does not have access to this section."
+                "errorDescription"=>"Sorry, This user does not have access to this section."
             );
-            return $this->createJsonResponse('error',$data);
+            return $this->_createJsonResponse('error',$data,400);
 
         }
 
@@ -55,25 +47,25 @@ class ChangePasswordController extends BaseController
 
             $data = array(
                 'successTitle'=>"Password Changed",
-                "successBody"=>"Password is successfully changed."
+                "successDescription"=>"Password is successfully changed."
             );
-            return $this->createJsonResponse('success',$data);
+            return $this->_createJsonResponse('success',$data,200);
 
         }else{
 
             $data = array(
                 'errorTitle'=>"Password could not be changed",
-                "errorBody"=>"Sorry, please check the form nad try again.."
+                "errorDescription"=>"Sorry, please check the form nad try again.."
             );
-            return $this->createJsonResponse('error',$data);
+            return $this->_createJsonResponse('error',$data,400);
         }
 
     }
 
-    public function createJsonResponse($key,$data){
+    public function _createJsonResponse($key,$data,$code){
         $serializer = $this->container->get('jms_serializer');
         $json = $serializer->serialize([$key => $data], 'json');
-        $response = new Response($json, 200);
+        $response = new Response($json, $code);
         return $response;
     }
 

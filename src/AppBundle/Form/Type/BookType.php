@@ -7,7 +7,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Date;
-
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 class BookType extends AbstractType
 {
     /**
@@ -91,11 +92,9 @@ class BookType extends AbstractType
                     new Date()
                 ),))
             ->add('bookBuyer','entity',array(
-//            'validation_groups' => false
                 'class' => "AppBundle:User",
                 ))
             ->add('bookSeller','entity',array(
-//            'validation_groups' => false
                 'class' => "AppBundle:User",
                 'constraints' => array(
                     new NotBlank(),
@@ -108,7 +107,17 @@ class BookType extends AbstractType
                 'by_reference' =>false
 
             ));
+
+//        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
     }
+
+
+//    function onPreSetData(FormEvent $event) {
+//        $data = $event->getData();
+//        $data->setBookBinding('BOOKBINDING');
+////        var_dump($data);
+//        return $event->setData($data);
+//    }
 
 
     /**

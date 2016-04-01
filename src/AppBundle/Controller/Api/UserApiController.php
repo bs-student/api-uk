@@ -21,10 +21,8 @@ class UserApiController extends Controller
 {
 
     /**
-     * Displays a form to update an Just Created User entity.
+     * Update Just Created User entity.
      *
-     * @Route("/api/user/update_created_profile", name="update_created_profile")
-     * @Method({"POST"})
      */
     public function updateCreatedProfileAction(Request $request)
     {
@@ -149,32 +147,35 @@ class UserApiController extends Controller
                 $user->setRegistrationStatus("complete");
                 $em->persist($user);
                 $em->flush();
-                $json = $serializer->serialize(['success' => "User is successfully updated"], 'json');
-                $response = new Response($json, 200);
-                return $response;
+
+                return $this->_createJsonResponse('success',array(
+                    'successTitle'=>"User Updated Successfully",
+                ),200);
+
             } else {
 
-                $response = new Response(json_encode($tempArray), 200);
-                return $response;
+                return $this->_createJsonResponse('error',array(
+                    'errorTitle'=>"User was not updated successfully",
+                    'errorDescription'=>"Email or Username Exists",
+                    'errorData'=>$tempArray
+                ),400);
+
             }
 
         } else {
 
-            $response = new Response(json_encode($tempArray), 200);
-            return $response;
-
+            return $this->_createJsonResponse('error',array(
+                'errorTitle'=>"User was not updated successfully",
+                'errorDescription'=>"Email or Username Exists",
+                'errorData'=>$tempArray
+            ),400);
         }
 
     }
 
 
-    /**
-     * Displays a form to update User entity.
-     *
-     * @Route("/user/update_profile", name="update_profile")
-     * @Method({"GET", "POST"})
-     */
-    public function updateUserAction(Request $request)
+
+    /*public function updateUserAction(Request $request)
     {
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -209,9 +210,9 @@ class UserApiController extends Controller
             'edit_form' => $editForm->createView(),
 
         ));
-    }
+    }*/
 
-    private function getErrorMessages(\Symfony\Component\Form\Form $form)
+    /*private function getErrorMessages(\Symfony\Component\Form\Form $form)
     {
         $errors = array();
         foreach ($form->getErrors() as $key => $error) {
@@ -232,15 +233,15 @@ class UserApiController extends Controller
             }
         }
         return $errors;
-    }
+    }*/
 
 
     /**
-     * @Route("/api/current_user_short_details", name="current_user_short_details")
+     * Get Current user Short Details
      */
     public function currentUserShortDetailsAction()
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
         if ($user) {
             $user_data = array(
                 'username' => $user->getUsername(),
@@ -249,19 +250,21 @@ class UserApiController extends Controller
                 'registrationStatus' => $user->getRegistrationStatus(),
                 'userId' => ($user->getGoogleId() != null) ? $user->getGoogleId() : $user->getFacebookId(),
             );
-            $json = $this->get('jms_serializer')->serialize(['user' => $user_data], 'json');
-            $response = new Response($json, 200);
-            return $response;
+
+            return $this->_createJsonResponse('success',array(
+                'successData'=>$user_data,
+            ),200);
+
+        }else{
+            return $this->_createJsonResponse('error',array(
+                'errorTitle'=>"User was not identified",
+            ),400);
+
         }
-
-        $json = $this->get('jms_serializer')->serialize(['error' => "User is not identified"], 'json');
-        $response = new Response($json, 400);
-        return $response;
-
     }
 
     /**
-     * @Route("/api/current_user_full_details", name="current_user_full_details")
+     * Get Current user Full Details
      */
     public function currentUserFullDetailsAction()
     {
@@ -280,23 +283,25 @@ class UserApiController extends Controller
                 'stateShortName' => $user->getCampus()->getState()->getStateShortName(),
                 'countryName' => $user->getCampus()->getState()->getCountry()->getCountryName()
             );
-            $json = $this->get('jms_serializer')->serialize(['user' => $user_data], 'json');
-            $response = new Response($json, 200);
-            return $response;
-        }
 
-        $json = $this->get('jms_serializer')->serialize(['error' => "User is not identified"], 'json');
-        $response = new Response($json, 400);
-        return $response;
+            return $this->_createJsonResponse('success',array(
+                'successData'=>$user_data,
+            ),200);
+
+        }else{
+            return $this->_createJsonResponse('error',array(
+                'errorTitle'=>"User was not identified",
+            ),400);
+        }
 
     }
 
 
     /**
-     * @Route("/api/admin/all_users", name="admin_all_users")
+     * All Users List Admin
      *
      */
-    public function adminAllUsers()
+    public function adminAllUsersAction()
     {
 //        $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
@@ -320,18 +325,18 @@ class UserApiController extends Controller
 //            return $response;
 //        }
 
-        $json = $this->get('jms_serializer')->serialize(['users' => $users], 'json');
-        $response = new Response($json, 200);
-        return $response;
+        return $this->_createJsonResponse('success',array(
+            'successData'=>$users,
+        ),200);
+
 
     }
 
 
     /**
-     * @Route("/api/admin/update_user_data", name="admin_update_users")
-     * @Method({"POST"})
+     * Admin Update User Data
      */
-    public function adminUpdateUserData(Request $request)
+    public function adminUpdateUserDataAction(Request $request)
     {
 //        $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
@@ -343,24 +348,34 @@ class UserApiController extends Controller
         if ($user != null) {
 
             if ($userRepo->checkIfUsernameExistByUsername($request_data->username, $user->getUsername())) {
-                $json = $this->get('jms_serializer')->serialize(['error' => "Username '" . $request_data->username . "' Already Exist", 'username' => $user->getusername()], 'json');
+
+                return $this->_createJsonResponse('error',array(
+                    'errorTitle'=>"Can't Update User",
+                    'errorDescription'=> "Username '" . $request_data->username . "' Already Exist",
+                    'errorData'=> array(
+                        'username'=> $user->getusername()
+                    )
+                ),200);
+
             } else {
 
                 $user->setUserName($request_data->username);
                 $em->persist($user);
                 $em->flush();
-                $json = $this->get('jms_serializer')->serialize(['success' => "User Updated"], 'json');
+
+                return $this->_createJsonResponse('success',array(
+                    'successTitle'=>"User Updated",
+                ),200);
+
             }
-            $response = new Response($json, 200);
-            return $response;
+
         }
     }
 
     /**
-     * @Route("/api/update_user_full_name", name="user_update_full_name")
-     * @Method({"POST"})
+     * Update User Full Name
      */
-    public function updateUserFullNameData(Request $request)
+    public function updateUserFullNameDataAction(Request $request)
     {
 //        $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
@@ -384,22 +399,23 @@ class UserApiController extends Controller
             if ($updateForm->isValid()) {
                 $em->persist($user);
                 $em->flush();
-                return $this->createJsonResponse('success', array('successTitle' => 'Full Name is Updated', 'successBody' => 'Your full name is successfully updated.'));
+                return $this->_createJsonResponse('success', array('successTitle' => 'Full Name is Updated', 'successDescription' => 'Your full name is successfully updated.'),200);
             } else {
-                return $this->createJsonResponse('error', array(
+                return $this->_createJsonResponse('error', array(
                     'errorTitle' => 'Full Name is not Updated',
-                    'errorBody' => 'Sorry. Please check the form and submit again.',
-                    'form' => $serializer->serialize($updateForm, 'json'),
-                    'fullName' => $oldFullName
-                ));
+                    'errorDescription' => 'Sorry. Please check the form and submit again.',
+                    'errorData'=>array(
+                        'form'=> $serializer->serialize($updateForm, 'json'),
+                        'fullName'=>$oldFullName
+                    )
+                ),400);
             }
         }
     }
 
 
     /**
-     * @Route("/api/update_user_university_campus", name="user_update_university_campus")
-     * @Method({"POST"})
+     * Update User University Campus
      */
     public function updateUserUniversityCampusAction(Request $request)
     {
@@ -432,34 +448,40 @@ class UserApiController extends Controller
             if ($updateForm->isValid()) {
                 $em->persist($user);
                 $em->flush();
-                return $this->createJsonResponse('success', array(
+                return $this->_createJsonResponse('success', array(
                     'successTitle' => 'University is Successfully Changed',
-                    'successBody' => 'Your university is successfully changed.',
-                    'universityName'=>$user->getCampus()->getUniversity()->getUniversityName(),
-                    'campusName'=>$user->getCampus()->getCampusName(),
-                    'stateShortName' =>$user->getCampus()->getState()->getStateShortName(),
-                    'countryName'=>$user->getCampus()->getState()->getCountry()->getCountryname()
-                ));
+                    'successDescription' => 'Your university is successfully changed.',
+                    'successData'=>array(
+                        'universityName'=>$user->getCampus()->getUniversity()->getUniversityName(),
+                        'campusName'=>$user->getCampus()->getCampusName(),
+                        'stateShortName' =>$user->getCampus()->getState()->getStateShortName(),
+                        'countryName'=>$user->getCampus()->getState()->getCountry()->getCountryname()
+                    )
+
+                ),200);
             } else {
 
-                return $this->createJsonResponse('error', array(
+                return $this->_createJsonResponse('error', array(
                     'errorTitle' => 'University was not changed.',
-                    'errorBody' => 'Sorry. Please check the form and submit again.',
-                    'form' => $serializer->serialize($updateForm, 'json'),
-                    'universityName'=>$oldUniversityName,
-                    'campusName'=>$oldCampusName,
-                    'stateShortName' =>$oldStateShortName,
-                    'countryName'=>$oldCountryName
-                ));
+                    'errorDescription' => 'Sorry. Please check the form and submit again.',
+                    'errorData'=>array(
+                        'form' => $serializer->serialize($updateForm, 'json'),
+                        'universityName'=>$oldUniversityName,
+                        'campusName'=>$oldCampusName,
+                        'stateShortName' =>$oldStateShortName,
+                        'countryName'=>$oldCountryName
+                    )
+
+                ),400);
             }
         }
     }
 
-    public function createJsonResponse($key, $data)
+    public function _createJsonResponse($key, $data,$code)
     {
         $serializer = $this->container->get('jms_serializer');
         $json = $serializer->serialize([$key => $data], 'json');
-        $response = new Response($json, 200);
+        $response = new Response($json, $code);
         return $response;
     }
 }

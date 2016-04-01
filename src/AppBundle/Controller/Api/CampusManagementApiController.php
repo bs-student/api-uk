@@ -19,10 +19,7 @@ class CampusManagementApiController extends Controller
 
 
     /**
-     * @Route("/api/campus/list", name="campus_list_by_university")
-     *
-     * @Method({"POST"})
-     *
+     * Campus List By university
      */
     public function campusListByUniversityAction(Request $request)
     {
@@ -36,19 +33,15 @@ class CampusManagementApiController extends Controller
 
         $campuses = $campusRepo->getCampusesByUniversityId($universityId);
 
-        return $this->createJsonResponse('campuses', $campuses);
+        return $this->_createJsonResponse('success',array('successData'=>$campuses),200 );
 
 
     }
 
-
     /**
-     * Displays a form to update an Just Created User entity.
-     *
-     * @Route("/api/campus/update", name="update_campus")
-     * @Method({"POST"})
+     * Update Campus
      */
-    public function updateUniversityAction(Request $request)
+    public function updateCampusAction(Request $request)
     {
         //Initialize Repositories
         $em = $this->getDoctrine()->getManager();
@@ -88,42 +81,42 @@ class CampusManagementApiController extends Controller
 
                     $array = array(
                         'successTitle' => "Campus Updated Successfully",
-                        'successBody' => "Campus has been updated. please check the list for update result."
+                        'successDescription' => "Campus has been updated. please check the list for update result."
                     );
-                    return $this->createJsonResponse('success', $array);
+                    return $this->_createJsonResponse('success', $array,200);
 
                 } else {
 
                     $array = array(
                         'errorTitle' => "Campus Could not be Updated",
-                        'errorBody' => "Sorry there is a problem with the form data. Please check and submit again.",
-                        'campusStatus' => $oldCampusStatus,
-                        'campusName' => $oldCampusName,
-                        'campusId' => $oldCampusId
+                        'errorDescription' => "Sorry there is a problem with the form data. Please check and submit again.",
+                        'errorData'=>array(
+                            'campusStatus' => $oldCampusStatus,
+                            'campusName' => $oldCampusName,
+                            'campusId' => $oldCampusId
+                        )
+
                     );
-                    return $this->createJsonResponse('error', $array);
+                    return $this->_createJsonResponse('error', $array,400);
 
                 }
 
 
             } else {
-                return $this->createJsonResponse('error', array('errorTitle' => "Error on submitting Data", 'errorBody' => "Please check the fields and try again."));
+                return $this->_createJsonResponse('error', array('errorTitle' => "Error on submitting Data", 'errorDescription' => "Please check the fields and try again."),400);
             }
 
         } else {
-            return $this->createJsonResponse('error', array('errorTitle' => "Error on submitting Data", 'errorBody' => "Please check the fields and try again."));
+            return $this->_createJsonResponse('error', array('errorTitle' => "Error on submitting Data", 'errorDescription' => "Please check the fields and try again."),400);
         }
 
 
     }
 
     /**
-     * Save new Universities.
-     *
-     * @Route("/api/campus/add", name="save_new_campus")
-     * @Method({"POST"})
+     * Save new Campus
      */
-    public function saveNewUniversityAction(Request $request)
+    public function saveNewCampusAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $serializer = $this->container->get('jms_serializer');
@@ -153,20 +146,18 @@ class CampusManagementApiController extends Controller
             if(!$error){
                 $em->persist($universityEntity);
                 $em->flush();
-                return $this->createJsonResponse('success',array('successTitle'=>"Campus Created Successfully",'successBody'=>"Campus has been added to the University"));
+                return $this->_createJsonResponse('success',array('successTitle'=>"Campus Created Successfully",'successDescription'=>"Campus has been added to the University"),200);
             }else{
-                return $this->createJsonResponse('error',array('errorTitle'=>"Campus was not created",'errorBody'=>"Sorry, please check the form and submit again"));
+                return $this->_createJsonResponse('error',array('errorTitle'=>"Campus was not created",'errorDescription'=>"Sorry, please check the form and submit again"),400);
             }
         }
 
     }
 
     /**
-     * Displays a form to update an Just Created User entity.
-     *
-     * @Route("/api/university/delete", name="delete_university")
-     * @Method({"POST"})
+     * Delete University
      */
+    //TODO SOMETHING WRONG WITH FOLLOWING FUNCTION
     public function deleteUniversityAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -179,28 +170,30 @@ class CampusManagementApiController extends Controller
         $message_array = null;
         if (!$university) {
             $message_array = array(
-                'error' => 'No University was found.'
+                'errorTitle' => "University Could not be Deleted",
+                'errorDescription'=>'No University was found.'
             );
+            return $this->_createJsonResponse('error',$message_array,400);
 
         } else {
             $em->remove($university);
             $em->flush();
             $message_array = array(
-                'success' => 'University was removed.'
+                'successTitle' => "University has been removed Removed",
+
             );
+            return $this->_createJsonResponse('success',$message_array,200);
         }
-        $json = $serializer->serialize($message_array, 'json');
-        $response = new Response($json, 200);
-        return $response;
+
 
 
     }
 
-    public function createJsonResponse($key, $data)
+    public function _createJsonResponse($key, $data,$code)
     {
         $serializer = $this->container->get('jms_serializer');
         $json = $serializer->serialize([$key => $data], 'json');
-        $response = new Response($json, 200);
+        $response = new Response($json, $code);
         return $response;
     }
 

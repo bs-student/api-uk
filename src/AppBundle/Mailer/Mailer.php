@@ -31,7 +31,7 @@ class Mailer extends BaseClass
 //        die();
         $template = $this->parameters['confirmation.template'];
 //        $url = $this->router->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), true);
-        $url = "http://localhost:8080/Student2StudentApp/app/#/security/confirm/".$user->getConfirmationToken();
+        $url = "http://168.61.173.224:8080/Student2Student/#/confirmRegistration/".$user->getConfirmationToken();
         $rendered = $this->templating->render($template, array(
             'user' => $user,
             'confirmationUrl' =>  $url
@@ -45,7 +45,7 @@ class Mailer extends BaseClass
 
         $template = $this->parameters['resetting.template'];
 //        $url = $this->router->generate('fos_user_resetting_reset', array('token' => $user->getConfirmationToken()), true);
-        $url = "http://localhost:8080/Student2StudentApp/app/#/security/reset/".$user->getConfirmationToken();
+        $url = "http://168.61.173.224:8080/Student2Student/#/resetPassword/".$user->getConfirmationToken();
         $rendered = $this->templating->render($template, array(
             'user' => $user,
             'confirmationUrl' => $url

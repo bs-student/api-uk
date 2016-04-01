@@ -19,9 +19,7 @@ class UniversityManagementApiController extends Controller
 
 
     /**
-     * @Route("/api/university/autocomplete_activated_search_list", name="university_list")
-     * @Method("POST")
-     *
+     * Activated Universities When Under Search
      */
     public function universityAutocompleteActivatedSearchListAction(Request $request)
     {
@@ -32,9 +30,10 @@ class UniversityManagementApiController extends Controller
 
         if ($query == null||$query == "") {
 
-            $json = $this->get('jms_serializer')->serialize(['university' => ""], 'json');
-            $response = new Response($json, 200);
-            return $response;
+            $responseData= array(
+                'university' => ""
+            );
+            return $this->_createJsonResponse('success',array('successData'=>$responseData),200);
         }
 
         $universities = $em->getRepository('AppBundle:University')->getActivatedUniversitySearchResults($query);
@@ -47,16 +46,12 @@ class UniversityManagementApiController extends Controller
 
         }
 
+        return $this->_createJsonResponse('success',array('successData'=>$data),200);
 
-        $json = $this->get('jms_serializer')->serialize($data, 'json');
-        $response = new Response($json, 200);
-        return $response;
     }
 
     /**
-     * @Route("/api/university/autocomplete_university_name_search_list", name="university_name_list")
-     *
-     * @Method({"POST"})
+     * University Search Autocomplete When Search By Name
      */
     public function universityAutocompleteNameSearchListAction(Request $request)
     {
@@ -65,26 +60,22 @@ class UniversityManagementApiController extends Controller
 
 
         if ($query == null) {
-            $json = $this->get('jms_serializer')->serialize(['university' => ""], 'json');
-            $response = new Response($json, 200);
-            return $response;
+
+            return $this->_createJsonResponse('success',array('successData'=>array('university' => "")),200);
+
         } else {
             $universities = $em->getRepository('AppBundle:University')->getUniversitySearchResults($query);
-            $json = $this->get('jms_serializer')->serialize($universities, 'json');
-            $response = new Response($json, 200);
-            return $response;
+
+            return $this->_createJsonResponse('success',array('successData'=>$universities),200);
 
         }
 
     }
 
     /**
-     * @Route("/api/university/search", name="university_search")
-     *
-     * @Method({"POST"})
-     *
+     * University Search for Admin
      */
-    public function universitySearchActionAdmin(Request $request)
+    public function universitySearchAdminAction(Request $request)
     {
 
         $content = $request->getContent();
@@ -100,18 +91,16 @@ class UniversityManagementApiController extends Controller
         $universities = $em->getRepository('AppBundle:University')->getUniversitySearchResultAdmin($searchQuery, $pageNumber, $pageSize);
 
 
-        $json = $this->get('jms_serializer')->serialize(['universities' => $universities, 'totalNumber' => $totalNumber], 'json');
-        $response = new Response($json, 200);
-        return $response;
+        return $this->_createJsonResponse('success',array('successData'=>array(
+            'universities' => $universities,
+            'totalNumber' => $totalNumber
+        )),200);
+
 
     }
 
-
     /**
-     * Displays a form to update an Just Created User entity.
-     *
-     * @Route("/api/university/update_university", name="update_university")
-     * @Method({"POST"})
+     * Update University
      */
     public function updateUniversityAction(Request $request)
     {
@@ -199,13 +188,17 @@ class UniversityManagementApiController extends Controller
 
             }
 
-            $json = $serializer->serialize($message_array, 'json');
-            $response = new Response($json, 200);
-            return $response;
+            return $this->_createJsonResponse('success',array(
+                'successTitle'=>'University Updated Successfully',
+                'successData'=>$message_array
+            ),200);
+
         } else {
-            $json = $serializer->serialize(['error' => "Error on Submitting Data"], 'json');
-            $response = new Response($json, 200);
-            return $response;
+
+            return $this->_createJsonResponse('error',array(
+                'errorTitle'=>'University was not Updated',
+                'errorDescription'=>'Please Check the form and submit again'
+            ),400);
         }
 
 
@@ -213,9 +206,6 @@ class UniversityManagementApiController extends Controller
 
     /**
      * Save new Universities.
-     *
-     * @Route("/api/university/save_new_university", name="save_new_university")
-     * @Method({"POST"})
      */
     public function saveNewUniversityAction(Request $request)
     {
@@ -242,6 +232,7 @@ class UniversityManagementApiController extends Controller
 
             $universityForm = $this->createForm(new UniversityType(), $universityEntity);
 
+            //TODO work on response
             $universityForm->submit($university);
 
             if ($universityForm->isValid()) {
@@ -285,21 +276,31 @@ class UniversityManagementApiController extends Controller
         $message_array = null;
         if (!$university) {
             $message_array  = array(
-                'error'=>'No University was found.'
+                'errorTitle'=> 'University cannot be deleted',
+                'errorDescription'=>'No University was found.'
             );
+
+            return $this->_createJsonResponse('error',$message_array,400);
 
         }else{
             $em->remove($university);
             $em->flush();
             $message_array  = array(
-                'success'=>'University was removed.'
+                'successTitle'=>'University has been removed.'
             );
+            return $this->_createJsonResponse('success',$message_array,200);
         }
-        $json = $serializer->serialize($message_array, 'json');
-        $response = new Response($json , 200);
+
+
+    }
+
+
+    public function _createJsonResponse($key, $data,$code)
+    {
+        $serializer = $this->container->get('jms_serializer');
+        $json = $serializer->serialize([$key => $data], 'json');
+        $response = new Response($json, $code);
         return $response;
-
-
     }
 
 
