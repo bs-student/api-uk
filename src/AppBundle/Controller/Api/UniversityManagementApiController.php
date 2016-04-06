@@ -13,6 +13,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Response;
+use Lsw\ApiCallerBundle\Call\HttpGetJson;
+use Lsw\ApiCallerBundle\Call\HttpGetHtml;
 
 class UniversityManagementApiController extends Controller
 {
@@ -208,6 +210,95 @@ class UniversityManagementApiController extends Controller
      * Save new Universities.
      */
     public function saveNewUniversityAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $serializer = $this->container->get('jms_serializer');
+        /*$stateRepo = $em->getRepository("AppBundle:State");*/
+
+        $request_data = json_decode($request->getContent(), true);
+
+        if(array_key_exists('key',$request_data)){
+
+            $captchaApiInfo = $this->getParameter('google_re_captcha_info');
+
+            $host = $captchaApiInfo['host'];
+            $secret = $captchaApiInfo['secret'];
+
+            $url= $host."?secret=".$secret."&response=".$request_data['key'];
+
+            $jsonOutput = $this->container->get('api_caller')->call(new HttpGetHtml($url, null, null));
+            $captchaResponse = json_decode($jsonOutput,true);
+
+            if($captchaResponse['success']){
+                $universityData=array();
+
+
+
+                $universityData['universityName']=$request_data['universityName'];
+                $universityData['universityStatus']='Activated';
+                $universityData['universityUrl']=$request_data['universityUrl'];
+                $universityData['referral']=$request_data['referral'];
+                $universityData['campuses']=array();
+
+                for($i=0; $i<count($request_data['campuses']);$i++){
+
+                    array_push($universityData['campuses'],array(
+                        'campusName'=>$request_data['campuses'][$i]['campusName'],
+                        'state'=>$request_data['campuses'][$i]['state'],
+                        'campusStatus'=>'Activated'
+                    ));
+
+                }
+
+
+                $universityEntity = new University();
+
+                $universityForm = $this->createForm(new UniversityType(), $universityEntity);
+
+                $universityForm->submit($universityData);
+
+                if ($universityForm->isValid()) {
+
+                    $em->persist($universityEntity);
+                    $em->flush();
+
+                    return $this->_createJsonResponse('success',array(
+                        'successTitle'=>"University Successfully Created"
+                    ),201);
+
+                } else {
+
+                    $formErrorData = json_decode($serializer->serialize($universityForm, 'json'),true);
+
+                    return $this->_createJsonResponse('error',array(
+                        'errorTitle'=>"University Creation Unsuccessful",
+                        'errorDescription'=>"Please fill up the form again & submit.",
+                        'errorData'=>$formErrorData
+                    ),400);
+
+                }
+
+
+            }else{
+                return $this->_createJsonResponse('error',array(
+                    'errorTitle'=>"University Creation Unsuccessful",
+                    'errorDescription'=>"Captcha was Wrong. Reload and try again."
+                ),400);
+            }
+        }else{
+            return $this->_createJsonResponse('error',array(
+                'errorTitle'=>"University Creation Unsuccessful",
+                'errorDescription'=>"Sorry we were unable to create university. FillUp the form and try again."
+            ),400);
+        }
+
+
+    }
+
+    /**
+     * Save new Universities Admin Api.
+     */
+    public function saveNewUniversityAdminAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $serializer = $this->container->get('jms_serializer');

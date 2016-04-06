@@ -29,6 +29,18 @@ class CountryManagementApiController extends Controller
         return $this->_createJsonResponse('success',array('successData'=>$countries),200);
     }
 
+    /**
+     * Get List of all Countries Admin api
+     */
+    public function countryListAdminAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $countries = $em->getRepository('AppBundle:Country')->findAllCountry();
+
+        return $this->_createJsonResponse('success',array('successData'=>$countries),200);
+    }
+
     public function _createJsonResponse($key, $data,$code)
     {
         $serializer = $this->container->get('jms_serializer');

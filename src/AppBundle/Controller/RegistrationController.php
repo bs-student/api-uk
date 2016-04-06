@@ -21,6 +21,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Lsw\ApiCallerBundle\Call\HttpGetJson;
+use Lsw\ApiCallerBundle\Call\HttpGetHtml;
 
 
 class RegistrationController extends BaseController
@@ -67,59 +69,91 @@ class RegistrationController extends BaseController
      */
     public function registerAction()
     {
-
-        $form = $this->container->get('fos_user.registration.form');
-
-        $form->remove('googleId');
-        $form->remove('facebookId');
-        $form->remove('googleEmail');
-        $form->remove('facebookEmail');
-        $form->remove('registrationStatus');
-        $form->remove('registrationStatus');
-        $form->remove('googleToken');
-        $form->remove('facebookToken');
-
         $formHandler = $this->container->get('fos_user.registration.form.handler');
-        $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
+        $submittedData = $formHandler->getSubmittedData();
 
 
-        $process = $formHandler->process($confirmationEnabled);
+        if(array_key_exists('key',$submittedData)){
 
-        if ($process) {
-            $user = $form->getData();
+            $captchaApiInfo = $this->container->getParameter('google_re_captcha_info');
 
-            $authUser = false;
-            if ($confirmationEnabled) {
-                $this->container->get('session')->set('fos_user_send_confirmation_email/email', $user->getEmail());
-                $route = 'fos_user_registration_check_email';
+            $host = $captchaApiInfo['host'];
+            $secret = $captchaApiInfo['secret'];
 
-            } else {
-                $authUser = true;
-                $route = 'fos_user_registration_confirmed';
+            $url= $host."?secret=".$secret."&response=".$submittedData['key'];
+
+            $jsonOutput = $this->container->get('api_caller')->call(new HttpGetHtml($url, null, null));
+            $captchaResponse = json_decode($jsonOutput,true);
+            if($captchaResponse['success']){
+                $form = $this->container->get('fos_user.registration.form');
+
+                $form->remove('googleId');
+                $form->remove('facebookId');
+                $form->remove('googleEmail');
+                $form->remove('facebookEmail');
+                $form->remove('registrationStatus');
+                $form->remove('registrationStatus');
+                $form->remove('googleToken');
+                $form->remove('facebookToken');
+
+
+                $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
+
+
+                $process = $formHandler->process($confirmationEnabled);
+
+                if ($process) {
+                    $user = $form->getData();
+
+                    $authUser = false;
+                    if ($confirmationEnabled) {
+                        $this->container->get('session')->set('fos_user_send_confirmation_email/email', $user->getEmail());
+                        $route = 'fos_user_registration_check_email';
+
+                    } else {
+                        $authUser = true;
+                        $route = 'fos_user_registration_confirmed';
+                    }
+
+                    $message = array(
+                        'successTitle' => "Registration Successful",
+                        'successDescription' => "A verification Email has been sent to your mail. Please check verify your email to confirm registration."
+                    );
+
+                    $this->setFlash('fos_user_success', 'registration.flash.user_created');
+                    $url = $this->container->get('router')->generate($route);
+                    $response = new RedirectResponse($url);
+
+                    if ($authUser) {
+                        $this->authenticateUser($user, $response);
+                    }
+
+                    return $this->_createJsonResponse('success',$message,201);
+
+
+                }
+
+                return $this->_createJsonResponse('error',array(
+                    'errorTitle'=>"User Registration Unsuccessful",
+                    'errorDescription'=>"Sorry we were unable to register you. Reload the page and try again.",
+                    'errorData'=>$form
+                ),400);
+            }else{
+                return $this->_createJsonResponse('error',array(
+                    'errorTitle'=>"User Registration Unsuccessful",
+                    'errorDescription'=>"Captcha was Wrong. Reload and try again."
+                ),400);
             }
 
-            $message = array(
-                'successTitle' => "Registration Successful",
-                'successDescription' => "A verification Email has been sent to your mail. Please check verify your email to confirm registration."
-            );
-
-            $this->setFlash('fos_user_success', 'registration.flash.user_created');
-            $url = $this->container->get('router')->generate($route);
-            $response = new RedirectResponse($url);
-
-            if ($authUser) {
-                $this->authenticateUser($user, $response);
-            }
-
-            return $this->_createJsonResponse('success',$message,201);
-
-
+        }else{
+            return $this->_createJsonResponse('error',array(
+                'errorTitle'=>"User Registration Unsuccessful",
+                'errorDescription'=>"Sorry we were unable to register you. FillUp the form and try again."
+            ),400);
         }
-        return $this->_createJsonResponse('error',array(
-            'errorTitle'=>"User Registration Unsuccessful",
-            'errorDescription'=>"Sorry we were unable to register you. Reload the page and try again.",
-            'errorData'=>$form
-        ),400);
+
+
+
 
 
 

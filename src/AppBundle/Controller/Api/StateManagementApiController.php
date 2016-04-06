@@ -33,6 +33,24 @@ class StateManagementApiController extends Controller
 
     }
 
+
+    /**
+     * Get all the states under a country Admin api
+     */
+    public function statesByCountryAdminAction(Request $request)
+    {
+
+        $request_data = json_decode($request->getContent());
+
+        $em = $this->getDoctrine()->getManager();
+
+
+        $states = $em->getRepository('AppBundle:State')->findByCountryId($request_data->countryId);
+
+        return $this->_createJsonResponse('success',array('successData'=>$states),200);
+
+    }
+
     public function _createJsonResponse($key, $data,$code)
     {
         $serializer = $this->container->get('jms_serializer');

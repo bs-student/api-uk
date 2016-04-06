@@ -48,6 +48,7 @@ class CampusType extends AbstractType
             'constraints' => array(
                 new NotBlank(),
             ),
+
 //            'error_bubbling'=>true
         ));
 

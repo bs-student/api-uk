@@ -50,7 +50,7 @@ class UniversityType extends AbstractType
         $builder->add('campuses', 'collection', array(
             'type'         => new CampusType(),
             'allow_add'    => true,
-
+            'by_reference' =>false
         ))
         ;
 

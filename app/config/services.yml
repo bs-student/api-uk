@@ -3,6 +3,8 @@ parameters:
 
     sujit.user_manager.class : AppBundle\Manager\UserManager
     sujit.my_mailer.class : AppBundle\Mailer\Mailer
+
+
     api_caller.options:
             timeout: 50  # maximum transport + execution duration of the call in sec.
             ssl_verifypeer: false  # to stop cURL from verifying the peer's certificate.
@@ -22,7 +24,9 @@ parameters:
             host : "http://api2.campusbooks.com"
             uri : "/12/rest/bookprices"
             api_key: "s2SmHJAVMOykHAOdaG55"
-
+    google_re_captcha_info:
+            host: "https://www.google.com/recaptcha/api/siteverify"
+            secret: "6LfXfBwTAAAAAJeXK5uHanz7UJWCXIN8_qvBzmjq"
 
 
 services:

@@ -58,4 +58,8 @@ class RegistrationFormHandler extends BaseHandler
         }
         return $salt_code;
     }
+
+    function getSubmittedData(){
+        return json_decode($this->request->getContent(),true);
+    }
 }

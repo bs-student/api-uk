@@ -154,6 +154,22 @@ class CampusManagementApiController extends Controller
 
     }
 
+
+    /**
+     * Get Campus Details With University And State
+     */
+    public function campusDetailsWithUniversityAndStateAction(Request $request)
+    {
+        $requestData = json_decode($request->getContent(), true);
+        $em = $this->getDoctrine()->getManager();
+
+        $campusRepo = $em->getRepository("AppBundle:Campus");
+        $campusData = $campusRepo->getCampusDetailsWithUniversityAndState($requestData['campusId']);
+
+        return $this->_createJsonResponse('success',array('successData'=>$campusData),200);
+
+    }
+
     /**
      * Delete University
      */

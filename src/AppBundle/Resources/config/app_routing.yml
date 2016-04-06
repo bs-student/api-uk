@@ -161,6 +161,11 @@ campus_list_by_university:
     defaults:  {_controller: AppBundle:Api/CampusManagementApi:campusListByUniversity}
     methods: [POST]
 
+campus_details_with_university_and_state:
+    path: /campus/details_with_university_and_state
+    defaults:  {_controller: AppBundle:Api/CampusManagementApi:campusDetailsWithUniversityAndState}
+    methods: [POST]
+
 update_campus:
     path: /api/campus/update
     defaults:  {_controller: AppBundle:Api/CampusManagementApi:updateCampus}
@@ -180,8 +185,12 @@ delete_university:
 #CountryManagementApiController
 
 all_countries:
-    path: /api/country/list
+    path: /country/list
     defaults:  {_controller: AppBundle:Api/CountryManagementApi:countryList}
+
+all_countries_api:
+    path: /api/country/list
+    defaults:  {_controller: AppBundle:Api/CountryManagementApi:countryListAdmin}
 
 #ReferralManagementApiController
 
@@ -197,8 +206,13 @@ all_referrals:
 #StateManagementApiController
 
 all_states_by_country:
-    path: /api/state/list_by_country
+    path: /state/list_by_country
     defaults:  {_controller: AppBundle:Api/StateManagementApi:statesByCountry}
+    methods: [POST]
+
+all_states_by_country_api:
+    path: /api/state/list_by_country
+    defaults:  {_controller: AppBundle:Api/StateManagementApi:statesByCountryAdmin}
     methods: [POST]
 
 #UniversityManagementApiController
@@ -224,8 +238,14 @@ update_university:
     methods: [POST]
 
 save_new_university:
-    path: /api/university/save_new_university
+    path: /university/save_new_university
     defaults:  {_controller: AppBundle:Api/UniversityManagementApi:saveNewUniversity}
+    methods: [POST]
+
+
+save_new_university_admin:
+    path: /api/university/save_new_university
+    defaults:  {_controller: AppBundle:Api/UniversityManagementApi:saveNewUniversityAdmin}
     methods: [POST]
 
 delete_university:
