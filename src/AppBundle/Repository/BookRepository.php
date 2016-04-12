@@ -10,5 +10,66 @@ namespace AppBundle\Repository;
  */
 class BookRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getStudentBooksWithMultipleISBN($books){
 
+
+        $conditions = array();
+        foreach($books as $book){
+            array_push($conditions,"b.bookIsbn10 = '".$book['bookIsbn']."'");
+        }
+
+
+        $queryBuilderBook = $this->getEntityManager()->createQueryBuilder('b');
+
+
+        $queryBuilderBook->select('b.bookIsbn10,MIN(b.bookPriceSell) AS bookPriceSell')
+            ->from('AppBundle:Book', 'b')
+            ->groupBy('b.bookIsbn10');
+        $orX = $queryBuilderBook->expr()->orX();
+        $orX->addMultiple($conditions);
+        $queryBuilderBook->add('where', $orX);
+
+
+
+//        $queryBuilderBook2 = $this->getEntityManager()->createQueryBuilder('b2')
+//            ->innerJoin('AppBundle:Book', 'b2', 'WITH', $queryBuilderBook->expr()->eq( 'b2.bookIsbn10', '('.$queryBuilderBook->getDQL().')' ));
+        /*$queryBuilderBook2->select('b2.id,b2.bookIsbn10,MIN(b2.bookPriceSell) AS bookPriceSell')
+            ->from('AppBundle:Book', 'b2')
+            ->groupBy('b2.bookIsbn10');*/
+
+//        var_dump($queryBuilderBook->getQuery()->getSQL());
+//        die();
+
+
+        return($queryBuilderBook->getQuery()->getResult());
+
+
+
+
+
+
+
+//        return $this->getEntityManager()
+//            ->createQueryBuilder('u')
+//            ->select('c.id as campusId, u.universityName, c.campusName, s.stateShortName, co.countryName')
+//
+//            ->from('AppBundle:University', 'u')
+//
+//            ->innerJoin('AppBundle:Campus', 'c','WITH', 'u.id = c.university')
+//
+//            ->andwhere('u.universityStatus=\'Activated\'')
+//            ->andwhere('c.campusName LIKE :query OR u.universityName LIKE :query OR co.countryName LIKE :query OR s.stateName LIKE :query')
+//
+//
+//
+//            ->setParameter('query', '%'.$searchQuery.'%')
+//            ->getQuery()
+//            ->getResult();
+
+
+
+
+
+
+    }
 }

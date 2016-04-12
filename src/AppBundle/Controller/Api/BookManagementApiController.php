@@ -272,6 +272,32 @@ class BookManagementApiController extends Controller
 
         $booksArray = $this->_parseMultipleBooksAmazonXmlResponse($xmlOutput);
 
+
+        /*$user = $this->container->get('security.token_storage')->getToken()->getUser();
+        var_dump($user);*/
+
+
+        $em = $this->getDoctrine()->getManager();
+        $bookRepo = $em->getRepository("AppBundle:Book");
+        $studentBooks=$bookRepo->getStudentBooksWithMultipleISBN($booksArray['books']);
+
+        for($i = 0;$i<count($booksArray['books']);$i++){
+
+            if(strpos($booksArray['books'][$i]['bookTitle'],":")){
+                $booksArray['books'][$i]['bookSubTitle']=substr($booksArray['books'][$i]['bookTitle'],strpos($booksArray['books'][$i]['bookTitle'],":")+2);
+                $booksArray['books'][$i]['bookTitle'] = substr($booksArray['books'][$i]['bookTitle'],0,strpos($booksArray['books'][$i]['bookTitle'],":"));
+            }
+
+
+            foreach($studentBooks as $studentBook){
+                if(!strcmp(strval($studentBook['bookIsbn10']), strval($booksArray['books'][$i]['bookIsbn']))){
+                    $booksArray['books'][$i]['bookPriceStudentLowest']="$".$studentBook['bookPriceSell'];
+                    break;
+                }
+            }
+        }
+
+
         return $this->_createJsonResponse('success', array('successData'=>$booksArray),200);
 
     }
@@ -478,8 +504,24 @@ class BookManagementApiController extends Controller
             'bookPublisher' => (string)$item->ItemAttributes->Publisher,
             'bookPublishDate' => (string)$item->ItemAttributes->PublicationDate,
             'bookBinding' => (string)$item->ItemAttributes->Binding,
-            'bookMediumImageUrl' => $book_image_medium_url,
-            'bookLargeImageUrl' => $book_image_large_url,
+            'bookImages'=>[
+                array(
+                    'image'=>$book_image_large_url,
+                    'imageId'=>0
+                )/*,
+                array(
+                    'image'=>$book_image_large_url,
+                    'imageId'=>1
+                ),
+                array(
+                    'image'=>$book_image_large_url,
+                    'imageId'=>2
+                ),
+                array(
+                    'image'=>$book_image_large_url,
+                    'imageId'=>3
+                )*/
+            ],
             'bookDescription' => (string)$item->EditorialReviews->EditorialReview->Content,
             'bookPages' => (string)$item->ItemAttributes->NumberOfPages,
             'bookOfferId'=>$offerId,

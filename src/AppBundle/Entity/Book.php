@@ -80,7 +80,7 @@ class Book
     private $bookPage;
 
     /**
-     * @var string
+     * @var decimal
      *
      */
     private $bookPriceSell;
@@ -164,7 +164,11 @@ class Book
      *
      */
     private $bookAvailableDate;
-
+    /**
+     * @var string
+     *
+     */
+    private $bookStatus ;
 
 
 
@@ -886,4 +890,27 @@ class Book
     }
 
 
+
+    /**
+     * Set bookStatus
+     *
+     * @param string $bookStatus
+     * @return Book
+     */
+    public function setBookStatus($bookStatus)
+    {
+        $this->bookStatus = $bookStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get bookStatus
+     *
+     * @return string 
+     */
+    public function getBookStatus()
+    {
+        return $this->bookStatus;
+    }
 }

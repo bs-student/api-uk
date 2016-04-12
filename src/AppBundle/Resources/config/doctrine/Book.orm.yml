@@ -80,8 +80,9 @@ AppBundle\Entity\Book:
         bookPriceSell:
             column: book_price_sell
             nullable: true
-            type: string
-            length: '10'
+            type: decimal
+            precision: 7
+            scale: 2
         bookLanguage:
             column: book_language
             nullable: true
@@ -150,6 +151,12 @@ AppBundle\Entity\Book:
         bookAvailableDate:
             column: book_available_date
             type: date
-
+        bookStatus:
+            column: book_status
+            nullable: false
+            options:
+                default: 'Activated'
+            type: string
+            length: '20'
 
     lifecycleCallbacks: {  }

@@ -124,7 +124,7 @@ user_update_university_campus:
 #BookManagementApiController
 
 books_search_by_keyword_amazon:
-    path: /api/book/search_by_keyword_amazon
+    path: /book/search_by_keyword_amazon
     defaults:  {_controller: AppBundle:Api/BookManagementApi:searchByKeywordAmazonApi}
     methods: [POST]
 
