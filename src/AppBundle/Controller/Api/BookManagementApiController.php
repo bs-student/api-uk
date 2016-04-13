@@ -282,16 +282,17 @@ class BookManagementApiController extends Controller
         $studentBooks=$bookRepo->getStudentBooksWithMultipleISBN($booksArray['books']);
 
         for($i = 0;$i<count($booksArray['books']);$i++){
-
+            //Set Subtitle in Book
             if(strpos($booksArray['books'][$i]['bookTitle'],":")){
                 $booksArray['books'][$i]['bookSubTitle']=substr($booksArray['books'][$i]['bookTitle'],strpos($booksArray['books'][$i]['bookTitle'],":")+2);
                 $booksArray['books'][$i]['bookTitle'] = substr($booksArray['books'][$i]['bookTitle'],0,strpos($booksArray['books'][$i]['bookTitle'],":"));
             }
 
-
+            //
             foreach($studentBooks as $studentBook){
                 if(!strcmp(strval($studentBook['bookIsbn10']), strval($booksArray['books'][$i]['bookIsbn']))){
                     $booksArray['books'][$i]['bookPriceStudentLowest']="$".$studentBook['bookPriceSell'];
+                    $booksArray['books'][$i]['bookPriceStudentLowestFound']=true;
                     break;
                 }
             }
