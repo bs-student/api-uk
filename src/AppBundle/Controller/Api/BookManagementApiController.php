@@ -272,34 +272,39 @@ class BookManagementApiController extends Controller
 
         $booksArray = $this->_parseMultipleBooksAmazonXmlResponse($xmlOutput);
 
-
         /*$user = $this->container->get('security.token_storage')->getToken()->getUser();
         var_dump($user);*/
 
 
-        $em = $this->getDoctrine()->getManager();
-        $bookRepo = $em->getRepository("AppBundle:Book");
-        $studentBooks=$bookRepo->getStudentBooksWithMultipleISBN($booksArray['books']);
+        if(count($booksArray['books'])>0){
+            $em = $this->getDoctrine()->getManager();
+            $bookRepo = $em->getRepository("AppBundle:Book");
+            $studentBooks=$bookRepo->getStudentBooksWithMultipleISBN($booksArray['books']);
 
-        for($i = 0;$i<count($booksArray['books']);$i++){
-            //Set Subtitle in Book
-            if(strpos($booksArray['books'][$i]['bookTitle'],":")){
-                $booksArray['books'][$i]['bookSubTitle']=substr($booksArray['books'][$i]['bookTitle'],strpos($booksArray['books'][$i]['bookTitle'],":")+2);
-                $booksArray['books'][$i]['bookTitle'] = substr($booksArray['books'][$i]['bookTitle'],0,strpos($booksArray['books'][$i]['bookTitle'],":"));
-            }
+            for($i = 0;$i<count($booksArray['books']);$i++){
+                //Set Subtitle in Book
+                if(strpos($booksArray['books'][$i]['bookTitle'],":")){
+                    $booksArray['books'][$i]['bookSubTitle']=substr($booksArray['books'][$i]['bookTitle'],strpos($booksArray['books'][$i]['bookTitle'],":")+2);
+                    $booksArray['books'][$i]['bookTitle'] = substr($booksArray['books'][$i]['bookTitle'],0,strpos($booksArray['books'][$i]['bookTitle'],":"));
+                }
 
-            //
-            foreach($studentBooks as $studentBook){
-                if(!strcmp(strval($studentBook['bookIsbn10']), strval($booksArray['books'][$i]['bookIsbn']))){
-                    $booksArray['books'][$i]['bookPriceStudentLowest']="$".$studentBook['bookPriceSell'];
-                    $booksArray['books'][$i]['bookPriceStudentLowestFound']=true;
-                    break;
+                //
+                foreach($studentBooks as $studentBook){
+                    if(!strcmp(strval($studentBook['bookIsbn10']), strval($booksArray['books'][$i]['bookIsbn']))){
+                        $booksArray['books'][$i]['bookPriceStudentLowest']="$".$studentBook['bookPriceSell'];
+                        $booksArray['books'][$i]['bookPriceStudentLowestFound']=true;
+                        break;
+                    }
                 }
             }
+
+
+            return $this->_createJsonResponse('success', array('successData'=>$booksArray),200);
+        }else{
+            return $this->_createJsonResponse('error', array('errorTitle'=>"No Books were found","errorDescription"=>"Please Refine your search query and try again."),400);
         }
 
 
-        return $this->_createJsonResponse('success', array('successData'=>$booksArray),200);
 
     }
 
@@ -442,6 +447,7 @@ class BookManagementApiController extends Controller
         $simpleXml = simplexml_load_string($fileContents);
 
         $booksArray = array();
+
         foreach ($simpleXml->Items->Item as $item) {
             $booksArray[] = $this->_createJsonFromItemAmazon($item);
         }
