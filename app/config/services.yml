@@ -24,6 +24,10 @@ parameters:
             host : "http://api2.campusbooks.com"
             uri : "/12/rest/bookprices"
             api_key: "s2SmHJAVMOykHAOdaG55"
+    campus_books_api_info_lowest_price:
+            host : "http://api2.campusbooks.com"
+            uri : "/12/rest/prices"
+            api_key: "s2SmHJAVMOykHAOdaG55"
     google_re_captcha_info:
             host: "https://www.google.com/recaptcha/api/siteverify"
             secret: "6LfXfBwTAAAAAJeXK5uHanz7UJWCXIN8_qvBzmjq"

@@ -10,7 +10,9 @@ namespace AppBundle\Repository;
  */
 class BookRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getStudentBooksWithMultipleISBN($books){
+    public function getStudentBooksWithMultipleISBN($books,$campusId){
+
+
 
 
         $conditions = array();
@@ -24,25 +26,27 @@ class BookRepository extends \Doctrine\ORM\EntityRepository
 
         $queryBuilderBook->select('b.bookIsbn10,MIN(b.bookPriceSell) AS bookPriceSell')
             ->from('AppBundle:Book', 'b')
+
             ->groupBy('b.bookIsbn10');
+
+        if($campusId!=null){
+            $queryBuilderBook->innerJoin('AppBundle:User', 'u','WITH', 'u.id = b.bookSeller');
+
+        }
+
         $orX = $queryBuilderBook->expr()->orX();
         $orX->addMultiple($conditions);
         $queryBuilderBook->add('where', $orX);
 
-
-
-//        $queryBuilderBook2 = $this->getEntityManager()->createQueryBuilder('b2')
-//            ->innerJoin('AppBundle:Book', 'b2', 'WITH', $queryBuilderBook->expr()->eq( 'b2.bookIsbn10', '('.$queryBuilderBook->getDQL().')' ));
-        /*$queryBuilderBook2->select('b2.id,b2.bookIsbn10,MIN(b2.bookPriceSell) AS bookPriceSell')
-            ->from('AppBundle:Book', 'b2')
-            ->groupBy('b2.bookIsbn10');*/
-
-//        var_dump($queryBuilderBook->getQuery()->getSQL());
-//        die();
+        $queryBuilderBook->add('where', $orX);
+        if($campusId!=null){
+            $queryBuilderBook->andWhere('u.campus = '.$campusId);
+        }
 
 
         return($queryBuilderBook->getQuery()->getResult());
 
+//        die($queryBuilderBook->getQuery()->getSql());
 
 
 

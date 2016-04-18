@@ -47,6 +47,20 @@ class BookManagementApiController extends Controller
 
     }
 
+    /**
+     * Get Lowest Online Price Campus Books Api
+     */
+    public function getLowestPriceByIsbnCampusBooksApiAction(Request $request){
+        $isbn = $request->query->get('isbn');
+        if($isbn!=null){
+            $lowestOnlinePrice = $this->_getBooksLowestPriceByIsbnCampusBooks($isbn);
+            return $this->_createJsonResponse('success',array('successData'=>array('lowestOnlinePrice'=>$lowestOnlinePrice)),200);
+        }else{
+            return $this->_createJsonResponse('error',array('errorTitle'=>"Invalid Isbn"),400);
+        }
+
+    }
+
 
     /**
      * Search By ASIN Amazon API
@@ -279,7 +293,12 @@ class BookManagementApiController extends Controller
         if(count($booksArray['books'])>0){
             $em = $this->getDoctrine()->getManager();
             $bookRepo = $em->getRepository("AppBundle:Book");
-            $studentBooks=$bookRepo->getStudentBooksWithMultipleISBN($booksArray['books']);
+            $user = $this->container->get('security.context')->getToken()->getUser();
+            $campusId=null;
+            if($user!="anon."){
+                $campusId=$user->getCampus()->getId();
+            }
+            $studentBooks=$bookRepo->getStudentBooksWithMultipleISBN($booksArray['books'],$campusId);
 
             for($i = 0;$i<count($booksArray['books']);$i++){
                 //Set Subtitle in Book
@@ -377,6 +396,39 @@ class BookManagementApiController extends Controller
 
     }
 
+    public function _getBooksLowestPriceByIsbnCampusBooks($isbn)
+    {
+        $campusBooksApiInfo = $this->getParameter('campus_books_api_info_lowest_price');
+        $apiKey = $campusBooksApiInfo['api_key'];
+        $host = $campusBooksApiInfo['host'];
+        $uri = $campusBooksApiInfo['uri'];
+
+        $url= $host.$uri."?key=".$apiKey."&isbn=".$isbn;
+
+        $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($url, null, null));
+
+
+        $fileContents = str_replace(array("\n", "\r", "\t"), '', $xmlOutput);
+
+        $simpleXml = simplexml_load_string($fileContents);
+
+
+        $priceArray=array();
+        foreach($simpleXml->page->offers->condition as $condition){
+
+            foreach($condition->offer as $offer){
+                array_push($priceArray,(floatval($offer->total_price[0])));
+            }
+
+        }
+
+        return "$".min($priceArray);
+
+
+
+
+    }
+
     public function _getUrlWithSignature($amazonCredentials)
     {
         // sort the parameters
@@ -463,6 +515,7 @@ class BookManagementApiController extends Controller
     public function _createJsonFromItemAmazon($item)
     {
 
+        //Getting Price
         if (!empty($item->Offers->Offer->OfferListing->Price->FormattedPrice)) {
             $price = (string)$item->Offers->Offer->OfferListing->Price->FormattedPrice;
         } elseif (!empty($item->ListPrice->FormattedPrice)) {
@@ -471,6 +524,7 @@ class BookManagementApiController extends Controller
             $price = "Not Found";
         }
 
+        //Getting Author
         if (isset($item->ItemAttributes->Director)) {
             $book_director_author_artist = (string)$item->ItemAttributes->Director;
         } elseif (isset($item->ItemAttributes->Author)) {
@@ -481,6 +535,7 @@ class BookManagementApiController extends Controller
             $book_director_author_artist = 'No Author Found';
         }
 
+        //Getting offer
         if(!empty($item->Offers->Offer->OfferListing->OfferListingId)){
             $offerId = (string)$item->Offers->Offer->OfferListing->OfferListingId;
         }else{
@@ -488,6 +543,7 @@ class BookManagementApiController extends Controller
         }
 
 
+        //Getting Image
         if (!empty($item->MediumImage->URL)) {
             $book_image_medium_url = (string)$item->MediumImage->URL;
         } else {
@@ -499,6 +555,14 @@ class BookManagementApiController extends Controller
         } else {
             $book_image_large_url  = './images/misc/no_picture_100x125.jpg';
         }
+
+        //Getting Description
+        if (!empty($item->EditorialReviews->EditorialReview->Content)) {
+            $description = (string)$item->EditorialReviews->EditorialReview->Content;
+        } else {
+            $description  = '';
+        }
+
 
         return array(
             'bookAsin' => (string)$item->ASIN,
@@ -529,10 +593,10 @@ class BookManagementApiController extends Controller
                     'imageId'=>3
                 )*/
             ],
-            'bookDescription' => (string)$item->EditorialReviews->EditorialReview->Content,
+            'bookDescription' => $description,
             'bookPages' => (string)$item->ItemAttributes->NumberOfPages,
             'bookOfferId'=>$offerId,
-            'bookLanguage'=> (string)$item->ItemAttributes->Languages->Language->Name,
+//            'bookLanguage'=> (string)$item->ItemAttributes->Languages->Language->Name,
         );
     }
 

@@ -129,22 +129,27 @@ books_search_by_keyword_amazon:
     methods: [POST]
 
 books_search_by_asin_amazon:
-    path: /api/book/search_by_asin_amazon
+    path: /book/search_by_asin_amazon
     defaults:  {_controller: AppBundle:Api/BookManagementApi:searchByAsinAmazonApi}
     methods: [POST]
 
 books_search_by_isbn_amazon:
-    path: /api/book/search_by_isbn_amazon
+    path: /book/search_by_isbn_amazon
     defaults:  {_controller: AppBundle:Api/BookManagementApi:searchByIsbnAmazonApi}
     methods: [POST]
 
 books_search_by_isbn_campus_books:
-    path: /api/book/search_by_isbn_campus_books
+    path: /book/search_by_isbn_campus_books
     defaults:  {_controller: AppBundle:Api/BookManagementApi:searchByIsbnCampusBooksApi}
     methods: [POST]
 
+get_lowest_online_price_campus_books_by_isbn:
+    path: /book/get_lowest_price_by_isbn_campus_books
+    defaults:  {_controller: AppBundle:Api/BookManagementApi:getLowestPriceByIsbnCampusBooksApi}
+    methods: [GET]
+
 get_amazon_cart_create_url:
-    path: /api/book/get_amazon_cart_create_url
+    path: /book/get_amazon_cart_create_url
     defaults:  {_controller: AppBundle:Api/BookManagementApi:getAmazonCartCreateUrl}
     methods: [POST]
 
