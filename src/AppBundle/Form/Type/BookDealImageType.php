@@ -16,22 +16,12 @@ class BookImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-
-        $builder->add('imageName','text',array(
-            'constraints' => array(
-                new NotBlank(),
-
-            )
-        ));
         $builder->add('imageUrl','text',array(
             'constraints' => array(
                 new NotBlank(),
 
             )
         ));
-        $builder->add('titleImage','checkbox');
-
-
     }
 
 
@@ -39,9 +29,6 @@ class BookImageType extends AbstractType
     {
         return 'appbundle_bookimage';
     }
-
-
-
 
     /**
      * @param OptionsResolver $resolver
@@ -51,11 +38,7 @@ class BookImageType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\BookImage',
             'csrf_protection' => false,
-//            'validation_groups' => false,
             'allow_extra_fields' => true,
-//            'error_mapping' => array(
-//                'usernameAlreadyExist' => 'username',
-//            ),
 
         ));
     }

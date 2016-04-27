@@ -21,21 +21,11 @@ AppBundle\Entity\BookImage:
             generator:
                 strategy: AUTO
     fields:
-        imageName:
-            column: image_name
-            nullable: true
-            type: string
-            length: '255'
         imageUrl:
             column: image_url
             nullable: true
             type: string
             length: '255'
-        titleImage:
-            column: title_image
-            nullable: true
-            type: boolean
-
 
 
     lifecycleCallbacks: {  }

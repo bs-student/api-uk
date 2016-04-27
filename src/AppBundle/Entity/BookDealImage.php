@@ -21,19 +21,7 @@ class BookImage
      * @var string
      *
      */
-    private $imageName;
-
-    /**
-     * @var string
-     *
-     */
     private $imageUrl;
-
-    /**
-     * @var boolean
-     *
-     */
-    private $titleImage;
 
 
     private $book;
@@ -49,28 +37,7 @@ class BookImage
         return $this->id;
     }
 
-    /**
-     * Set imageName
-     *
-     * @param string $imageName
-     * @return BookImage
-     */
-    public function setImageName($imageName)
-    {
-        $this->imageName = $imageName;
 
-        return $this;
-    }
-
-    /**
-     * Get imageName
-     *
-     * @return string 
-     */
-    public function getImageName()
-    {
-        return $this->imageName;
-    }
 
     /**
      * Set imageUrl
@@ -95,28 +62,6 @@ class BookImage
         return $this->imageUrl;
     }
 
-    /**
-     * Set titleImage
-     *
-     * @param boolean $titleImage
-     * @return BookImage
-     */
-    public function setTitleImage($titleImage)
-    {
-        $this->titleImage = $titleImage;
-
-        return $this;
-    }
-
-    /**
-     * Get titleImage
-     *
-     * @return boolean 
-     */
-    public function getTitleImage()
-    {
-        return $this->titleImage;
-    }
 
     /**
      * Set book
