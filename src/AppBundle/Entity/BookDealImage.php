@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * BookImage
  */
-class BookImage
+class BookDealImage
 {
 
 
@@ -24,8 +24,13 @@ class BookImage
     private $imageUrl;
 
 
-    private $book;
+    private $bookDeal;
 
+
+    public function __toString()
+    {
+        return strval($this->id);
+    }
 
     /**
      * Get id
@@ -37,13 +42,11 @@ class BookImage
         return $this->id;
     }
 
-
-
     /**
      * Set imageUrl
      *
      * @param string $imageUrl
-     * @return BookImage
+     * @return BookDealImage
      */
     public function setImageUrl($imageUrl)
     {
@@ -62,31 +65,26 @@ class BookImage
         return $this->imageUrl;
     }
 
-
     /**
-     * Set book
+     * Set bookDeal
      *
-     * @param \AppBundle\Entity\Book $book
-     * @return BookImage
+     * @param \AppBundle\Entity\BookDeal $bookDeal
+     * @return BookDealImage
      */
-    public function setBook(\AppBundle\Entity\Book $book = null)
+    public function setBookDeal(\AppBundle\Entity\BookDeal $bookDeal = null)
     {
-        $this->book = $book;
+        $this->bookDeal = $bookDeal;
 
         return $this;
     }
 
     /**
-     * Get book
+     * Get bookDeal
      *
-     * @return \AppBundle\Entity\Book 
+     * @return \AppBundle\Entity\BookDeal 
      */
-    public function getBook()
+    public function getBookDeal()
     {
-        return $this->book;
-    }
-    public function __toString()
-    {
-        return strval($this->id);
+        return $this->bookDeal;
     }
 }

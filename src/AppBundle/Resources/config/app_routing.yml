@@ -128,6 +128,11 @@ books_search_by_keyword_amazon:
     defaults:  {_controller: AppBundle:Api/BookManagementApi:searchByKeywordAmazonApi}
     methods: [POST]
 
+books_search_by_keyword_amazon_api:
+    path: /api/book/search_by_keyword_amazon_api
+    defaults:  {_controller: AppBundle:Api/BookManagementApi:searchByKeywordAmazonApiWithApiCall}
+    methods: [POST]
+
 books_search_by_asin_amazon:
     path: /book/search_by_asin_amazon
     defaults:  {_controller: AppBundle:Api/BookManagementApi:searchByAsinAmazonApi}
@@ -153,11 +158,31 @@ get_amazon_cart_create_url:
     defaults:  {_controller: AppBundle:Api/BookManagementApi:getAmazonCartCreateUrl}
     methods: [POST]
 
+get_campus_deals_by_isbn_api:
+    path: /api/book/get_campus_deals_by_isbn_api
+    defaults:  {_controller: AppBundle:Api/BookManagementApi:getCampusDealsByIsbnApi}
+    methods: [POST]
+
+get_campus_deals_by_isbn:
+    path: /book/get_campus_deals_by_isbn
+    defaults:  {_controller: AppBundle:Api/BookManagementApi:getCampusDealsByIsbn}
+    methods: [POST]
+
+#get_on_campus_deals_by_isbn:
+#    path: /api/book/get_on_campus_deals_by_isbn
+#    defaults:  {_controller: AppBundle:Api/BookManagementApi:getOnCampusDealsByIsbn}
+#    methods: [POST]
+
+
 add_new_sell_book:
     path: /api/book/add_new_sell_book
     defaults:  {_controller: AppBundle:Api/BookManagementApi:addNewSellBook}
     methods: [POST]
 
+add_new_custom_sell_book:
+    path: /api/book/add_new_custom_sell_book
+    defaults:  {_controller: AppBundle:Api/BookManagementApi:addNewCustomSellBook}
+    methods: [POST]
 
 #CampusManagementApiController
 
@@ -258,3 +283,37 @@ delete_university:
     defaults:  {_controller: AppBundle:Api/UniversityManagementApi:deleteUniversity}
     methods: [POST]
 
+#ContactManagementApiController
+
+add_contact_api:
+    path: /api/contact/add_contact_api
+    defaults:  {_controller: AppBundle:Api/ContactManagementApi:addNewContactApi}
+    methods: [POST]
+
+add_contact:
+    path: /contact/add_contact
+    defaults:  {_controller: AppBundle:Api/ContactManagementApi:addNewContact}
+    methods: [POST]
+
+get_messages:
+    path: /api/contact/get_messages
+    defaults:  {_controller: AppBundle:Api/ContactManagementApi:getMessages}
+    methods: [POST]
+
+send_messages:
+    path: /api/contact/send_messages
+    defaults:  {_controller: AppBundle:Api/ContactManagementApi:sendMessages}
+    methods: [POST]
+
+
+#BookDealManagementApiController
+
+get_book_deals_i_have_contacted_for:
+    path: /api/book_deal/get_book_deals_i_have_contacted_for
+    defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getBooksIHaveContactedFor}
+    methods: [GET]
+
+get_book_deals_i_have_created:
+    path: /api/book_deal/get_book_deals_i_have_created
+    defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getBooksIHaveCreated}
+    methods: [GET]

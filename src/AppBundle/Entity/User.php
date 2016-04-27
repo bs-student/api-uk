@@ -17,7 +17,8 @@ class User extends BaseUser
     {
         $this->buyBooks = new ArrayCollection();
         $this->sellBooks = new ArrayCollection();
-        $this->messages = new ArrayCollection();
+        $this->wishLists = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
         parent::__construct();
     }
 
@@ -86,8 +87,9 @@ class User extends BaseUser
 
     private $sellBooks;
 
-    private $messages;
+    private $wishLists;
 
+    private $contacts;
 
     /**
      * Get id
@@ -443,5 +445,71 @@ class User extends BaseUser
     public function getMessages()
     {
         return $this->messages;
+    }
+
+    /**
+     * Add wishLists
+     *
+     * @param \AppBundle\Entity\WishList $wishLists
+     * @return User
+     */
+    public function addWishList(\AppBundle\Entity\WishList $wishLists)
+    {
+        $this->wishLists[] = $wishLists;
+
+        return $this;
+    }
+
+    /**
+     * Remove wishLists
+     *
+     * @param \AppBundle\Entity\WishList $wishLists
+     */
+    public function removeWishList(\AppBundle\Entity\WishList $wishLists)
+    {
+        $this->wishLists->removeElement($wishLists);
+    }
+
+    /**
+     * Get wishLists
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getWishLists()
+    {
+        return $this->wishLists;
+    }
+
+    /**
+     * Add contacts
+     *
+     * @param \AppBundle\Entity\Contact $contacts
+     * @return User
+     */
+    public function addContact(\AppBundle\Entity\Contact $contacts)
+    {
+        $this->contacts[] = $contacts;
+
+        return $this;
+    }
+
+    /**
+     * Remove contacts
+     *
+     * @param \AppBundle\Entity\Contact $contacts
+     */
+    public function removeContact(\AppBundle\Entity\Contact $contacts)
+    {
+        $this->contacts->removeElement($contacts);
+    }
+
+    /**
+     * Get contacts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getContacts()
+    {
+        return $this->contacts;
     }
 }

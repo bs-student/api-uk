@@ -1,5 +1,5 @@
 {% block body -%}
-    Seller Sent you a Message
+    Message has been sent to Buyer ({{ buyer }})
 
     <strong>Here is the deal information</strong><br/>
     Title: {{ book.bookTitle }}<br/>
@@ -9,7 +9,7 @@
     Contact :{{ bookDeal.bookContactMethod }}<br/>
     Price:${{ bookDeal.bookPriceSell }}<br/>
 
-    <strong>Message</strong><br/>
-    {{ seller.username }} : {{ message }} }}<br/>
+    <strong>Your Message</strong><br/>
+    {{ seller.username }} : {{ message.messageBody }} <br/>
 
 {% endblock %}

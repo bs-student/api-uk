@@ -1,11 +1,13 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\DateTime;
 class MessageType extends AbstractType
 {
     /**
@@ -15,22 +17,29 @@ class MessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('messageBody')
-            ->add('messageDateTime')
-            ->add('user')
-            ->add('contact')
+            ->add('messageBody','text',array(
+                'constraints' => array(
+                    new NotBlank(),
+
+                )
+            ))
+            ->add('messageDateTime','datetime',array(
+                'widget' => 'single_text',
+                'constraints' => array(
+                    new DateTime(),
+                    new NotBlank()
+                )
+            ))
+            ->add('user','entity',array(
+                'class' => "AppBundle:User"/*,
+                'constraints' => array(
+                    new NotBlank(),
+
+                )*/
+            ))
         ;
     }
     
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Message'
-        ));
-    }
 
     /**
      * @return string
@@ -39,4 +48,23 @@ class MessageType extends AbstractType
     {
         return 'appbundle_message';
     }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'AppBundle\Entity\Message',
+            'csrf_protection' => false,
+//            'validation_groups' => false,
+            'allow_extra_fields' => true,
+//            'error_mapping' => array(
+//                'usernameAlreadyExist' => 'username',
+//            ),
+
+        ));
+    }
+
+
 }

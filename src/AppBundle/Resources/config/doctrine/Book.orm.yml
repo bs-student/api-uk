@@ -1,162 +1,65 @@
 AppBundle\Entity\Book:
     type: entity
-    table: 	books
+    table: books
     repositoryClass: AppBundle\Repository\BookRepository
-
-    oneToMany:
-        messages:
-          targetEntity: Message
-          mappedBy: book
-        bookImages:
-          targetEntity: BookImage
-          mappedBy: book
-          cascade: [persist,remove]
-
-    manyToOne:
-        bookBuyer:
-            targetEntity: User
-            inversedBy: buyBooks
-            joinColumn:
-              name: book_buyer
-              referencedColumnName: id
-        bookSeller:
-            targetEntity: User
-            inversedBy: sellBooks
-            joinColumn:
-              name: book_seller
-              referencedColumnName: id
-
-
     id:
         id:
             type: integer
             id: true
             generator:
                 strategy: AUTO
+
+    oneToMany:
+        bookDeals:
+            targetEntity: BookDeal
+            mappedBy: book
+            cascade: [persist,remove]
+
     fields:
         bookTitle:
-            column: book_title
-            nullable: true
+            nullable: false
             type: string
             length: '255'
         bookDirectorAuthorArtist:
-            column: book_director_author_artist
             nullable: true
             type: string
             length: '255'
         bookEdition:
-            column: book_edition
             nullable: true
             type: string
             length: '100'
         bookIsbn10:
-            column: book_isbn_10
-            nullable: true
+            nullable: false
             type: string
-            length: '12'
+            length: '30'
         bookIsbn13:
-            column: book_isbn_13
-            nullable: true
+            nullable: false
             type: string
-            length: '20'
+            length: '30'
         bookPublisher:
-            column: book_publisher
             nullable: true
             type: string
             length: '200'
         bookPublishDate:
-            column: book_publish_date
+            nullable: true
             type: date
         bookBinding:
-            column: book_binding
             nullable: true
             type: string
-            length: '50'
+            length: '100'
         bookPage:
-            column: book_page
             nullable: true
             type: string
             length: '10'
-        bookPriceSell:
-            column: book_price_sell
-            nullable: true
-            type: decimal
-            precision: 7
-            scale: 2
         bookLanguage:
-            column: book_language
             nullable: true
             type: string
-            length: '10'
+            length: '20'
         bookDescription:
-            column: book_description
             nullable: true
             type: text
-
-        bookCondition:
-            column: book_condition
+        bookImage:
             nullable: true
             type: string
-            length: '20'
-        bookIsHighlighted:
-            column: book_is_highlighted
-            nullable: true
-            type: string
-            length: '5'
-        bookHasNotes:
-            column: book_has_notes
-            nullable: true
-            type: string
-            length: '5'
-        bookComment:
-            column: book_comment
-            nullable: true
-            type: string
-            length: '255'
-        bookContactMethod:
-            column: book_contact_method
-            nullable: true
-            type: string
-            length: '20'
-        bookContactHomeNumber:
-            column: book_contact_home_number
-            nullable: true
-            type: string
-            length: '20'
-        bookContactCellNumber:
-            column: book_contact_cell_number
-            nullable: true
-            type: string
-            length: '20'
-        bookContactEmail:
-            column: book_contact_email
-            nullable: true
-            type: string
-            length: '20'
-        bookIsAvailablePublic:
-            column: book_is_available_public
-            nullable: true
-            type: string
-            length: '5'
-
-        bookPaymentMethodCaShOnExchange:
-            column: book_payment_method_cash_on_exchange
-            nullable: true
-            type: boolean
-
-        bookPaymentMethodCheque:
-            column: book_payment_method_cheque
-            nullable: true
-            type: boolean
-        bookAvailableDate:
-            column: book_available_date
-            type: date
-        bookStatus:
-            column: book_status
-            nullable: false
-            options:
-                default: 'Activated'
-            type: string
-            length: '20'
-
+            length: '200'
     lifecycleCallbacks: {  }

@@ -1,18 +1,16 @@
-AppBundle\Entity\BookImage:
+AppBundle\Entity\BookDealImage:
     type: entity
-    table: 	book_images
-    repositoryClass: AppBundle\Repository\BookImageRepository
-
+    table: 	book_deal_images
+    repositoryClass: AppBundle\Repository\BookDealImageRepository
 
 
     manyToOne:
-        book:
-            targetEntity: Book
-            inversedBy: bookImages
+        bookDeal:
+            targetEntity: BookDeal
+            inversedBy: bookDealImages
             joinColumn:
-              name: book_id
-              referencedColumnName: id
-
+                name: book_deal_id
+                referencedColumnName: id
 
     id:
         id:

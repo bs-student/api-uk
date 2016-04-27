@@ -19,14 +19,19 @@ AppBundle\Entity\User:
 
     oneToMany:
         buyBooks:
-          targetEntity: Book
-          mappedBy: bookBuyer
+          targetEntity: BookDeal
+          mappedBy: buyer
         sellBooks:
-          targetEntity: Book
-          mappedBy: bookSeller
-        messages:
-          targetEntity: Message
+          targetEntity: BookDeal
+          mappedBy: seller
+        wishLists:
+          targetEntity: WishList
           mappedBy: user
+          cascade: [persist,remove]
+        contacts:
+          targetEntity: Contact
+          mappedBy: buyer
+          cascade: [persist,remove]
 
     id:
         id:

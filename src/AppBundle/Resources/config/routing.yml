@@ -1,3 +1,19 @@
+app_message:
+    resource: "@AppBundle/Resources/config/routing/message.yml"
+    prefix:   /message
+
+app_contact:
+    resource: "@AppBundle/Resources/config/routing/contact.yml"
+    prefix:   /contact
+
+app_wishlist:
+    resource: "@AppBundle/Resources/config/routing/wishlist.yml"
+    prefix:   /wishlist
+
+app_bookdeal:
+    resource: "@AppBundle/Resources/config/routing/bookdeal.yml"
+    prefix:   /bookdeal
+
 app_book:
     resource: "@AppBundle/Resources/config/routing/book.yml"
     prefix:   /book

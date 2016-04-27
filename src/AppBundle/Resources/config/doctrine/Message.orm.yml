@@ -5,17 +5,16 @@ AppBundle\Entity\Message:
 
 
     manyToOne:
-        book:
-          targetEntity: Book
-          inversedBy: messages
-          joinColumn:
-            name: book_id
-            referencedColumnName: id
         user:
           targetEntity: User
-          inversedBy: messages
           joinColumn:
             name: user_id
+            referencedColumnName: id
+        contact:
+          targetEntity: Contact
+          inversedBy: messages
+          joinColumn:
+            name: contact_id
             referencedColumnName: id
 
 

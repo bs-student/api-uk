@@ -16,21 +16,8 @@
                 <th>Bookpublishdate</th>
                 <th>Bookbinding</th>
                 <th>Bookpage</th>
-                <th>Bookpricesell</th>
                 <th>Booklanguage</th>
                 <th>Bookdescription</th>
-                <th>Bookcondition</th>
-                <th>Bookishighlighted</th>
-                <th>Bookhasnotes</th>
-                <th>Bookcomment</th>
-                <th>Bookcontactmethod</th>
-                <th>Bookcontacthomenumber</th>
-                <th>Bookcontactcellnumber</th>
-                <th>Bookcontactemail</th>
-                <th>Bookisavailablepublic</th>
-                <th>Bookpaymentmethodcashonexchange</th>
-                <th>Bookpaymentmethodcheque</th>
-                <th>Bookavailabledate</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -47,21 +34,8 @@
                 <td>{% if entity.bookPublishDate %}{{ entity.bookPublishDate|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ entity.bookBinding }}</td>
                 <td>{{ entity.bookPage }}</td>
-                <td>{{ entity.bookPriceSell }}</td>
                 <td>{{ entity.bookLanguage }}</td>
                 <td>{{ entity.bookDescription }}</td>
-                <td>{{ entity.bookCondition }}</td>
-                <td>{{ entity.bookIsHighlighted }}</td>
-                <td>{{ entity.bookHasNotes }}</td>
-                <td>{{ entity.bookComment }}</td>
-                <td>{{ entity.bookContactMethod }}</td>
-                <td>{{ entity.bookContactHomeNumber }}</td>
-                <td>{{ entity.bookContactCellNumber }}</td>
-                <td>{{ entity.bookContactEmail }}</td>
-                <td>{{ entity.bookIsAvailablePublic }}</td>
-                <td>{{ entity.bookPaymentMethodCaShOnExchange }}</td>
-                <td>{{ entity.bookPaymentMethodCheque }}</td>
-                <td>{% if entity.bookAvailableDate %}{{ entity.bookAvailableDate|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
                 <ul>
                     <li>

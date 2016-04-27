@@ -33,7 +33,8 @@ class BookType extends AbstractType
             ->add('bookIsbn13', 'text')
 
             ->add('bookPublisher', 'text')
-            ->add('bookPublishDate','text', array(
+            ->add('bookPublishDate','date', array(
+                'widget' => 'single_text',
                 'constraints' => array(
                     new Date(),
 
@@ -44,81 +45,18 @@ class BookType extends AbstractType
 
                 ),))
             ->add('bookPage','text')
-            ->add('bookPriceSell', 'text', array(
-                'constraints' => array(
-                    new NotBlank(),
-
-                ),))
             ->add('bookLanguage','text')
             ->add('bookDescription','text')
-            ->add('bookCondition', 'text', array(
+
+            ->add('bookImage', 'text', array(
                 'constraints' => array(
                     new NotBlank(),
 
-                ),))
-            ->add('bookIsHighlighted', 'text', array(
-                'constraints' => array(
-                    new NotBlank(),
-
-                ),))
-            ->add('bookHasNotes', 'text', array(
-                'constraints' => array(
-                    new NotBlank(),
-
-                ),))
-            ->add('bookComment', 'text', array(
-                'constraints' => array(
-                    new NotBlank(),
-
-                ),))
-            ->add('bookContactMethod', 'text', array(
-                'constraints' => array(
-                    new NotBlank(),
-
-                ),))
-            ->add('bookContactHomeNumber','text')
-            ->add('bookContactCellNumber','text')
-            ->add('bookContactEmail','text')
-            ->add('bookIsAvailablePublic', 'text', array(
-                'constraints' => array(
-                    new NotBlank(),
-
-                ),))
-            ->add('bookPaymentMethodCaShOnExchange')
-            ->add('bookPaymentMethodCheque')
-            ->add('bookAvailableDate', 'text', array(
-                'constraints' => array(
-                    new NotBlank(),
-                    new Date()
-                ),))
-            ->add('bookBuyer','entity',array(
-                'class' => "AppBundle:User",
-                ))
-            ->add('bookSeller','entity',array(
-                'class' => "AppBundle:User",
-                'constraints' => array(
-                    new NotBlank(),
-
-                )))
-        ->add('bookImages', 'collection', array(
-                'type'         => new BookImageType(),
-                'allow_add'    => true,
-//                'allow_delete'    => true,
-                'by_reference' =>false
-
+                )
             ));
 
-//        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
+
     }
-
-
-//    function onPreSetData(FormEvent $event) {
-//        $data = $event->getData();
-//        $data->setBookBinding('BOOKBINDING');
-////        var_dump($data);
-//        return $event->setData($data);
-//    }
-
 
     /**
      * @return string
@@ -133,12 +71,7 @@ class BookType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Book',
             'csrf_protection' => false,
-//            'validation_groups' => false,
             'allow_extra_fields' => true,
-//            'error_mapping' => array(
-//                'usernameAlreadyExist' => 'username',
-//            ),
-//            'cascade_validation'=>true
 
         ));
     }

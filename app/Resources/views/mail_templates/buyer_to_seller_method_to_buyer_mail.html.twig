@@ -1,7 +1,21 @@
-
-
 {% block body -%}
-    <h1>Buyer To Seller</h1>
-        buyer has got your info. and buyer will contact you soon.
+    Seller Contact Info
+    <strong>Here is seller's information</strong><br/>
+    Nickname: {{ seller.username }}<br/>
+    Full Name: {{ seller.fullName }}<br/>
+    Email:{{ bookDeal.bookContactEmail }}<br/>
+    CellPhone:{{ bookDeal.bookContactCellNumber }}<br/>
+    HomePhone:{{ bookDeal.bookContactHomeNumber }}<br/>
+
+    <strong>Here is the deal information</strong><br/>
+    Title: {{ book.bookTitle }}<br/>
+    Author: {{ book.bookDirectorAuthorArtist }}<br/>
+    ISBN: {{ book.bookIsbn10 }}<br/>
+    Available Date:{{ bookDeal.bookAvailableDate|date("d M Y")}}<br/>
+    Contact :{{ bookDeal.bookContactMethod }}<br/>
+    Price:${{ bookDeal.bookPriceSell }}<br/>
+
+
+    <strong>Contact seller Now </strong><br/>
 
 {% endblock %}

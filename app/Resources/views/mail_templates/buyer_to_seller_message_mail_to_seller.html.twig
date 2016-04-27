@@ -1,11 +1,5 @@
 {% block body -%}
-    Seller Contact Info
-    <strong>Here is seller's information</strong><br/>
-    Nickname: {{ seller.username }}<br/>
-    Full Name: {{ seller.fullName }}<br/>
-    Email:{{ bookDeal.bookContactEmail }}<br/>
-    CellPhone:{{ bookDeal.bookContactCellNumber }}<br/>
-    HomePhone:{{ bookDeal.bookContactHomeNumber }}<br/>
+    Buyer ({{ buyer }}) Sent you a Message
 
     <strong>Here is the deal information</strong><br/>
     Title: {{ book.bookTitle }}<br/>
@@ -15,7 +9,7 @@
     Contact :{{ bookDeal.bookContactMethod }}<br/>
     Price:${{ bookDeal.bookPriceSell }}<br/>
 
-
-    <strong>Contact seller Now </strong><br/>
+    <strong>Message</strong><br/>
+    {{ buyer }} : {{ message.messageBody }} <br/>
 
 {% endblock %}

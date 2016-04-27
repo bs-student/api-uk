@@ -249,6 +249,7 @@ class UserApiController extends Controller
                 'email' => $user->getEmail(),
                 'registrationStatus' => $user->getRegistrationStatus(),
                 'userId' => ($user->getGoogleId() != null) ? $user->getGoogleId() : $user->getFacebookId(),
+                'campusId' => $user->getCampus()->getId()
             );
 
             return $this->_createJsonResponse('success',array(
@@ -278,6 +279,7 @@ class UserApiController extends Controller
                 'registrationStatus' => $user->getRegistrationStatus(),
                 'userId' => ($user->getGoogleId() != null) ? $user->getGoogleId() : $user->getFacebookId(),
                 'campusName' => $user->getCampus()->getCampusName(),
+                'campusId' => $user->getCampus()->getId(),
                 'universityName' => $user->getCampus()->getUniversity()->getUniversityName(),
                 'stateName' => $user->getCampus()->getState()->getStateName(),
                 'stateShortName' => $user->getCampus()->getState()->getStateShortName(),

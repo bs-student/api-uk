@@ -32,8 +32,7 @@ class Message
 
     private $user;
 
-
-    private $book;
+    private $contact;
 
 
 
@@ -139,5 +138,28 @@ class Message
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set contact
+     *
+     * @param \AppBundle\Entity\Contact $contact
+     * @return Message
+     */
+    public function setContact(\AppBundle\Entity\Contact $contact = null)
+    {
+        $this->contact = $contact;
+
+        return $this;
+    }
+
+    /**
+     * Get contact
+     *
+     * @return \AppBundle\Entity\Contact 
+     */
+    public function getContact()
+    {
+        return $this->contact;
     }
 }
