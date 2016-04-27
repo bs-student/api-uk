@@ -1,0 +1,30 @@
+wishlist:
+    path:     /
+    defaults: { _controller: "AppBundle:CRUD/WishList:index" }
+
+wishlist_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:CRUD/WishList:show" }
+
+wishlist_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:CRUD/WishList:new" }
+
+wishlist_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:CRUD/WishList:create" }
+    methods:  POST
+
+wishlist_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:CRUD/WishList:edit" }
+
+wishlist_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:CRUD/WishList:update" }
+    methods:  [POST, PUT]
+
+wishlist_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:CRUD/WishList:delete" }
+    methods:  [POST, DELETE]

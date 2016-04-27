@@ -1,0 +1,30 @@
+message:
+    path:     /
+    defaults: { _controller: "AppBundle:CRUD/Message:index" }
+
+message_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:CRUD/Message:show" }
+
+message_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:CRUD/Message:new" }
+
+message_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:CRUD/Message:create" }
+    methods:  POST
+
+message_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:CRUD/Message:edit" }
+
+message_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:CRUD/Message:update" }
+    methods:  [POST, PUT]
+
+message_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:CRUD/Message:delete" }
+    methods:  [POST, DELETE]

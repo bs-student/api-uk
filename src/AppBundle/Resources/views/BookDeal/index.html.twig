@@ -1,0 +1,69 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>BookDeal list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Bookpricesell</th>
+                <th>Bookcondition</th>
+                <th>Bookishighlighted</th>
+                <th>Bookhasnotes</th>
+                <th>Bookcomment</th>
+                <th>Bookcontactmethod</th>
+                <th>Bookcontacthomenumber</th>
+                <th>Bookcontactcellnumber</th>
+                <th>Bookcontactemail</th>
+                <th>Bookisavailablepublic</th>
+                <th>Bookpaymentmethodcashonexchange</th>
+                <th>Bookpaymentmethodcheque</th>
+                <th>Bookavailabledate</th>
+                <th>Booksellingstatus</th>
+                <th>Bookstatus</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('bookdeal_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.bookPriceSell }}</td>
+                <td>{{ entity.bookCondition }}</td>
+                <td>{{ entity.bookIsHighlighted }}</td>
+                <td>{{ entity.bookHasNotes }}</td>
+                <td>{{ entity.bookComment }}</td>
+                <td>{{ entity.bookContactMethod }}</td>
+                <td>{{ entity.bookContactHomeNumber }}</td>
+                <td>{{ entity.bookContactCellNumber }}</td>
+                <td>{{ entity.bookContactEmail }}</td>
+                <td>{{ entity.bookIsAvailablePublic }}</td>
+                <td>{{ entity.bookPaymentMethodCaShOnExchange }}</td>
+                <td>{{ entity.bookPaymentMethodCheque }}</td>
+                <td>{% if entity.bookAvailableDate %}{{ entity.bookAvailableDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.bookSellingStatus }}</td>
+                <td>{{ entity.bookStatus }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('bookdeal_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('bookdeal_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('bookdeal_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

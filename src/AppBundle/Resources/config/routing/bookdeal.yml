@@ -1,0 +1,30 @@
+bookdeal:
+    path:     /
+    defaults: { _controller: "AppBundle:CRUD/BookDeal:index" }
+
+bookdeal_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:CRUD/BookDeal:show" }
+
+bookdeal_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:CRUD/BookDeal:new" }
+
+bookdeal_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:CRUD/BookDeal:create" }
+    methods:  POST
+
+bookdeal_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:CRUD/BookDeal:edit" }
+
+bookdeal_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:CRUD/BookDeal:update" }
+    methods:  [POST, PUT]
+
+bookdeal_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:CRUD/BookDeal:delete" }
+    methods:  [POST, DELETE]
