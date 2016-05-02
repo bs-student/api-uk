@@ -198,23 +198,30 @@ class BookManagementApiController extends Controller
                     'sellerToBuyer' => array()
                 );
                 $onCampusDeals = $bookDealRepo->getCampusDealsByIsbn($data['isbn'], $campusId);
+                //Increase View Counter
+                if(count($onCampusDeals)>0){
+                    $bookDealRepo->increaseBookViewCounter($onCampusDeals);
 
+                    foreach ($onCampusDeals as $deal) {
 
-                foreach ($onCampusDeals as $deal) {
+                        //Formatting Date
+                        if ($deal['bookAvailableDate'] != null) {
+                            $deal['bookAvailableDate'] = $deal['bookAvailableDate']->format('d M Y');
+                        }
 
-                    //Formatting Date
-                    if ($deal['bookAvailableDate'] != null) {
-                        $deal['bookAvailableDate'] = $deal['bookAvailableDate']->format('d M Y');
-                    }
+                        //dividing via Contact Method
+                        if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
+                            array_push($deals['buyerToSeller'], $deal);
+                        } else {
+                            array_push($deals['sellerToBuyer'], $deal);
+                        }
 
-                    //dividing via Contact Method
-                    if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
-                        array_push($deals['buyerToSeller'], $deal);
-                    } else {
-                        array_push($deals['sellerToBuyer'], $deal);
                     }
 
                 }
+
+
+
 
                 return $this->_createJsonResponse('success', array('successData' => $deals), 200);
 
@@ -248,21 +255,28 @@ class BookManagementApiController extends Controller
                 );
                 $onCampusDeals = $bookDealRepo->getCampusDealsByIsbn($data['isbn'], $data['campusId']);
 
-                foreach ($onCampusDeals as $deal) {
+                //Increase View Counter
+                if(count($onCampusDeals)>0){
+                    $bookDealRepo->increaseBookViewCounter($onCampusDeals);
 
-                    //Formatting Date
-                    if ($deal['bookAvailableDate'] != null) {
-                        $deal['bookAvailableDate'] = $deal['bookAvailableDate']->format('d M Y');
+                    foreach ($onCampusDeals as $deal) {
+
+                        //Formatting Date
+                        if ($deal['bookAvailableDate'] != null) {
+                            $deal['bookAvailableDate'] = $deal['bookAvailableDate']->format('d M Y');
+                        }
+
+                        //dividing via Contact Method
+                        if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
+                            array_push($deals['buyerToSeller'], $deal);
+                        } else {
+                            array_push($deals['sellerToBuyer'], $deal);
+                        }
+
                     }
-
-                    //dividing via Contact Method
-                    if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
-                        array_push($deals['buyerToSeller'], $deal);
-                    } else {
-                        array_push($deals['sellerToBuyer'], $deal);
-                    }
-
                 }
+
+
 
                 return $this->_createJsonResponse('success', array('successData' => $deals), 200);
 
@@ -356,7 +370,7 @@ class BookManagementApiController extends Controller
                 $bookForm = $this->createForm(new BookType(), $book);
 
                 $bookData['bookPublishDate'] = (new \DateTime($bookData['bookPublishDate']))->format("Y-m-d");
-
+                $bookData['bookDescription'] = strip_tags($bookData['bookDescription']);
 
                 $bookForm->submit($bookData);
 
@@ -416,6 +430,7 @@ class BookManagementApiController extends Controller
     public function _addNewCustomSellBookAction(Request $request){
 
     }
+
 
     function _checkIfBookExistInDatabase($isbn10)
     {
@@ -497,8 +512,8 @@ class BookManagementApiController extends Controller
 
     function _getBooksByAsinAmazon($asin)
     {
-
-
+        $em = $this->getDoctrine()->getManager();
+        $bookRepo = $em->getRepository("AppBundle:Book");
         $amazonCredentials = $this->_getAmazonSearchParams();
 
         $amazonCredentials['params']['Operation'] = "ItemLookup";
@@ -509,6 +524,53 @@ class BookManagementApiController extends Controller
 
         $booksArray = $this->_parseMultipleBooksAmazonXmlResponse($xmlOutput);
 
+        //Insert Book INTo DB
+        $insertedBookId = $this->_insertBookIntoDatabase($booksArray['books'][0]);
+
+        $images = array();
+        if($insertedBookId){
+            $bookImages = $bookRepo->getBookAndDealImages($insertedBookId);
+            $insertedBook=$bookRepo->findOneById($insertedBookId);
+            //GET FIRST IMAGE OF THAT BOOK
+            array_push($images,array(
+                'image'=>$insertedBook->getBookImage(),
+                'imageId'=>0
+            ));
+        }
+
+
+        //GET All IMAGES OF THAT BOOK's DEALS
+
+
+        for($i=0;$i<count($bookImages);$i++){
+            array_push($images,array(
+                'image'=>$bookImages[$i]['imageUrl'],
+                'imageId'=>($i+1)
+            ));
+        }
+        $booksArray['books'][0]['bookImages'] = $images;
+        $booksArray['books'][0]['bookId'] = $insertedBookId;
+        $booksArray['books'][0]['bookDescription'] = strip_tags($booksArray['books'][0]['bookDescription']);
+
+        //DONE 1.Insert Book into DB
+        //DONE 2.GET All Images Of That Book With Deals & Add with Response
+        //DONE 3.Return the DB response. Not the Amazon response
+        //DONE 4.Increase View Number of Each Deal related to that Book (Do it on Second call)
+
+        for ($i = 0; $i < count($booksArray['books']); $i++) {
+            //Fixing Title & Sub Title
+            if (strpos($booksArray['books'][$i]['bookTitle'], ":")) {
+                $booksArray['books'][$i]['bookSubTitle'] = substr($booksArray['books'][$i]['bookTitle'], strpos($booksArray['books'][$i]['bookTitle'], ":") + 2);
+                $booksArray['books'][$i]['bookTitle'] = substr($booksArray['books'][$i]['bookTitle'], 0, strpos($booksArray['books'][$i]['bookTitle'], ":"));
+            }
+            //Fixing Date
+            if ($booksArray['books'][$i]['bookPublishDate'] != null) {
+                $booksArray['books'][$i]['bookPublishDate'] = (new \DateTime($booksArray['books'][$i]['bookPublishDate']))->format('d M Y');
+            }
+
+        }
+
+
         if (count($booksArray['books']) > 0) {
             return $this->_createJsonResponse('success', array('successData' => $booksArray), 200);
         } else {
@@ -516,6 +578,51 @@ class BookManagementApiController extends Controller
         }
 
 
+    }
+
+    function _insertBookIntoDatabase($book){
+
+        $em = $this->getDoctrine()->getManager();
+        $alreadyExistedBook = $this->_checkIfBookExistInDatabase($book['bookIsbn']);
+
+        // Check if Book is already in DB
+        if (!($alreadyExistedBook instanceof Book)) {
+
+            //Insert Book Image from amazon
+            $fileDirHost = $this->container->getParameter('kernel.root_dir');
+            $fileDir = '/../web/bookImages/';
+
+            $imageOutput = $this->get('api_caller')->call(new HttpGetHtml($book['bookImages'][0]['image'], null, null));
+            $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . ".png";
+            $fp = fopen($fileDirHost . $fileDir . $fileSaveName, 'x');
+            fwrite($fp, $imageOutput);
+            fclose($fp);
+
+            $book['bookImage'] = $fileDir . $fileSaveName;
+
+            //Insert New Book
+            $bookEntity = new Book();
+            $bookForm = $this->createForm(new BookType(), $bookEntity);
+
+            $book['bookIsbn10']=$book['bookIsbn'];
+            $book['bookIsbn13']=$book['bookEan'];
+            $book['bookPublishDate'] = (new \DateTime($book['bookPublishDate']))->format("Y-m-d");
+            $book['bookPage'] = $book['bookPages'];
+            $book['bookDescription'] = strip_tags($book['bookDescription']);
+
+            $bookForm->submit($book);
+
+            if ($bookForm->isValid()) {
+                $em->persist($bookEntity);
+                $em->flush();
+                return $bookEntity->getId();
+            } else {
+                return false;
+            }
+
+        }else{
+            return $alreadyExistedBook->getId();
+        }
     }
 
     function _getBooksByIsbnAmazon($isbn)

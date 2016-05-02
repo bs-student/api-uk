@@ -14,10 +14,6 @@ class WishList
      */
     private $id;
 
-    /**
-     * @var \DateTime
-     */
-    private $lastUpdate;
 
     private $user;
 
@@ -33,28 +29,7 @@ class WishList
         return $this->id;
     }
 
-    /**
-     * Set lastUpdate
-     *
-     * @param \DateTime $lastUpdate
-     * @return WishList
-     */
-    public function setLastUpdate($lastUpdate)
-    {
-        $this->lastUpdate = $lastUpdate;
 
-        return $this;
-    }
-
-    /**
-     * Get lastUpdate
-     *
-     * @return \DateTime 
-     */
-    public function getLastUpdate()
-    {
-        return $this->lastUpdate;
-    }
 
     /**
      * Set user

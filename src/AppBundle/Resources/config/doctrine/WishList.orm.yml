@@ -22,7 +22,5 @@ AppBundle\Entity\WishList:
             id: true
             generator:
                 strategy: AUTO
-    fields:
-        lastUpdate:
-            type: datetime
+
     lifecycleCallbacks: {  }

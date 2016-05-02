@@ -33,6 +33,7 @@ class ContactType extends AbstractType
             ->add('buyerHomePhone', 'text')
 
             ->add('buyerCellPhone', 'text')
+            ->add('soldToThatBuyer', 'text')
 
             ->add('bookDeal', 'entity',array(
                 'class' => "AppBundle:BookDeal",
@@ -50,6 +51,7 @@ class ContactType extends AbstractType
                 'by_reference' =>false
 
             ))
+
             ->add('contactDateTime','datetime',array(
                 'widget' => 'single_text',
                 'constraints' => array(

@@ -73,7 +73,9 @@ class BookDealRepository extends EntityRepository
 
     function getCampusDealsByIsbn($isbn, $campusId = null)
     {
-
+        if($campusId == null){
+            return null;
+        }
 
         $qb = $this->getEntityManager()
             ->createQueryBuilder('b')
@@ -259,5 +261,27 @@ class BookDealRepository extends EntityRepository
 //die($queryBuilderBook->getQuery()->getSQL());
             return ($queryBuilderBook->getQuery()->getResult());
         }
+    }
+
+    function increaseBookViewCounter($onCampusDeals){
+
+
+        $conditions = array();
+        foreach ($onCampusDeals as $bookDeal) {
+            array_push($conditions, "bd.id = '" . $bookDeal['bookDealId'] . "'");
+        }
+
+        $queryBuilderBook =  $this
+            ->createQueryBuilder('bd')
+            ->update('AppBundle:BookDeal', 'bd')
+            ->set('bd.bookViewCount', 'bd.bookViewCount+1');
+
+        $orX = $queryBuilderBook->expr()->orX();
+        $orX->addMultiple($conditions);
+        $queryBuilderBook->add('where', $orX);
+
+
+           $queryBuilderBook ->getQuery()
+            ->execute();
     }
 }

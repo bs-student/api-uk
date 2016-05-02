@@ -12,4 +12,26 @@ use Doctrine\ORM\EntityRepository;
  */
 class WishListRepository extends EntityRepository
 {
+    function checkIfAlreadyAddedToWishList($userId,$bookId){
+       $data =  $this->getEntityManager()
+            ->createQueryBuilder('w')
+            ->select('w.id')
+
+            ->from('AppBundle:WishList', 'w')
+            ->andwhere('w.user = :user')
+            ->andwhere('w.book = :book')
+
+            ->setParameter('book', $bookId)
+            ->setParameter('user', $userId)
+            ->getQuery()
+            ->getResult();
+
+        if(count($data)>0){
+            return true;
+
+        }else{
+            return false;
+
+        }
+    }
 }

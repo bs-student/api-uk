@@ -455,9 +455,10 @@ class User extends BaseUser
      */
     public function addWishList(\AppBundle\Entity\WishList $wishLists)
     {
-        $this->wishLists[] = $wishLists;
-
+        $this->wishLists->add($wishLists);
+        $wishLists->setUser($this);
         return $this;
+
     }
 
     /**

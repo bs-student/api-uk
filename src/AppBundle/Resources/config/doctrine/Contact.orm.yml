@@ -49,4 +49,10 @@ AppBundle\Entity\Contact:
         contactDateTime:
             column: contact_datetime
             type: datetime
+        soldToThatBuyer:
+            column: sold_to_that_buyer
+            type: string
+            length: '25'
+            options:
+                default: 'No'
     lifecycleCallbacks: {  }

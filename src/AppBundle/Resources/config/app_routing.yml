@@ -184,6 +184,7 @@ add_new_custom_sell_book:
     defaults:  {_controller: AppBundle:Api/BookManagementApi:addNewCustomSellBook}
     methods: [POST]
 
+
 #CampusManagementApiController
 
 campus_list_by_university:
@@ -317,3 +318,16 @@ get_book_deals_i_have_created:
     path: /api/book_deal/get_book_deals_i_have_created
     defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getBooksIHaveCreated}
     methods: [GET]
+
+sell_book_to_user:
+    path: /api/book_deal/sell_book_to_user
+    defaults:  {_controller: AppBundle:Api/BookDealManagementApi:sellBookToUser}
+    methods: [POST]
+
+
+#WishList Management Api Controller
+
+add_book_to_wish_list:
+    path: /api/wishlist/add_book_to_wish_list
+    defaults:  {_controller: AppBundle:Api/WishListManagementApi:addBookToWishList}
+    methods: [POST]

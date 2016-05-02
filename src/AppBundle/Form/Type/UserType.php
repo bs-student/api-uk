@@ -78,9 +78,12 @@ class UserType extends AbstractType
 
         ));
 
-//        $builder->add('save', 'button', array(
-//            'attr' => array('class' => 'save'),
-//        ));
+        $builder->add('wishLists', 'collection', array(
+            'type'         => new WishListType(),
+            'allow_add'    => true,
+            'by_reference' =>false
+        ));
+
     }
 
 

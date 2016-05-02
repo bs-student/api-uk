@@ -38,6 +38,11 @@ class Contact
     private $buyerCellPhone;
 
     /**
+     * @var string
+     */
+    private $soldToThatBuyer;
+
+    /**
      * @var datetime
      */
     private $contactDateTime;
@@ -257,5 +262,28 @@ class Contact
     public function getContactDateTime()
     {
         return $this->contactDateTime;
+    }
+
+    /**
+     * Set soldToThatBuyer
+     *
+     * @param string $soldToThatBuyer
+     * @return Contact
+     */
+    public function setSoldToThatBuyer($soldToThatBuyer)
+    {
+        $this->soldToThatBuyer = $soldToThatBuyer;
+
+        return $this;
+    }
+
+    /**
+     * Get soldToThatBuyer
+     *
+     * @return string 
+     */
+    public function getSoldToThatBuyer()
+    {
+        return $this->soldToThatBuyer;
     }
 }
