@@ -301,7 +301,9 @@ class BookManagementApiController extends Controller
 
         //Get Image Save Dir
         $fileDirHost = $this->container->getParameter('kernel.root_dir');
+        //TODO Fix that below directory
         $fileDir = '/../web/bookImages/';
+        $fileNameDir = '/bookImages/';
 
         //GET Request Data
         $content = $request->get('data');
@@ -322,7 +324,7 @@ class BookManagementApiController extends Controller
                 $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . "." . pathinfo($file->getClientOriginalName())['extension'];
                 $file->move($fileDirHost . $fileDir, $fileSaveName);
                 $bookImageArray = array();
-                $bookImageArray['imageUrl'] = $fileDir . $fileSaveName;
+                $bookImageArray['imageUrl'] = $fileNameDir . $fileSaveName;
                 array_push($bookDealData['bookDealImages'], $bookImageArray);
             } else {
                 $fileUploadError = true;
@@ -354,7 +356,7 @@ class BookManagementApiController extends Controller
                     $fp = fopen($fileDirHost . $fileDir . $fileSaveName, 'x');
                     fwrite($fp, $imageOutput);
                     fclose($fp);
-                    $bookData['bookImage'] = $fileDir . $fileSaveName;
+                    $bookData['bookImage'] = $fileNameDir . $fileSaveName;
 
 
                 }elseif(!strcmp('newSellCustomBook',$bookData['bookType'])){
@@ -524,48 +526,51 @@ class BookManagementApiController extends Controller
 
         $booksArray = $this->_parseMultipleBooksAmazonXmlResponse($xmlOutput);
 
-        //Insert Book INTo DB
-        $insertedBookId = $this->_insertBookIntoDatabase($booksArray['books'][0]);
+        if(count($booksArray['books'])>0){
+            //Insert Book INTo DB
+            $insertedBookId = $this->_insertBookIntoDatabase($booksArray['books'][0]);
 
-        $images = array();
-        if($insertedBookId){
-            $bookImages = $bookRepo->getBookAndDealImages($insertedBookId);
-            $insertedBook=$bookRepo->findOneById($insertedBookId);
-            //GET FIRST IMAGE OF THAT BOOK
-            array_push($images,array(
-                'image'=>$insertedBook->getBookImage(),
-                'imageId'=>0
-            ));
-        }
-
-
-        //GET All IMAGES OF THAT BOOK's DEALS
-
-
-        for($i=0;$i<count($bookImages);$i++){
-            array_push($images,array(
-                'image'=>$bookImages[$i]['imageUrl'],
-                'imageId'=>($i+1)
-            ));
-        }
-        $booksArray['books'][0]['bookImages'] = $images;
-        $booksArray['books'][0]['bookId'] = $insertedBookId;
-        $booksArray['books'][0]['bookDescription'] = strip_tags($booksArray['books'][0]['bookDescription']);
-
-        //DONE 1.Insert Book into DB
-        //DONE 2.GET All Images Of That Book With Deals & Add with Response
-        //DONE 3.Return the DB response. Not the Amazon response
-        //DONE 4.Increase View Number of Each Deal related to that Book (Do it on Second call)
-
-        for ($i = 0; $i < count($booksArray['books']); $i++) {
-            //Fixing Title & Sub Title
-            if (strpos($booksArray['books'][$i]['bookTitle'], ":")) {
-                $booksArray['books'][$i]['bookSubTitle'] = substr($booksArray['books'][$i]['bookTitle'], strpos($booksArray['books'][$i]['bookTitle'], ":") + 2);
-                $booksArray['books'][$i]['bookTitle'] = substr($booksArray['books'][$i]['bookTitle'], 0, strpos($booksArray['books'][$i]['bookTitle'], ":"));
+            $images = array();
+            if($insertedBookId){
+                $bookImages = $bookRepo->getBookAndDealImages($insertedBookId);
+                $insertedBook=$bookRepo->findOneById($insertedBookId);
+                //GET FIRST IMAGE OF THAT BOOK
+                array_push($images,array(
+                    'image'=>$insertedBook->getBookImage(),
+                    'imageId'=>0
+                ));
             }
-            //Fixing Date
-            if ($booksArray['books'][$i]['bookPublishDate'] != null) {
-                $booksArray['books'][$i]['bookPublishDate'] = (new \DateTime($booksArray['books'][$i]['bookPublishDate']))->format('d M Y');
+
+
+            //GET All IMAGES OF THAT BOOK's DEALS
+
+
+            for($i=0;$i<count($bookImages);$i++){
+                array_push($images,array(
+                    'image'=>$bookImages[$i]['imageUrl'],
+                    'imageId'=>($i+1)
+                ));
+            }
+            $booksArray['books'][0]['bookImages'] = $images;
+            $booksArray['books'][0]['bookId'] = $insertedBookId;
+            $booksArray['books'][0]['bookDescription'] = strip_tags($booksArray['books'][0]['bookDescription']);
+
+            //DONE 1.Insert Book into DB
+            //DONE 2.GET All Images Of That Book With Deals & Add with Response
+            //DONE 3.Return the DB response. Not the Amazon response
+            //DONE 4.Increase View Number of Each Deal related to that Book (Do it on Second call)
+
+            for ($i = 0; $i < count($booksArray['books']); $i++) {
+                //Fixing Title & Sub Title
+                if (strpos($booksArray['books'][$i]['bookTitle'], ":")) {
+                    $booksArray['books'][$i]['bookSubTitle'] = substr($booksArray['books'][$i]['bookTitle'], strpos($booksArray['books'][$i]['bookTitle'], ":") + 2);
+                    $booksArray['books'][$i]['bookTitle'] = substr($booksArray['books'][$i]['bookTitle'], 0, strpos($booksArray['books'][$i]['bookTitle'], ":"));
+                }
+                //Fixing Date
+                if ($booksArray['books'][$i]['bookPublishDate'] != null) {
+                    $booksArray['books'][$i]['bookPublishDate'] = (new \DateTime($booksArray['books'][$i]['bookPublishDate']))->format('d M Y');
+                }
+
             }
 
         }
@@ -591,6 +596,7 @@ class BookManagementApiController extends Controller
             //Insert Book Image from amazon
             $fileDirHost = $this->container->getParameter('kernel.root_dir');
             $fileDir = '/../web/bookImages/';
+            $fileNameDir = '/bookImages/';
 
             $imageOutput = $this->get('api_caller')->call(new HttpGetHtml($book['bookImages'][0]['image'], null, null));
             $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . ".png";
@@ -598,7 +604,7 @@ class BookManagementApiController extends Controller
             fwrite($fp, $imageOutput);
             fclose($fp);
 
-            $book['bookImage'] = $fileDir . $fileSaveName;
+            $book['bookImage'] = $fileNameDir . $fileSaveName;
 
             //Insert New Book
             $bookEntity = new Book();
