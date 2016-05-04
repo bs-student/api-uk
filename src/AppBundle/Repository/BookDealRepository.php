@@ -175,6 +175,7 @@ class BookDealRepository extends EntityRepository
                       b.bookPublisher,
                       b.bookPublishDate,
                       b.bookBinding,
+                      b.bookImage,
                       u.username as sellerUsername,
                       bd.bookContactHomeNumber as sellerHomeNumber,
                       bd.bookContactCellNumber as sellerCellNumber,
@@ -191,6 +192,7 @@ class BookDealRepository extends EntityRepository
                       bd.bookIsAvailablePublic,
                       bd.bookAvailableDate,
                       bd.bookStatus,
+                      bd.bookViewCount,
                       c.campusName,
                       un.universityName,
                       s.stateName,
@@ -218,6 +220,7 @@ class BookDealRepository extends EntityRepository
     function getContactsOfBookDeals($bookDeals)
     {
         if ($bookDeals != null) {
+
             $conditions = array();
             foreach ($bookDeals as $bookDeal) {
                 array_push($conditions, "c.bookDeal = '" . $bookDeal['bookDealId'] . "'");
@@ -252,13 +255,14 @@ class BookDealRepository extends EntityRepository
             $orX->addMultiple($conditions);
             $queryBuilderBook->add('where', $orX);
 
-            $queryBuilderBook->add('where', $orX);
+//            $queryBuilderBook->add('where', $orX);
 //            $queryBuilderBook->innerJoin('AppBundle:User', 'u', 'WITH', 'c.buyer = u.id');
 //        if($campusId!=null){
 //            $queryBuilderBook->andWhere('u.campus = '.$campusId);
 //        }
 
 //die($queryBuilderBook->getQuery()->getSQL());
+
             return ($queryBuilderBook->getQuery()->getResult());
         }
     }

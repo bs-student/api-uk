@@ -95,8 +95,17 @@ class BookDealManagementApiController extends Controller
         //Getting Contacts of Deals
         $contacts = $bookDealRepo->getContactsOfBookDeals($bookDeals);
 
+
         for ($i = 0; $i < count($bookDeals); $i++) {
             $bookDeals[$i]['contacts'] = array();
+
+            //Set Subtitle in Book
+
+            if (strpos($bookDeals[$i]['bookTitle'], ":")) {
+                $bookDeals[$i]['bookSubTitle'] = substr($bookDeals[$i]['bookTitle'], strpos($bookDeals[$i]['bookTitle'], ":") + 2);
+                $bookDeals[$i]['bookTitle'] = substr($bookDeals[$i]['bookTitle'], 0, strpos($bookDeals[$i]['bookTitle'], ":"));
+            }
+
         }
 
         //Adding Contacts according to deals
@@ -126,6 +135,25 @@ class BookDealManagementApiController extends Controller
             if ($deal['bookAvailableDate'] != null) {
                 $deal['bookAvailableDate'] = $deal['bookAvailableDate']->format('d M Y');
             }
+
+            //Getting Images
+            $images = array();
+            $bookDeal = $bookDealRepo->findOneById($deal['bookDealId']);
+            //GET FIRST IMAGE OF THAT BOOK
+            array_push($images,array(
+                'image'=>$deal['bookImage'],
+                'imageId'=>0
+            ));
+
+            $bookDealImages = $bookDeal->getBookDealImages();
+            for($i=0;$i<count($bookDealImages);$i++){
+                array_push($images,array(
+                    'image'=>$bookDealImages[$i]->getImageUrl(),
+                    'imageId'=>($i+1)
+                ));
+            }
+            $deal['bookImages']=$images;
+
 
             //dividing via Contact Method
             if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
