@@ -218,6 +218,62 @@ class BookDealRepository extends EntityRepository
             ->getResult();
     }
 
+    function getBooksIHaveCreatedAndSold($userId)
+    {
+
+        return $this->getEntityManager()
+            ->createQueryBuilder('b')
+            ->select("b.id as bookId,
+                      b.bookIsbn10 as bookIsbn,
+                      b.bookTitle,
+                      b.bookDirectorAuthorArtist,
+                      b.bookEdition,
+                      b.bookPublisher,
+                      b.bookPublishDate,
+                      b.bookBinding,
+                      b.bookImage,
+                      u.username as sellerUsername,
+                      bd.bookContactHomeNumber as sellerHomeNumber,
+                      bd.bookContactCellNumber as sellerCellNumber,
+                      bd.bookContactEmail as sellerEmail,
+                      bd.id as bookDealId,
+                      bd.bookPriceSell,
+                      bd.bookCondition,
+                      bd.bookIsHighlighted,
+                      bd.bookHasNotes,
+                      bd.bookComment,
+                      bd.bookContactMethod,
+                      bd.bookPaymentMethodCaShOnExchange,
+                      bd.bookPaymentMethodCheque,
+                      bd.bookIsAvailablePublic,
+                      bd.bookAvailableDate,
+                      bd.bookStatus,
+                      bd.bookViewCount,
+                      IDENTITY(bd.buyer) AS buyerId,
+                      c.campusName,
+                      un.universityName,
+                      s.stateName,
+                      s.stateShortName,
+                      co.countryName")
+
+            ->from('AppBundle:Book', 'b')
+            ->innerJoin('AppBundle:BookDeal', 'bd', 'WITH', 'b.id = bd.book')
+            ->innerJoin('AppBundle:User', 'u', 'WITH', 'u.id = bd.seller')
+            ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'c.id = u.campus')
+            ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
+            ->innerJoin('AppBundle:State', 's', 'WITH', 's.id = c.state')
+            ->innerJoin('AppBundle:Country', 'co', 'WITH', 'co.id = s.country')
+//            ->innerJoin('AppBundle:Contact', 'con','WITH', 'con.bookDeal = bd.id')
+
+
+            ->andwhere('bd.bookStatus = '."'Activated'")
+            ->andwhere('bd.bookSellingStatus = ' . "'Sold'")
+            ->andwhere('bd.seller= :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
+
     function getContactsOfBookDeals($bookDeals)
     {
         if ($bookDeals != null) {
@@ -266,6 +322,20 @@ class BookDealRepository extends EntityRepository
 
             return ($queryBuilderBook->getQuery()->getResult());
         }
+    }
+
+    function getPublicUserWhoBoughtBookDeal($bookDealId){
+        return $this->getEntityManager()
+            ->createQueryBuilder('b')
+            ->select("c.buyerNickName ")
+
+            ->from('AppBundle:Contact', 'c')
+
+            ->andwhere('c.soldToThatBuyer = ' . "'Yes'")
+            ->andwhere('c.bookDeal= :bookDealId')
+            ->setParameter('bookDealId', $bookDealId)
+            ->getQuery()
+            ->getResult();
     }
 
     function increaseBookViewCounter($onCampusDeals){
