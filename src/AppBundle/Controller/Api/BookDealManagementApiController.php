@@ -47,7 +47,19 @@ class BookDealManagementApiController extends Controller
         $userRepo = $em->getRepository('AppBundle:User');
         $bookDeals = $bookDealRepo->getBooksIHaveContactedFor($userId);
 
+
+        //Set Subtitle in Book
+        for ($i = 0; $i < count($bookDeals); $i++) {
+            $bookDeals[$i]['contacts'] = array();
+            if (strpos($bookDeals[$i]['bookTitle'], ":")) {
+                $bookDeals[$i]['bookSubTitle'] = substr($bookDeals[$i]['bookTitle'], strpos($bookDeals[$i]['bookTitle'], ":") + 2);
+                $bookDeals[$i]['bookTitle'] = substr($bookDeals[$i]['bookTitle'], 0, strpos($bookDeals[$i]['bookTitle'], ":"));
+            }
+
+        }
+
         foreach ($bookDeals as $deal) {
+
 
             //Formatting Date
             if (array_key_exists('bookPublishDate', $deal)) {
@@ -61,12 +73,40 @@ class BookDealManagementApiController extends Controller
                 $deal['contactDateTime'] = $deal['contactDateTime']->format('d M Y');
             }
 
+            //Formatting Contact
+            array_push($deal['contacts'],array(
+                'contactDateTime'=>$deal['contactDateTime'],
+                'contactId' =>$deal['contactId']
+            ));
+
+
+
+            //Getting Images
+            $images = array();
+            $bookDeal = $bookDealRepo->findOneById($deal['bookDealId']);
+            //GET FIRST IMAGE OF THAT BOOK
+            array_push($images,array(
+                'image'=>$deal['bookImage'],
+                'imageId'=>0
+            ));
+
+            $bookDealImages = $bookDeal->getBookDealImages();
+            for($i=0;$i<count($bookDealImages);$i++){
+                array_push($images,array(
+                    'image'=>$bookDealImages[$i]->getImageUrl(),
+                    'imageId'=>($i+1)
+                ));
+            }
+            $deal['bookImages']=$images;
+
+
             //dividing via Contact Method
             if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
                 array_push($deals['buyerToSeller'], $deal);
             } else {
                 array_push($deals['sellerToBuyer'], $deal);
             }
+
 
         }
 
@@ -96,11 +136,9 @@ class BookDealManagementApiController extends Controller
         $contacts = $bookDealRepo->getContactsOfBookDeals($bookDeals);
 
 
+        //Set Subtitle in Book
         for ($i = 0; $i < count($bookDeals); $i++) {
             $bookDeals[$i]['contacts'] = array();
-
-            //Set Subtitle in Book
-
             if (strpos($bookDeals[$i]['bookTitle'], ":")) {
                 $bookDeals[$i]['bookSubTitle'] = substr($bookDeals[$i]['bookTitle'], strpos($bookDeals[$i]['bookTitle'], ":") + 2);
                 $bookDeals[$i]['bookTitle'] = substr($bookDeals[$i]['bookTitle'], 0, strpos($bookDeals[$i]['bookTitle'], ":"));

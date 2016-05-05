@@ -119,6 +119,7 @@ class BookDealRepository extends EntityRepository
                       b.bookPublisher,
                       b.bookPublishDate,
                       b.bookBinding,
+                      b.bookImage,
                       u.username as sellerUsername,
                       bd.bookContactHomeNumber as sellerHomeNumber,
                       bd.bookContactCellNumber as sellerCellNumber,
