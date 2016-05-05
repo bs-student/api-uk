@@ -419,6 +419,113 @@ class BookDealManagementApiController extends Controller
         ), 200);
     }
 
+    public function getBooksIHaveBoughtAction(Request $request){
+        $deals = array(
+            'buyerToSeller' => array(),
+            'sellerToBuyer' => array()
+        );
+
+        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
+        $em = $this->getDoctrine()->getManager();
+        $bookDealRepo = $em->getRepository('AppBundle:BookDeal');
+        $userRepo = $em->getRepository('AppBundle:User');
+        $bookDeals = $bookDealRepo->getBooksIHaveBought($userId);
+
+        //Getting Contacts of Deals
+//        $contacts = $bookDealRepo->getContactsOfBookDeals($bookDeals);
+
+
+        //Set Subtitle in Book
+        for ($i = 0; $i < count($bookDeals); $i++) {
+            $bookDeals[$i]['contacts'] = array();
+            if (strpos($bookDeals[$i]['bookTitle'], ":")) {
+                $bookDeals[$i]['bookSubTitle'] = substr($bookDeals[$i]['bookTitle'], strpos($bookDeals[$i]['bookTitle'], ":") + 2);
+                $bookDeals[$i]['bookTitle'] = substr($bookDeals[$i]['bookTitle'], 0, strpos($bookDeals[$i]['bookTitle'], ":"));
+            }
+
+        }
+
+
+        //Adding Contacts according to deals
+//        foreach ($contacts as $contact) {
+//
+//            for ($i = 0; $i < count($bookDeals); $i++) {
+//                if ((int)$contact['bookDealId'] == (int)$bookDeals[$i]['bookDealId']) {
+//
+//                    if ($contact['buyerNickName'] == null) {
+//                        $user = $userRepo->findById((int)$contact['buyerId']);
+//                        $contact['buyerNickName'] = $user[0]->getUsername();
+//                    }
+//                    $contact['contactDateTime'] = $contact['contactDateTime']->format('H:i d M Y');
+//                    array_push($bookDeals[$i]['contacts'], $contact);
+//                }
+//            }
+//
+//        }
+
+        //Getting Deals I have created
+        foreach ($bookDeals as $deal) {
+
+
+            //Getting Buyer
+            if($deal['buyerId']!=null){
+                $buyer = $userRepo->findOneById($deal['buyerId']);
+                $deal['buyerNickName']=$buyer->getUsername();
+            }else{
+                $buyer = $bookDealRepo->getPublicUserWhoBoughtBookDeal($deal['bookDealId']);
+                $deal['buyerNickName']=$buyer[0]['buyerNickName'];
+
+            }
+
+
+            //Formatting Date
+            if (array_key_exists('bookPublishDate', $deal)) {
+                $deal['bookPublishDate'] = $deal['bookPublishDate']->format('d M Y');
+            }
+            if ($deal['bookAvailableDate'] != null) {
+                $deal['bookAvailableDate'] = $deal['bookAvailableDate']->format('d M Y');
+            }
+
+            //Getting Images
+            $images = array();
+            $bookDeal = $bookDealRepo->findOneById($deal['bookDealId']);
+            //GET FIRST IMAGE OF THAT BOOK
+            array_push($images,array(
+                'image'=>$deal['bookImage'],
+                'imageId'=>0
+            ));
+
+            $bookDealImages = $bookDeal->getBookDealImages();
+            for($i=0;$i<count($bookDealImages);$i++){
+                array_push($images,array(
+                    'image'=>$bookDealImages[$i]->getImageUrl(),
+                    'imageId'=>($i+1)
+                ));
+            }
+            $deal['bookImages']=$images;
+
+            //Formatting Contact
+            array_push($deal['contacts'],array(
+                'contactDateTime'=>$deal['contactDateTime'],
+                'contactId' =>$deal['contactId']
+            ));
+
+
+            //dividing via Contact Method
+            if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
+                array_push($deals['buyerToSeller'], $deal);
+            } else {
+                array_push($deals['sellerToBuyer'], $deal);
+            }
+
+        }
+
+
+        return $this->_createJsonResponse('success', array(
+            'successData' => $deals
+        ), 200);
+    }
+
     public function _createJsonResponse($key, $data, $code)
     {
         $serializer = $this->container->get('jms_serializer');
