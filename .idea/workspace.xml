@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="992c5a8c-cd64-41e9-9383-a47a89a328fa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php" afterPath="$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" afterPath="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" />
-    </list>
+    <list default="true" id="992c5a8c-cd64-41e9-9383-a47a89a328fa" name="Default" comment="" />
     <ignored path="Student2StudentApi.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -39,7 +35,7 @@
       <file leaf-file-name="BookDealManagementApiController.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="522" column="0" selection-start="19528" selection-end="19528" vertical-scroll-proportion="0.72" vertical-offset="3213" max-vertical-offset="4080">
+            <state line="462" column="2" selection-start="17548" selection-end="17548" vertical-scroll-proportion="0.82" vertical-offset="2108" max-vertical-offset="4080">
               <folding>
                 <element signature="e#969#1018#0" expanded="false" />
                 <element signature="e#1113#1208#0" expanded="false" />
@@ -783,7 +779,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1111,7 +1107,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="522" column="0" selection-start="19528" selection-end="19528" vertical-scroll-proportion="0.72" vertical-offset="3213" max-vertical-offset="4080">
+        <state line="462" column="2" selection-start="17548" selection-end="17548" vertical-scroll-proportion="0.82" vertical-offset="2108" max-vertical-offset="4080">
           <folding>
             <element signature="e#969#1018#0" expanded="false" />
             <element signature="e#1113#1208#0" expanded="false" />
