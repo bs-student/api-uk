@@ -79,9 +79,14 @@ class Book
      * @var string
      */
     private $bookImage;
+    /**
+     * @var string
+     */
+    private $bookAmazonPrice;
 
 
 
+    
     private $bookDeals;
 
 
@@ -90,6 +95,7 @@ class Book
     {
         return strval($this->id);
     }
+
 
 
 
@@ -377,6 +383,29 @@ class Book
     public function getBookImage()
     {
         return $this->bookImage;
+    }
+
+    /**
+     * Set bookAmazonPrice
+     *
+     * @param string $bookAmazonPrice
+     * @return Book
+     */
+    public function setBookAmazonPrice($bookAmazonPrice)
+    {
+        $this->bookAmazonPrice = $bookAmazonPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get bookAmazonPrice
+     *
+     * @return string 
+     */
+    public function getBookAmazonPrice()
+    {
+        return $this->bookAmazonPrice;
     }
 
     /**

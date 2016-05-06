@@ -67,6 +67,96 @@ class WishListManagementApiController extends Controller
 
 
     }
+
+    /**
+     * GET My Wishlist
+     */
+    public function getMyWishListAction(Request $request){
+
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $wishListBooks = $user->getWishLists();
+
+        $books=array();
+        foreach($wishListBooks as $row){
+            $bookEntity=$row->getBook();
+            $book=array();
+
+            $book['bookId']=$bookEntity->getId();
+            $book['bookTitle']=$bookEntity->getBookTitle();
+            $book['bookDirectorAuthorArtist']=$bookEntity->getBookDirectorAuthorArtist();
+            $book['bookEdition']=$bookEntity->getBookEdition();
+            $book['bookPublisher']=$bookEntity->getBookPublisher();
+            $book['bookPublishDate']=$bookEntity->getBookPublishDate();
+            $book['bookBinding']=$bookEntity->getBookBinding();
+            $book['bookPage']=$bookEntity->getBookPage();
+            $book['bookLanguage']=$bookEntity->getBooklanguage();
+            $book['bookDescription']=$bookEntity->getBookDescription();
+            $book['bookIsbn10']=$bookEntity->getBookIsbn10();
+            $book['bookIsbn13']=$bookEntity->getBookIsbn13();
+            $book['bookImage']=$bookEntity->getBookImage();
+            $book['bookAmazonPrice']="$".$bookEntity->getBookAmazonPrice();
+
+
+            //Formatting Date
+            if ($book['bookPublishDate']!=null) {
+                $book['bookPublishDate'] = $book['bookPublishDate']->format('d M Y');
+            }
+
+            //Getting Images
+
+            //GET FIRST IMAGE OF THAT BOOK
+            $book['bookImages'] = array();
+
+            $image = array(
+                'image'=>$book['bookImage'],
+                'imageId'=>0
+            );
+            array_push($book['bookImages'],$image);
+
+            //Formatting Title & SubTitle
+            if (strpos($book['bookTitle'], ":")) {
+                $book['bookSubTitle'] = substr($book['bookTitle'], strpos($book['bookTitle'], ":") + 2);
+                $book['bookTitle'] = substr($book['bookTitle'], 0, strpos($book['bookTitle'], ":"));
+            }
+
+            array_push($books,$book);
+
+        }
+
+        return $this->_createJsonResponse('success',array('successData'=>$books),200);
+
+
+
+    }
+
+    /**
+     * Remove My Wishlist Item
+     */
+    public function removeWishListItemAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $wishListRepo = $em->getRepository("AppBundle:WishList");
+
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $data = $wishListRepo->findBy(array('book'=>$data['bookId'],'user'=>$user->getId()));
+
+
+        $em->remove($data[0]);
+
+        try {
+            $em->flush();
+            return $this->_createJsonResponse('success',array('successTitle'=>"Wish List Item has been removed"),200);
+        }catch (Exception $e){
+            return $this->_createJsonResponse('error',array('errorTitle'=>"Wish List Item could not be removed"),400);
+        }
+
+
+    }
+
     public function _createJsonResponse($key, $data, $code)
     {
         $serializer = $this->container->get('jms_serializer');

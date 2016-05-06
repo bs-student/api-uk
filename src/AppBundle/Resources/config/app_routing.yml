@@ -340,3 +340,13 @@ add_book_to_wish_list:
     path: /api/wishlist/add_book_to_wish_list
     defaults:  {_controller: AppBundle:Api/WishListManagementApi:addBookToWishList}
     methods: [POST]
+
+get_my_wishlist:
+    path: /api/wishlist/get_my_wishlist
+    defaults:  {_controller: AppBundle:Api/WishListManagementApi:getMyWishList}
+    methods: [GET]
+
+remove_wishlist_item:
+    path: /api/wishlist/remove_wishlist_item
+    defaults:  {_controller: AppBundle:Api/WishListManagementApi:removeWishListItem}
+    methods: [POST]

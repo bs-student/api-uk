@@ -62,4 +62,9 @@ AppBundle\Entity\Book:
             nullable: true
             type: string
             length: '200'
+        bookAmazonPrice:
+            nullable: true
+            type: decimal
+            precision: 7
+            scale: 2
     lifecycleCallbacks: {  }

@@ -47,6 +47,7 @@ class BookType extends AbstractType
             ->add('bookPage','text')
             ->add('bookLanguage','text')
             ->add('bookDescription','text')
+            ->add('bookAmazonPrice','text')
 
             ->add('bookImage', 'text', array(
                 'constraints' => array(

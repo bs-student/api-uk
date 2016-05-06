@@ -373,7 +373,7 @@ class BookManagementApiController extends Controller
 
                 $bookData['bookPublishDate'] = (new \DateTime($bookData['bookPublishDate']))->format("Y-m-d");
                 $bookData['bookDescription'] = strip_tags($bookData['bookDescription']);
-
+                //TODO Insert Book Amazon Price
                 $bookForm->submit($bookData);
 
                 if ($bookForm->isValid()) {
@@ -615,6 +615,7 @@ class BookManagementApiController extends Controller
             $book['bookPublishDate'] = (new \DateTime($book['bookPublishDate']))->format("Y-m-d");
             $book['bookPage'] = $book['bookPages'];
             $book['bookDescription'] = strip_tags($book['bookDescription']);
+            $book['bookAmazonPrice'] = substr($book['bookPriceAmazon'],1);
 
             $bookForm->submit($book);
 

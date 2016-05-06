@@ -34,4 +34,60 @@ class WishListRepository extends EntityRepository
 
         }
     }
+
+    function removeWishListItem($id){
+
+    }
+
+//    function getMyWishListBooks($userId){
+//        return $this->getEntityManager()
+//            ->createQueryBuilder('w')
+//            ->select("b.id as bookId,
+//                      b.bookIsbn10,
+//                      b.bookIsbn13,
+//                      b.bookTitle,
+//                      b.bookDirectorAuthorArtist,
+//                      b.bookEdition,
+//                      b.bookPublisher,
+//                      b.bookPublishDate,
+//                      b.bookBinding,
+//                      b.bookPage,
+//                      b.bookImage,
+//                      u.username as sellerUsername,
+//                      bd.bookContactHomeNumber as sellerHomeNumber,
+//                      bd.bookContactCellNumber as sellerCellNumber,
+//                      bd.bookContactEmail as sellerEmail,
+//                      bd.id as bookDealId,
+//                      bd.bookPriceSell,
+//                      bd.bookCondition,
+//                      bd.bookIsHighlighted,
+//                      bd.bookHasNotes,
+//                      bd.bookComment,
+//                      bd.bookContactMethod,
+//                      bd.bookPaymentMethodCaShOnExchange,
+//                      bd.bookPaymentMethodCheque,
+//                      bd.bookIsAvailablePublic,
+//                      bd.bookAvailableDate,
+//                      bd.bookStatus,
+//                      bd.bookViewCount,
+//                      IDENTITY(bd.buyer) AS buyerId,
+//                      c.campusName,
+//                      un.universityName,
+//                      s.stateName,
+//                      s.stateShortName,
+//                      co.countryName,
+//                      con.id as contactId,
+//                      con.contactDateTime,
+//                      con.buyerHomePhone,
+//                      con.buyerCellPhone
+//                      ")
+//
+//            ->from('AppBundle:WishList', 'w')
+//            ->innerJoin('AppBundle:Book', 'b', 'WITH', 'w.book = b.id')
+//
+//            ->andwhere('w.user = :userId')
+//            ->setParameter('userId', $userId)
+//            ->getQuery()
+//            ->getResult();
+//    }
 }
