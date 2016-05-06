@@ -109,16 +109,20 @@ admin_update_users:
     defaults:  {_controller: AppBundle:Api/UserApi:adminUpdateUserData}
     methods: [POST]
 
-user_update_full_name:
-    path: /api/update_user_full_name
-    defaults:  {_controller: AppBundle:Api/UserApi:updateUserFullNameData}
-    methods: [POST]
+#user_update_full_name:
+#    path: /api/update_user_full_name
+#    defaults:  {_controller: AppBundle:Api/UserApi:updateUserFullNameData}
+#    methods: [POST]
+#
+#user_update_university_campus:
+#    path: /api/update_user_university_campus
+#    defaults:  {_controller: AppBundle:Api/UserApi:updateUserUniversityCampus}
+#    methods: [POST]
 
-user_update_university_campus:
-    path: /api/update_user_university_campus
-    defaults:  {_controller: AppBundle:Api/UserApi:updateUserUniversityCampus}
+update_user_profile:
+    path: /api/update_user_profile
+    defaults:  {_controller: AppBundle:Api/UserApi:updateUserProfile}
     methods: [POST]
-
 
 
 #BookManagementApiController

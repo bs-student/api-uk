@@ -377,23 +377,24 @@ class UserApiController extends Controller
     /**
      * Update User Full Name
      */
-    public function updateUserFullNameDataAction(Request $request)
+/*    public function updateUserFullNameDataAction(Request $request)
     {
-//        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
         $userRepo = $em->getRepository('AppBundle:User');
         $serializer = $this->container->get('jms_serializer');
 
         $request_data = json_decode($request->getContent(), true);
-        $user = $userRepo->findOneBy(array("id" => $request_data['id']));
+//        $user = $userRepo->findOneBy(array("id" => $request_data['id']));
 
         if ($user != null) {
-            $oldFullName = $user->getFullName();
+//            $oldFullName = $user->getFullName();
             $updateForm = $this->createForm(new UserType(), $user);
             $updateForm->remove('username');
             $updateForm->remove('email');
             $updateForm->remove('referral');
             $updateForm->remove('campus');
+            $updateForm->remove('wishLists');
 
             $updateForm->submit($request_data);
 
@@ -406,20 +407,17 @@ class UserApiController extends Controller
                 return $this->_createJsonResponse('error', array(
                     'errorTitle' => 'Full Name is not Updated',
                     'errorDescription' => 'Sorry. Please check the form and submit again.',
-                    'errorData'=>array(
-                        'form'=> $serializer->serialize($updateForm, 'json'),
-                        'fullName'=>$oldFullName
-                    )
+                    'errorData'=>$updateForm
                 ),400);
             }
         }
-    }
+    }*/
 
 
     /**
      * Update User University Campus
      */
-    public function updateUserUniversityCampusAction(Request $request)
+/*    public function updateUserUniversityCampusAction(Request $request)
     {
 //        $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
@@ -474,6 +472,55 @@ class UserApiController extends Controller
                         'countryName'=>$oldCountryName
                     )
 
+                ),400);
+            }
+        }
+    }*/
+
+    /**
+     * Update User Profile
+     */
+    public function updateUserProfileAction(Request $request){
+
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+//        $userRepo = $em->getRepository('AppBundle:User');
+//        $serializer = $this->container->get('jms_serializer');
+
+        $data = json_decode($request->getContent(), true);
+//        $user = $userRepo->findOneBy(array("id" => $request_data['id']));
+
+        if ($user != null) {
+//            $oldFullName = $user->getFullName();
+            $updateForm = $this->createForm(new UserType(), $user);
+            $updateForm->remove('username');
+            $updateForm->remove('email');
+            $updateForm->remove('referral');
+//            $updateForm->remove('campus');
+            $updateForm->remove('wishLists');
+
+            $updateForm->submit($data);
+
+
+            if ($updateForm->isValid()) {
+                $em->persist($user);
+                $em->flush();
+
+                $userData=array(
+                    'campusId'=>$user->getCampus()->getId(),
+                    'campusName'=>$user->getCampus()->getCampusName(),
+                    'countryName'=>$user->getCampus()->getState()->getCountry()->getCountryName(),
+                    'stateName'=>$user->getCampus()->getState()->getStateName(),
+                    'stateShortName'=>$user->getCampus()->getState()->getStateShortName(),
+                    'universityName'=>$user->getCampus()->getUniversity()->getUniversityName()
+                );
+
+                return $this->_createJsonResponse('success', array('successTitle' => 'Profile is Updated', 'successData' => $userData),200);
+            } else {
+                return $this->_createJsonResponse('error', array(
+                    'errorTitle' => 'Full Name is not Updated',
+                    'errorDescription' => 'Sorry. Please check the form and submit again.',
+                    'errorData'=>$updateForm
                 ),400);
             }
         }
