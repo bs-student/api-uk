@@ -384,3 +384,10 @@ add_admin_user:
     path: /api/admin/add_admin_user
     defaults:  {_controller: AppBundle:Api/AdminUserApi:addAdminUser}
     methods: [POST]
+
+#Admin BookDeal Api Controller
+
+get_all_book_deals:
+    path: /api/admin/get_all_book_deals
+    defaults:  {_controller: AppBundle:Api/AdminBookDealApi:getAllBookDeals}
+    methods: [POST]

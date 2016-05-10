@@ -420,4 +420,83 @@ class BookDealRepository extends EntityRepository
            $queryBuilderBook ->getQuery()
             ->execute();
     }
+
+    function getAllBookDealSearchResult($searchQuery, $pageNumber, $pageSize,$sort){
+
+        $firstResult = ($pageNumber - 1) * $pageSize;
+        $qb= $this->getEntityManager()
+            ->createQueryBuilder('bd')
+            ->select('b.id as bookId,
+                      b.bookIsbn10 as bookIsbn,
+                      b.bookTitle,
+                      b.bookDirectorAuthorArtist,
+                      b.bookEdition,
+                      b.bookPublisher,
+                      b.bookPublishDate,
+                      b.bookBinding,
+                      b.bookImage,
+                      u.username as sellerUsername,
+                      bd.bookContactHomeNumber as sellerHomeNumber,
+                      bd.bookContactCellNumber as sellerCellNumber,
+                      bd.bookContactEmail as sellerEmail,
+                      bd.id as bookDealId,
+                      bd.bookPriceSell,
+                      bd.bookCondition,
+                      bd.bookIsHighlighted,
+                      bd.bookHasNotes,
+                      bd.bookComment,
+                      bd.bookContactMethod,
+                      bd.bookPaymentMethodCaShOnExchange,
+                      bd.bookPaymentMethodCheque,
+                      bd.bookIsAvailablePublic,
+                      bd.bookAvailableDate,
+                      bd.bookStatus,
+                      bd.bookViewCount,
+                      c.campusName,
+                      un.universityName,
+                      s.stateName,
+                      s.stateShortName,
+                      co.countryName
+            ')
+            ->from('AppBundle:BookDeal', 'bd')
+            ->innerJoin('AppBundle:Book', 'b', 'WITH', 'bd.book = b.id')
+            ->innerJoin('AppBundle:User', 'u', 'WITH', 'bd.seller = u.id')
+            ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
+            ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
+            ->innerJoin('AppBundle:State', 's', 'WITH', 's.id = c.state')
+            ->innerJoin('AppBundle:Country', 'co', 'WITH', 's.country = co.id')
+            ->andwhere('b.bookTitle LIKE :query ')
+            ->setParameter('query', '%' . $searchQuery . '%')
+            ->setMaxResults($pageSize)
+            ->setFirstResult($firstResult);
+
+
+        foreach($sort as  $key => $value){
+            $qb->addOrderBy("bd.".$key,$value);
+        }
+        return $qb->getQuery()
+            ->getResult();
+
+    }
+
+
+    public function getAllBookDealSearchNumber($searchQuery)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder('u')
+            ->select('COUNT(bd)')
+            ->from('AppBundle:BookDeal', 'bd')
+            ->innerJoin('AppBundle:Book', 'b', 'WITH', 'bd.book = b.id')
+            ->innerJoin('AppBundle:User', 'u', 'WITH', 'bd.seller = u.id')
+            ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
+            ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
+            ->innerJoin('AppBundle:State', 's', 'WITH', 's.id = c.state')
+            ->innerJoin('AppBundle:Country', 'co', 'WITH', 's.country = co.id')
+            ->andwhere('b.bookTitle LIKE :query ')
+            ->setParameter('query', '%' . $searchQuery . '%')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+
 }
