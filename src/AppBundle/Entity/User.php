@@ -77,6 +77,14 @@ class User extends BaseUser
      */
     private $registrationStatus;
 
+    /**
+     * @var string
+     *
+     */
+    private $adminApproved;
+
+    protected $enabled;
+
 
 
     private $referral;
@@ -512,5 +520,28 @@ class User extends BaseUser
     public function getContacts()
     {
         return $this->contacts;
+    }
+
+    /**
+     * Set adminApproved
+     *
+     * @param string $adminApproved
+     * @return User
+     */
+    public function setAdminApproved($adminApproved)
+    {
+        $this->adminApproved = $adminApproved;
+
+        return $this;
+    }
+
+    /**
+     * Get adminApproved
+     *
+     * @return string 
+     */
+    public function getAdminApproved()
+    {
+        return $this->adminApproved;
     }
 }

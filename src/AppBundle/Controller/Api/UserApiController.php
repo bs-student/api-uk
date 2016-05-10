@@ -249,7 +249,8 @@ class UserApiController extends Controller
                 'email' => $user->getEmail(),
                 'registrationStatus' => $user->getRegistrationStatus(),
                 'userId' => ($user->getGoogleId() != null) ? $user->getGoogleId() : $user->getFacebookId(),
-                'campusId' => $user->getCampus()->getId()
+                'campusId' => $user->getCampus()?$user->getCampus()->getId():'',
+                'role'=>$user->getRoles()
             );
 
             return $this->_createJsonResponse('success',array(
@@ -283,7 +284,8 @@ class UserApiController extends Controller
                 'universityName' => $user->getCampus()->getUniversity()->getUniversityName(),
                 'stateName' => $user->getCampus()->getState()->getStateName(),
                 'stateShortName' => $user->getCampus()->getState()->getStateShortName(),
-                'countryName' => $user->getCampus()->getState()->getCountry()->getCountryName()
+                'countryName' => $user->getCampus()->getState()->getCountry()->getCountryName(),
+                'role'=>$user->getRoles()
             );
 
             return $this->_createJsonResponse('success',array(
@@ -335,44 +337,7 @@ class UserApiController extends Controller
     }
 
 
-    /**
-     * Admin Update User Data
-     */
-    public function adminUpdateUserDataAction(Request $request)
-    {
-//        $user = $this->container->get('security.context')->getToken()->getUser();
-        $em = $this->getDoctrine()->getManager();
-        $userRepo = $em->getRepository('AppBundle:User');
 
-        $request_data = json_decode($request->getContent());
-        $user = $userRepo->findOneBy(array("id" => $request_data->id));
-
-        if ($user != null) {
-
-            if ($userRepo->checkIfUsernameExistByUsername($request_data->username, $user->getUsername())) {
-
-                return $this->_createJsonResponse('error',array(
-                    'errorTitle'=>"Can't Update User",
-                    'errorDescription'=> "Username '" . $request_data->username . "' Already Exist",
-                    'errorData'=> array(
-                        'username'=> $user->getusername()
-                    )
-                ),200);
-
-            } else {
-
-                $user->setUserName($request_data->username);
-                $em->persist($user);
-                $em->flush();
-
-                return $this->_createJsonResponse('success',array(
-                    'successTitle'=>"User Updated",
-                ),200);
-
-            }
-
-        }
-    }
 
     /**
      * Update User Full Name
@@ -525,6 +490,7 @@ class UserApiController extends Controller
             }
         }
     }
+
 
     public function _createJsonResponse($key, $data,$code)
     {

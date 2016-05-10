@@ -21,17 +21,14 @@ class UserType extends AbstractType
             'constraints' => array(
                 new NotBlank(),
 
-            ),
-//            'error_bubbling'=>true
+            )
         ));
 
         $builder->add('username','text',array(
-//            'validation_groups' => false
             'constraints' => array(
                 new NotBlank(),
 
-            ),
-//            'error_bubbling'=>true
+            )
         ));
 
 
@@ -39,8 +36,7 @@ class UserType extends AbstractType
             'constraints' => array(
                 new NotBlank(),
                 new Email(),
-            ),
-//            'error_bubbling'=>true
+            )
         ));
 
 
@@ -48,40 +44,40 @@ class UserType extends AbstractType
 
         $builder->add('referral', 'entity', array(
             'class' => "AppBundle:Referral",
-//            'empty_value' => 'Choose an option',
-//            'query_builder' => function(ReferralRepository $er) {
-//                    return $er->createQueryBuilder('u')
-//                        ->orderBy('u.id', 'ASC');
-//                },
             'property' => 'referralName',
             'constraints' => array(
                 new NotBlank(),
 
-            ),
-//            'error_bubbling'=>true
+            )
 
         ));
-//
+
         $builder->add('campus', 'entity', array(
             'class' => "AppBundle:Campus",
-//            'empty_value' => 'Choose University Campus',
-//            'query_builder' => function(CampusRepository $er) {
-//                    return $er->getCampus();
-//                },
             'property' => 'campusName',
             'constraints' => array(
                 new NotBlank(),
 
-            ),
-//            'error_bubbling'=>true
-
-
+            )
         ));
 
         $builder->add('wishLists', 'collection', array(
             'type'         => new WishListType(),
             'allow_add'    => true,
             'by_reference' =>false
+        ));
+
+        $builder->add('enabled','boolean',array(
+            'constraints' => array(
+                new NotBlank(),
+
+            )
+        ));
+        $builder->add('adminApproved','text',array(
+            'constraints' => array(
+                new NotBlank(),
+
+            )
         ));
 
     }

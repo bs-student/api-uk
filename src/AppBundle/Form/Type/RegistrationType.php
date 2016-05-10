@@ -107,6 +107,7 @@ class RegistrationType extends AbstractType
 
 
         ));
+        $builder->add('adminApproved','text');
     }
 
     public function getParent()

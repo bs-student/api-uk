@@ -104,10 +104,7 @@ admin_all_users:
     path: /api/admin/all_users
     defaults:  {_controller: AppBundle:Api/UserApi:adminAllUsers}
 
-admin_update_users:
-    path: /api/admin/update_user_data
-    defaults:  {_controller: AppBundle:Api/UserApi:adminUpdateUserData}
-    methods: [POST]
+
 
 #user_update_full_name:
 #    path: /api/update_user_full_name
@@ -353,4 +350,37 @@ get_my_wishlist:
 remove_wishlist_item:
     path: /api/wishlist/remove_wishlist_item
     defaults:  {_controller: AppBundle:Api/WishListManagementApi:removeWishListItem}
+    methods: [POST]
+
+
+#Admin User Api Controller
+
+get_all_non_approved_user:
+    path: /api/admin/get_all_non_approved_user
+    defaults:  {_controller: AppBundle:Api/AdminUserApi:getAllNonApprovedUser}
+    methods: [POST]
+
+get_all_approved_user:
+    path: /api/admin/get_all_approved_user
+    defaults:  {_controller: AppBundle:Api/AdminUserApi:getAllApprovedUser}
+    methods: [POST]
+
+get_all_admin_user:
+    path: /api/admin/get_all_admin_user
+    defaults:  {_controller: AppBundle:Api/AdminUserApi:getAllAdminUser}
+    methods: [POST]
+
+admin_update_users:
+    path: /api/admin/update_user_data
+    defaults:  {_controller: AppBundle:Api/AdminUserApi:adminUpdateUserData}
+    methods: [POST]
+
+approve_users:
+    path: /api/admin/approve_users
+    defaults:  {_controller: AppBundle:Api/AdminUserApi:approveUsers}
+    methods: [POST]
+
+add_admin_user:
+    path: /api/admin/add_admin_user
+    defaults:  {_controller: AppBundle:Api/AdminUserApi:addAdminUser}
     methods: [POST]

@@ -124,4 +124,147 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             return false;
         }
     }
+
+
+
+    function getNonApprovedUserSearchResult($searchQuery, $pageNumber, $pageSize,$sort){
+        $firstResult = ($pageNumber - 1) * $pageSize;
+        $qb= $this->getEntityManager()
+            ->createQueryBuilder('u')
+            ->select('u.id as userId, u.username,u.email,u.fullName,un.universityName,c.campusName,u.enabled,u.roles')
+            ->from('AppBundle:User', 'u')
+            ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
+            ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
+            ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.roles NOT LIKE :role ')
+            ->andwhere("u.adminApproved= 'No'")
+            ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('role','%ROLE_ADMIN_USER%')
+            ->setMaxResults($pageSize)
+            ->setFirstResult($firstResult);
+
+
+        foreach($sort as  $key => $value){
+            $qb->addOrderBy("u.".$key,$value);
+        }
+        return $qb->getQuery()
+            ->getResult();
+
+    }
+
+
+    public function getNonApprovedUserSearchNumber($searchQuery)
+    {
+        return $this->getEntityManager()->createQueryBuilder('u')
+            ->select('COUNT(u)')
+            ->from('AppBundle:User', 'u')
+            ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.roles NOT LIKE :role ')
+            ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('role','%ROLE_ADMIN_USER%')
+            ->andwhere("u.adminApproved= 'No'")
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+
+
+    function getAdminUserSearchResult($searchQuery, $pageNumber, $pageSize,$sort){
+        $firstResult = ($pageNumber - 1) * $pageSize;
+        $qb= $this->getEntityManager()
+            ->createQueryBuilder('u')
+            ->select('u.id as userId, u.username,u.email,u.fullName,u.enabled,u.roles')
+            ->from('AppBundle:User', 'u')
+
+            ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.roles LIKE :role ')
+            ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('role','%ROLE_ADMIN_USER%')
+            ->setMaxResults($pageSize)
+            ->setFirstResult($firstResult);
+
+
+        foreach($sort as  $key => $value){
+            $qb->addOrderBy("u.".$key,$value);
+        }
+        return($qb->getQuery()
+            ->getResult()) ;
+
+    }
+
+
+    public function getAdminUserSearchNumber($searchQuery)
+    {
+        return $this->getEntityManager()->createQueryBuilder('u')
+            ->select('COUNT(u)')
+            ->from('AppBundle:User', 'u')
+            ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.roles LIKE :role ')
+            ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('role','%ROLE_ADMIN_USER%')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+
+    function getApprovedUserSearchResult($searchQuery, $pageNumber, $pageSize,$sort){
+        $firstResult = ($pageNumber - 1) * $pageSize;
+        $qb= $this->getEntityManager()
+            ->createQueryBuilder('u')
+            ->select('u.id as userId, u.username,u.email,u.fullName,un.universityName,c.campusName,u.enabled')
+            ->from('AppBundle:User', 'u')
+            ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
+            ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
+            ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.roles NOT LIKE :role ')
+            ->andwhere("u.adminApproved= 'Yes'")
+            ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('role','%ROLE_ADMIN_USER%')
+            ->setMaxResults($pageSize)
+            ->setFirstResult($firstResult);
+
+        foreach($sort as  $key => $value){
+            $qb->addOrderBy("u.".$key,$value);
+        }
+        return $qb->getQuery()
+            ->getResult();
+
+    }
+
+
+    public function getApprovedUserSearchNumber($searchQuery)
+    {
+        return $this->getEntityManager()->createQueryBuilder('u')
+            ->select('COUNT(u)')
+            ->from('AppBundle:User', 'u')
+            ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.roles NOT LIKE :role ')
+            ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('role','%ROLE_ADMIN_USER%')
+            ->andwhere("u.adminApproved= 'Yes'")
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function approveUsers($users){
+        $conditions = array();
+        foreach ($users as $user) {
+            array_push($conditions, "u.id = '" . $user['userId'] . "'");
+        }
+
+        $queryBuilderUser = $this->getEntityManager()->createQueryBuilder('u');
+
+
+        $queryBuilderUser
+            ->update('AppBundle:User', 'u')
+            ->set('u.adminApproved', "'Yes'");
+
+        $orX = $queryBuilderUser->expr()->orX();
+        $orX->addMultiple($conditions);
+        $queryBuilderUser->add('where', $orX);
+
+
+        return $queryBuilderUser->getQuery()->execute();
+
+    }
 }

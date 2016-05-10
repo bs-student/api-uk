@@ -54,8 +54,7 @@ class ChangePasswordController extends BaseController
         }else{
 
             $data = array(
-                'errorTitle'=>"Password could not be changed",
-                "errorDescription"=>"Sorry, please check the form nad try again.."
+                'errorTitle'=>"Sorry, Password could not be changed"
             );
             return $this->_createJsonResponse('error',$data,400);
         }

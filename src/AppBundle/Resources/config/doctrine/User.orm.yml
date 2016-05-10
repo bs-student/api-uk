@@ -80,5 +80,11 @@ AppBundle\Entity\User:
             nullable: true
             type: string
             length: '255'
+        adminApproved:
+            column: admin_approved
+            type: string
+            length: '20'
+            options:
+                default: 'No'
 
     lifecycleCallbacks: {  }
