@@ -419,6 +419,9 @@ class BookDealManagementApiController extends Controller
         ), 200);
     }
 
+    /**
+     * Get Books I Have Have Bought (Buy Archive)
+     */
     public function getBooksIHaveBoughtAction(Request $request){
         $deals = array(
             'buyerToSeller' => array(),

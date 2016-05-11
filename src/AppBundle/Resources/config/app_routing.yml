@@ -391,3 +391,25 @@ get_all_book_deals:
     path: /api/admin/get_all_book_deals
     defaults:  {_controller: AppBundle:Api/AdminBookDealApi:getAllBookDeals}
     methods: [POST]
+
+#QuoteManagementApiController
+
+get_student_quotes:
+    path: /api/admin/get_student_quotes
+    defaults:  {_controller: AppBundle:Api/AdminQuoteApi:getStudentQuotes}
+    methods: [POST]
+
+get_university_quotes:
+    path: /api/admin/get_university_quotes
+    defaults:  {_controller: AppBundle:Api/AdminQuoteApi:getUniversityQuotes}
+    methods: [POST]
+
+update_quote:
+    path: /api/admin/update_quote
+    defaults:  {_controller: AppBundle:Api/AdminQuoteApi:updateQuote}
+    methods: [POST]
+
+add_quote:
+    path: /api/admin/add_quote
+    defaults:  {_controller: AppBundle:Api/AdminQuoteApi:addQuote}
+    methods: [POST]

@@ -1,3 +1,7 @@
+app_quote:
+    resource: "@AppBundle/Resources/config/routing/quote.yml"
+    prefix:   /quote
+
 app_message:
     resource: "@AppBundle/Resources/config/routing/message.yml"
     prefix:   /message
