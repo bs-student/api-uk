@@ -654,6 +654,12 @@ class BookManagementApiController extends Controller
         $newBookArray = array();
         foreach ($booksArray['books'] as $book) {
             if (strcmp($book['bookBinding'], "Kindle Edition") && strcmp($book['bookPriceAmazon'], "Not Found")) {
+
+                //Title Subtitle Formatting
+                if (strpos($book['bookTitle'], ":")) {
+                    $book['bookSubTitle'] = substr($book['bookTitle'], strpos($book['bookTitle'], ":") + 2);
+                    $book['bookTitle'] = substr($book['bookTitle'], 0, strpos($book['bookTitle'], ":"));
+                }
                 array_push($newBookArray, $book);
             }
         }
