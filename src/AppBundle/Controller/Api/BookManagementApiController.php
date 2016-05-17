@@ -372,7 +372,14 @@ class BookManagementApiController extends Controller
                 $bookForm = $this->createForm(new BookType(), $book);
 
                 $bookData['bookPublishDate'] = (new \DateTime($bookData['bookPublishDate']))->format("Y-m-d");
-                $bookData['bookDescription'] = strip_tags($bookData['bookDescription']);
+
+                if(array_key_exists('bookDescription',$bookData)){
+                    $bookData['bookDescription'] = strip_tags($bookData['bookDescription']);
+                }
+
+                if(array_key_exists('bookSubTitle',$bookData)){
+                    $bookData['bookTitle']=$bookData['bookTitle'].": ".$bookData['bookSubTitle'];
+                }
                 //TODO Insert Book Amazon Price
                 $bookForm->submit($bookData);
 
