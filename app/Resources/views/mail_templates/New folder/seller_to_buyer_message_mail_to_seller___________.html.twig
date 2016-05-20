@@ -1,0 +1,15 @@
+{% block body -%}
+    Message has been sent to Buyer ({{ buyer }})
+
+    <strong>Here is the deal information</strong><br/>
+    Title: {{ book.bookTitle }}<br/>
+    Author: {{ book.bookDirectorAuthorArtist }}<br/>
+    ISBN: {{ book.bookIsbn10 }}<br/>
+    Available Date:{{ bookDeal.bookAvailableDate|date("d M Y")}}<br/>
+    Contact :{{ bookDeal.bookContactMethod }}<br/>
+    Price:${{ bookDeal.bookPriceSell }}<br/>
+
+    <strong>Your Message</strong><br/>
+    {{ seller.username }} : {{ message.messageBody }} <br/>
+
+{% endblock %}
