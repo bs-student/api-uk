@@ -32,6 +32,8 @@ class RegistrationFormHandler extends BaseHandler
             'first'=>$submittedData['new_password'],
             'second'=>$submittedData['confirm_password']
         );
+        $submittedData['adminApproved']='No';
+
         if ('POST' === $this->request->getMethod()) {
 
             $this->form->bind($submittedData);

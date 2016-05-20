@@ -97,6 +97,7 @@ class RegistrationController extends BaseController
                 $form->remove('facebookToken');
 
 
+
                 $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
 
 

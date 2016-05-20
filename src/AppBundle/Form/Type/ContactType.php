@@ -58,7 +58,8 @@ class ContactType extends AbstractType
                     new DateTime(),
                     new NotBlank()
                 )
-            ));
+            ))
+            ->add('soldToThatBuyer','text');
 
 
 

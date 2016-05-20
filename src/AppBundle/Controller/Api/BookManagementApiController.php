@@ -352,7 +352,7 @@ class BookManagementApiController extends Controller
 
                     //Insert Book Image from amazon
                     $imageOutput = $this->get('api_caller')->call(new HttpGetHtml($bookData['bookImage'], null, null));
-                    $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . ".png";
+                    $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . ".jpg";
                     $fp = fopen($fileDirHost . $fileDir . $fileSaveName, 'x');
                     fwrite($fp, $imageOutput);
                     fclose($fp);
@@ -606,7 +606,7 @@ class BookManagementApiController extends Controller
             $fileNameDir = '/bookImages/';
 
             $imageOutput = $this->get('api_caller')->call(new HttpGetHtml($book['bookImages'][0]['image'], null, null));
-            $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . ".png";
+            $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . ".jpg";
             $fp = fopen($fileDirHost . $fileDir . $fileSaveName, 'x');
             fwrite($fp, $imageOutput);
             fclose($fp);
@@ -812,14 +812,20 @@ class BookManagementApiController extends Controller
 
         $booksArray = array();
 
-        foreach ($simpleXml->Items->Item as $item) {
-            $booksArray[] = $this->_createJsonFromItemAmazon($item);
+        if($simpleXml!=null){
+            foreach ($simpleXml->Items->Item as $item) {
+                $booksArray[] = $this->_createJsonFromItemAmazon($item);
+            }
+            $totalSearchResults = (string)$simpleXml->Items->TotalResults;
+        }else{
+            $totalSearchResults = 0;
         }
+
 
 
         return array(
             'books' => $booksArray,
-            'totalSearchResults' => (string)$simpleXml->Items->TotalResults
+            'totalSearchResults' => $totalSearchResults
         );
 
     }

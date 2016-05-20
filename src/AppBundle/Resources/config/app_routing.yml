@@ -413,3 +413,10 @@ add_quote:
     path: /api/admin/add_quote
     defaults:  {_controller: AppBundle:Api/AdminQuoteApi:addQuote}
     methods: [POST]
+
+
+#TestCiontroller
+test:
+    path: /test
+    defaults:  {_controller: AppBundle:Test:index}
+    methods: [GET]

@@ -55,6 +55,7 @@ class ContactManagementApiController extends Controller
                         $contact = new Contact();
 
                         $contactForm = $this->createForm(new ContactType(), $contact);
+                        $data['contact']['soldToThatBuyer']="No";
 
                         $contactForm->submit($data['contact']);
 
@@ -78,8 +79,16 @@ class ContactManagementApiController extends Controller
                                     'buyerNickName'=>$this->get('security.token_storage')->getToken()->getUser()->getUsername(),
                                     'buyerEmail'=>$data['contact']['buyerEmail']
                                 );
-                                if(array_key_exists('buyerCellPhone',$data['contact']))$buyerInfo['buyerCellPhone']=$data['contact']['buyerCellPhone'];
-                                if(array_key_exists('buyerHomePhone',$data['contact']))$buyerInfo['buyerHomePhone']=$data['contact']['buyerHomePhone'];
+                                if(array_key_exists('buyerCellPhone',$data['contact'])){
+                                    $buyerInfo['buyerCellPhone']=$data['contact']['buyerCellPhone'];
+                                }else{
+                                    $buyerInfo['buyerCellPhone']="";
+                                }
+                                if(array_key_exists('buyerHomePhone',$data['contact'])){
+                                    $buyerInfo['buyerHomePhone']=$data['contact']['buyerHomePhone'];
+                                }else{
+                                    $buyerInfo['buyerHomePhone']="";
+                                }
 
                             }
                             //Send Proper Mails to Buyer & Seller
@@ -144,7 +153,7 @@ class ContactManagementApiController extends Controller
             $contact = new Contact();
 
             $contactForm = $this->createForm(new ContactType(), $contact);
-
+            $data['contact']['soldToThatBuyer']="No";
             $contactForm->submit($data['contact']);
 
             if($contactForm->isValid()){

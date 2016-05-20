@@ -11,53 +11,56 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
-use FOS\UserBundle\Controller\ChangePasswordController as BaseController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * Controller managing the password change
  *
  */
-class ChangePasswordController extends BaseController
+class TestController extends Controller
 {
+
 
     /**
      * Change password
      */
-    public function changePasswordAction()
+    public function indexAction()
     {
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        if (!is_object($user) || !$user instanceof UserInterface) {
-            $data = array(
-                'errorTitle'=>"Access Denied",
-                "errorDescription"=>"Sorry, This user does not have access to this section."
-            );
-            return $this->_createJsonResponse('error',$data,400);
+        $message = \Swift_Message::newInstance();
 
-        }
 
-        $form = $this->container->get('fos_user.change_password.form');
-        $formHandler = $this->container->get('fos_user.change_password.form.handler');
+        $data = array(
+            'user' => "User",
+            'confirmationUrl' =>  "url",
+            'header_image'=>$message->embed(\Swift_Image::fromPath('assets/images/header.png')),
+            'banner_image'=>$message->embed(\Swift_Image::fromPath('assets/images/banner.png')),
+            'sub_title_image'=>$message->embed(\Swift_Image::fromPath('assets/images/subTitle.png')),
+            'button_activate_account_image'=>$message->embed(\Swift_Image::fromPath('assets/images/activate_button.png')),
+            'button_tell_friends_image'=>$message->embed(\Swift_Image::fromPath('assets/images/tell_friend_button.png')),
+            'share_image'=>$message->embed(\Swift_Image::fromPath('assets/images/share.png')),
+            'footer_image'=>$message->embed(\Swift_Image::fromPath('assets/images/footer.png')),
+        );
 
-        $process = $formHandler->process($user);
-        if ($process) {
 
-            $data = array(
-                'successTitle'=>"Password Changed",
-                "successDescription"=>"Password is successfully changed."
-            );
-            return $this->_createJsonResponse('success',$data,200);
 
-        }else{
 
-            $data = array(
-                'errorTitle'=>"Sorry, Password could not be changed"
-            );
-            return $this->_createJsonResponse('error',$data,400);
-        }
+       /* $message->setBody(
+            $this->templating->render('mail_templates/registration_confirmation.html.twig', $data),'text/html'
+        );*/
+
+
+//        $image= $message->embed(\Swift_Image::fromPath('http://localhost:8080/Student2StudentApi/web/assets/images/logo.jpg'));
+//        var_dump($message->embed(\Swift_Image::fromPath('http://localhost:8080/Student2StudentApi/web/assets/images/logo.jpg')));
+
+//        return $this->render('mail_templates/registration_confirmation.html.twig',array('image'=>$image));
+//        die();
+
+        return $this->render('mail_templates/registration_confirmation.html.twig',$data);
 
     }
 
