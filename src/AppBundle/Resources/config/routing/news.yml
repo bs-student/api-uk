@@ -1,0 +1,30 @@
+news:
+    path:     /
+    defaults: { _controller: "AppBundle:CRUD/News:index" }
+
+news_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:CRUD/News:show" }
+
+news_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:CRUD/News:new" }
+
+news_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:CRUD/News:create" }
+    methods:  POST
+
+news_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:CRUD/News:edit" }
+
+news_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:CRUD/News:update" }
+    methods:  [POST, PUT]
+
+news_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:CRUD/News:delete" }
+    methods:  [POST, DELETE]

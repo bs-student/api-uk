@@ -1,0 +1,30 @@
+newsimage:
+    path:     /
+    defaults: { _controller: "AppBundle:CRUD/NewsImage:index" }
+
+newsimage_show:
+    path:     /{id}/show
+    defaults: { _controller: "AppBundle:CRUD/NewsImage:show" }
+
+newsimage_new:
+    path:     /new
+    defaults: { _controller: "AppBundle:CRUD/NewsImage:new" }
+
+newsimage_create:
+    path:     /create
+    defaults: { _controller: "AppBundle:CRUD/NewsImage:create" }
+    methods:  POST
+
+newsimage_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AppBundle:CRUD/NewsImage:edit" }
+
+newsimage_update:
+    path:     /{id}/update
+    defaults: { _controller: "AppBundle:CRUD/NewsImage:update" }
+    methods:  [POST, PUT]
+
+newsimage_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AppBundle:CRUD/NewsImage:delete" }
+    methods:  [POST, DELETE]
