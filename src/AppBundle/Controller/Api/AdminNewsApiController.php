@@ -6,9 +6,11 @@ use AppBundle\Entity\Book;
 use AppBundle\Entity\BookImage;
 use AppBundle\Entity\Campus;
 use AppBundle\Entity\Contact;
+use AppBundle\Entity\News;
 use AppBundle\Entity\Quote;
 use AppBundle\Form\Type\BookDealType;
 use AppBundle\Form\Type\ContactType;
+use AppBundle\Form\Type\NewsType;
 use AppBundle\Form\Type\QuoteType;
 use AppBundle\Form\Type\UniversityType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -28,14 +30,15 @@ use Lsw\ApiCallerBundle\Call\HttpGetHtml;
 use AppBundle\Form\Type\BookType;
 use Symfony\Component\HttpFoundation\FileBag;
 
-class AdminQuoteApiController extends Controller
+class AdminNewsApiController extends Controller
 {
 
 
     /**
-     * Get Student Quotes
+     * Get News for Admin
      */
-    public function getStudentQuotesAction(Request $request){
+    public function getNewsAction(Request $request){
+
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
         if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
@@ -43,32 +46,49 @@ class AdminQuoteApiController extends Controller
             $content = $request->getContent();
             $data = json_decode($content, true);
             $em = $this->getDoctrine()->getManager();
-            $quoteRepo=$em->getRepository('AppBundle:Quote');
+            $newsRepo=$em->getRepository('AppBundle:News');
 
             $pageSize = $data["pageSize"];
             $searchQuery = filter_var($data["searchQuery"], FILTER_SANITIZE_STRING);
             $pageNumber = $data["pageNumber"];
             $sort = $data["sort"];
 
-            $totalNumber = $quoteRepo->getAllStudentQuoteSearchNumber($searchQuery);
-            $searchResults= $quoteRepo->getAllStudentQuoteSearchResult($searchQuery, $pageNumber, $pageSize,$sort);
+            $totalNumber = $newsRepo->getAllNewsSearchNumber($searchQuery);
+            $searchResults= $newsRepo->getAllNewsSearchResult($searchQuery, $pageNumber, $pageSize,$sort);
+
+            $newsData = array();
+            foreach($searchResults as $news){
+                $news['newsDateTime']=$news['newsDateTime']->format('d M Y');
+                $images = $newsRepo->findOneById($news['newsId'])->getNewsImages();
+
+                $news['newsImages']=array();
+                foreach($images as $image){
+                    array_push($news['newsImages'], array(
+                        'imageId'=>$image->getId(),
+                        'image'=>$image->getNewsImageUrl()
+                    ));
+                }
+
+                array_push($newsData,$news);
+            }
 
 
             $data = array(
-                'totalQuotes' => $searchResults ,
+                'totalNews' => $newsData ,
                 'totalNumber' => $totalNumber
             );
 
-            return $this->_createJsonResponse('success', array('successData'=>array('quotes'=>$data)), 200);
+            return $this->_createJsonResponse('success', array('successData'=>array('news'=>$data)), 200);
         }else{
             return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
         }
     }
 
+
     /**
-     * Get University Quote
+     * Update News
      */
-    public function getUniversityQuotesAction(Request $request){
+    public function updateNewsAction(Request $request){
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
         if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
@@ -76,60 +96,27 @@ class AdminQuoteApiController extends Controller
             $content = $request->getContent();
             $data = json_decode($content, true);
             $em = $this->getDoctrine()->getManager();
-            $quoteRepo=$em->getRepository('AppBundle:Quote');
+            $newsRepo=$em->getRepository('AppBundle:News');
 
-            $pageSize = $data["pageSize"];
-            $searchQuery = filter_var($data["searchQuery"], FILTER_SANITIZE_STRING);
-            $pageNumber = $data["pageNumber"];
-            $sort = $data["sort"];
+            $news = $newsRepo->findOneById($data['newsId']);
 
-            $totalNumber = $quoteRepo->getAllUniversityQuoteSearchNumber($searchQuery);
-            $searchResults= $quoteRepo->getAllUniversityQuoteSearchResult($searchQuery, $pageNumber, $pageSize,$sort);
+            if($news!=null){
+                $newsForm = $this->createForm(new NewsType(), $news);
+                $newsForm->remove('newsImages');
+                $data['newsDateTime']=gmdate('Y-m-d H:i:s');
+                $newsForm->submit($data);
 
-
-            $data = array(
-                'totalQuotes' => $searchResults ,
-                'totalNumber' => $totalNumber
-            );
-
-            return $this->_createJsonResponse('success', array('successData'=>array('quotes'=>$data)), 200);
-        }else{
-            return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
-        }
-    }
-
-    /**
-     * Update Quote
-     */
-    public function updateQuoteAction(Request $request){
-        $user = $this->container->get('security.token_storage')->getToken()->getUser();
-
-        if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
-
-            $content = $request->getContent();
-            $data = json_decode($content, true);
-            $em = $this->getDoctrine()->getManager();
-            $quoteRepo=$em->getRepository('AppBundle:Quote');
-
-            $quote = $quoteRepo->findOneById($data['quoteId']);
-
-            if($quote!=null){
-                $quoteForm = $this->createForm(new QuoteType(), $quote);
-                $quoteForm->remove('quoteType');
-                $quoteForm->remove('quoteImage');
-                $quoteForm->submit($data);
-
-                if ($quoteForm->isValid()) {
-                    $em->persist($quote);
+                if ($newsForm->isValid()) {
+                    $em->persist($news);
                     $em->flush();
                     return $this->_createJsonResponse('success', array(
-                        'successTitle' => "Quote has been updated"
+                        'successTitle' => "News has been updated"
                     ), 200);
                 } else {
-                    return $this->_createJsonResponse('error', array("errorTitle"=>"Could Not update quote","errorData" => $quoteForm), 400);
+                    return $this->_createJsonResponse('error', array("errorTitle"=>"Could Not update news","errorData" => $newsForm), 400);
                 }
             }else{
-                return $this->_createJsonResponse('error', array("errorTitle"=>"Could was not found"), 400);
+                return $this->_createJsonResponse('error', array("errorTitle"=>"News was not found"), 400);
             }
 
 
@@ -139,43 +126,41 @@ class AdminQuoteApiController extends Controller
     }
 
     /**
-     * Add Quote
+     * Add News
      */
-    public function addQuoteAction(Request $request){
+    public function addNewsAction(Request $request){
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
         if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
 
-            $content = $request->get('quote');
+            $content = $request->get('news');
             $data = json_decode($content, true);
             $em = $this->getDoctrine()->getManager();
 
             //Prepare File
             $fileDirHost = $this->container->getParameter('kernel.root_dir');
-            $fileDir = '/../web/quoteImages/';
-            $fileNameDir = '/quoteImages/';
+            $fileDir = '/../web/newsImages/';
+            $fileNameDir = '/newsImages/';
             $files = $request->files;
 
             //Return Error if image not found
             if(count($files)==0){
-                return $this->_createJsonResponse('error', array('errorTitle' => "Cannot Add Quote", 'errorDescription' => "Image not Found"), 400);
+                return $this->_createJsonResponse('error', array('errorTitle' => "Cannot Add News", 'errorDescription' => "Image not Found"), 400);
             }
 
             //Upload Image
             $fileUploadError = false;
+            $data['newsImages']=array();
             foreach ($files as $file) {
                 if ((($file->getSize()) / 1024) <= 200) {
-                    $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . "." . pathinfo($file->getClientOriginalName())['extension'];
+                    $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . "." . 'jpg';
                     $file->move($fileDirHost . $fileDir, $fileSaveName);
 
-                    if(!strcmp('Student',$data['quoteType'])){
-                        $this->_smart_resize_image($fileDirHost.$fileDir.$fileSaveName , null, 64 , 64 , false , $fileDirHost.$fileDir.$fileSaveName , false , false ,100 );
-                    }elseif(!strcmp('Student',$data['quoteType'])){
-                        $this->_smart_resize_image($fileDirHost.$fileDir.$fileSaveName , null, 195 , 195 , false , $fileDirHost.$fileDir.$fileSaveName , false , false ,100 );
-                    }
+                    $this->_smart_resize_image($fileDirHost.$fileDir.$fileSaveName , null, 0 , 0 , false , $fileDirHost.$fileDir.$fileSaveName , false , false ,100 );
 
-
-                    $data['quoteImage']= $fileNameDir . $fileSaveName;
+                    array_push($data['newsImages'],array(
+                        'newsImageUrl'=>$fileNameDir . $fileSaveName
+                    ));
                 } else {
                     $fileUploadError = true;
                 }
@@ -185,31 +170,44 @@ class AdminQuoteApiController extends Controller
 
 
 
-            $quote = new Quote();
 
-            $data['quoteStatus']='Activated';
+            $news = new News();
+
+            $data['newsStatus']='Activated';
+            $data['newsDateTime']=gmdate('Y-m-d H:i:s');
 
 
-            $quoteForm = $this->createForm(new QuoteType(), $quote);
+            $newsForm = $this->createForm(new NewsType(), $news);
 
-            $quoteForm->submit($data);
+            $newsForm->submit($data);
 
-            if ($quoteForm->isValid()) {
-                $em->persist($quote);
+            if ($newsForm->isValid()) {
+                $em->persist($news);
                 $em->flush();
+
+                $images = $news->getNewsImages();
+                $imageData=array();
+                foreach($images as $image){
+                    array_push($imageData,array(
+                        'imageId'=>$image->getId(),
+                        'image'=>$image->getNewsImageUrl()
+                    ));
+                }
+
                 return $this->_createJsonResponse('success', array(
-                    'successTitle' => "Quote has been created",
+                    'successTitle' => "News has been created",
                     'successData'=>array(
-                        'quoteId'=>$quote->getId(),
-                        'quoteImage'=>$quote->getQuoteImage(),
-                        'quoteProvider'=>$quote->getQuoteProvider(),
-                        'quoteDescription'=>$quote->getQuoteDescription(),
-                        'quoteStatus'=>$quote->getQuoteStatus()
+                        'newsId'=>$news->getId(),
+                        'newsTitle'=>$news->getNewsTitle(),
+                        'newsDescription'=>$news->getNewsDescription(),
+                        'newsDateTime'=>$news->getNewsDateTime()->format('d M Y'),
+                        'newsStatus'=>$news->getNewsStatus(),
+                        'newsImages'=>$imageData
                     )
                 ), 201);
 
             } else {
-                return $this->_createJsonResponse('error', array("errorTitle"=>"Could Not create quote","errorData" => $quoteForm), 400);
+                return $this->_createJsonResponse('error', array("errorTitle"=>"Could Not create news","errorData" => $newsForm), 400);
             }
 
 

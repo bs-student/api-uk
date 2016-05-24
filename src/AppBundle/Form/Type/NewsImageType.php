@@ -11,15 +11,14 @@ use Symfony\Component\Validator\Constraints\Required;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BookDealImageType extends AbstractType
+class NewsImageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('imageUrl','text',array(
+        $builder->add('newsImageUrl','text',array(
             'constraints' => array(
                 new NotBlank(),
-
             )
         ));
     }
@@ -27,7 +26,7 @@ class BookDealImageType extends AbstractType
 
     public function getName()
     {
-        return 'appbundle_book_deal_image';
+        return 'appbundle_news_image';
     }
 
     /**
@@ -36,7 +35,7 @@ class BookDealImageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\BookDealImage',
+            'data_class' => 'AppBundle\Entity\NewsImage',
             'csrf_protection' => false,
             'allow_extra_fields' => true,
 

@@ -415,8 +415,26 @@ add_quote:
     methods: [POST]
 
 
-#TestCiontroller
-test:
-    path: /test
-    defaults:  {_controller: AppBundle:Test:index}
-    methods: [GET]
+#AdminNewsManagementApiController
+
+get_news:
+    path: /api/admin/get_news
+    defaults:  {_controller: AppBundle:Api/AdminNewsApi:getNews}
+    methods: [POST]
+
+add_news:
+    path: /api/admin/add_news
+    defaults:  {_controller: AppBundle:Api/AdminNewsApi:addNews}
+    methods: [POST]
+
+update_news:
+    path: /api/admin/update_news
+    defaults:  {_controller: AppBundle:Api/AdminNewsApi:updateNews}
+    methods: [POST]
+
+#NewsManagementApiController
+
+get_active_news:
+    path: /news/get_activated_news
+    defaults:  {_controller: AppBundle:Api/NewsApi:getActiveNews}
+    methods: [POST]

@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
-class BookDealType extends AbstractType
+class NewsType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -21,87 +21,37 @@ class BookDealType extends AbstractType
 
         $builder
 
-            ->add('book','entity',array(
-                'class' => "AppBundle:Book",
-                'constraints' => array(
-                    new NotBlank(),
 
-                )))
 
-            ->add('bookPriceSell', 'text', array(
+            ->add('newsTitle', 'text', array(
                 'constraints' => array(
                     new NotBlank(),
 
                 ),))
 
-            ->add('bookCondition', 'text', array(
+            ->add('newsDescription', 'text', array(
                 'constraints' => array(
                     new NotBlank(),
 
                 ),))
-            ->add('bookIsHighlighted', 'text', array(
-                'constraints' => array(
-                    new NotBlank(),
 
-                ),))
-            ->add('bookHasNotes', 'text', array(
-                'constraints' => array(
-                    new NotBlank(),
 
-                ),))
-            ->add('bookComment', 'text', array(
-                'constraints' => array(
-                    new NotBlank(),
-
-                ),))
-            ->add('bookContactMethod', 'text', array(
-                'constraints' => array(
-                    new NotBlank(),
-
-                ),))
-            ->add('bookContactHomeNumber','text')
-            ->add('bookContactCellNumber','text')
-            ->add('bookContactEmail','text')
-            ->add('bookIsAvailablePublic', 'text', array(
-                'constraints' => array(
-                    new NotBlank(),
-
-                ),))
-            ->add('bookPaymentMethodCaShOnExchange')
-            ->add('bookPaymentMethodCheque')
-            ->add('bookAvailableDate', 'date', array(
+            ->add('newsDateTime', 'date', array(
                 'widget' => 'single_text',
                 'constraints' => array(
                     new NotBlank(),
                     new Date()
                 ),))
-            ->add('buyer','entity',array(
-                'class' => "AppBundle:User",
-                ))
-            ->add('seller','entity',array(
-                'class' => "AppBundle:User",
-                'constraints' => array(
-                    new NotBlank(),
 
-                )))
-            ->add('bookSellingStatus', 'text', array(
+
+
+            ->add('newsStatus', 'text', array(
                 'constraints' => array(
                     new NotBlank(),
 
                 ),))
-            ->add('bookStatus', 'text', array(
-                'constraints' => array(
-                    new NotBlank(),
-
-                ),))
-            ->add('bookViewCount', 'integer', array(
-                'constraints' => array(
-                    new NotBlank(),
-
-                ),))
-
-            ->add('bookDealImages', 'collection', array(
-                'type'         => new BookDealImageType(),
+            ->add('newsImages', 'collection', array(
+                'type'         => new NewsImageType(),
                 'allow_add'    => true,
 //                'allow_delete'    => true,
                 'by_reference' =>false
@@ -117,13 +67,13 @@ class BookDealType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_book_deal';
+        return 'appbundle_news';
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\BookDeal',
+            'data_class' => 'AppBundle\Entity\News',
             'csrf_protection' => false,
             'allow_extra_fields' => true,
 

@@ -1,3 +1,11 @@
+app_newsimage:
+    resource: "@AppBundle/Resources/config/routing/newsimage.yml"
+    prefix:   /newsimage
+
+app_news:
+    resource: "@AppBundle/Resources/config/routing/news.yml"
+    prefix:   /news
+
 app_quote:
     resource: "@AppBundle/Resources/config/routing/quote.yml"
     prefix:   /quote

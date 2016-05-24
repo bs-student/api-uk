@@ -2,21 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="992c5a8c-cd64-41e9-9383-a47a89a328fa" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Resources/views/mail_templates/seller_to_buyer_message_mail_to_buyer.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Resources/views/mail_templates/seller_to_buyer_message_mail_to_seller.html.twig" />
-      <change type="DELETED" beforePath="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\views\mail_templates\New folder\buyer_to_seller_message_mail_to_buyer.html.twig" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\views\mail_templates\New folder\buyer_to_seller_message_mail_to_seller.html.twig" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\views\mail_templates\New folder\buyer_to_seller_method_to_buyer.html________.twig" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\views\mail_templates\New folder\buyer_to_seller_method_to_buyer_mail.html________.twig" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\views\mail_templates\New folder\buyer_to_seller_method_to_seller_mail.html_________.twig" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\views\mail_templates\New folder\buyer_to_seller_to_seller_mail.html.twig" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\views\mail_templates\New folder\seller_to_buyer_message_mail_to_buyer__________.html.twig" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\views\mail_templates\New folder\seller_to_buyer_message_mail_to_seller___________.html.twig" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\views\mail_templates\New folder\seller_to_buyer_method_to_buyer_mail.html__________.twig" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\views\mail_templates\New folder\seller_to_buyer_method_to_seller.html.twig" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\views\mail_templates\New folder\seller_to_buyer_method_to_seller_mail.html.twig" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\views\mail_templates\New folder\seller_to_buyer_to_buyer.html.twig" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php" afterPath="$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminNewsApiController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminNewsApiController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/Api/NewsApiController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/Api/NewsApiController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Form/Type/NewsImageType.php" afterPath="$PROJECT_DIR$/src/AppBundle/Form/Type/NewsImageType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Form/Type/NewsType.php" afterPath="$PROJECT_DIR$/src/AppBundle/Form/Type/NewsType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" afterPath="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/routing.yml" afterPath="$PROJECT_DIR$/src/AppBundle/Resources/config/routing.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Student2StudentApi.iws" />
@@ -40,54 +31,73 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Mailer.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php">
+      <file leaf-file-name="BookDealManagementApiController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="238" column="0" selection-start="11691" selection-end="11691" vertical-scroll-proportion="0.52" vertical-offset="0" max-vertical-offset="1564">
+            <state line="485" column="84" selection-start="18263" selection-end="18278" vertical-scroll-proportion="-5.54902" vertical-offset="7588" max-vertical-offset="8908">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AdminNewsApiController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminNewsApiController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="37" column="25" selection-start="1113" selection-end="1113" vertical-scroll-proportion="-3.3333333" vertical-offset="17" max-vertical-offset="3757">
               <folding>
-                <element signature="e#531#599#0" expanded="false" />
-                <element signature="e#640#1838#0" expanded="false" />
-                <element signature="e#1844#2991#0" expanded="false" />
-                <element signature="e#2997#7444#0" expanded="false" />
-                <element signature="e#7450#8242#0" expanded="false" />
-                <element signature="e#8248#9965#0" expanded="false" />
-                <element signature="e#9971#11689#0" expanded="false" />
+                <element signature="e#8017#12893#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="seller_to_buyer_message_mail_to_buyer.html.twig" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/seller_to_buyer_message_mail_to_buyer.html.twig">
+      <file leaf-file-name="NewsApiController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/NewsApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="73" column="46" selection-start="2353" selection-end="2353" vertical-scroll-proportion="-28.115385" vertical-offset="510" max-vertical-offset="3434">
+            <state line="40" column="0" selection-start="1177" selection-end="1177" vertical-scroll-proportion="-7.8461537" vertical-offset="0" max-vertical-offset="782">
+              <folding>
+                <element signature="e#1079#1117#0" expanded="false" />
+                <element signature="e#1841#2398#0" expanded="false" />
+                <element signature="e#2099#2338#0" expanded="false" />
+                <element signature="e#2147#2319#0" expanded="false" />
+                <element signature="e#2421#2530#0" expanded="false" />
+                <element signature="e#2652#2921#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewsRepository.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/NewsRepository.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="81" column="32" selection-start="2440" selection-end="2440" vertical-scroll-proportion="-31.692308" vertical-offset="553" max-vertical-offset="1700">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="seller_to_buyer_message_mail_to_seller.html.twig" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/seller_to_buyer_message_mail_to_seller.html.twig">
+      <file leaf-file-name="NewsType.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/NewsType.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="69" column="32" selection-start="2222" selection-end="2222" vertical-scroll-proportion="-30.076923" vertical-offset="391" max-vertical-offset="3451">
+            <state line="52" column="29" selection-start="1316" selection-end="1326" vertical-scroll-proportion="-28.115385" vertical-offset="34" max-vertical-offset="1394">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContactManagementApiController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/ContactManagementApiController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="287" column="96" selection-start="13339" selection-end="13347" vertical-scroll-proportion="-7.607843" vertical-offset="4134" max-vertical-offset="5474">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app_routing.yml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="app_routing.yml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="306" column="76" selection-start="9029" selection-end="9041" vertical-scroll-proportion="-12.64" vertical-offset="4886" max-vertical-offset="7276">
+            <state line="438" column="47" selection-start="12938" selection-end="12938" vertical-scroll-proportion="0.8679245" vertical-offset="6664" max-vertical-offset="7565">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="News.orm.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/News.orm.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="0" selection-start="622" selection-end="622" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
               <folding />
             </state>
           </provider>
@@ -96,16 +106,25 @@
       <file leaf-file-name="BookManagementApiController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookManagementApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="653" column="48" selection-start="23525" selection-end="23525" vertical-scroll-proportion="-6.5384617" vertical-offset="10608" max-vertical-offset="15572">
+            <state line="890" column="47" selection-start="32073" selection-end="32073" vertical-scroll-proportion="-4.882353" vertical-offset="14558" max-vertical-offset="15572">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="buyer_to_seller_method_to_seller_mail.html.twig" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_method_to_seller_mail.html.twig">
+      <file leaf-file-name="AdminUserApiController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminUserApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="178" column="54" selection-start="7234" selection-end="7234" vertical-scroll-proportion="-89.84615" vertical-offset="690" max-vertical-offset="3451">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="5015">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AdminBookDealApiController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminBookDealApiController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="42" column="53" selection-start="1366" selection-end="1366" vertical-scroll-proportion="-6.6666665" vertical-offset="0" max-vertical-offset="1768">
               <folding />
             </state>
           </provider>
@@ -124,20 +143,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/AppBundle/Repository/BookRepository.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/WishlistManagementApiController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/WishList.orm.yml" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/WishList.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Form/Type/WishListType.php" />
-        <option value="$PROJECT_DIR$/web/.htaccess" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Form/Type/BookType.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Book.orm.yml" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Book.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Repository/WishListRepository.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/WishListManagementApiController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/ChangePasswordController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Form/Handler/ChangePasswordFormHandler.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Form/Type/UserType.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/UserApiController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/UserRepository.php" />
@@ -147,7 +152,6 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/CRUD/QuoteController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/routing/quote.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Quote.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminBookDealApiController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/QuoteRepository.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Quote.orm.yml" />
@@ -156,7 +160,6 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/User.orm.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Form/Handler/RegistrationFormHandler.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/RegistrationController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/TestController.php" />
         <option value="$PROJECT_DIR$/app/config/parameters.yml" />
         <option value="$PROJECT_DIR$/app/Resources/views/mail_templates/test.html.twig" />
@@ -175,6 +178,22 @@
         <option value="$PROJECT_DIR$/app/Resources/views/mail_templates/seller_to_buyer_message_mail_to_buyer.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/mail_templates/seller_to_buyer_message_mail_to_seller.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Repository/NewsImageRepository.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/News.orm.yml" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/NewsImage.orm.yml" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/NewsImage.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/CRUD/NewsController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/routing/news.yml" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/CRUD/NewsImageController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/routing/newsimage.yml" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Form/Type/NewsImageType.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Form/Type/NewsType.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/News.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Repository/NewsRepository.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminNewsApiController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/NewsApiController.php" />
       </list>
     </option>
   </component>
@@ -338,6 +357,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="routing" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -599,72 +648,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Student2StudentApi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Student2StudentApi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Student2StudentApi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Student2StudentApi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mail_templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Student2StudentApi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Student2StudentApi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -681,10 +664,10 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\src\AppBundle\Controller\Api" />
+      <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\src\AppBundle\Form\Type" />
       <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\views\mail_templates" />
       <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\src\AppBundle\Controller" />
-      <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\src\AppBundle\Form\Type" />
-      <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\src\AppBundle\Controller\Api" />
       <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\src\AppBundle\Resources\views\Contact" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -720,7 +703,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -761,122 +744,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminBookDealApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="4" selection-start="964" selection-end="1001" vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="442" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminQuoteApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="6" selection-start="973" selection-end="973" vertical-scroll-proportion="0.11383928" vertical-offset="0" max-vertical-offset="1428" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/QuoteType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="4" selection-start="573" selection-end="573" vertical-scroll-proportion="0.3984375" vertical-offset="0" max-vertical-offset="896" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/QuoteType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="29" selection-start="1107" selection-end="1117" vertical-scroll-proportion="0.46875" vertical-offset="107" max-vertical-offset="1003" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/QuoteRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="50" selection-start="2910" selection-end="2910" vertical-scroll-proportion="1.5178572" vertical-offset="204" max-vertical-offset="1768" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Quote.orm.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="26" selection-start="752" selection-end="752" vertical-scroll-proportion="0.5347071" vertical-offset="0" max-vertical-offset="922" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/BookType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="922" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/BookType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="34" selection-start="1535" selection-end="1550" vertical-scroll-proportion="0.0" vertical-offset="833" max-vertical-offset="1445" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/RegistrationType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="107" column="0" selection-start="2811" selection-end="2811" vertical-scroll-proportion="-20.423077" vertical-offset="1203" max-vertical-offset="2278" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/User.orm.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="34" selection-start="2085" selection-end="2085" vertical-scroll-proportion="0.0" vertical-offset="710" max-vertical-offset="1632" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="26" selection-start="1268" selection-end="1281" vertical-scroll-proportion="0.33294117" vertical-offset="1043" max-vertical-offset="9316" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CRUD/BookController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="91" selection-end="148" vertical-scroll-proportion="-3.2307692" vertical-offset="1" max-vertical-offset="3910" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/config_prod.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Handler/RegistrationFormHandler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="1111" selection-end="1111" vertical-scroll-proportion="-22.23077" vertical-offset="0" max-vertical-offset="1207" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/TestController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="0" selection-start="1631" selection-end="1777" vertical-scroll-proportion="-22.538462" vertical-offset="281" max-vertical-offset="1309" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Mailer/Mailer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="21" selection-start="614" selection-end="621" vertical-scroll-proportion="-10.461538" vertical-offset="0" max-vertical-offset="1309">
-          <folding>
-            <element signature="e#295#357#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/security.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="53" selection-start="626" selection-end="626" vertical-scroll-proportion="0.0" vertical-offset="25" max-vertical-offset="1836" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/config_dev.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="918" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/config_test.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="922" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/swiftmailer/swiftmailer/lib/classes/Swift/Mailer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="20" selection-start="1824" selection-end="1824" vertical-scroll-proportion="0.34263393" vertical-offset="832" max-vertical-offset="1938" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/swiftmailer/swiftmailer/lib/classes/Swift/Mime/SimpleMessage.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="561" column="20" selection-start="14514" selection-end="14514" vertical-scroll-proportion="0.34263393" vertical-offset="9128" max-vertical-offset="11033">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/swiftmailer/swiftmailer/lib/classes/Swift/Image.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="6" selection-start="303" selection-end="303" vertical-scroll-proportion="0.013392857" vertical-offset="141" max-vertical-offset="1037">
@@ -914,13 +781,6 @@
         <state line="38" column="100" selection-start="1555" selection-end="1555" vertical-scroll-proportion="-18.115385" vertical-offset="175" max-vertical-offset="1989" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Contact.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="28" selection-start="603" selection-end="619" vertical-scroll-proportion="-9.153846" vertical-offset="459" max-vertical-offset="4998">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Contact.orm.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="51" column="23" selection-start="1233" selection-end="1248" vertical-scroll-proportion="0.0" vertical-offset="166" max-vertical-offset="1088" />
@@ -943,11 +803,6 @@
         <state line="106" column="11" selection-start="23" selection-end="4581" vertical-scroll-proportion="-55.576923" vertical-offset="357" max-vertical-offset="2006" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Book.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="25.5" vertical-offset="663" max-vertical-offset="7616" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/seller_to_buyer_method_to_seller_mail.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state line="101" column="24" selection-start="2495" selection-end="2999" vertical-scroll-proportion="0.0" vertical-offset="1118" max-vertical-offset="3842">
@@ -962,37 +817,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="69" selection-start="1088" selection-end="1088" vertical-scroll-proportion="-0.4174107" vertical-offset="595" max-vertical-offset="8908">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/seller_to_buyer_method_to_buyer_mail.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state line="130" column="24" selection-start="3325" selection-end="5092" vertical-scroll-proportion="0.57366073" vertical-offset="1696" max-vertical-offset="3196">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/BookDeal.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="7" selection-start="1197" selection-end="1197" vertical-scroll-proportion="0.3705357" vertical-offset="1045" max-vertical-offset="10829">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookManagementApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="653" column="48" selection-start="23525" selection-end="23525" vertical-scroll-proportion="-6.5384617" vertical-offset="10608" max-vertical-offset="15572">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="306" column="76" selection-start="9029" selection-end="9041" vertical-scroll-proportion="-12.64" vertical-offset="4886" max-vertical-offset="7276">
           <folding />
         </state>
       </provider>
@@ -1027,7 +854,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="238" column="0" selection-start="11691" selection-end="11691" vertical-scroll-proportion="0.52" vertical-offset="0" max-vertical-offset="1564">
+        <state line="252" column="37" selection-start="12252" selection-end="12252" vertical-scroll-proportion="-8.333333" vertical-offset="255" max-vertical-offset="1564">
           <folding>
             <element signature="e#531#599#0" expanded="false" />
             <element signature="e#640#1838#0" expanded="false" />
@@ -1037,6 +864,244 @@
             <element signature="e#8248#9965#0" expanded="false" />
             <element signature="e#9971#11689#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/NewsImageRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="30" selection-start="37" selection-end="37" vertical-scroll-proportion="-1.3076923" vertical-offset="0" max-vertical-offset="357">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Client.orm.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/BookDeal.orm.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="37" selection-start="132" selection-end="396" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1853">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/BookDealImage.orm.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="40" selection-start="150" selection-end="352" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="595">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Contact.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="10" selection-start="203" selection-end="204" vertical-scroll-proportion="-7.8461537" vertical-offset="0" max-vertical-offset="4998">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/NewsImage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="162" selection-end="162" vertical-scroll-proportion="-9.807693" vertical-offset="0" max-vertical-offset="1428">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CRUD/NewsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="35" selection-start="42" selection-end="42" vertical-scroll-proportion="-1.3076923" vertical-offset="0" max-vertical-offset="3842">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/routing/news.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="45" selection-start="686" selection-end="686" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CRUD/NewsImageController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="35" selection-start="42" selection-end="42" vertical-scroll-proportion="-1.3076923" vertical-offset="0" max-vertical-offset="3842">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/NewsImage.orm.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="22" selection-start="411" selection-end="411" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
+          <folding>
+            <marker date="1464086535169" expanded="true" signature="-1:-1" placeholder="manyToOne:" />
+            <marker date="1464086535169" expanded="true" signature="-1:-1" placeholder="news:" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/routing/newsimage.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="45" selection-start="751" selection-end="751" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Book.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="97" column="0" selection-start="1162" selection-end="1239" vertical-scroll-proportion="-11.769231" vertical-offset="1326" max-vertical-offset="7616">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8636">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/QuoteRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="5" selection-start="259" selection-end="1643" vertical-scroll-proportion="-23.192308" vertical-offset="332" max-vertical-offset="1768">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/routing.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="0" selection-start="117" selection-end="117" vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="1054">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/NewsType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/BookDealImageType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/NewsImageType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="20" selection-start="402" selection-end="402" vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="714">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/BookDealImage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="8.846154" vertical-offset="230" max-vertical-offset="1615">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/BookDeal.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="539" column="21" selection-start="9746" selection-end="9857" vertical-scroll-proportion="-19.615385" vertical-offset="8636" max-vertical-offset="10829">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/News.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="161" column="21" selection-start="2641" selection-end="2641" vertical-scroll-proportion="-105.26923" vertical-offset="0" max-vertical-offset="3230">
+          <folding>
+            <element signature="e#36#68#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminQuoteApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5389">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminUserApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5015">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="485" column="84" selection-start="18263" selection-end="18278" vertical-scroll-proportion="-5.54902" vertical-offset="7588" max-vertical-offset="8908">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/News.orm.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="0" selection-start="622" selection-end="622" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminBookDealApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="53" selection-start="1366" selection-end="1366" vertical-scroll-proportion="-6.6666665" vertical-offset="0" max-vertical-offset="1768">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookManagementApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="890" column="47" selection-start="32073" selection-end="32073" vertical-scroll-proportion="-4.882353" vertical-offset="14558" max-vertical-offset="15572">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/NewsType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="29" selection-start="1316" selection-end="1326" vertical-scroll-proportion="-28.115385" vertical-offset="34" max-vertical-offset="1394">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminNewsApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="25" selection-start="1113" selection-end="1113" vertical-scroll-proportion="-3.3333333" vertical-offset="17" max-vertical-offset="3757">
+          <folding>
+            <element signature="e#8017#12893#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/NewsRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="32" selection-start="2440" selection-end="2440" vertical-scroll-proportion="-31.692308" vertical-offset="553" max-vertical-offset="1700">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/NewsApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="0" selection-start="1177" selection-end="1177" vertical-scroll-proportion="-7.8461537" vertical-offset="0" max-vertical-offset="782">
+          <folding>
+            <element signature="e#1079#1117#0" expanded="false" />
+            <element signature="e#1841#2398#0" expanded="false" />
+            <element signature="e#2099#2338#0" expanded="false" />
+            <element signature="e#2147#2319#0" expanded="false" />
+            <element signature="e#2421#2530#0" expanded="false" />
+            <element signature="e#2652#2921#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="438" column="47" selection-start="12938" selection-end="12938" vertical-scroll-proportion="0.8679245" vertical-offset="6664" max-vertical-offset="7565">
+          <folding />
         </state>
       </provider>
     </entry>
