@@ -1,0 +1,197 @@
+<!doctype html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>textbook exchange made easy: student2student.com newsletter</title>
+        <style type="text/css">
+            body, td, th {
+                font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+                font-size: 14px
+            }
+            a:link {
+                color: #000000;
+                text-decoration: none;
+            }
+			.blue-text{
+					color: #0072AE;
+			}
+			.orange-text{
+					color: #FF530D;
+			}
+			.head-text{
+					font-size:18px;
+					
+			}
+			.sub-text{
+					font-size:15px;
+					
+			}
+			.uppercase{
+				text-transform:uppercase;
+			}
+			
+        </style>
+    </head>
+
+    <body bgcolor="#ebeefa">
+
+
+    <table style="background:#FFFFFF" bgcolor="#ebeefa" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+        
+		<tr>
+            <td>
+
+                <table cellpadding="0" cellspacing="0" border="0" align="center" width="500px">
+                    <tr>
+                        <td align="center"><a href="http://www.student2student.com/" target="_blank">
+                                <img  src="{{ header_image }}" alt="Student2student logo" style="width:600px;height:108px;display: block;    z-index: 10;    position: relative;" title="Student2student logo"></a>
+                        </td>
+                    </tr>
+                </table>
+
+                <table  cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#FFFFFF" width="500px">
+                    <tr>
+                        <td colspan="2" align="left" style=" font-size:18px">
+						<br>
+                            Hello {{ buyer }},<br /><br />
+							Message is sent to Seller ({{ seller.username }}).<br>
+							<br>
+							<br>
+                        </td>
+                    </tr>
+					
+                </table>
+                <table width="500px" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#FFFFFF">
+                    <tr>
+                        <td colspan="2" align="left" style=" padding-top:20px;font-size:18px">
+
+                            Your Message:
+                            <br>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ buyer }}: </td>
+                        <td align="left"><text class="blue-text">{{ message.messageBody }}</text></td>
+
+                    </tr>
+
+                </table>
+				<br><br>
+                <table width="500px" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#FFFFFF">
+                    <tr>
+                        <td align="left" valign="middle">
+                            <img src="{{ book_image }}" alt="activate my account button" width="200px" height="300px" title="Book Image">
+                        </td>
+                        <td width="26">
+
+                        </td>
+                        <td align="left" valign="top">
+                            <text class="orange-text uppercase head-text">{{ book.bookTitle }}</text><br/><br/>
+
+                            <text class="blue-text sub-text">ISBN: </text><text class="sub-text">{{ book.bookIsbn10 }}</text><br/><br/>
+                            <text class="blue-text sub-text">Author: </text><text class="sub-text">{{ book.bookDirectorAuthorArtist }}</text><br/><br/>
+                            <text class="blue-text sub-text">Publisher: </text><text class="sub-text">{{ book.bookPublisher }}</text><br/><br/>
+                            <text class="blue-text sub-text">Publish Date: </text><text class="sub-text">{{ book.bookPublishDate|date("d M Y") }}</text><br/><br/>
+
+
+                        </td>
+                    </tr>
+                </table>
+<br><br>
+
+                <table width="500px" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#FFFFFF">
+                    <tr>
+                        <td colspan="2" align="left" style=" font-size:18px">
+
+                            The Deal Information:
+                            <br>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left">Price : </td>
+                        <td>$ {{ bookDeal.bookPriceSell }}</td>
+
+                    </tr>
+                    <tr>
+                        <td align="left">Book Has Notes : </td>
+                        <td>{{ bookDeal.bookHasNotes }}</td>
+
+                    </tr>
+                    <tr>
+                        <td>Book Is Highlighted : </td>
+                        <td>{{ bookDeal.bookIsHighlighted }}</td>
+
+                    </tr>
+                    <tr>
+                        <td>Available Date : </td>
+                        <td>{{ bookDeal.bookAvailableDate|date("d M Y") }}
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Payment : </td>
+                        <td>{%if bookDeal.bookPaymentMethodCaShOnExchange and bookDeal.bookPaymentMethodCheque %}
+                                Cheque, Cash
+                            {% elseif bookDeal.bookPaymentMethodCaShOnExchange and bookDeal.bookPaymentMethodCheque!=true %}
+                                Cash
+                            {% elseif bookDeal.bookPaymentMethodCaShOnExchange!=true and bookDeal.bookPaymentMethodCheque %}
+                                Cheque
+                            {% endif %}
+                        </td>
+
+                    </tr>
+                </table>
+				
+				
+				
+                <table width="500px" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#FFFFFF">
+                    <tr>
+                        <td align="left" style="padding-top:20px; font-size:18px">
+                            Don't forget about our online price comparison feature.<br />
+                            Yes, we tell you the cheapest price online!<br /><br />
+
+<span style="color:#0063a0">Cheers,<br />
+Your Student 2 Student Team</span>
+                        </td>
+                    </tr>
+                </table>
+
+                <table width="600px" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" border="0" align="left">
+                    <tr>
+                        <td align="center">
+                            <img src="{{ share_image }}" alt="Student2student main hero image" width="600" height="136" style="display:block;margin-top:20px;" title="Student2student main hero image">
+                        </td>
+                    </tr>
+                </table>
+
+                <table align="center" bgcolor="#FFFFFF" width="600" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td height="15"></td>
+                    </tr>
+                </table>
+
+                <table cellpadding="0" cellspacing="0" border="0" align="center">
+                    <tr>
+                        <td align="center">
+                            <img  src="{{ footer_image }}" alt="Student2student main hero image" width="600" height="3" style="display:block" title="Student2student main hero image">
+                        </td>
+                    </tr>
+                </table>
+
+                <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#FFFFFF">
+                    <tr>
+                        <td align="center" style="padding:20px; font-size:14px">2007 - 2016 Student 2 Student, All Rights Reserved</td>
+                    </tr>
+                </table>
+
+
+
+            </td>
+        </tr>
+    </table>
+
+
+    </body>
+    </html>
