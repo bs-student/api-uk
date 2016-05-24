@@ -54,7 +54,7 @@
                         <td colspan="2" align="left" style=" font-size:18px">
 						<br>
                             Hello {{ buyer }},<br /><br />
-							Message is sent to Seller ({{ seller.username }}).<br>
+							Seller ( {{ seller.username }} ) sent you a message.<br>
 							<br>
 							<br>
                         </td>
@@ -65,13 +65,13 @@
                     <tr>
                         <td colspan="2" align="left" style=" padding-top:20px;font-size:18px">
 
-                            Your Message:
+                            Seller Message:
                             <br>
                             <br>
                         </td>
                     </tr>
                     <tr>
-                        <td>{{ buyer }}: </td>
+                        <td>{{ seller.username }}: </td>
                         <td align="left"><text class="blue-text">{{ message.messageBody }}</text></td>
 
                     </tr>
