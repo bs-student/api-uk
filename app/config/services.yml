@@ -31,7 +31,12 @@ parameters:
     google_re_captcha_info:
             host: "https://www.google.com/recaptcha/api/siteverify"
             secret: "6LfXfBwTAAAAAJeXK5uHanz7UJWCXIN8_qvBzmjq"
-
+    google_app_info:
+            client_id: "799265882325-g4jnl097bbst3popc0ainrstrtelicbk.apps.googleusercontent.com"
+            client_secret: "ecwlOs7uqXfte2kPoJLYxIpY"
+    facebook_app_info:
+            client_id: "1570785423241368"
+            client_secret: "f2f0e7dd876ddd0ca62463619347767e"
 
 services:
 

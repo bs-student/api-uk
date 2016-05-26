@@ -10,6 +10,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
 use AppBundle\Form\Type\RegistrationType;
+use Lsw\ApiCallerBundle\Call\HttpPost;
+use Lsw\ApiCallerBundle\Call\HttpPostJson;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerAware;
@@ -23,6 +25,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Lsw\ApiCallerBundle\Call\HttpGetJson;
 use Lsw\ApiCallerBundle\Call\HttpGetHtml;
+use GuzzleHttp;
 
 
 class RegistrationController extends BaseController
@@ -162,217 +165,6 @@ class RegistrationController extends BaseController
     }
 
     /**
-     *  Register a Social Media User
-     */
-    public function socialRegisterAction(Request $request)
-    {
-
-        $em = $this->container->get('doctrine')->getManager();
-        $userRepo = $em->getRepository('AppBundle:User');
-
-        $requestJson = $request->getContent();
-        $requestData = json_decode($requestJson, true);
-
-        $username = array_key_exists('username', $requestData) ? $requestData['username'] : null;
-        $email = array_key_exists('email', $requestData) ? $requestData['email'] : null;
-        $fullName = array_key_exists('fullName', $requestData) ? $requestData['fullName'] : null;
-        $googleId = array_key_exists('googleId', $requestData) ? $requestData['googleId'] : null;
-        $facebookId = array_key_exists('facebookId', $requestData) ? $requestData['facebookId'] : null;
-        $registrationStatus = "incomplete";
-        $googleEmail = array_key_exists('googleEmail', $requestData) ? $requestData['googleEmail'] : null;
-        $googleToken = array_key_exists('googleToken', $requestData) ? $requestData['googleToken'] : null;
-        $facebookEmail = array_key_exists('facebookEmail', $requestData) ? $requestData['facebookEmail'] : null;
-        $facebookToken = array_key_exists('facebookToken', $requestData) ? $requestData['facebookToken'] : null;
-
-        $data = array(
-            'username' => $username,
-            'email' => $email,
-            'fullName' => $fullName,
-            'googleId' => $googleId,
-            'facebookId' => $facebookId,
-            'registrationStatus' => $registrationStatus,
-            'googleEmail' => $googleEmail,
-            'googleToken' => $googleToken,
-            'facebookEmail' => $facebookEmail,
-            'facebookToken' => $facebookToken
-        );
-
-        if (array_key_exists('socialService', $requestData)) {
-
-            $serviceId = null;
-            //Check if User Exist with ServiceID
-            if ($requestData['socialService'] == 'google') {
-                $user = $userRepo->findOneBy(array($requestData['socialService'] . "Id" => $googleId));
-
-                $serviceId = $googleId;
-
-            } elseif ($requestData['socialService'] == 'facebook') {
-                $user = $userRepo->findOneBy(array($requestData['socialService'] . "Id" => $facebookId));
-
-                $serviceId = $facebookId;
-            }
-
-
-            //If User is not Exist with ServiceId
-            if (null === $user || !$user instanceof UserInterface) {
-
-                // Check if User exist with provided email
-                $user = $userRepo->findOneBy(array('email' => $email));
-
-                //If User found with provided email
-                if ($user instanceof UserInterface) {
-
-                    //Add data which is not in the table for mering as User Exist with provided Email
-                    if (($requestData['socialService'] == "google")) {
-                        $user->setGoogleId($googleId);
-                        $user->setGoogleToken($googleToken);
-                        $user->setGoogleEmail($googleEmail);
-                    }
-                    if (($requestData['socialService'] == "facebook")) {
-                        $user->setFacebookId($facebookId);
-                        $user->setFacebookToken($facebookToken);
-                        $user->setFacebookEmail($facebookEmail);
-                    }
-                    $em->persist($user);
-                    $em->flush();
-
-//                    //Check if user is incomplete or not
-//                    if ($user->getRegistrationStatus() == "incomplete") {
-//                        //Check if Email is valid or just a serviceId
-
-                    $userData = array(
-                        'username' => $user->getUsername(),
-                        'email' => $user->getEmail(),
-                        'userId' => $serviceId,
-                        'registrationStatus' => $user->getRegistrationStatus(),
-                        'fullName' => $user->getFullName()
-                    );
-
-                    return $this->_createJsonResponse('success',array(
-                        'successTitle'=>"User Successfully Updated",
-                        'successDescription'=>"We had you all along and now your login data is updated.",
-                        'successData'=>$userData
-                    ),200);
-
-//                    } else {
-//                        return $this->_createJsonResponse('found',$serviceId);
-//
-//                    }
-
-
-                } else {
-                    $user = new User();
-                    //If Email is not provided then set serviceId as Email
-                    if ($email == null) {
-                        $data['facebookEmail'] = $serviceId;
-                        $data['email'] = $serviceId;
-
-                    }
-                    //Set Data
-                    $user->addRole('ROLE_NORMAL_USER');
-                    $user->setPassword('');
-                    $user->setEnabled(true);
-                    $user->setRegistrationStatus('incomplete');
-
-                    //Create Form
-                    $registrationForm = $this->container->get('form.factory')->create(new RegistrationType(), $user);
-
-                    //Remove other social plugin fields
-                    if ($requestData['socialService'] == "google") {
-                        $registrationForm->remove('facebookId');
-                        $registrationForm->remove('facebookEmail');
-                        $registrationForm->remove('facebookToken');
-                    }
-                    if ($requestData['socialService'] == "facebook") {
-                        $registrationForm->remove('googleId');
-                        $registrationForm->remove('googleEmail');
-                        $registrationForm->remove('googleToken');
-                    }
-
-                    //Submit & Validate form
-                    $registrationForm->submit($data);
-                    if ($registrationForm->isValid()) {
-
-                        $em->persist($user);
-                        $em->flush();
-
-                        //Check if Email is valid or just a serviceId
-
-                        $userData = array(
-                            'username' => $user->getUsername(),
-                            'email' => $user->getEmail(),
-                            'userId' => $serviceId,
-                            'registrationStatus' => $user->getRegistrationStatus(),
-                            'fullName' => $user->getFullName()
-                        );
-
-                        return $this->_createJsonResponse('success',array(
-                            'successTitle'=>"User Successfully Registered",
-                            'successData'=>$userData
-                        ),200);
-
-
-                    } else {
-
-                        return $this->_createJsonResponse('error',array(
-                            'errorTitle'=>"User Registration Unsuccessful",
-                            'errorDescription'=>"Form was not submitted properly. Fill Up the form and submit again.",
-                            'errorData'=>$registrationForm
-                        ),400);
-
-                    }
-
-
-                }
-
-            } else {
-
-//                //Check if found user is incomplete Then send to second page of Registration
-//                if ($user->getRegistrationStatus() == "incomplete") {
-//                    //Check if Email is valid or just a serviceId
-                $userData = array(
-                    'username' => $user->getUsername(),
-                    'email' => $user->getEmail(),
-                    'userId' => $serviceId,
-                    'registrationStatus' => $user->getRegistrationStatus(),
-                    'fullName' => $user->getFullName()
-                );
-
-                return $this->_createJsonResponse('success',array(
-                    'successTitle'=>"User was found in the System",
-                    'successData'=>$userData
-                ),200);
-
-//                return $this->_createJsonResponse('userData', $userData,200);
-
-//                } else {
-//                    return $this->_createJsonResponse('found',$serviceId);
-//                }
-
-            }
-
-        } else {
-            return $this->_createJsonResponse('error',array(
-                'errorTitle'=>"User Registration Unsuccessful",
-                'errorDescription'=>"Form data was not submitted properly. Fill Up the form and submit again."
-            ),400);
-
-        }
-
-
-    }
-
-    /* public function checkIfEmailIsValid($email){
-         if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
-             return true;
-         }else{
-             return false;
-         }
-     }*/
-
-
-
-    /**
      * Tell the user to check his email provider
      *
      */
@@ -458,7 +250,6 @@ class RegistrationController extends BaseController
         return $this->_createJsonResponse('error', $data, 400);
 
     }
-
 
 
     public function _createJsonResponse($key, $data, $code)

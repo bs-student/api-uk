@@ -42,11 +42,6 @@ user_registration:
     path: /register
     defaults:  {_controller: AppBundle:Registration:register}
 
-social_user_registration:
-    path: /social_register
-    defaults: {_controller: AppBundle:Registration:socialRegister}
-    methods: [POST,GET]
-
 fos_user_registration_check_email:
     path: /check-email
     defaults: {_controller: AppBundle:Registration:checkEmail}
@@ -63,6 +58,28 @@ fos_user_registration_confirmed:
 confirmation_token_expired:
     path: /confirmation_token_expired
     defaults: {_controller: AppBundle:Registration:confirmationTokenExpired}
+
+#SocialRegistrationController
+
+social_user_registration:
+    path: /social_register
+    defaults: {_controller: AppBundle:SocialRegistration:socialRegister}
+    methods: [POST,GET]
+
+auth_google:
+    path: /auth/google
+    defaults: {_controller: AppBundle:SocialRegistration:authGoogle}
+    methods: [POST]
+
+auth_facebook:
+    path: /auth/facebook
+    defaults: {_controller: AppBundle:SocialRegistration:authFacebook}
+    methods: [POST]
+
+update_social_user:
+    path: /update_social_user
+    defaults: {_controller: AppBundle:SocialRegistration:updateSocialUser}
+    methods: [POST]
 
 #ChangePasswordController
 change_password:
@@ -82,10 +99,10 @@ change_password:
 
 
 #UserApiController
-update_created_profile:
-    path: /api/user/update_created_profile
-    defaults: {_controller: AppBundle:Api/UserApi:updateCreatedProfile}
-    methods: [POST]
+#update_created_profile:
+#    path: /api/user/update_created_profile
+#    defaults: {_controller: AppBundle:Api/UserApi:updateCreatedProfile}
+#    methods: [POST]
 
 #update_profile:
 #    path: /user/update_profile

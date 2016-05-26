@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints\Email;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SocialUserType extends AbstractType
+class SocialRegistrationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -42,12 +42,7 @@ class SocialUserType extends AbstractType
 
 
 
-        $builder->add('enabled','boolean',array(
-            'constraints' => array(
-                new NotBlank(),
 
-            )
-        ));
         $builder->add('adminApproved','text',array(
             'constraints' => array(
                 new NotBlank(),
