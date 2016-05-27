@@ -479,7 +479,6 @@ class BookDealRepository extends EntityRepository
 
     }
 
-
     public function getAllBookDealSearchNumber($searchQuery)
     {
         return $this->getEntityManager()
@@ -498,5 +497,22 @@ class BookDealRepository extends EntityRepository
             ->getSingleScalarResult();
     }
 
+    function getLowestDealPriceInCampus($userCampusId,$bookIsbn){
+        return $this->getEntityManager()
+            ->createQueryBuilder('bd')
+            ->select('MIN(bd.bookPriceSell)')
 
+            ->from('AppBundle:BookDeal', 'bd')
+            ->innerJoin('AppBundle:User', 'u', 'WITH', 'u.id = bd.seller')
+            ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'c.id = u.campus')
+            ->innerJoin('AppBundle:Book', 'b', 'WITH', 'b.id = bd.book')
+            ->andwhere('b.bookIsbn10 = :isbn')
+            ->andwhere('u.campus = :campus')
+            ->andwhere('bd.bookStatus = ' . "'Activated'")
+            ->andwhere('bd.bookSellingStatus = ' . "'Selling'")
+            ->setParameter('isbn', $bookIsbn)
+            ->setParameter('campus', $userCampusId)
+            ->getQuery()
+            ->getResult();
+    }
 }

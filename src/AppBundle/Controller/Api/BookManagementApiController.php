@@ -670,7 +670,24 @@ class BookManagementApiController extends Controller
                 array_push($newBookArray, $book);
             }
         }
+
+
+
+        //Getting Lowest Price In campus
+        if(count($newBookArray)>0){
+            $userCampusId = $this->container->get('security.token_storage')->getToken()->getUser()->getCampus()->getId();
+            $em = $this->getDoctrine()->getManager();
+            $bookDealRepo=$em->getRepository('AppBundle:BookDeal');
+            $lowestPriceOnCampus = $bookDealRepo->getLowestDealPriceInCampus($userCampusId,$newBookArray[0]['bookIsbn']);
+
+            if($lowestPriceOnCampus[0][1]!=null){
+                $newBookArray[0]['campusLowestPrice']= "$".$lowestPriceOnCampus[0][1];
+
+            }
+        }
+
         $booksArray['books'] = $newBookArray;
+
 
         return $this->_createJsonResponse('success', array('successData' => $booksArray), 200);
 
