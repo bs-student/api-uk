@@ -455,3 +455,9 @@ get_active_news:
     path: /news/get_activated_news
     defaults:  {_controller: AppBundle:Api/NewsApi:getActiveNews}
     methods: [POST]
+
+#ContactUsController
+send_message:
+    path: /contactus/send_message
+    defaults:  {_controller: AppBundle:Api/ContactUsApi:sendMessage}
+    methods: [POST]
