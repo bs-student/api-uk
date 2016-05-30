@@ -335,7 +335,7 @@ get_book_deals_i_have_contacted_for:
 get_book_deals_i_have_created:
     path: /api/book_deal/get_book_deals_i_have_created
     defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getBooksIHaveCreated}
-    methods: [GET]
+    methods: [POST]
 
 sell_book_to_user:
     path: /api/book_deal/sell_book_to_user

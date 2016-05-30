@@ -100,6 +100,11 @@ class BookDeal
      */
     private $bookViewCount;
 
+    /**
+     * @var \DateTime
+     */
+    private $bookSubmittedDateTime;
+
     private $book;
 
     private $contacts;
@@ -628,5 +633,28 @@ class BookDeal
     public function getBuyer()
     {
         return $this->buyer;
+    }
+
+    /**
+     * Set bookSubmittedDateTime
+     *
+     * @param \DateTime $bookSubmittedDateTime
+     * @return BookDeal
+     */
+    public function setBookSubmittedDateTime($bookSubmittedDateTime)
+    {
+        $this->bookSubmittedDateTime = $bookSubmittedDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get bookSubmittedDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getBookSubmittedDateTime()
+    {
+        return $this->bookSubmittedDateTime;
     }
 }

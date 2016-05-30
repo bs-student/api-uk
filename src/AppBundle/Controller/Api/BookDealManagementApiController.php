@@ -121,16 +121,23 @@ class BookDealManagementApiController extends Controller
      */
     public function getBooksIHaveCreatedAction(Request $request)
     {
-        $deals = array(
-            'buyerToSeller' => array(),
-            'sellerToBuyer' => array()
-        );
+        //todo Dont delete follwing comment may be needed later
+//        $deals = array(
+//            'buyerToSeller' => array(),
+//            'sellerToBuyer' => array()
+//        );
+
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+
+        $deals=array();
 
         $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
         $bookDealRepo = $em->getRepository('AppBundle:BookDeal');
         $userRepo = $em->getRepository('AppBundle:User');
-        $bookDeals = $bookDealRepo->getBooksIHaveCreated($userId);
+        $bookDeals = $bookDealRepo->getBooksIHaveCreated($userId,$data['pageNumber'],$data['pageSize']);
+        $bookDealsNumber = $bookDealRepo->getBooksIHaveCreatedTotalNumber($userId);
 
         //Getting Contacts of Deals
         $contacts = $bookDealRepo->getContactsOfBookDeals($bookDeals);
@@ -193,17 +200,23 @@ class BookDealManagementApiController extends Controller
             $deal['bookImages']=$images;
 
 
+            array_push($deals,$deal);
+
+            //todo Dont delete follwing comment may be needed later
             //dividing via Contact Method
-            if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
-                array_push($deals['buyerToSeller'], $deal);
-            } else {
-                array_push($deals['sellerToBuyer'], $deal);
-            }
+//            if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
+//                array_push($deals['buyerToSeller'], $deal);
+//            } else {
+//                array_push($deals['sellerToBuyer'], $deal);
+//            }
 
         }
 
         return $this->_createJsonResponse('success', array(
-            'successData' => $deals
+            'successData' => array(
+                'result'=>$deals,
+                'totalNumber'=>$bookDealsNumber
+            )
         ), 200);
     }
 
@@ -322,10 +335,14 @@ class BookDealManagementApiController extends Controller
      * Get Books I Have Created For and Sold (Sell Archive)
      */
     public function getBooksIHaveCreatedAndSoldAction(Request $request){
-        $deals = array(
-            'buyerToSeller' => array(),
-            'sellerToBuyer' => array()
-        );
+
+        //TODO dont remove following comment. May be needed
+//        $deals = array(
+//            'buyerToSeller' => array(),
+//            'sellerToBuyer' => array()
+//        );
+
+        $deals = array();
 
         $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
@@ -404,13 +421,15 @@ class BookDealManagementApiController extends Controller
             }
             $deal['bookImages']=$images;
 
+            array_push($deals,$deal);
 
+            //TODO dont remove following comment. May be needed
             //dividing via Contact Method
-            if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
-                array_push($deals['buyerToSeller'], $deal);
-            } else {
-                array_push($deals['sellerToBuyer'], $deal);
-            }
+//            if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
+//                array_push($deals['buyerToSeller'], $deal);
+//            } else {
+//                array_push($deals['sellerToBuyer'], $deal);
+//            }
 
         }
 

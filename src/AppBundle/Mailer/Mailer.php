@@ -216,7 +216,7 @@ class Mailer extends BaseClass
         $rendered = $this->templating->render("mail_templates/seller_to_buyer_message_mail_to_buyer.html.twig",$data);
 
         $message1->setBody($rendered,'text/html');
-        $this->_sendMail($message1,"Student2Student: Seller ( ".$data['seller']->getUsername()." ) Sent you message",$this->parameters['from_email']['resetting'], $data['bookDeal']->getBuyerEmail());
+        $this->_sendMail($message1,"Student2Student: Seller ( ".$data['seller']->getUsername()." ) Sent you message",$this->parameters['from_email']['resetting'], $data['contact']->getBuyerEmail());
 
 
         $message2 = \Swift_Message::newInstance();
@@ -228,7 +228,7 @@ class Mailer extends BaseClass
         $rendered = $this->templating->render("mail_templates/seller_to_buyer_message_mail_to_seller.html.twig",$data);
 
         $message2->setBody($rendered,'text/html');
-        $this->_sendMail($message2,"Student2Student: Message sent to Buyer ( ".$data['buyer']." )",$this->parameters['from_email']['resetting'], $data['contact']->getBookContactEmail());
+        $this->_sendMail($message2,"Student2Student: Message sent to Buyer ( ".$data['buyer']." )",$this->parameters['from_email']['resetting'], $data['bookDeal']->getBookContactEmail());
 
 
 

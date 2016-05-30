@@ -408,6 +408,7 @@ class BookManagementApiController extends Controller
             $bookDealData['bookStatus'] = "Activated";
             $bookDealData['bookViewCount'] = 0;
             $bookDealData['book'] = $bookId;
+            $bookDealData['bookSubmittedDateTime'] =  gmdate('Y-m-d H:i:s');
             //Set Email on Book Deal
             if(!array_key_exists('bookContactEmail',$bookDealData)){
                 $bookDealData['bookContactEmail'] = $this->container->get('security.token_storage')->getToken()->getUser()->getEmail();

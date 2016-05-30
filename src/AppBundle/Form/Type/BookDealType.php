@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 class BookDealType extends AbstractType
@@ -106,7 +107,15 @@ class BookDealType extends AbstractType
 //                'allow_delete'    => true,
                 'by_reference' =>false
 
-            ));
+            ))
+
+            ->add('bookSubmittedDateTime','datetime',array(
+                'widget' => 'single_text',
+                'constraints' => array(
+                    new DateTime(),
+                    new NotBlank()
+            )
+    ));
 
     }
 

@@ -100,4 +100,6 @@ AppBundle\Entity\BookDeal:
             nullable: false
             type: string
             length: '20'
+        bookSubmittedDateTime:
+            type: datetime
     lifecycleCallbacks: {  }
