@@ -78,6 +78,36 @@ class NewsApiController extends Controller
 
     }
 
+    /**
+     * Get Single News For Public
+     */
+    public function getSingleNewsAction(Request $request){
+
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+        $em = $this->getDoctrine()->getManager();
+        $newsRepo=$em->getRepository('AppBundle:News');
+
+
+        $newsEntity  = $newsRepo->findOneById($data['newsId']);
+        if(!strcmp($newsEntity->getNewsStatus(),"Activated")){
+            $news=array();
+            $news['newsTitle']=$newsEntity->getNewsTitle();
+            $news['newsDescription']=$newsEntity->getNewsDescription();
+            $news['newsDateTime']=$newsEntity->getNewsDateTime()->format('d M Y');
+            $news['newsImages']=array();
+            foreach($newsEntity->getNewsImages() as $image){
+                array_push($news['newsImages'], array(
+                    'imageId'=>$image->getId(),
+                    'image'=>$image->getNewsImageUrl()
+                ));
+            }
+        }
+
+        return $this->_createJsonResponse('success', array('successData'=>array('news'=>$news)), 200);
+
+    }
+
     public function _createJsonResponse($key, $data, $code)
     {
         $serializer = $this->container->get('jms_serializer');
