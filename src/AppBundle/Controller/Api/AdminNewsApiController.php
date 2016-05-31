@@ -156,8 +156,8 @@ class AdminNewsApiController extends Controller
                     $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . "." . 'jpg';
                     $file->move($fileDirHost . $fileDir, $fileSaveName);
 
-                    $this->_smart_resize_image($fileDirHost.$fileDir.$fileSaveName , null, 0 , 0 , false , $fileDirHost.$fileDir.$fileSaveName , false , false ,100 );
-
+//                    $this->_smart_resize_image($fileDirHost.$fileDir.$fileSaveName , null, 780 , 490 , false , $fileDirHost.$fileDir.$fileSaveName , false , false ,100 );
+                    $this->_resize(780,490,$fileDirHost.$fileDir.$fileSaveName,$fileDirHost.$fileDir.$fileSaveName);
                     array_push($data['newsImages'],array(
                         'newsImageUrl'=>$fileNameDir . $fileSaveName
                     ));
@@ -166,7 +166,7 @@ class AdminNewsApiController extends Controller
                 }
             }
             //If Error Occurs than Return Error Message
-            if($fileUploadError)return $this->_createJsonResponse('error', array('errorTitle' => "Cannot Add Quote", 'errorDescription' => "Image is more than 200 KB"), 400);
+            if($fileUploadError)return $this->_createJsonResponse('error', array('errorTitle' => "Cannot Add News", 'errorDescription' => "Image is more than 200 KB"), 400);
 
 
 
@@ -180,6 +180,7 @@ class AdminNewsApiController extends Controller
             $newsForm = $this->createForm(new NewsType(), $news);
 
             $newsForm->submit($data);
+
 
             if ($newsForm->isValid()) {
                 $em->persist($news);
@@ -217,109 +218,151 @@ class AdminNewsApiController extends Controller
     }
 
 
-    //Image Resize Function
-    function _smart_resize_image($file,
-                                $string             = null,
-                                $width              = 0,
-                                $height             = 0,
-                                $proportional       = false,
-                                $output             = 'file',
-                                $delete_original    = true,
-                                $use_linux_commands = false,
-                                $quality = 100
-    ) {
+    // New Image  Resize function
+    public function _resize($newWidth , $newHeight, $targetFile, $originalFile) {
 
-        if ( $height <= 0 && $width <= 0 ) return false;
-        if ( $file === null && $string === null ) return false;
-        # Setting defaults and meta
-        $info                         = $file !== null ? getimagesize($file) : getimagesizefromstring($string);
-        $image                        = '';
-        $final_width                  = 0;
-        $final_height                 = 0;
-        list($width_old, $height_old) = $info;
-        $cropHeight = $cropWidth = 0;
-        # Calculating proportionality
-        if ($proportional) {
-            if      ($width  == 0)  $factor = $height/$height_old;
-            elseif  ($height == 0)  $factor = $width/$width_old;
-            else                    $factor = min( $width / $width_old, $height / $height_old );
-            $final_width  = round( $width_old * $factor );
-            $final_height = round( $height_old * $factor );
-        }
-        else {
-            $final_width = ( $width <= 0 ) ? $width_old : $width;
-            $final_height = ( $height <= 0 ) ? $height_old : $height;
-            $widthX = $width_old / $width;
-            $heightX = $height_old / $height;
+        $info = getimagesize($originalFile);
+        $mime = $info['mime'];
 
-            $x = min($widthX, $heightX);
-            $cropWidth = ($width_old - $width * $x) / 2;
-            $cropHeight = ($height_old - $height * $x) / 2;
-        }
-        # Loading image to memory according to type
-        switch ( $info[2] ) {
-            case IMAGETYPE_JPEG:  $file !== null ? $image = imagecreatefromjpeg($file) : $image = imagecreatefromstring($string);  break;
-            case IMAGETYPE_GIF:   $file !== null ? $image = imagecreatefromgif($file)  : $image = imagecreatefromstring($string);  break;
-            case IMAGETYPE_PNG:   $file !== null ? $image = imagecreatefrompng($file)  : $image = imagecreatefromstring($string);  break;
-            default: return false;
-        }
-
-
-        # This is the resizing/resampling/transparency-preserving magic
-        $image_resized = imagecreatetruecolor( $final_width, $final_height );
-        if ( ($info[2] == IMAGETYPE_GIF) || ($info[2] == IMAGETYPE_PNG) ) {
-            $transparency = imagecolortransparent($image);
-            $palletsize = imagecolorstotal($image);
-            if ($transparency >= 0 && $transparency < $palletsize) {
-                $transparent_color  = imagecolorsforindex($image, $transparency);
-                $transparency       = imagecolorallocate($image_resized, $transparent_color['red'], $transparent_color['green'], $transparent_color['blue']);
-                imagefill($image_resized, 0, 0, $transparency);
-                imagecolortransparent($image_resized, $transparency);
-            }
-            elseif ($info[2] == IMAGETYPE_PNG) {
-                imagealphablending($image_resized, false);
-                $color = imagecolorallocatealpha($image_resized, 0, 0, 0, 127);
-                imagefill($image_resized, 0, 0, $color);
-                imagesavealpha($image_resized, true);
-            }
-        }
-        imagecopyresampled($image_resized, $image, 0, 0, $cropWidth, $cropHeight, $final_width, $final_height, $width_old - 2 * $cropWidth, $height_old - 2 * $cropHeight);
-
-
-        # Taking care of original, if needed
-        if ( $delete_original ) {
-            if ( $use_linux_commands ) exec('rm '.$file);
-            else @unlink($file);
-        }
-        # Preparing a method of providing result
-        switch ( strtolower($output) ) {
-            case 'browser':
-                $mime = image_type_to_mime_type($info[2]);
-                header("Content-type: $mime");
-                $output = NULL;
+        switch ($mime) {
+            case 'image/jpeg':
+                $image_create_func = 'imagecreatefromjpeg';
+                $image_save_func = 'imagejpeg';
+//                $new_image_ext = 'jpg';
                 break;
-            case 'file':
-                $output = $file;
+
+            case 'image/png':
+                $image_create_func = 'imagecreatefrompng';
+                $image_save_func = 'imagepng';
+//                $new_image_ext = 'png';
                 break;
-            case 'return':
-                return $image_resized;
+
+            case 'image/gif':
+                $image_create_func = 'imagecreatefromgif';
+                $image_save_func = 'imagegif';
+//                $new_image_ext = 'gif';
                 break;
+
             default:
-                break;
+                throw new Exception('Unknown image type.');
         }
 
-        # Writing image according to type to the output destination and image quality
-        switch ( $info[2] ) {
-            case IMAGETYPE_GIF:   imagegif($image_resized, $output);    break;
-            case IMAGETYPE_JPEG:  imagejpeg($image_resized, $output, $quality);   break;
-            case IMAGETYPE_PNG:
-                $quality = 9 - (int)((0.9*$quality)/10.0);
-                imagepng($image_resized, $output, $quality);
-                break;
-            default: return false;
+        $img = $image_create_func($originalFile);
+        list($width, $height) = getimagesize($originalFile);
+
+//        $newHeight = ($height / $width) * $newWidth;
+        $tmp = imagecreatetruecolor($newWidth, $newHeight);
+        imagecopyresampled($tmp, $img, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+        if (file_exists($targetFile)) {
+            unlink($targetFile);
         }
-        return true;
+        $image_save_func($tmp, "$targetFile");
     }
+
+    //Image Resize Function
+//    function _smart_resize_image($file,
+//                                $string             = null,
+//                                $width              = 0,
+//                                $height             = 0,
+//                                $proportional       = false,
+//                                $output             = 'file',
+//                                $delete_original    = true,
+//                                $use_linux_commands = false,
+//                                $quality = 100
+//    ) {
+//
+//        if ( $height <= 0 && $width <= 0 ) return false;
+//        if ( $file === null && $string === null ) return false;
+//        # Setting defaults and meta
+//        $info                         = $file !== null ? getimagesize($file) : getimagesizefromstring($string);
+//        $image                        = '';
+//        $final_width                  = 0;
+//        $final_height                 = 0;
+//        list($width_old, $height_old) = $info;
+//        $cropHeight = $cropWidth = 0;
+//        # Calculating proportionality
+//        if ($proportional) {
+//            if      ($width  == 0)  $factor = $height/$height_old;
+//            elseif  ($height == 0)  $factor = $width/$width_old;
+//            else                    $factor = min( $width / $width_old, $height / $height_old );
+//            $final_width  = round( $width_old * $factor );
+//            $final_height = round( $height_old * $factor );
+//        }
+//        else {
+//            $final_width = ( $width <= 0 ) ? $width_old : $width;
+//            $final_height = ( $height <= 0 ) ? $height_old : $height;
+//            $widthX = $width_old / $width;
+//            $heightX = $height_old / $height;
+//
+//            $x = min($widthX, $heightX);
+//            $cropWidth = ($width_old - $width * $x) / 2;
+//            $cropHeight = ($height_old - $height * $x) / 2;
+//        }
+//        # Loading image to memory according to type
+//        switch ( $info[2] ) {
+//            case IMAGETYPE_JPEG:  $file !== null ? $image = imagecreatefromjpeg($file) : $image = imagecreatefromstring($string);  break;
+//            case IMAGETYPE_GIF:   $file !== null ? $image = imagecreatefromgif($file)  : $image = imagecreatefromstring($string);  break;
+//            case IMAGETYPE_PNG:   $file !== null ? $image = imagecreatefrompng($file)  : $image = imagecreatefromstring($string);  break;
+//            default: return false;
+//        }
+//
+//
+//        # This is the resizing/resampling/transparency-preserving magic
+//        $image_resized = imagecreatetruecolor( $final_width, $final_height );
+//        if ( ($info[2] == IMAGETYPE_GIF) || ($info[2] == IMAGETYPE_PNG) ) {
+//            $transparency = imagecolortransparent($image);
+//            $palletsize = imagecolorstotal($image);
+//            if ($transparency >= 0 && $transparency < $palletsize) {
+//                $transparent_color  = imagecolorsforindex($image, $transparency);
+//                $transparency       = imagecolorallocate($image_resized, $transparent_color['red'], $transparent_color['green'], $transparent_color['blue']);
+//                imagefill($image_resized, 0, 0, $transparency);
+//                imagecolortransparent($image_resized, $transparency);
+//            }
+//            elseif ($info[2] == IMAGETYPE_PNG) {
+//                imagealphablending($image_resized, false);
+//                $color = imagecolorallocatealpha($image_resized, 0, 0, 0, 127);
+//                imagefill($image_resized, 0, 0, $color);
+//                imagesavealpha($image_resized, true);
+//            }
+//        }
+//        imagecopyresampled($image_resized, $image, 0, 0, $cropWidth, $cropHeight, $final_width, $final_height, $width_old - 2 * $cropWidth, $height_old - 2 * $cropHeight);
+//
+//
+//        # Taking care of original, if needed
+//        if ( $delete_original ) {
+//            if ( $use_linux_commands ) exec('rm '.$file);
+//            else @unlink($file);
+//        }
+//        # Preparing a method of providing result
+//        switch ( strtolower($output) ) {
+//            case 'browser':
+//                $mime = image_type_to_mime_type($info[2]);
+//                header("Content-type: $mime");
+//                $output = NULL;
+//                break;
+//            case 'file':
+//                $output = $file;
+//                break;
+//            case 'return':
+//                return $image_resized;
+//                break;
+//            default:
+//                break;
+//        }
+//
+//        # Writing image according to type to the output destination and image quality
+//        switch ( $info[2] ) {
+//            case IMAGETYPE_GIF:   imagegif($image_resized, $output);    break;
+//            case IMAGETYPE_JPEG:  imagejpeg($image_resized, $output, $quality);   break;
+//            case IMAGETYPE_PNG:
+//                $quality = 9 - (int)((0.9*$quality)/10.0);
+//                imagepng($image_resized, $output, $quality);
+//                break;
+//            default: return false;
+//        }
+//        return true;
+//    }
 
     public function _createJsonResponse($key, $data, $code)
     {

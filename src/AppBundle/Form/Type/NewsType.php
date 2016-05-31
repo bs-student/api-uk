@@ -6,6 +6,7 @@ use AppBundle\Entity\BookDealImage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Form\FormEvents;
@@ -36,11 +37,11 @@ class NewsType extends AbstractType
                 ),))
 
 
-            ->add('newsDateTime', 'date', array(
+            ->add('newsDateTime', 'datetime', array(
                 'widget' => 'single_text',
                 'constraints' => array(
                     new NotBlank(),
-                    new Date()
+                    new DateTime()
                 ),))
 
 

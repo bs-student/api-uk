@@ -66,6 +66,7 @@ class NewsRepository extends EntityRepository
             ->from('AppBundle:News', 'n')
             ->andwhere('n.newsTitle LIKE :query ')
             ->andwhere('n.newsStatus='."'Activated'")
+            ->orderBy('n.newsDateTime','DESC')
             ->setParameter('query', '%' . $searchQuery . '%')
             ->setMaxResults($pageSize)
             ->setFirstResult($firstResult);

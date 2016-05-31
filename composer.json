@@ -26,7 +26,8 @@
         "friendsofsymfony/oauth-server-bundle": "dev-master",
         "leaseweb/api-caller-bundle": "^1.2",
         "leaseweb/guzzle-bundle": "^1.0",
-        "guzzlehttp/guzzle": "~6.0"
+        "guzzlehttp/guzzle": "~6.0",
+        "liip/imagine-bundle": "^1.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
