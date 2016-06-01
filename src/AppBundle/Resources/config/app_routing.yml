@@ -352,6 +352,27 @@ get_book_deals_i_have_bought:
     defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getBooksIHaveBought}
     methods: [GET]
 
+change_book_deal_status:
+    path: /api/book_deal/change_book_deal_status
+    defaults:  {_controller: AppBundle:Api/BookDealManagementApi:changeBookDealStatus}
+    methods: [POST]
+
+get_lowest_campus_deal_price:
+    path: /api/book_deal/get_lowest_campus_deal_price
+    defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getLowestCampusDealPrice}
+    methods: [POST]
+
+update_book_deal:
+    path: /api/book_deal/update_book_deal
+    defaults:  {_controller: AppBundle:Api/BookDealManagementApi:updateBookDeal}
+    methods: [POST]
+
+delete_book_deal:
+    path: /api/book_deal/delete_book_deal
+    defaults:  {_controller: AppBundle:Api/BookDealManagementApi:deleteBookDeal}
+    methods: [POST]
+
+
 #WishList Management Api Controller
 
 add_book_to_wish_list:

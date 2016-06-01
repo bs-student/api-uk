@@ -271,6 +271,7 @@ class BookDealManagementApiController extends Controller
                     $bookDealForm->remove('bookPaymentMethodCaShOnExchange');
                     $bookDealForm->remove('bookPaymentMethodCheque');
                     $bookDealForm->remove('bookAvailableDate');
+                    $bookDealForm->remove('bookSubmittedDateTime');
                     $bookDealForm->remove('seller');
                     $bookDealForm->remove('bookStatus');
                     $bookDealForm->remove('bookViewCount');
@@ -546,6 +547,256 @@ class BookDealManagementApiController extends Controller
         return $this->_createJsonResponse('success', array(
             'successData' => $deals
         ), 200);
+    }
+
+    /**
+     * Change Book Deal Status
+     */
+    public function changeBookDealStatusAction(Request $request){
+
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+
+        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
+        $em = $this->getDoctrine()->getManager();
+        $bookDealRepo = $em->getRepository('AppBundle:BookDeal');
+        $bookDeal = $bookDealRepo->findOneById($data['bookDealId']);
+
+        if($bookDeal->getSeller()->getId()==$userId){
+
+
+            $bookDealForm = $this->createForm(new BookDealType(), $bookDeal);
+            $bookDealForm->remove('book');
+            $bookDealForm->remove('bookPriceSell');
+            $bookDealForm->remove('bookCondition');
+            $bookDealForm->remove('bookIsHighlighted');
+            $bookDealForm->remove('bookHasNotes');
+            $bookDealForm->remove('bookComment');
+            $bookDealForm->remove('bookContactMethod');
+            $bookDealForm->remove('bookContactHomeNumber');
+            $bookDealForm->remove('bookContactCellNumber');
+            $bookDealForm->remove('bookContactEmail');
+            $bookDealForm->remove('bookIsAvailablePublic');
+            $bookDealForm->remove('bookPaymentMethodCaShOnExchange');
+            $bookDealForm->remove('bookPaymentMethodCheque');
+            $bookDealForm->remove('bookAvailableDate');
+            $bookDealForm->remove('seller');
+            $bookDealForm->remove('buyer');
+            $bookDealForm->remove('bookSellingStatus');
+            $bookDealForm->remove('bookViewCount');
+            $bookDealForm->remove('bookDealImages');
+            $bookDealForm->remove('bookSubmittedDateTime');
+
+            $bookDealForm->submit($data);
+
+            if ($bookDealForm->isValid() ) {
+                $em->persist($bookDeal);
+
+                $em->flush();
+                return $this->_createJsonResponse('success', array(
+                    'successTitle' => "Book Deal Successfully Updated"
+                ), 200);
+
+            } else {
+                return $this->_createJsonResponse('error', array("errorTitle"=>"Could Not Update Book Deal","errorData" => array($bookDealForm)), 400);
+            }
+
+
+        }else{
+            $this->_createJsonResponse('error',array('errorTitle'=>"Sorry, You did not post this book."),400);
+        }
+
+    }
+
+    /**
+     * GTE Lowest Campus Book DEal Price
+     */
+    function getLowestCampusDealPriceAction(Request $request){
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+
+        $userCampusId = $this->container->get('security.token_storage')->getToken()->getUser()->getCampus()->getId();
+        $em = $this->getDoctrine()->getManager();
+        $bookDealRepo=$em->getRepository('AppBundle:BookDeal');
+        $lowestPriceOnCampus = $bookDealRepo->getLowestDealPriceInCampus($userCampusId,$data['bookIsbn']);
+
+        if($lowestPriceOnCampus[0][1]!=null){
+            return $this->_createJsonResponse('success',array('successData'=>array(
+                'lowestCampusPrice'=>"$".$lowestPriceOnCampus[0][1]
+            )),200);
+        }else{
+            return $this->_createJsonResponse('success',array('successData'=>array()),200);
+        }
+
+    }
+
+    /**
+     * Update book Deal
+     */
+    function updateBookDealAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+
+        //Get Image Save Dir
+        $fileDirHost = $this->container->getParameter('kernel.root_dir');
+        //TODO Fix that below directory
+        $fileDir = '/../web/bookImages/';
+        $fileNameDir = '/bookImages/';
+
+        //GET Request Data
+        $content = $request->get('data');
+        $data = json_decode($content, true);
+
+        $bookDealData = $data['bookDealData'];
+
+        // Image Files
+        $files = $request->files;
+
+        $bookDealData['bookDealImages'] = array();
+
+        //Upload All Deal Images
+        $fileUploadError = false;
+
+        $imageArray=array();
+        for($i=1;$i<count($bookDealData['bookImages']);$i++){
+            array_push($imageArray,array(
+               'imageUrl'=> $bookDealData['bookImages'][$i]['image']
+            ));
+        }
+
+        foreach ($files as $file) {
+            if ((($file->getSize()) / 1024) <= 200) {
+
+                $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . "." . 'jpg';
+                $file->move($fileDirHost . $fileDir, $fileSaveName);
+                $this->_resize(330,500,$fileDirHost.$fileDir.$fileSaveName,$fileDirHost.$fileDir.$fileSaveName);
+
+                array_push($imageArray,array(
+                   'imageUrl'=> $fileNameDir.$fileSaveName
+                ));
+
+            } else {
+                $fileUploadError = true;
+            }
+        }
+
+
+        //If Error Occurs than Return Error Message
+        if($fileUploadError)return $this->_createJsonResponse('error', array('errorTitle' => "Cannot Update Book Deal", 'errorDescription' => "Some Files are more than 200 KB"), 400);
+
+
+
+        $bookDealRepo=$em->getRepository('AppBundle:BookDeal');
+        $bookDeal = $bookDealRepo->findOneById($data['bookDealData']['bookDealId']);
+
+        //Check If User owns that deal
+        if($bookDeal->getSeller()->getId()==$this->container->get('security.token_storage')->getToken()->getUser()->getId() && $bookDeal->getBookSellingStatus()== "Selling"){
+
+            $bookDealForm = $this->createForm(new BookDealType(), $bookDeal);
+
+            $bookDealForm->remove('seller');
+            $bookDealForm->remove('bookSellingStatus');
+            $bookDealForm->remove('bookStatus');
+            $bookDealForm->remove('bookViewCount');
+            $bookDealForm->remove('book');
+            $bookDealForm->remove('bookSubmittedDateTime');
+            $bookDealForm->remove('buyer');
+
+            //Images
+            $bookDealData['bookDealImages']=$imageArray;
+
+            $date = new \DateTime($bookDealData['bookAvailableDate']);
+            $bookDealData['bookAvailableDate'] = $date->format("Y-m-d");
+            //Set Email on Book Deal
+            if(!array_key_exists('bookContactEmail',$bookDealData)){
+                $bookDealData['bookContactEmail'] = $this->container->get('security.token_storage')->getToken()->getUser()->getEmail();
+            }
+
+            //Remove Older Images
+            foreach($bookDeal->getBookDealImages() as $image){
+                $em->remove($image);
+
+            }
+            $em->flush();
+
+            $bookDealForm->submit($bookDealData);
+
+            if ($bookDealForm->isValid()) {
+                $em->persist($bookDeal);
+                $em->flush();
+                return $this->_createJsonResponse('success', array("successTitle" => "Book Deal has been updated into you selling List"), 200);
+            } else {
+                return $this->_createJsonResponse('error', array("errorData" => $bookDealForm), 400);
+
+            }
+        }else{
+            return $this->_createJsonResponse('error', array('errorTitle' => "Cannot Update Book Deal", 'errorDescription' => "You are not owner of that book deal or the book is already sold"), 400);
+        }
+
+
+    }
+
+    /**
+     * Delete Book Deal
+     */
+    function deleteBookDealAction(Request $request){
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+
+        $userId = $this->container->get('security.token_storage')->getToken()->getUser()->getId();
+        $em = $this->getDoctrine()->getManager();
+        $bookDealRepo=$em->getRepository('AppBundle:BookDeal');
+
+        $bookDeal = $bookDealRepo->findOneById($data['bookDealId']);
+        if($bookDeal->getSeller()->getId()==$userId){
+            $em->remove($bookDeal);
+            $em->flush();
+            return $this->_createJsonResponse('success', array('successTitle' => "Book Deal is Deleted"), 200);
+        }else{
+            return $this->_createJsonResponse('error', array('errorTitle' => "Cannot Delete Book Deal", 'errorDescription' => "You are not owner of that book deal."), 400);
+        }
+    }
+
+
+    // New Image  Resize function
+    public function _resize($newWidth , $newHeight, $targetFile, $originalFile) {
+
+        $info = getimagesize($originalFile);
+        $mime = $info['mime'];
+
+        switch ($mime) {
+            case 'image/jpeg':
+                $image_create_func = 'imagecreatefromjpeg';
+                $image_save_func = 'imagejpeg';
+//                $new_image_ext = 'jpg';
+                break;
+
+            case 'image/png':
+                $image_create_func = 'imagecreatefrompng';
+                $image_save_func = 'imagepng';
+//                $new_image_ext = 'png';
+                break;
+
+            case 'image/gif':
+                $image_create_func = 'imagecreatefromgif';
+                $image_save_func = 'imagegif';
+//                $new_image_ext = 'gif';
+                break;
+
+            default:
+                throw new Exception('Unknown image type.');
+        }
+
+        $img = $image_create_func($originalFile);
+        list($width, $height) = getimagesize($originalFile);
+
+//        $newHeight = ($height / $width) * $newWidth;
+        $tmp = imagecreatetruecolor($newWidth, $newHeight);
+        imagecopyresampled($tmp, $img, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+        if (file_exists($targetFile)) {
+            unlink($targetFile);
+        }
+        $image_save_func($tmp, "$targetFile");
     }
 
     public function _createJsonResponse($key, $data, $code)
