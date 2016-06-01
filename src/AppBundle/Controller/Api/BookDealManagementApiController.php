@@ -35,18 +35,23 @@ class BookDealManagementApiController extends Controller
      */
     public function getBooksIHaveContactedForAction(Request $request)
     {
+//        May Need Later
+//        $deals = array(
+//            'buyerToSeller' => array(),
+//            'sellerToBuyer' => array()
+//        );
 
-        $deals = array(
-            'buyerToSeller' => array(),
-            'sellerToBuyer' => array()
-        );
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+
+        $deals = array();
 
         $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
         $bookDealRepo = $em->getRepository('AppBundle:BookDeal');
         $userRepo = $em->getRepository('AppBundle:User');
-        $bookDeals = $bookDealRepo->getBooksIHaveContactedFor($userId);
-
+        $bookDeals = $bookDealRepo->getBooksIHaveContactedFor($userId,$data['pageNumber'],$data['pageSize']);
+        $bookDealsNumber = $bookDealRepo->getBooksIHaveContactedForTotalNumber($userId);
 
         //Set Subtitle in Book
         for ($i = 0; $i < count($bookDeals); $i++) {
@@ -99,20 +104,23 @@ class BookDealManagementApiController extends Controller
             }
             $deal['bookImages']=$images;
 
-
+            array_push($deals,$deal);
             //dividing via Contact Method
-            if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
-                array_push($deals['buyerToSeller'], $deal);
-            } else {
-                array_push($deals['sellerToBuyer'], $deal);
-            }
+//            if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
+//                array_push($deals['buyerToSeller'], $deal);
+//            } else {
+//                array_push($deals['sellerToBuyer'], $deal);
+//            }
 
 
         }
 
 
         return $this->_createJsonResponse('success', array(
-            'successData' => $deals
+            'successData' => array(
+                'result'=>$deals,
+                'totalNumber'=>$bookDealsNumber
+            )
         ), 200);
     }
 

@@ -107,8 +107,9 @@ class BookDealRepository extends EntityRepository
 
     }
 
-    function getBooksIHaveContactedFor($userId)
+    function getBooksIHaveContactedFor($userId,$pageNumber,$pageSize)
     {
+        $firstResult = ($pageNumber - 1) * $pageSize;
         return $this->getEntityManager()
             ->createQueryBuilder('b')
             ->select("b.id as bookId,
@@ -159,8 +160,36 @@ class BookDealRepository extends EntityRepository
             ->andwhere('bd.bookSellingStatus = ' . "'Selling'")
             ->andwhere('con.buyer= :userId')
             ->setParameter('userId', $userId)
+            ->orderBy('bd.bookSubmittedDateTime','DESC')
+            ->setMaxResults($pageSize)
+            ->setFirstResult($firstResult)
             ->getQuery()
             ->getResult();
+
+    }
+
+    function getBooksIHaveContactedForTotalNumber($userId)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder('b')
+            ->select("count(bd)")
+
+            ->from('AppBundle:Book', 'b')
+            ->innerJoin('AppBundle:BookDeal', 'bd', 'WITH', 'b.id = bd.book')
+            ->innerJoin('AppBundle:User', 'u', 'WITH', 'u.id = bd.seller')
+            ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'c.id = u.campus')
+            ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
+            ->innerJoin('AppBundle:State', 's', 'WITH', 's.id = c.state')
+            ->innerJoin('AppBundle:Country', 'co', 'WITH', 'co.id = s.country')
+            ->innerJoin('AppBundle:Contact', 'con', 'WITH', 'con.bookDeal = bd.id')
+
+            ->andwhere('bd.bookStatus = ' . "'Activated'")
+            ->andwhere('bd.bookSellingStatus = ' . "'Selling'")
+            ->andwhere('con.buyer= :userId')
+            ->setParameter('userId', $userId)
+
+            ->getQuery()
+            ->getSingleScalarResult();
 
     }
 

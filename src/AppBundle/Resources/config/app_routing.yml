@@ -330,7 +330,7 @@ send_messages:
 get_book_deals_i_have_contacted_for:
     path: /api/book_deal/get_book_deals_i_have_contacted_for
     defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getBooksIHaveContactedFor}
-    methods: [GET]
+    methods: [POST]
 
 get_book_deals_i_have_created:
     path: /api/book_deal/get_book_deals_i_have_created
