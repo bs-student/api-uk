@@ -342,6 +342,8 @@ class BookDealManagementApiController extends Controller
 //            'buyerToSeller' => array(),
 //            'sellerToBuyer' => array()
 //        );
+        $content = $request->getContent();
+        $data = json_decode($content, true);
 
         $deals = array();
 
@@ -349,7 +351,8 @@ class BookDealManagementApiController extends Controller
         $em = $this->getDoctrine()->getManager();
         $bookDealRepo = $em->getRepository('AppBundle:BookDeal');
         $userRepo = $em->getRepository('AppBundle:User');
-        $bookDeals = $bookDealRepo->getBooksIHaveCreatedAndSold($userId);
+        $bookDeals = $bookDealRepo->getBooksIHaveCreatedAndSold($userId,$data['pageNumber'],$data['pageSize']);
+        $bookDealsNumber = $bookDealRepo->getBooksIHaveCreatedAndSoldTotalNumber($userId);
 
         //Getting Contacts of Deals
         $contacts = $bookDealRepo->getContactsOfBookDeals($bookDeals);
@@ -435,7 +438,10 @@ class BookDealManagementApiController extends Controller
         }
 
         return $this->_createJsonResponse('success', array(
-            'successData' => $deals
+            'successData' => array(
+                'result'=>$deals,
+                'totalNumber'=>$bookDealsNumber
+            )
         ), 200);
     }
 
