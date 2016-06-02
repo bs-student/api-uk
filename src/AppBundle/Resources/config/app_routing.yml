@@ -350,7 +350,7 @@ get_book_deals_i_have_created_and_sold:
 get_book_deals_i_have_bought:
     path: /api/book_deal/get_book_deals_i_have_bought
     defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getBooksIHaveBought}
-    methods: [GET]
+    methods: [POST]
 
 change_book_deal_status:
     path: /api/book_deal/change_book_deal_status
