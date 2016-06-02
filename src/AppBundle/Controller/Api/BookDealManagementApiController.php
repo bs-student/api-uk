@@ -780,6 +780,87 @@ class BookDealManagementApiController extends Controller
         }
     }
 
+    function getActivatedBookDealOfUserAction(Request $request){
+
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+
+
+        $em = $this->getDoctrine()->getManager();
+        $bookDealRepo = $em->getRepository('AppBundle:BookDeal');
+        $userRepo = $em->getRepository('AppBundle:User');
+
+        $user = $userRepo->findOneBy(array('username'=>$data['username']));
+
+        if($user instanceof User){
+
+            $deals=array();
+
+            $bookDeals = $bookDealRepo->getActivatedBooksUserHasCreated($user->getId(),$data['pageNumber'],$data['pageSize'],$data['keyword']);
+            $bookDealsNumber = $bookDealRepo->getActivatedBooksUserHasCreatedTotalNumber($user->getId(),$data['keyword']);
+            $userData=array(
+                'username'=>$user->getUsername(),
+                'university'=>$user->getCampus()->getUniversity()->getUniversityName()
+            );
+            //Set Subtitle in Book
+            for ($i = 0; $i < count($bookDeals); $i++) {
+                $bookDeals[$i]['contacts'] = array();
+                if (strpos($bookDeals[$i]['bookTitle'], ":")) {
+                    $bookDeals[$i]['bookSubTitle'] = substr($bookDeals[$i]['bookTitle'], strpos($bookDeals[$i]['bookTitle'], ":") + 2);
+                    $bookDeals[$i]['bookTitle'] = substr($bookDeals[$i]['bookTitle'], 0, strpos($bookDeals[$i]['bookTitle'], ":"));
+                }
+
+            }
+
+            //Getting Deals I have created
+            foreach ($bookDeals as $deal) {
+
+                //Formatting Date
+                if (array_key_exists('bookPublishDate', $deal)) {
+                    $deal['bookPublishDate'] = $deal['bookPublishDate']->format('d M Y');
+                }
+                if ($deal['bookAvailableDate'] != null) {
+                    $deal['bookAvailableDate'] = $deal['bookAvailableDate']->format('d M Y');
+                }
+
+                //Getting Images
+                $images = array();
+                $bookDeal = $bookDealRepo->findOneById($deal['bookDealId']);
+                //GET FIRST IMAGE OF THAT BOOK
+                array_push($images,array(
+                    'image'=>$deal['bookImage'],
+                    'imageId'=>0
+                ));
+
+                $bookDealImages = $bookDeal->getBookDealImages();
+                for($i=0;$i<count($bookDealImages);$i++){
+                    array_push($images,array(
+                        'image'=>$bookDealImages[$i]->getImageUrl(),
+                        'imageId'=>($i+1)
+                    ));
+                }
+                $deal['bookImages']=$images;
+
+                array_push($deals,$deal);
+
+            }
+
+            return $this->_createJsonResponse('success', array(
+                'successData' => array(
+                    'userData'=>$userData,
+                    'result'=>$deals,
+                    'totalNumber'=>$bookDealsNumber
+                )
+            ), 200);
+
+
+        }else{
+            return $this->_createJsonResponse('error', array(
+                'errorTitle' => "Sorry, No User Found in that Username"
+            ), 400);
+        }
+
+    }
 
     // New Image  Resize function
     public function _resize($newWidth , $newHeight, $targetFile, $originalFile) {

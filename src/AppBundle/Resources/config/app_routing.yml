@@ -372,6 +372,10 @@ delete_book_deal:
     defaults:  {_controller: AppBundle:Api/BookDealManagementApi:deleteBookDeal}
     methods: [POST]
 
+get_activated_book_deal_of_user:
+    path: /book_deal/get_activated_book_deal_of_user
+    defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getActivatedBookDealOfUser}
+    methods: [POST]
 
 #WishList Management Api Controller
 
