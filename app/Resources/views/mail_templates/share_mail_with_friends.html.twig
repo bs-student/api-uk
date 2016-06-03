@@ -34,36 +34,39 @@
 
                 <table cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#FFFFFF">
                     <tr>
-                        <td align="left" style="padding:20px; font-size:18px">
-                            Hello {{ user }},<br /><br />
-                            Great, you have taken the first step of cutting out the middleman!
-                            Before you can use your account, you must verify your email address. Please click on the 			following link:
-                        </td>
-                    </tr>
-                </table>
+                        <td align="left" style="width:60%;padding:10px; font-size:14px;color:#147DB4">
+                            <h4 style="color:#147DB4;font-size: 18px;">Hello my Friend,</h4>
+                            <p >Check out this service... just for students!</p>
+                            <p >No! This is not another bookstore trying to get your used textbooks for almost nothing!</p>
+                            <p >I am sick of getting ripped-off by the bookstores, so I decided to sell my textbooks directly to all the students on-campus.</p>
+                            <ul>
+                                <li>List books you want to sell, find books you need.</li>
+                                <li>Promote your own textbook Selling Page.</li>
+                                <li>Meet on-campus to do the deal.</li>
+                                <li>Interact directly with students. Pay cash.</li>
+                                <li>No shipping. No credit cards.</li>
+                                <li>Use the online textbook price comparison.</li>
+                                <li>IT'S TOTALLY FREE!</li>
+                                <li>Check out the 2 minute "How it Works":<br/>
+                                    <a href="http://localhost:8080/Student2StudentApp/app/#/conceptVideo">Watch Now!</a></li>
+                            </ul>
+                            <p >Don't waste money, buy directly from students.</p>
+                            <p >... tell your friends, tell your classmates, tell the world... the more members we get, the more everyone will SAVE!</p>
+                            <p >It's time to take back the bookstore! Cutout the middleman and spend your money on something better!!! Or do you like to get ripped-off?</p>
 
-                <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#FFFFFF">
-                    <tr>
-                        <td colspan="3" align="right" valign="middle"><a href="{{ confirmationUrl }}">
-                            <img src="{{ button_activate_account_image }}" alt="activate my account button" width="268" height="59" title="Activate my account"></a>
-                        </td>
-                        <td width="26">
+                            <text>
+                                Cheers,<br/>
+                                {{fullName}}<br/>
+                                {{email}}
+                            </text>
+
 
                         </td>
-                        <td align="left" valign="middle">
-                            <img src="{{ button_tell_friends_image }}" alt="tell your friends button" width="268" height="59" title="Tell your friends">
-                        </td>
-                    </tr>
-                </table>
-
-                <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#FFFFFF">
-                    <tr>
-                        <td align="left" style="padding:20px; font-size:18px">
-                            Don't forget about our online price comparison feature.<br />
-                            Yes, we tell you the cheapest price online!<br /><br />
-
-<span style="color:#0063a0">Cheers,<br />
-Your Student 2 Student Team</span>
+                        <td align="center" style="width:40%;padding:10px; font-size:14px;color:#147DB4">
+                            <br/><br/>
+                            <a href="http://168.61.173.224:8080/student2student/#/signup"><img width="100%" src="{{ join_button }}"/></a><br/><br/>
+                            <p style="font-style: italic;" >Personal Message for you:</p><br/>
+                            <text>{{message}}</text>
                         </td>
                     </tr>
                 </table>

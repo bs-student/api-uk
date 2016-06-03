@@ -15,7 +15,7 @@ use FOS\RestBundle\Util\Codes;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\Extension\Validator\ViolationMapper\ViolationMapper;
 use Symfony\Component\Validator\ConstraintViolation;
-
+use Lsw\ApiCallerBundle\Call\HttpGetHtml;
 
 class ContactUsApiController extends Controller
 {
@@ -36,6 +36,52 @@ class ContactUsApiController extends Controller
         ),201);
 
     }
+
+    /**
+     * Send Mails To Friends
+     */
+    public function sendMailsToFriendsAction(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if(array_key_exists('key',$data)){
+
+            $captchaApiInfo = $this->container->getParameter('google_re_captcha_info');
+
+            $host = $captchaApiInfo['host'];
+            $secret = $captchaApiInfo['secret'];
+
+            $url= $host."?secret=".$secret."&response=".$data['key'];
+
+            $jsonOutput = $this->container->get('api_caller')->call(new HttpGetHtml($url, null, null));
+            $captchaResponse = json_decode($jsonOutput,true);
+            if($captchaResponse['success']){
+
+                $this->get('fos_user.mailer')->sendFriendsEmail($data);
+
+                return $this->_createJsonResponse('success',array(
+                    'successTitle'=>"Emails have successfully sent to your Friends",
+                    'successDescription'=>"Thank you for sharing our website."
+                ),201);
+            }else{
+                return $this->_createJsonResponse('error',array(
+                    'errorTitle'=>"Emails not Sent",
+                    'errorDescription'=>"Captcha was Wrong. Reload and try again."
+                ),400);
+            }
+
+        }else{
+            return $this->_createJsonResponse('error',array(
+                'errorTitle'=>"Emails not Sent",
+                'errorDescription'=>"Sorry we were unable to Send the Emails. FillUp the form and try again."
+            ),400);
+        }
+
+
+
+    }
+
+
     public function _createJsonResponse($key, $data,$code)
     {
         $serializer = $this->container->get('jms_serializer');

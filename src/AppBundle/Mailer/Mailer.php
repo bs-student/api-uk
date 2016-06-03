@@ -243,6 +243,18 @@ class Mailer extends BaseClass
         $this->_sendMail($message1,"Student2Student: Contact Message",$this->parameters['from_email']['resetting'], 'sujit@brainstation-23.com');
     }
 
+    function sendFriendsEmail($data){
+        $message1 = \Swift_Message::newInstance();
+
+        $data['header_image']=$message1->embed(\Swift_Image::fromPath('assets/images/header.jpg'));
+        $data['share_image']=$message1->embed(\Swift_Image::fromPath('assets/images/share.jpg'));
+        $data['footer_image']=$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg'));
+        $data['join_button']=$message1->embed(\Swift_Image::fromPath('assets/images/joinButton.jpg'));
+        $rendered = $this->templating->render("mail_templates/share_mail_with_friends.html.twig",$data);
+
+        $message1->setBody($rendered,'text/html');
+        $this->_sendMailToMultiple($message1,"Student2Student",$this->parameters['from_email']['resetting'],$data['friendEmails']);
+    }
 
 
 
@@ -300,6 +312,23 @@ class Mailer extends BaseClass
         $mailer->send($message);
     }
 
+    public function _sendMailToMultiple($message,$subject,$from,$toes){
+        $transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')
+            ->setUsername('sujit.developer.136663@gmail.com')
+            ->setPassword('maniac.sujit');
+
+        $mailer = \Swift_Mailer::newInstance($transport);
+
+        $message
+            ->setSubject($subject)
+            ->setFrom($from);
+
+        foreach($toes as $to){
+            $message->addBcc($to['email']);
+        }
+
+        $mailer->send($message);
+    }
 
 
 }

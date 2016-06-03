@@ -492,3 +492,8 @@ send_message:
     path: /contactus/send_message
     defaults:  {_controller: AppBundle:Api/ContactUsApi:sendMessage}
     methods: [POST]
+
+send_mails_to_friends:
+    path: /contactus/send_mails_to_friends
+    defaults:  {_controller: AppBundle:Api/ContactUsApi:sendMailsToFriends}
+    methods: [POST]
