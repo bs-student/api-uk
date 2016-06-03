@@ -86,5 +86,20 @@ AppBundle\Entity\User:
             length: '20'
             options:
                 default: 'No'
+        standardHomePhone:
+            column: standard_home_phone
+            nullable: true
+            type: string
+            length: '30'
+        standardCellPhone:
+            column: standard_cell_phone
+            nullable: true
+            type: string
+            length: '30'
+        standardEmail:
+            column: standard_email
+            nullable: true
+            type: string
+            length: '90'
 
     lifecycleCallbacks: {  }

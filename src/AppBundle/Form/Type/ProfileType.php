@@ -11,74 +11,22 @@ use Symfony\Component\Validator\Constraints\Email;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class ProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-
-        $builder->add('fullName','text',array(
-            'constraints' => array(
-                new NotBlank(),
-
-            )
-        ));
-
-        $builder->add('username','text',array(
-            'constraints' => array(
-                new NotBlank(),
-
-            )
-        ));
-
-
-        $builder->add('email','email',array(
-            'constraints' => array(
-                new NotBlank(),
-                new Email(),
-            )
-        ));
-
-
-
-
-        $builder->add('referral', 'entity', array(
-            'class' => "AppBundle:Referral",
-            'property' => 'referralName',
-            'constraints' => array(
-                new NotBlank(),
-
-            )
-
-        ));
 
         $builder->add('campus', 'entity', array(
             'class' => "AppBundle:Campus",
             'property' => 'campusName',
             'constraints' => array(
                 new NotBlank(),
-
             )
         ));
 
-        $builder->add('wishLists', 'collection', array(
-            'type'         => new WishListType(),
-            'allow_add'    => true,
-            'by_reference' =>false
-        ));
-
-        $builder->add('enabled','boolean',array(
-            'constraints' => array(
-                new NotBlank(),
-
-            )
-        ));
-        $builder->add('adminApproved','text',array(
-            'constraints' => array(
-                new NotBlank(),
-
-            )
-        ));
+        $builder->add('standardHomePhone','text');
+        $builder->add('standardCellPhone','text');
+        $builder->add('standardEmail','text');
 
     }
 
@@ -87,8 +35,6 @@ class UserType extends AbstractType
     {
         return 'app_created_user_update';
     }
-
-
 
 
     /**

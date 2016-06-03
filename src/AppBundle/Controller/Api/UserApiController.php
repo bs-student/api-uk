@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Api;
 
+use AppBundle\Form\Type\ProfileType;
 use AppBundle\Validator\Constraints\UsernameConstraints;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -97,6 +98,9 @@ class UserApiController extends Controller
                 'registrationStatus' => $user->getRegistrationStatus(),
                 'userId' => ($user->getGoogleId() != null) ? $user->getGoogleId() : $user->getFacebookId(),
                 'campusId' => $user->getCampus()?$user->getCampus()->getId():'',
+                'standardHomePhone' => $user->getStandardHomePhone(),
+                'standardCellPhone' => $user->getStandardCellPhone(),
+                'standardEmail' => $user->getStandardEmail(),
                 'role'=>$user->getRoles()
             );
 
@@ -132,6 +136,9 @@ class UserApiController extends Controller
                 'stateName' => $user->getCampus()->getState()->getStateName(),
                 'stateShortName' => $user->getCampus()->getState()->getStateShortName(),
                 'countryName' => $user->getCampus()->getState()->getCountry()->getCountryName(),
+                'standardHomePhone' => $user->getStandardHomePhone(),
+                'standardCellPhone' => $user->getStandardCellPhone(),
+                'standardEmail' => $user->getStandardEmail(),
                 'role'=>$user->getRoles()
             );
 
@@ -304,12 +311,8 @@ class UserApiController extends Controller
 
         if ($user != null) {
 //            $oldFullName = $user->getFullName();
-            $updateForm = $this->createForm(new UserType(), $user);
-            $updateForm->remove('username');
-            $updateForm->remove('email');
-            $updateForm->remove('referral');
-//            $updateForm->remove('campus');
-            $updateForm->remove('wishLists');
+            $updateForm = $this->createForm(new ProfileType(), $user);
+
 
             $updateForm->submit($data);
 
@@ -327,7 +330,7 @@ class UserApiController extends Controller
                     'universityName'=>$user->getCampus()->getUniversity()->getUniversityName()
                 );
 
-                return $this->_createJsonResponse('success', array('successTitle' => 'Profile is Updated', 'successData' => $userData),200);
+                return $this->_createJsonResponse('success', array('successTitle' => 'Profile is Updated','successData'=>$userData),200);
             } else {
                 return $this->_createJsonResponse('error', array(
                     'errorTitle' => 'Full Name is not Updated',

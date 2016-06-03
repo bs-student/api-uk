@@ -83,6 +83,26 @@ class User extends BaseUser
      */
     private $adminApproved;
 
+    /**
+     * @var string
+     *
+     */
+    private $standardHomePhone;
+
+    /**
+     * @var string
+     *
+     */
+    private $standardCellPhone;
+
+    /**
+     * @var string
+     *
+     */
+    private $standardEmail;
+
+
+
     protected $enabled;
 
 
@@ -543,5 +563,74 @@ class User extends BaseUser
     public function getAdminApproved()
     {
         return $this->adminApproved;
+    }
+
+    /**
+     * Set standardHomePhone
+     *
+     * @param string $standardHomePhone
+     * @return User
+     */
+    public function setStandardHomePhone($standardHomePhone)
+    {
+        $this->standardHomePhone = $standardHomePhone;
+
+        return $this;
+    }
+
+    /**
+     * Get standardHomePhone
+     *
+     * @return string 
+     */
+    public function getStandardHomePhone()
+    {
+        return $this->standardHomePhone;
+    }
+
+    /**
+     * Set standardCellPhone
+     *
+     * @param string $standardCellPhone
+     * @return User
+     */
+    public function setStandardCellPhone($standardCellPhone)
+    {
+        $this->standardCellPhone = $standardCellPhone;
+
+        return $this;
+    }
+
+    /**
+     * Get standardCellPhone
+     *
+     * @return string 
+     */
+    public function getStandardCellPhone()
+    {
+        return $this->standardCellPhone;
+    }
+
+    /**
+     * Set standardEmail
+     *
+     * @param string $standardEmail
+     * @return User
+     */
+    public function setStandardEmail($standardEmail)
+    {
+        $this->standardEmail = $standardEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get standardEmail
+     *
+     * @return string 
+     */
+    public function getStandardEmail()
+    {
+        return $this->standardEmail;
     }
 }
