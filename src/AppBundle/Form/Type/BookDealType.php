@@ -50,11 +50,7 @@ class BookDealType extends AbstractType
                     new NotBlank(),
 
                 ),))
-            ->add('bookComment', 'text', array(
-                'constraints' => array(
-                    new NotBlank(),
-
-                ),))
+            ->add('bookComment', 'text')
             ->add('bookContactMethod', 'text', array(
                 'constraints' => array(
                     new NotBlank(),

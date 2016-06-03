@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="992c5a8c-cd64-41e9-9383-a47a89a328fa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php" afterPath="$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" afterPath="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Form/Type/BookDealType.php" afterPath="$PROJECT_DIR$/src/AppBundle/Form/Type/BookDealType.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Student2StudentApi.iws" />
@@ -31,16 +29,16 @@
       <file leaf-file-name="app_routing.yml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="376" column="65" selection-start="11376" selection-end="11402" vertical-scroll-proportion="-13.32" vertical-offset="6059" max-vertical-offset="8500">
+            <state line="376" column="65" selection-start="11376" selection-end="11402" vertical-scroll-proportion="0.0" vertical-offset="6059" max-vertical-offset="8500">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BookDealManagementApiController.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BookDealManagementApiController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="847" column="63" selection-start="32398" selection-end="32398" vertical-scroll-proportion="0.0045924224" vertical-offset="14395" max-vertical-offset="15657">
+            <state line="847" column="63" selection-start="32398" selection-end="32398" vertical-scroll-proportion="-0.15384616" vertical-offset="14395" max-vertical-offset="15657">
               <folding>
                 <element signature="e#44#70#0" expanded="true" />
               </folding>
@@ -48,10 +46,39 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="BookDealType.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/BookDealType.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="52" column="39" selection-start="1507" selection-end="1507" vertical-scroll-proportion="-5.6862745" vertical-offset="594" max-vertical-offset="2448">
+              <folding>
+                <element signature="e#39#74#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Book.orm.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Book.orm.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="1292">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BookDeal.orm.yml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/BookDeal.orm.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="70" column="24" selection-start="1800" selection-end="1800" vertical-scroll-proportion="0.5759219" vertical-offset="659" max-vertical-offset="1887">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="BookDealRepository.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="684" column="53" selection-start="27548" selection-end="27548" vertical-scroll-proportion="-37.7451" vertical-offset="9703" max-vertical-offset="12512">
+            <state line="684" column="53" selection-start="27548" selection-end="27548" vertical-scroll-proportion="0.0" vertical-offset="11628" max-vertical-offset="12512">
               <folding />
             </state>
           </provider>
@@ -112,7 +139,6 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/BookDeal.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/BookDeal.orm.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookManagementApiController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Form/Type/BookDealType.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/NewsApiController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Form/Type/NewsType.php" />
@@ -121,6 +147,7 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Form/Type/BookDealType.php" />
       </list>
     </option>
   </component>
@@ -651,7 +678,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -667,11 +694,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -693,11 +720,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/config/services.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="60" selection-start="1765" selection-end="1797" vertical-scroll-proportion="-25.84" vertical-offset="0" max-vertical-offset="1938" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/hwi/oauth-bundle/Controller/ConnectController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="311" column="9" selection-start="11805" selection-end="11805" vertical-scroll-proportion="0.89127976" vertical-offset="4109" max-vertical-offset="7089" />
@@ -739,11 +761,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/composer.lock">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="158" column="45" selection-start="5580" selection-end="5580" vertical-scroll-proportion="0.606466" vertical-offset="2142" max-vertical-offset="51918" />
-      </provider>
       <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
         <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="158" column="45" selection-start="5580" selection-end="5580" vertical-scroll-proportion="0.606466" vertical-offset="2142" max-vertical-offset="51918" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/guzzlehttp/streams/tests/LimitStreamTest.php">
@@ -858,11 +880,6 @@
         <state line="30" column="57" selection-start="953" selection-end="971" vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="884" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/BookDeal.orm.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="24" selection-start="1800" selection-end="1800" vertical-scroll-proportion="-8.0" vertical-offset="990" max-vertical-offset="1887" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/ContactManagementApiController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="190" column="23" selection-start="9224" selection-end="9454" vertical-scroll-proportion="-0.40430352" vertical-offset="3230" max-vertical-offset="5474" />
@@ -928,40 +945,54 @@
         <state line="159" column="116" selection-start="5568" selection-end="6005" vertical-scroll-proportion="0.68303573" vertical-offset="153" max-vertical-offset="1564" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/BookDealType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="24" selection-start="2409" selection-end="2414" vertical-scroll-proportion="-2.6153846" vertical-offset="1122" max-vertical-offset="2380">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/WishListManagementApiController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="23" selection-start="2614" selection-end="2614" vertical-scroll-proportion="-4.6862745" vertical-offset="730" max-vertical-offset="2584">
-          <folding />
-        </state>
+        <state line="79" column="23" selection-start="2614" selection-end="2614" vertical-scroll-proportion="-4.6862745" vertical-offset="730" max-vertical-offset="2584" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="376" column="65" selection-start="11376" selection-end="11402" vertical-scroll-proportion="-13.32" vertical-offset="6059" max-vertical-offset="8500">
+        <state line="376" column="65" selection-start="11376" selection-end="11402" vertical-scroll-proportion="0.0" vertical-offset="6059" max-vertical-offset="8500">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="684" column="53" selection-start="27548" selection-end="27548" vertical-scroll-proportion="-37.7451" vertical-offset="9703" max-vertical-offset="12512">
+        <state line="684" column="53" selection-start="27548" selection-end="27548" vertical-scroll-proportion="0.0" vertical-offset="11628" max-vertical-offset="12512">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="847" column="63" selection-start="32398" selection-end="32398" vertical-scroll-proportion="0.0045924224" vertical-offset="14395" max-vertical-offset="15657">
+        <state line="847" column="63" selection-start="32398" selection-end="32398" vertical-scroll-proportion="-0.15384616" vertical-offset="14395" max-vertical-offset="15657">
           <folding>
             <element signature="e#44#70#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/BookDealType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="39" selection-start="1507" selection-end="1507" vertical-scroll-proportion="-5.6862745" vertical-offset="594" max-vertical-offset="2448">
+          <folding>
+            <element signature="e#39#74#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Book.orm.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1292">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/BookDeal.orm.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="70" column="24" selection-start="1800" selection-end="1800" vertical-scroll-proportion="0.5759219" vertical-offset="659" max-vertical-offset="1887">
+          <folding />
         </state>
       </provider>
     </entry>
