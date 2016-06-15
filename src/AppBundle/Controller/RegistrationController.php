@@ -85,8 +85,27 @@ class RegistrationController extends BaseController
 
             $url= $host."?secret=".$secret."&response=".$submittedData['key'];
 
-            $jsonOutput = $this->container->get('api_caller')->call(new HttpGetHtml($url, null, null));
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, FALSE);
+            $jsonOutput = curl_exec($ch);
+            curl_close($ch);
+
+//            if(curl_errno($ch))
+//            {
+//                echo 'Curl error: ' . curl_error($ch);
+//            }
+//            var_dump(curl_getinfo($ch));
+//            curl_close($ch);
+//
+//            var_dump($jsonOutput);
+//            die();
+//            $jsonOutput = $this->container->get('api_caller')->call(new HttpGetJson($url,array(),false,array()));
+
             $captchaResponse = json_decode($jsonOutput,true);
+
+
+
             if($captchaResponse['success']){
                 $form = $this->container->get('fos_user.registration.form');
 

@@ -434,7 +434,7 @@ get_all_book_deals:
     defaults:  {_controller: AppBundle:Api/AdminBookDealApi:getAllBookDeals}
     methods: [POST]
 
-#QuoteManagementApiController
+#AdminQuoteManagementApiController
 
 get_student_quotes:
     path: /api/admin/get_student_quotes
@@ -456,6 +456,22 @@ add_quote:
     defaults:  {_controller: AppBundle:Api/AdminQuoteApi:addQuote}
     methods: [POST]
 
+delete_quote:
+    path: /api/admin/delete_quote
+    defaults:  {_controller: AppBundle:Api/AdminQuoteApi:deleteQuote}
+    methods: [POST]
+
+#QuoteApiController
+
+get_activated_student_quote:
+    path: /quote/get_activated_student_quote
+    defaults:  {_controller: AppBundle:Api/QuoteApi:getActivatedStudentQuotes}
+    methods: [GET]
+
+get_activated_university_quote:
+    path: /quote/get_activated_university_quote
+    defaults:  {_controller: AppBundle:Api/QuoteApi:getActivatedUniversityQuotes}
+    methods: [GET]
 
 #AdminNewsManagementApiController
 
@@ -497,3 +513,9 @@ send_mails_to_friends:
     path: /contactus/send_mails_to_friends
     defaults:  {_controller: AppBundle:Api/ContactUsApi:sendMailsToFriends}
     methods: [POST]
+
+#ContactUsController
+test:
+    path: /test
+    defaults:  {_controller: AppBundle:Test:index}
+    methods: [GET]

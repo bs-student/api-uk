@@ -218,6 +218,33 @@ class AdminQuoteApiController extends Controller
         }
     }
 
+    public function deleteQuoteAction(Request $request){
+
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
+            $content = $request->getContent();
+            $data = json_decode($content, true);
+            $em = $this->getDoctrine()->getManager();
+            $quoteRepo=$em->getRepository('AppBundle:Quote');
+
+            $quote = $quoteRepo->findOneById($data['quoteId']);
+
+            if($quote!=null){
+
+                $em->remove($quote);
+                $em->flush();
+                return $this->_createJsonResponse('success', array(
+                    'successTitle' => "Quote has been deleted"
+                ), 200);
+
+            }else{
+                return $this->_createJsonResponse('error', array("errorTitle"=>"Quote was not found"), 400);
+            }
+        }else{
+            return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
+        }
+
+    }
 
     //Image Resize Function
     function _smart_resize_image($file,

@@ -95,4 +95,43 @@ class QuoteRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    function getActivatedStudentQuotes(){
+
+        return $this->getEntityManager()
+            ->createQueryBuilder('q')
+            ->select('q.id as id,
+                      q.quoteType as peopleType,
+                      q.quoteDescription as peopleQuote,
+                      q.quoteStatus,
+                      q.quoteProvider as peopleName,
+                      q.quoteImage as peopleImg
+            ')
+            ->from('AppBundle:Quote', 'q')
+            ->andwhere('q.quoteType='."'Student'")
+            ->andwhere('q.quoteStatus='."'Activated'")
+            ->getQuery()
+            ->getResult();
+
+    }
+
+    function getActivatedUniversityQuotes(){
+
+        return $this->getEntityManager()
+            ->createQueryBuilder('q')
+            ->select('q.id as id,
+                      q.quoteType,
+                      q.quoteDescription as universityQuote,
+                      q.quoteStatus,
+                      q.quoteProvider as universityName,
+                      q.quoteImage as universityImg
+            ')
+            ->from('AppBundle:Quote', 'q')
+            ->andwhere('q.quoteType='."'University'")
+            ->andwhere('q.quoteStatus='."'Activated'")
+            ->getQuery()
+            ->getResult();
+
+    }
+
 }
