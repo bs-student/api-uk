@@ -514,7 +514,20 @@ send_mails_to_friends:
     defaults:  {_controller: AppBundle:Api/ContactUsApi:sendMailsToFriends}
     methods: [POST]
 
-#ContactUsController
+
+#NewsletterApiController
+add_newsletter_email:
+    path: /newsletter/add_newsletter_email
+    defaults:  {_controller: AppBundle:Api/NewsletterApi:addNewsletterEmail}
+    methods: [POST]
+
+get_all_newsletter_emails:
+    path: /api/admin/get_all_newsletter_emails
+    defaults:  {_controller: AppBundle:Api/NewsletterApi:getAllNewsletterEmails}
+    methods: [POST]
+
+
+#TestController
 test:
     path: /test
     defaults:  {_controller: AppBundle:Test:index}

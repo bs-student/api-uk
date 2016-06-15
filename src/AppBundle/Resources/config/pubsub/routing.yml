@@ -1,7 +1,3 @@
-app_newsletter:
-    resource: "@AppBundle/Resources/config/routing/newsletter.yml"
-    prefix:   /newsletter
-
 app_newsimage:
     resource: "@AppBundle/Resources/config/routing/newsimage.yml"
     prefix:   /newsimage
