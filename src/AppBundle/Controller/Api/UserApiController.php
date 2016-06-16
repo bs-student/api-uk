@@ -98,6 +98,7 @@ class UserApiController extends Controller
                 'registrationStatus' => $user->getRegistrationStatus(),
                 'userId' => ($user->getGoogleId() != null) ? $user->getGoogleId() : $user->getFacebookId(),
                 'campusId' => $user->getCampus()?$user->getCampus()->getId():'',
+                'universityName' => $user->getCampus()->getUniversity()->getUniversityName(),
                 'standardHomePhone' => $user->getStandardHomePhone(),
                 'standardCellPhone' => $user->getStandardCellPhone(),
                 'standardEmail' => $user->getStandardEmail(),

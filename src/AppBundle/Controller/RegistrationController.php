@@ -87,7 +87,7 @@ class RegistrationController extends BaseController
 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, FALSE);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
             $jsonOutput = curl_exec($ch);
             curl_close($ch);
 
