@@ -618,7 +618,7 @@ class BookDealManagementApiController extends Controller
 
                 $em->flush();
                 return $this->_createJsonResponse('success', array(
-                    'successTitle' => "Book Deal Successfully Updated"
+                    'successTitle' => "Textbook Deal Successfully Updated"
                 ), 200);
 
             } else {
