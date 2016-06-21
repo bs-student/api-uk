@@ -15,17 +15,15 @@ class BookDealRepository extends EntityRepository
     public function getStudentBooksWithMultipleISBN($books, $campusId)
     {
 
-
-        $conditions = array();
-        foreach ($books as $book) {
-            array_push($conditions, "b.bookIsbn10 = '" . $book['bookIsbn'] . "'");
+        $isbns = array();
+        foreach($books as $book){
+            array_push($isbns, $book['bookIsbn']);
         }
-
 
         $queryBuilderBook = $this->getEntityManager()->createQueryBuilder('b');
 
 
-        $queryBuilderBook->select('b.bookIsbn10,MIN(bd.bookPriceSell) AS bookPriceSell')
+        $queryBuilderBook->select('b.bookIsbn10,MIN(bd.bookPriceSell) AS bookPriceSell , bd.bookStatus')
             ->from('AppBundle:Book', 'b')
             ->innerJoin('AppBundle:BookDeal', 'bd', 'WITH', 'b.id = bd.book')
             ->groupBy('b.bookIsbn10');
@@ -35,39 +33,16 @@ class BookDealRepository extends EntityRepository
             $queryBuilderBook->innerJoin('AppBundle:User', 'u', 'WITH', 'u.id = bd.seller');
         }
 
-        $orX = $queryBuilderBook->expr()->orX();
-        $orX->addMultiple($conditions);
-        $queryBuilderBook->add('where', $orX);
+        $queryBuilderBook->add('where', $queryBuilderBook->expr()->in('b.bookIsbn10', $isbns));
+        $queryBuilderBook->andWhere("bd.bookStatus  = 'Activated'");
+        $queryBuilderBook->andWhere("bd.bookSellingStatus  = 'Selling'");
 
-        $queryBuilderBook->add('where', $orX);
-
-        //If Logged In then only Send campus lowest
+//        //If Logged In then only Send campus lowest
         if ($campusId != null) {
             $queryBuilderBook->andWhere('u.campus = ' . $campusId);
         }
 
-
         return ($queryBuilderBook->getQuery()->getResult());
-
-//        die($queryBuilderBook->getQuery()->getSql());
-
-
-//        return $this->getEntityManager()
-//            ->createQueryBuilder('u')
-//            ->select('c.id as campusId, u.universityName, c.campusName, s.stateShortName, co.countryName')
-//
-//            ->from('AppBundle:University', 'u')
-//
-//            ->innerJoin('AppBundle:Campus', 'c','WITH', 'u.id = c.university')
-//
-//            ->andwhere('u.universityStatus=\'Activated\'')
-//            ->andwhere('c.campusName LIKE :query OR u.universityName LIKE :query OR co.countryName LIKE :query OR s.stateName LIKE :query')
-//
-//
-//
-//            ->setParameter('query', '%'.$searchQuery.'%')
-//            ->getQuery()
-//            ->getResult();
 
     }
 
