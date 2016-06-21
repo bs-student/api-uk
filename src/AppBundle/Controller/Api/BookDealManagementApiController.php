@@ -171,7 +171,7 @@ class BookDealManagementApiController extends Controller
                         $user = $userRepo->findById((int)$contact['buyerId']);
                         $contact['buyerNickName'] = $user[0]->getUsername();
                     }
-                    $contact['contactDateTime'] = $contact['contactDateTime']->format('H:i d M Y');
+                    $contact['contactDateTime'] = $contact['contactDateTime']->format('H:i, d-M-Y');
                     array_push($bookDeals[$i]['contacts'], $contact);
                 }
             }

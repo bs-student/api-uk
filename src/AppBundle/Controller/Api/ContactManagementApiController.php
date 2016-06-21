@@ -242,7 +242,7 @@ class ContactManagementApiController extends Controller
                 array_push($data,array(
                     'messageId'=>$message->getId(),
                     'sender'=> $sender,
-                    'messageDateTime'=> $message->getMessageDateTime()->format('H:i , d M Y'),
+                    'messageDateTime'=> $message->getMessageDateTime()->format('H:i, d-M-Y'),
                     'messageBody'=> $message->getMessageBody(),
                 ));
             }
@@ -292,7 +292,7 @@ class ContactManagementApiController extends Controller
                     'successData'=>array(
                         'sender'=>$message->getUser()->getUsername(),
                         'messageBody'=>$message->getMessageBody(),
-                        'messageDateTime'=>$message->getMessageDateTime()->format('H:i , d M Y'),
+                        'messageDateTime'=>$message->getMessageDateTime()->format('H:i, d-M-Y'),
                         'messageId'=>$message->getId()
                     )
                 ),201);
