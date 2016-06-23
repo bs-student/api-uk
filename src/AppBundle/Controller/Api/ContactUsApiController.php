@@ -28,13 +28,45 @@ class ContactUsApiController extends Controller
     {
         $data = json_decode($request->getContent(), true);
 
-        $this->get('fos_user.mailer')->sendContactUsEmail($data);
+        if(array_key_exists('key',$data)){
 
-        return $this->_createJsonResponse('success',array(
-            'successTitle'=>"Your message has been sent",
-            'successDescription'=>"Authority will contact you as soon as possible"
-        ),201);
+            $captchaApiInfo = $this->container->getParameter('google_re_captcha_info');
 
+            $host = $captchaApiInfo['host'];
+            $secret = $captchaApiInfo['secret'];
+
+            $url= $host."?secret=".$secret."&response=".$data['key'];
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            $jsonOutput = curl_exec($ch);
+            curl_close($ch);
+//            var_dump("Hello");
+//            die();
+//            $jsonOutput = $this->container->get('api_caller')->call(new HttpGetHtml($url, null, null));
+            $captchaResponse = json_decode($jsonOutput,true);
+
+            if($captchaResponse['success']){
+
+                $this->get('fos_user.mailer')->sendContactUsEmail($data);
+
+                return $this->_createJsonResponse('success',array(
+                    'successTitle'=>"Your message has been sent",
+                    'successDescription'=>"We will contact you as soon as possible"
+                ),201);
+            }else{
+                return $this->_createJsonResponse('error',array(
+                    'errorTitle'=>"Emails not Sent",
+                    'errorDescription'=>"Captcha was Wrong. Reload and try again."
+                ),400);
+            }
+        }else{
+            return $this->_createJsonResponse('error',array(
+                'errorTitle'=>"Message not Sent",
+                'errorDescription'=>"Sorry we were unable to Send the message. FillUp the form and try again."
+            ),400);
+        }
     }
 
     /**
