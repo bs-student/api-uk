@@ -35,44 +35,83 @@ class ResettingController extends BaseController
     public function sendEmailAction()
     {
 
-        $username = $this->container->get('request')->request->get('username');
+        $formHandler = $this->container->get('fos_user.resetting.form.handler');
+        $submittedData = $formHandler->getSubmittedData();
 
-        /** @var $user UserInterface */
-        $user = $this->container->get('fos_user.user_manager')->findUserByUsernameOrEmail($username);
 
-        if (null === $user) {
-            $data = array(
-                'errorTitle'=>"Cannot Reset Password",
-                "errorDescription"=>"Sorry No User found on that email Address"
-            );
-            return $this->_createJsonResponse('error',$data,400);
+        if(array_key_exists('key',$submittedData)){
+
+            $captchaApiInfo = $this->container->getParameter('google_re_captcha_info');
+
+            $host = $captchaApiInfo['host'];
+            $secret = $captchaApiInfo['secret'];
+
+            $url= $host."?secret=".$secret."&response=".$submittedData['key'];
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            $jsonOutput = curl_exec($ch);
+            curl_close($ch);
+
+            $captchaResponse = json_decode($jsonOutput,true);
+
+
+            if($captchaResponse['success']){
+                $username = $this->container->get('request')->request->get('username');
+
+                /** @var $user UserInterface */
+                $user = $this->container->get('fos_user.user_manager')->findUserByUsernameOrEmail($username);
+
+                if (null === $user) {
+                    $data = array(
+                        'errorTitle'=>"Cannot Reset Password",
+                        "errorDescription"=>"Sorry No User found on that email Address"
+                    );
+                    return $this->_createJsonResponse('error',$data,400);
+                }
+
+                if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
+                    $data = array(
+                        'errorTitle'=>"Cannot Reset Password",
+                        "errorDescription"=>"Sorry the Reset Password was already requested"
+                    );
+                    return $this->_createJsonResponse('error',$data,400);
+
+                }
+
+                if (null === $user->getConfirmationToken()) {
+                    /** @var $tokenGenerator \FOS\UserBundle\Util\TokenGeneratorInterface */
+                    $tokenGenerator = $this->container->get('fos_user.util.token_generator');
+                    $user->setConfirmationToken($tokenGenerator->generateToken());
+                }
+
+                $this->container->get('session')->set(static::SESSION_EMAIL, $this->getObfuscatedEmail($user));
+                $this->container->get('fos_user.mailer')->sendResettingEmailMessage($user);
+                $user->setPasswordRequestedAt(new \DateTime());
+                $this->container->get('fos_user.user_manager')->updateUser($user);
+
+                $data = array(
+                    'successTitle'=>"Reset Password Successful",
+                    "successDescription"=>"A mail has been sent to your email address for resetting password"
+                );
+                return $this->_createJsonResponse('success',$data,200);
+            }else{
+                return $this->_createJsonResponse('error',array(
+                    'errorTitle'=>"Reset Password Unsuccessful",
+                    'errorDescription'=>"Captcha was Wrong. Reload and try again."
+                ),400);
+            }
+
+
+
+        }else{
+            return $this->_createJsonResponse('error',array(
+                'errorTitle'=>"User Registration Unsuccessful",
+                'errorDescription'=>"Reload and try again."
+            ),400);
         }
 
-        if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-            $data = array(
-                'errorTitle'=>"Cannot Reset Password",
-                "errorDescription"=>"Sorry the Reset Password was already requested"
-            );
-            return $this->_createJsonResponse('error',$data,400);
-
-        }
-
-        if (null === $user->getConfirmationToken()) {
-            /** @var $tokenGenerator \FOS\UserBundle\Util\TokenGeneratorInterface */
-            $tokenGenerator = $this->container->get('fos_user.util.token_generator');
-            $user->setConfirmationToken($tokenGenerator->generateToken());
-        }
-
-        $this->container->get('session')->set(static::SESSION_EMAIL, $this->getObfuscatedEmail($user));
-        $this->container->get('fos_user.mailer')->sendResettingEmailMessage($user);
-        $user->setPasswordRequestedAt(new \DateTime());
-        $this->container->get('fos_user.user_manager')->updateUser($user);
-
-        $data = array(
-            'successTitle'=>"Reset Password Successful",
-            "successDescription"=>"A mail has been sent to your email Address for resetting Password"
-        );
-        return $this->_createJsonResponse('success',$data,200);
     }
 
     /**

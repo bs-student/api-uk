@@ -62,4 +62,8 @@ class ResettingFormHandler extends BaseHandler
         $user->setEnabled(true);
         $this->userManager->updateUser($user);
     }
+
+    function getSubmittedData(){
+        return json_decode($this->request->getContent(),true);
+    }
 }
