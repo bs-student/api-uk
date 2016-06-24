@@ -519,6 +519,11 @@ send_mails_to_friends:
     defaults:  {_controller: AppBundle:Api/ContactUsApi:sendMailsToFriends}
     methods: [POST]
 
+send_mails_to_user_friends:
+    path: /api/contactus/send_mails_to_user_friends
+    defaults:  {_controller: AppBundle:Api/ContactUsApi:sendMailsToUserFriends}
+    methods: [POST]
+
 
 #NewsletterApiController
 add_newsletter_email:

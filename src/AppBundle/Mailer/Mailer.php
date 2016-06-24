@@ -256,6 +256,22 @@ class Mailer extends BaseClass
         $this->_sendMailToMultiple($message1,"Student2Student",$this->parameters['from_email']['resetting'],$data['friendEmails']);
     }
 
+    function sendShareSellPageEmailToFriends($data){
+        $message1 = \Swift_Message::newInstance();
+
+        $data['header_image']=$message1->embed(\Swift_Image::fromPath('assets/images/header.jpg'));
+        $data['share_image']=$message1->embed(\Swift_Image::fromPath('assets/images/share.jpg'));
+        $data['footer_image']=$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg'));
+        $data['buy_my_textbooks_button_image']=$message1->embed(\Swift_Image::fromPath('assets/images/buy_my_textbooks.jpg'));
+        $data['books_stack_image']=$message1->embed(\Swift_Image::fromPath('assets/images/books_stack.jpg'));
+        $data['shareUrl'] = "http://168.61.173.224:8080/Student2Student/#/".$data['username'];
+
+        $rendered = $this->templating->render("mail_templates/share_sell_page_mail_with_friends.html.twig",$data);
+
+        $message1->setBody($rendered,'text/html');
+        $this->_sendMailToMultiple($message1,$data['username']."'s Sell Page | Student2Student",$this->parameters['from_email']['resetting'],$data['friendEmails']);
+    }
+
 
 
     /**

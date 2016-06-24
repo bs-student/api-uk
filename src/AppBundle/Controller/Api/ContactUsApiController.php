@@ -120,6 +120,36 @@ class ContactUsApiController extends Controller
 
     }
 
+    /**
+     * Send Mails To Friends of a User
+     */
+
+    public function sendMailsToUserFriendsAction(Request $request){
+        $data = json_decode($request->getContent(), true);
+
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        if($user instanceof User){
+            $data['fullName']=$user->getFullName();
+            $data['email']=$user->getEmail();
+            $data['username']=$user->getUsername();
+
+            $this->get('fos_user.mailer')->sendShareSellPageEmailToFriends($data);
+
+            return $this->_createJsonResponse('success',array(
+                'successTitle'=>"Emails have successfully sent to your Friends",
+                'successDescription'=>"Thank you for sharing your sell page."
+            ),200);
+        }else{
+            return $this->_createJsonResponse('error',array(
+                'errorTitle'=>"Emails couldn't be sent",
+                'errorDescription'=>"Reload the page and try again."
+            ),201);
+        }
+
+
+    }
+
 
     public function _createJsonResponse($key, $data,$code)
     {
