@@ -162,6 +162,9 @@ class BookDealManagementApiController extends Controller
         }
 
         //Adding Contacts according to deals
+        if($contacts==null){
+            $contacts=array();
+        }
         foreach ($contacts as $contact) {
 
             for ($i = 0; $i < count($bookDeals); $i++) {
@@ -376,6 +379,9 @@ class BookDealManagementApiController extends Controller
         }
 
         //Adding Contacts according to deals
+        if($contacts==null){
+            $contacts=array();
+        }
         foreach ($contacts as $contact) {
 
             for ($i = 0; $i < count($bookDeals); $i++) {
