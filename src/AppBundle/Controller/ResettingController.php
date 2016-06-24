@@ -182,6 +182,32 @@ class ResettingController extends BaseController
     }
 
 
+    public function checkTokenAction($token=null){
+        $user = $this->container->get('fos_user.user_manager')->findUserByConfirmationToken($token);
+
+
+        if (null === $user) {
+            $data = array(
+                'errorTitle'=>"The Reset my Password link has already been used or has expired",
+            );
+            return $this->_createJsonResponse('error',$data,400);
+        }
+
+        if (!$user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
+
+            $data = array(
+                'errorTitle'=>"The Reset my Password link has already been used or has expired",
+            );
+            return $this->_createJsonResponse('error',$data,400);
+        }else{
+            $data = array(
+                'successData'=>true,
+            );
+            return $this->_createJsonResponse('success',$data,200);
+        }
+
+    }
+
     public function _createJsonResponse($key,$data,$code){
         $serializer = $this->container->get('jms_serializer');
         $json = $serializer->serialize([$key => $data], 'json');
