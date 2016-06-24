@@ -36,7 +36,7 @@
                     <tr>
                         <td align="left" style="padding:20px; font-size:18px">
                             Hello {{ user }},<br /><br />
-                            You can reset your password by clicking following Reset Password Button.
+                            You can reset your password by clicking following "Reset my Password Button".
                         </td>
                     </tr>
                 </table>
@@ -50,18 +50,31 @@
 
                         </td>
                         <td align="left" valign="middle">
-                            <img src="{{ button_tell_friends_image }}" alt="tell your friends" width="268" height="59" title="Tell your friends">
+                           <a href="http://168.61.173.224:8080/student2student/#/tellFriends"> <img src="{{ button_tell_friends_image }}" alt="tell your friends" width="268" height="59" title="Tell your friends"></a>
                         </td>
                     </tr>
                 </table>
 
                 <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#FFFFFF">
                     <tr>
+                        <td align="left" style="padding:20px; font-size:18px" colspan="5" align="left" valign="middle">
+                            Or just click the following link to reset your password.<br/><br/>
+                            <a style="padding:20px; font-size:12px; color: blue; text-decoration: underline" href="{{ confirmationUrl }}">{{ confirmationUrl }}</a>
+
+                        </td>
+
+                    </tr>
+                </table>
+
+
+                <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" bgcolor="#FFFFFF">
+                    <tr>
                         <td align="left" style="padding:20px; font-size:18px">
                             Don't forget about our online price comparison feature.<br />
                             Yes, we tell you the cheapest price online!<br /><br />
+                            The reset password link will expire in the next 24 hours<br/><br/>
 
-<span style="color:#0063a0">Cheers,<br />
+<span style="color:#000000">Cheers,<br />
 Your Student 2 Student Team</span>
                         </td>
                     </tr>
