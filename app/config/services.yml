@@ -9,9 +9,10 @@ parameters:
             timeout: 50  # maximum transport + execution duration of the call in sec.
             ssl_verifypeer: false  # to stop cURL from verifying the peer's certificate.
             useragent: "LeaseWeb API Caller"  # contents of the "User-Agent: " header.
+#            useragent: "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36"
             followlocation: true  # to follow any "Location: " header that the server sends.
             sslversion: 3  # set to 3 to avoid any bugs that relate to automatic version selection.
-            fresh_connect: false  # set to true to force full reconnect every call.
+            fresh_connect: true  # set to true to force full reconnect every call.
     amazon_api_info:
             host : "webservices.amazon.com"
             uri : "/onca/xml"
@@ -105,4 +106,40 @@ services:
             tags:
                 - { name: fos_oauth_server.grant_extension, uri: 'http://platform.local/grants/social_plugin' }
 
+#Services for Real TIme Notification Start
+#
+#    pdo:
+#        class: PDO
+#        arguments:
+#            dsn: mysql:host=localhost;port=;dbname=stu2stu
+#            user: root
+#            password:
+#        calls:
+#            - [ setAttribute, [3, 2] ] # \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION
+#
+#    session.handler.pdo:
+#        class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+#        arguments: [@pdo, {lock_mode: 0}]
+#
+#
+#    app.real_time.subscribe_and_push:
+#        class: AppBundle\RealTime\SubscribeAndPush
+#        arguments: [ @gos_web_socket.websocket.client_manipulator ]
+#
+#    app.socket_subscriber:
+#        class:  AppBundle\RealTime\EventSubscriber
+#        tags:
+#          - { name: app.socket_subscriber }
+#
+#    app.socket_listeners:
+#        class:  AppBundle\RealTime\EventListener
+#        tags:
+#          - { name: kernel.event_listener, event: gos_web_socket.push_success, method: onSuccess }
+#          - { name: kernel.event_listener, event: gos_web_socket.push_fail, method: onFailure }
+#
+#    app.kernal_listener:
+#        class:  AppBundle\RealTime\KernalListener
+#        tags:
+#          - { name: kernel.event_listener, event: kernel.response, method: listen }
 
+#Services for Real TIme Notification End

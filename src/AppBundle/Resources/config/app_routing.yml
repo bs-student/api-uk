@@ -537,8 +537,3 @@ get_all_newsletter_emails:
     methods: [POST]
 
 
-#TestController
-test:
-    path: /test
-    defaults:  {_controller: AppBundle:Test:index}
-    methods: [GET]
