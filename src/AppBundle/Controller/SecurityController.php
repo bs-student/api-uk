@@ -18,6 +18,7 @@ use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
 
+
 class SecurityController extends BaseController {
 
     /**
@@ -25,6 +26,7 @@ class SecurityController extends BaseController {
      */
     public function indexAction()
     {
+
         return $this->_createJsonResponse('success',array(
             "successTitle" => "Homepage",
             "successDescription"=> "You have successfully accessed the Web Api"
@@ -125,5 +127,19 @@ class SecurityController extends BaseController {
         $response = new Response($json, $code);
         return $response;
     }
+
+//    function _create_custom_token($data) {
+//
+//        $now_seconds = time();
+//        $payload = array(
+//            "iss" => $data['client_email'],
+//            "sub" => $data['client_email'],
+//            "aud" => "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit",
+//            "iat" => $now_seconds,
+//            "exp" => $now_seconds+(60*60),  // Maximum expiration time is one hour
+//            "uid" => $data['client_id'],
+//        );
+//        return JWT::encode($payload, $data['private_key'], "HS256");
+//    }
 
 } 

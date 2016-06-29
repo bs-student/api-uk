@@ -59,7 +59,8 @@ class ContactType extends AbstractType
                     new NotBlank()
                 )
             ))
-            ->add('soldToThatBuyer','text');
+            ->add('soldToThatBuyer','text')
+            ->add('contactCondition','text');
 
 
 

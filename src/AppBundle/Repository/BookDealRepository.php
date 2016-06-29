@@ -54,7 +54,7 @@ class BookDealRepository extends EntityRepository
 
         $qb = $this->getEntityManager()
             ->createQueryBuilder('b')
-            ->select('b.id as bookId,bd.id as bookDealId,b.bookIsbn10,u.username, bd.bookPriceSell, bd.bookCondition,bd.bookIsHighlighted, bd.bookHasNotes,
+            ->select('b.id as bookId, bd.id as bookDealId,b.bookIsbn10, b.bookTitle, u.username, bd.bookPriceSell, bd.bookIsHighlighted, bd.bookHasNotes,
                     bd.bookComment,bd.bookContactMethod,bd.bookPaymentMethodCaShOnExchange,bd.bookPaymentMethodCheque,
                     bd.bookIsAvailablePublic,bd.bookAvailableDate,c.campusName,un.universityName,s.stateName,s.stateShortName,
                     co.countryName')

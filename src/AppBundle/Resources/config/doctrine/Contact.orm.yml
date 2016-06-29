@@ -46,6 +46,10 @@ AppBundle\Entity\Contact:
             nullable: true
             type: string
             length: '25'
+        contactCondition:
+            nullable: true
+            type: string
+            length: '25'
         contactDateTime:
             column: contact_datetime
             type: datetime

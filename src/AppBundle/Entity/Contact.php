@@ -47,11 +47,18 @@ class Contact
      */
     private $contactDateTime;
 
+    /**
+     * @var string
+     */
+    private $contactCondition;
+
     private $bookDeal;
 
     private $buyer;
 
     private $messages;
+
+
 
     public function __toString()
     {
@@ -285,5 +292,28 @@ class Contact
     public function getSoldToThatBuyer()
     {
         return $this->soldToThatBuyer;
+    }
+
+    /**
+     * Set contactCondition
+     *
+     * @param string $contactCondition
+     * @return Contact
+     */
+    public function setContactCondition($contactCondition)
+    {
+        $this->contactCondition = $contactCondition;
+
+        return $this;
+    }
+
+    /**
+     * Get contactCondition
+     *
+     * @return string 
+     */
+    public function getContactCondition()
+    {
+        return $this->contactCondition;
     }
 }

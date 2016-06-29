@@ -56,7 +56,7 @@ class ContactManagementApiController extends Controller
 
                         $contactForm = $this->createForm(new ContactType(), $contact);
                         $data['contact']['soldToThatBuyer']="No";
-
+                        $data['contact']['contactCondition']="New";
                         $contactForm->submit($data['contact']);
 
                         if($contactForm->isValid()){
@@ -96,7 +96,8 @@ class ContactManagementApiController extends Controller
 
                             return $this->_createJsonResponse('success',array(
                                 'successTitle'=>"Successfully Contacted ".$bookDeals[0]->getSeller()->getUsername(),
-                                'successDescription'=>$message
+                                'successDescription'=>$message,
+                                'successData'=>array('contactId'=>$contact->getId())
                             ),201);
                         }else{
 
@@ -154,6 +155,7 @@ class ContactManagementApiController extends Controller
 
             $contactForm = $this->createForm(new ContactType(), $contact);
             $data['contact']['soldToThatBuyer']="No";
+            $data['contact']['contactCondition']="New";
             $contactForm->submit($data['contact']);
 
             if($contactForm->isValid()){
@@ -187,7 +189,8 @@ class ContactManagementApiController extends Controller
 
                 return $this->_createJsonResponse('success',array(
                     'successTitle'=>"Successfully Contacted ".$bookDeals[0]->getSeller()->getUsername(),
-                    'successDescription'=>$message
+                    'successDescription'=>$message,
+                    'successData'=>array('contactId'=>$contact->getId())
                 ),201);
             }else{
 
