@@ -868,6 +868,105 @@ class BookDealManagementApiController extends Controller
 
     }
 
+    /**
+     * Get All Activated Selling and Contacted Book Deals of User
+     */
+    public function getAllActivatedSellingAndContactedBookOfUserAction(Request $request){
+
+        $userEntity = $this->container->get('security.token_storage')->getToken()->getUser();
+
+        if($userEntity instanceof User){
+            $em = $this->getDoctrine()->getManager();
+            $userRepo = $em->getRepository('AppBundle:User');
+            $bookDealRepo = $em->getRepository('AppBundle:BookDeal');
+
+
+            //Getting Selling Book Deals
+            $sellingBookDeals = $bookDealRepo->getAllActivatedSellingBookOfUser($userEntity->getId());
+
+            //Set Subtitle For Selling Book Deals
+            for ($i = 0; $i < count($sellingBookDeals); $i++) {
+                $sellingBookDeals[$i]['contacts'] = array();
+                if (strpos($sellingBookDeals[$i]['bookTitle'], ":")) {
+                    $sellingBookDeals[$i]['bookSubTitle'] = substr($sellingBookDeals[$i]['bookTitle'], strpos($sellingBookDeals[$i]['bookTitle'], ":") + 2);
+                    $sellingBookDeals[$i]['bookTitle'] = substr($sellingBookDeals[$i]['bookTitle'], 0, strpos($sellingBookDeals[$i]['bookTitle'], ":"));
+                }
+            }
+            //Getting Contacts For Selling Book Deals
+            $contacts = $bookDealRepo->getContactsOfBookDeals($sellingBookDeals);
+
+            //Adding Contacts according to deals
+            if($contacts==null){
+                $contacts=array();
+            }
+            foreach ($contacts as $contact) {
+                for ($i = 0; $i < count($sellingBookDeals); $i++) {
+                    if ((int)$contact['bookDealId'] == (int)$sellingBookDeals[$i]['bookDealId']) {
+
+                        if ($contact['buyerNickName'] == null) {
+                            $user = $userRepo->findById((int)$contact['buyerId']);
+                            $contact['contactName'] = $user[0]->getUsername();
+                        }
+                        $contact['contactEmail'] = $contact['buyerEmail'];
+                        $date = $contact['contactDateTime']->format('H:i d M Y');
+
+                        $contact['contactDateTimeFormatted']=$date;
+
+                        array_push($sellingBookDeals[$i]['contacts'], $contact);
+                    }
+                }
+            }
+
+
+            //Getting Contacted Book Deals
+            $contactedBookDeals = $bookDealRepo->getAllActivatedContactedBookOfUser($userEntity->getId());
+
+            //Set Subtitle in Book
+            for ($i = 0; $i < count($contactedBookDeals); $i++) {
+                $contactedBookDeals[$i]['contacts'] = array();
+                if (strpos($contactedBookDeals[$i]['bookTitle'], ":")) {
+                    $contactedBookDeals[$i]['bookSubTitle'] = substr($contactedBookDeals[$i]['bookTitle'], strpos($contactedBookDeals[$i]['bookTitle'], ":") + 2);
+                    $contactedBookDeals[$i]['bookTitle'] = substr($contactedBookDeals[$i]['bookTitle'], 0, strpos($contactedBookDeals[$i]['bookTitle'], ":"));
+                }
+
+            }
+
+            //Getting Contacts
+            $contacts = $bookDealRepo->getContactsOfBookDeals($contactedBookDeals);
+            //Adding Contacts according to deals
+            if($contacts==null){
+                $contacts=array();
+            }
+            foreach ($contacts as $contact) {
+
+
+                for ($i = 0; $i < count($contactedBookDeals); $i++) {
+
+                    if ((int)$contact['bookDealId'] == (int)$contactedBookDeals[$i]['bookDealId']) {
+
+
+                        $contact['contactName'] = $contactedBookDeals[$i]['sellerUsername'];
+                        $contact['contactEmail'] = $contactedBookDeals[$i]['sellerEmail'];
+                        $date = $contact['contactDateTime']->format('H:i d M Y');
+
+                        $contact['contactDateTimeFormatted']=$date;
+
+                        array_push($contactedBookDeals[$i]['contacts'], $contact);
+                    }
+                }
+
+            }
+            $bookDeals =array();
+
+            $bookDeals =array_merge($sellingBookDeals,$contactedBookDeals);
+
+            return $this->_createJsonResponse('success',array('successData'=>$bookDeals),200);
+        }else{
+            return $this->_createJsonResponse('error',array('errorTitle'=>"Sorry No Data was found"),400);
+        }
+
+    }
+
     // New Image  Resize function
     public function _resize($newWidth , $newHeight, $targetFile, $originalFile) {
 

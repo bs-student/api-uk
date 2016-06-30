@@ -696,7 +696,119 @@ class BookDealRepository extends EntityRepository
     }
 
 
+    function getAllActivatedSellingBookOfUser($userId){
 
+        return $this->getEntityManager()
+            ->createQueryBuilder('b')
+            ->select("b.id as bookId,
+                      b.bookIsbn10 as bookIsbn,
+                      b.bookTitle,
+                      b.bookDirectorAuthorArtist,
+                      b.bookEdition,
+                      b.bookPublisher,
+                      b.bookPublishDate,
+                      b.bookBinding,
+                      b.bookImage,
+                      u.username as sellerUsername,
+                      bd.bookContactHomeNumber as sellerHomeNumber,
+                      bd.bookContactCellNumber as sellerCellNumber,
+                      bd.bookContactEmail as sellerEmail,
+                      bd.id as bookDealId,
+                      bd.bookPriceSell,
+                      bd.bookCondition,
+                      bd.bookIsHighlighted,
+                      bd.bookHasNotes,
+                      bd.bookComment,
+                      bd.bookContactMethod,
+                      bd.bookPaymentMethodCaShOnExchange,
+                      bd.bookPaymentMethodCheque,
+                      bd.bookIsAvailablePublic,
+                      bd.bookAvailableDate,
+                      bd.bookStatus,
+                      bd.bookViewCount,
+                      c.campusName,
+                      un.universityName,
+                      s.stateName,
+                      s.stateShortName,
+                      co.countryName")
+
+            ->from('AppBundle:Book', 'b')
+            ->innerJoin('AppBundle:BookDeal', 'bd', 'WITH', 'b.id = bd.book')
+            ->innerJoin('AppBundle:User', 'u', 'WITH', 'u.id = bd.seller')
+            ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'c.id = u.campus')
+            ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
+            ->innerJoin('AppBundle:State', 's', 'WITH', 's.id = c.state')
+            ->innerJoin('AppBundle:Country', 'co', 'WITH', 'co.id = s.country')
+//            ->innerJoin('AppBundle:Contact', 'con','WITH', 'con.bookDeal = bd.id')
+
+
+            ->andwhere('bd.bookStatus = '."'Activated'")
+            ->andwhere('bd.bookSellingStatus = ' . "'Selling'")
+            ->andwhere('bd.seller= :userId')
+            ->setParameter('userId', $userId)
+
+            ->orderBy('bd.bookSubmittedDateTime','DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    function getAllActivatedContactedBookOfUser($userId){
+
+        return $this->getEntityManager()
+            ->createQueryBuilder('b')
+            ->select("b.id as bookId,
+                      b.bookIsbn10 as bookIsbn,
+                      b.bookTitle,
+                      b.bookDirectorAuthorArtist,
+                      b.bookEdition,
+                      b.bookPublisher,
+                      b.bookPublishDate,
+                      b.bookBinding,
+                      b.bookImage,
+                      u.username as sellerUsername,
+                      bd.bookContactHomeNumber as sellerHomeNumber,
+                      bd.bookContactCellNumber as sellerCellNumber,
+                      bd.bookContactEmail as sellerEmail,
+                      bd.id as bookDealId,
+                      bd.bookPriceSell,
+                      bd.bookCondition,
+                      bd.bookIsHighlighted,
+                      bd.bookHasNotes,
+                      bd.bookComment,
+                      bd.bookContactMethod,
+                      bd.bookPaymentMethodCaShOnExchange,
+                      bd.bookPaymentMethodCheque,
+                      bd.bookIsAvailablePublic,
+                      bd.bookAvailableDate,
+                      c.campusName,
+                      un.universityName,
+                      s.stateName,
+                      s.stateShortName,
+                      co.countryName,
+                      con.id as contactId,
+                      con.contactDateTime,
+                      con.buyerHomePhone,
+                      con.buyerCellPhone")
+
+            ->from('AppBundle:Book', 'b')
+            ->innerJoin('AppBundle:BookDeal', 'bd', 'WITH', 'b.id = bd.book')
+            ->innerJoin('AppBundle:User', 'u', 'WITH', 'u.id = bd.seller')
+            ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'c.id = u.campus')
+            ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
+            ->innerJoin('AppBundle:State', 's', 'WITH', 's.id = c.state')
+            ->innerJoin('AppBundle:Country', 'co', 'WITH', 'co.id = s.country')
+            ->innerJoin('AppBundle:Contact', 'con', 'WITH', 'con.bookDeal = bd.id')
+
+
+            ->andwhere('bd.bookStatus = ' . "'Activated'")
+            ->andwhere('bd.bookSellingStatus = ' . "'Selling'")
+            ->andwhere('con.buyer= :userId')
+            ->setParameter('userId', $userId)
+            ->orderBy('bd.bookSubmittedDateTime','DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 
 
 

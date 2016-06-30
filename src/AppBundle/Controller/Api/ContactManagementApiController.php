@@ -260,7 +260,9 @@ class ContactManagementApiController extends Controller
         }
     }
 
-
+    /**
+     * Send Messages of A deal with Email
+     */
     public function sendMessagesAction(Request $request){
         $content = $request->getContent();
         $data = json_decode($content, true);
@@ -316,6 +318,59 @@ class ContactManagementApiController extends Controller
 
 
     }
+
+    /**
+     * Send Messages of A deal without Email
+     */
+    public function sendMessagesWithoutMailingAction(Request $request){
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+        $em = $this->getDoctrine()->getManager();
+        $contactRepo = $em->getRepository("AppBundle:Contact");
+        $userRepo = $em->getRepository("AppBundle:User");
+        $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
+        if(array_key_exists('contactId',$data)){
+
+            $contact  =$contactRepo->findById($data['contactId']);
+            $message = new Message();
+            $message->setContact($contact[0]);
+            $messageForm = $this->createForm(new MessageType(), $message);
+            $data['user']=$userId;
+            $data['messageDateTime']= gmdate('Y-m-d H:i:s');
+            $data['messageBody']= $data['message'];
+            $messageForm->submit($data);
+
+            if($messageForm->isValid()){
+                $em->persist($message);
+                $em->flush();
+
+                return $this->_createJsonResponse('success',array(
+                    'successTitle'=>"Successfully Sent Message",
+                    'successData'=>array(
+                        'sender'=>$message->getUser()->getUsername(),
+                        'messageBody'=>$message->getMessageBody(),
+                        'messageDateTime'=>$message->getMessageDateTime()->format('H:i, d-M-Y'),
+                        'messageId'=>$message->getId()
+                    )
+                ),201);
+            }else{
+                return $this->_createJsonResponse('error', array(
+                    'errorTitle' => "Cannot Send Message",
+                    'errorDescription' => "Please reload and send valid data again.",
+                    'errorData'=>$messageForm
+                ), 400);
+            }
+        }else{
+            return $this->_createJsonResponse('error', array(
+                'errorTitle' => "Wrong data",
+                'errorDescription' => "Please reload and send valid data again."
+            ), 400);
+
+        }
+
+
+    }
+
 
     public function _whatTypeOfMessage($contact,$senderId){
         if($contact->getBuyer()!=null){

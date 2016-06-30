@@ -329,6 +329,10 @@ send_messages:
     defaults:  {_controller: AppBundle:Api/ContactManagementApi:sendMessages}
     methods: [POST]
 
+send_messages_without_mailing:
+    path: /api/contact/send_messages_without_mailing
+    defaults:  {_controller: AppBundle:Api/ContactManagementApi:sendMessagesWithoutMailing}
+    methods: [POST]
 
 #BookDealManagementApiController
 
@@ -381,6 +385,14 @@ get_activated_book_deal_of_user:
     path: /book_deal/get_activated_book_deal_of_user
     defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getActivatedBookDealOfUser}
     methods: [POST]
+
+get_all_activated_selling_and_contacted_book_of_user:
+    path: /api/book_del/get_all_activated_selling_and_contacted_book_of_user
+    defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getAllActivatedSellingAndContactedBookOfUser}
+    methods: [POST]
+
+
+
 
 #WishList Management Api Controller
 
