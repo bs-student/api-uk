@@ -89,6 +89,7 @@ class BookDealRepository extends EntityRepository
             ->createQueryBuilder('b')
             ->select("b.id as bookId,
                       b.bookIsbn10 as bookIsbn,
+                      b.bookIsbn13 as bookIsbn13,
                       b.bookTitle,
                       b.bookDirectorAuthorArtist,
                       b.bookEdition,
@@ -175,6 +176,7 @@ class BookDealRepository extends EntityRepository
             ->createQueryBuilder('b')
             ->select("b.id as bookId,
                       b.bookIsbn10 as bookIsbn,
+                      b.bookIsbn13 as bookIsbn13,
                       b.bookTitle,
                       b.bookDirectorAuthorArtist,
                       b.bookEdition,
@@ -258,6 +260,7 @@ class BookDealRepository extends EntityRepository
             ->createQueryBuilder('b')
             ->select("b.id as bookId,
                       b.bookIsbn10 as bookIsbn,
+                      b.bookIsbn13 as bookIsbn13,
                       b.bookTitle,
                       b.bookDirectorAuthorArtist,
                       b.bookEdition,
@@ -340,6 +343,7 @@ class BookDealRepository extends EntityRepository
             ->createQueryBuilder('b')
             ->select("b.id as bookId,
                       b.bookIsbn10 as bookIsbn,
+                      b.bookIsbn13 as bookIsbn13,
                       b.bookTitle,
                       b.bookDirectorAuthorArtist,
                       b.bookEdition,
@@ -519,6 +523,7 @@ class BookDealRepository extends EntityRepository
             ->createQueryBuilder('bd')
             ->select('b.id as bookId,
                       b.bookIsbn10 as bookIsbn,
+                      b.bookIsbn13 as bookIsbn13,
                       b.bookTitle,
                       b.bookDirectorAuthorArtist,
                       b.bookEdition,
@@ -616,6 +621,7 @@ class BookDealRepository extends EntityRepository
             ->createQueryBuilder('b')
             ->select("b.id as bookId,
                       b.bookIsbn10 as bookIsbn,
+                      b.bookIsbn13 as bookIsbn13,
                       b.bookTitle,
                       b.bookDirectorAuthorArtist,
                       b.bookEdition,
@@ -702,6 +708,7 @@ class BookDealRepository extends EntityRepository
             ->createQueryBuilder('b')
             ->select("b.id as bookId,
                       b.bookIsbn10 as bookIsbn,
+                      b.bookIsbn13 as bookIsbn13,
                       b.bookTitle,
                       b.bookDirectorAuthorArtist,
                       b.bookEdition,
@@ -758,6 +765,7 @@ class BookDealRepository extends EntityRepository
             ->createQueryBuilder('b')
             ->select("b.id as bookId,
                       b.bookIsbn10 as bookIsbn,
+                      b.bookIsbn13 as bookIsbn13,
                       b.bookTitle,
                       b.bookDirectorAuthorArtist,
                       b.bookEdition,
