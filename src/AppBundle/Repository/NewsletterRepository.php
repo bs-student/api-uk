@@ -47,4 +47,19 @@ class NewsletterRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function getAllEmails(){
+
+        $qb= $this->getEntityManager()
+            ->createQueryBuilder('n')
+            ->select('n.id as newsletterId,
+                      n.email,
+                      n.activationStatus,
+                      n.lastUpdateDateTime
+            ')
+            ->from('AppBundle:Newsletter', 'n');
+
+        return $qb->getQuery()
+            ->getResult();
+    }
 }

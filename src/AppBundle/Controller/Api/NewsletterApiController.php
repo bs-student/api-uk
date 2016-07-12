@@ -29,6 +29,7 @@ use Lsw\ApiCallerBundle\Call\HttpGetJson;
 use Lsw\ApiCallerBundle\Call\HttpGetHtml;
 use AppBundle\Form\Type\BookType;
 use Symfony\Component\HttpFoundation\FileBag;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class NewsletterApiController extends Controller
 {
@@ -138,6 +139,40 @@ class NewsletterApiController extends Controller
             );
 
             return $this->_createJsonResponse('success', array('successData'=>array('newsletterEmails'=>$data)), 200);
+        }else{
+            return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
+        }
+    }
+
+    /**
+     * Export All Newsletter Emails
+     */
+    public function exportAllNewsletterEmailsAction(Request $request){
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+        if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
+
+            $em = $this->getDoctrine()->getManager();
+            $newsletterRepo=$em->getRepository('AppBundle:Newsletter');
+
+            $handle = fopen('newsletterEmails/newsletterEmails.csv', 'w+');
+
+            // Add the header of the CSV file
+            fputcsv($handle, array('Email', 'DateTime', 'Status'),',');
+
+            $emails = $newsletterRepo->getAllEmails();
+            // Add the data queried from database
+            foreach($emails as $email) {
+                fputcsv(
+                    $handle, // The file pointer
+                    array($email['email'], $email['lastUpdateDateTime']->format('H:i d-M-Y'), $email['activationStatus']), // The fields
+                    ',' // The delimiter
+                );
+            }
+
+            fclose($handle);
+            return $this->_createJsonResponse('success', array('successTitle'=>"CSV is generated",'successData'=>array("link"=>"/newsletterEmails/newsletterEmails.csv")), 200);
+
         }else{
             return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
         }

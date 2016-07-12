@@ -548,4 +548,9 @@ get_all_newsletter_emails:
     defaults:  {_controller: AppBundle:Api/NewsletterApi:getAllNewsletterEmails}
     methods: [POST]
 
+export_all_newsletter_data_into_csv:
+    path: /api/admin/export_all_newsletter_data_into_csv
+    defaults:  {_controller: AppBundle:Api/NewsletterApi:exportAllNewsletterEmails}
+    methods: [GET]
+
 
