@@ -94,9 +94,11 @@ class NewsletterApiController extends Controller
                     ), 201);
 
                 } else {
-                    return $this->_createJsonResponse('error', array("errorTitle"=>"Could Not Subscribe Your Email","errorData" => $newsletterForm), 400);
+                    return $this->_createJsonResponse('error', array("errorTitle"=>"Sorry, Could Not Subscribe Your Email","errorData" => $newsletterForm), 400);
                 }
             }
+        }else{
+            return $this->_createJsonResponse('error', array("errorTitle"=>"Sorry, Could Not Subscribe Your Email","errorDescription" => "Check your form and submit again"), 400);
         }
 
     }
