@@ -90,6 +90,12 @@ class ContactManagementApiController extends Controller
                                     $buyerInfo['buyerHomePhone']="";
                                 }
 
+                            }elseif(!strcmp($bookDeals[0]->getBookContactMethod(),"student2studentBoard")){
+                                $message="You have successfully contacted ".$bookDeals[0]->getSeller()->getUsername().". Please go to message board to view replies.";
+                                $buyerInfo=array(
+                                    'buyerNickName'=>$this->get('security.token_storage')->getToken()->getUser()->getUsername(),
+                                    'buyerEmail'=>$this->get('security.token_storage')->getToken()->getUser()->getEmail()
+                                );
                             }
                             //Send Proper Mails to Buyer & Seller
                             $this->get('fos_user.mailer')->operateContactMailingProcess($bookDeals[0],$bookDeals[0]->getBook(),$bookDeals[0]->getSeller(),$buyerInfo,$data['contact']['messages'][0]);

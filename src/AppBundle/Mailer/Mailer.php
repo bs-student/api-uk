@@ -108,7 +108,7 @@ class Mailer extends BaseClass
             ));
             $message2->setBody($toBuyerRendered,'text/html');
             $this->_sendMail($message2, "Student2Student: Seller Contact Information ", $this->parameters['from_email']['resetting'], $buyerInfo['buyerEmail']);
-        }else{
+        }elseif(!strcmp($bookDeal->getBookContactMethod(),"sellerToBuyer")){
             //Sending First Mail
             $message1 = \Swift_Message::newInstance();
 
@@ -145,6 +145,43 @@ class Mailer extends BaseClass
             ));
             $message2->setBody($toBuyerRendered,'text/html');
             $this->_sendMail($message2,"Student2Student: Sent Information to Seller", $this->parameters['from_email']['resetting'], $buyerInfo['buyerEmail']);
+        }elseif(!strcmp($bookDeal->getBookContactMethod(),"student2studentBoard")){
+            //Sending First Mail
+            $message1 = \Swift_Message::newInstance();
+
+            $toSellerRendered = $this->templating->render("mail_templates/student2studentBoard_method_to_seller_mail.html.twig", array(
+                'bookDeal' => $bookDeal,
+                'seller' => $seller,
+                'buyerInfo'=>$buyerInfo,
+                'book'=>$book,
+                'buyerMessage'=>$buyerMessage,
+                'book_image'=>$message1->embed(\Swift_Image::fromPath(substr($book->getBookImage(),1))),
+                'header_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg')),
+                'share_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/share.jpg')),
+                'footer_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+            ));
+
+
+            $message1->setBody($toSellerRendered,'text/html');
+
+            $this->_sendMail($message1,"Student2Student: New Contact Received", $this->parameters['from_email']['resetting'], $seller->getEmail());
+
+            //Sending 2nd Mail
+            $message2 = \Swift_Message::newInstance();
+
+            $toBuyerRendered = $this->templating->render("mail_templates/student2studentBoard_method_to_buyer_mail.html.twig", array(
+                'bookDeal' => $bookDeal,
+                'seller' => $seller,
+                'buyerInfo'=>$buyerInfo,
+                'book'=>$book,
+                'buyerMessage'=>$buyerMessage,
+                'book_image'=>$message2->embed(\Swift_Image::fromPath(substr($book->getBookImage(),1))),
+                'header_image'=>$message2->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg')),
+                'share_image'=>$message2->embed(\Swift_Image::fromPath('assets/images/share.jpg')),
+                'footer_image'=>$message2->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+            ));
+            $message2->setBody($toBuyerRendered,'text/html');
+            $this->_sendMail($message2,"Student2Student: Contacted Seller ", $this->parameters['from_email']['resetting'], $buyerInfo['buyerEmail']);
         }
 
     }

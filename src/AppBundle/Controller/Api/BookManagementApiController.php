@@ -195,9 +195,11 @@ class BookManagementApiController extends Controller
             if (array_key_exists('isbn', $data)) {
                 $deals = array(
                     'buyerToSeller' => array(),
-                    'sellerToBuyer' => array()
+                    'sellerToBuyer' => array(),
+                    'student2studentBoard' => array(),
                 );
                 $onCampusDeals = $bookDealRepo->getCampusDealsByIsbn($data['isbn'], $campusId);
+
                 //Increase View Counter
                 if(count($onCampusDeals)>0){
                     $bookDealRepo->increaseBookViewCounter($onCampusDeals);
@@ -212,15 +214,15 @@ class BookManagementApiController extends Controller
                         //dividing via Contact Method
                         if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
                             array_push($deals['buyerToSeller'], $deal);
-                        } else {
+                        } else if(strpos('sellerToBuyer', $deal['bookContactMethod'])!== false) {
                             array_push($deals['sellerToBuyer'], $deal);
+                        }else if(strpos('student2studentBoard', $deal['bookContactMethod'])!== false){
+                            array_push($deals['student2studentBoard'], $deal);
                         }
 
                     }
 
                 }
-
-
 
 
                 return $this->_createJsonResponse('success', array('successData' => $deals), 200);
