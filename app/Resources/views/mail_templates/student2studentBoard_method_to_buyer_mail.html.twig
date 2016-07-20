@@ -1,0 +1,163 @@
+<!doctype html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>textbook exchange made easy: student2student.com newsletter</title>
+        <style type="text/css">
+            body, td, th {
+                font-family:  'Open Sans';
+                font-size: 11pt;
+            }
+            a:link {
+                color: #000000;
+                text-decoration: none;
+            }
+			.blue-text{
+					color: #0072AE;
+			}
+			.orange-text{
+					color: #FF530D;
+			}
+			.head-text{
+					font-size:18px;
+					
+			}
+			.sub-text{
+					font-size:15px;
+					
+			}
+			.uppercase{
+				text-transform:uppercase;
+			}
+			
+        </style>
+    </head>
+
+    <body style="background: #EBEEFA;align-content: center;">
+
+    <table  bgcolor="#ebeefa" cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="padding: 20px;">
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0" border="0" align="center" width="500" bgcolor="#FFFFFF">
+                    <tr>
+                        <td align="center">
+                            <a href="http://www.student2student.com/" target="_blank">
+                                <img  src="{{ header_image }}" alt="Student2student logo" style="width:100%;height:90px;display: block;    z-index: 10;    position: relative;" title="Student2student logo"></a>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td align="left" style="padding: 20px;font-family:'Open Sans';">
+                            <br>
+                            Hello {{ buyerInfo.buyerNickName }},<br /><br />
+                            Your Contact Information has been sent to seller ({{ seller.username }}).<br>
+                            {{ seller.username }} will contact you soon
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td style="padding: 20px;font-family:'Open Sans';">
+                            <table  width="500" cellpadding="0" cellspacing="0" border="0" align="left" >
+                                <tr>
+                                    <td align="left" valign="middle">
+                                        <img src="{{ book_image }}" alt="activate my account button" style="width: 200px !important;height: 300px !important;" title="Book Image">
+                                    </td>
+                                    <td width="26">
+
+                                    </td>
+                                    <td align="left" valign="top" style="font-family:'Open Sans';">
+                                        <text class="orange-text uppercase head-text">{{ book.bookTitle }}</text><br/><br/>
+
+                                        <text class="blue-text sub-text">ISBN: </text><text class="sub-text">{{ book.bookIsbn10 }}</text><br/><br/>
+                                        <text class="blue-text sub-text">Author: </text><text class="sub-text">{{ book.bookDirectorAuthorArtist }}</text><br/><br/>
+                                        <text class="blue-text sub-text">Publisher: </text><text class="sub-text">{{ book.bookPublisher }}</text><br/><br/>
+                                        <text class="blue-text sub-text">Publish Date: </text><text class="sub-text">{{ book.bookPublishDate|date("d M Y") }}</text><br/><br/>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr >
+                        <td style="padding: 20px;font-family:'Open Sans';">
+                            <table width="500" cellpadding="0" cellspacing="0" border="0" align="left">
+                                <tr>
+                                    <td colspan="2" style=" font-size:18px;font-family: 'Open Sans';">
+
+                                        The Deal Information:
+                                        <br>
+                                        <br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family:'Open Sans';" align="left">Price : </td>
+                                    <td style="font-family:'Open Sans';">$ {{ bookDeal.bookPriceSell }}</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="font-family:'Open Sans';" align="left">Book Has Notes : </td>
+                                    <td style="font-family:'Open Sans';">{{ bookDeal.bookHasNotes }}</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="font-family:'Open Sans';">Book Is Highlighted : </td>
+                                    <td style="font-family:'Open Sans';">{{ bookDeal.bookIsHighlighted }}</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="font-family:'Open Sans';">Available Date : </td>
+                                    <td style="font-family:'Open Sans';">{{ bookDeal.bookAvailableDate|date("d M Y") }}
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td style="font-family:'Open Sans';">Payment : </td>
+                                    <td style="font-family:'Open Sans';">{%if bookDeal.bookPaymentMethodCaShOnExchange and bookDeal.bookPaymentMethodCheque %}
+                                            Cheque, Cash
+                                        {% elseif bookDeal.bookPaymentMethodCaShOnExchange and bookDeal.bookPaymentMethodCheque!=true %}
+                                            Cash
+                                        {% elseif bookDeal.bookPaymentMethodCaShOnExchange!=true and bookDeal.bookPaymentMethodCheque %}
+                                            Cheque
+                                        {% endif %}
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr >
+                        <td style="padding: 20px;font-family: 'Open Sans';font-size:18px" align="left" >
+                            Don't forget about our online price comparison feature.<br />
+                            Yes, we tell you the cheapest price online!<br /><br />
+
+<span >Cheers,<br />
+Your Student 2 Student Team</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <img src="{{ share_image }}" alt="Student2student main hero image" style="display:block;width: 100%;height: 108px;" title="Student2student main hero image">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <img  src="{{ footer_image }}" alt="Student2student main hero image" style="display:block;height: 3px;width: 100%;margin-top: 20px;" title="Student2student main hero image">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="padding:20px;font-family: 'Open Sans'; font-size:14px">2007 - 2016 Student 2 Student, All Rights Reserved</td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+
+
+
+    </body>
+    </html>
