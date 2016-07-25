@@ -27,6 +27,12 @@ class ProfileType extends AbstractType
         $builder->add('standardHomePhone','text');
         $builder->add('standardCellPhone','text');
         $builder->add('standardEmail','text');
+        $builder->add('profilePicture','text');
+        $builder->add('fullName','text',array(
+            'constraints' => array(
+                new NotBlank(),
+            )
+        ));
 
     }
 

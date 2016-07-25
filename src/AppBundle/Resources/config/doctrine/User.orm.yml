@@ -101,5 +101,12 @@ AppBundle\Entity\User:
             nullable: true
             type: string
             length: '90'
+        profilePicture:
+            column: profile_picture
+            nullable: true
+            type: string
+            length: '255'
+            options:
+                default: '/userImages/deafault_profile_picture.png'
 
     lifecycleCallbacks: {  }

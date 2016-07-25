@@ -131,7 +131,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         $firstResult = ($pageNumber - 1) * $pageSize;
         $qb= $this->getEntityManager()
             ->createQueryBuilder('u')
-            ->select('u.id as userId, u.username,u.email,u.fullName,un.universityName,c.campusName,u.enabled,u.roles')
+            ->select('u.id as userId, u.username,u.email,u.fullName,un.universityName,c.campusName,u.enabled,u.roles,u.profilePicture')
             ->from('AppBundle:User', 'u')
             ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
             ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
@@ -173,7 +173,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         $firstResult = ($pageNumber - 1) * $pageSize;
         $qb= $this->getEntityManager()
             ->createQueryBuilder('u')
-            ->select('u.id as userId, u.username,u.email,u.fullName,u.enabled,u.roles')
+            ->select('u.id as userId, u.username,u.email,u.fullName,u.enabled,u.roles,u.profilePicture')
             ->from('AppBundle:User', 'u')
 
             ->andwhere('u.username LIKE :query ')
@@ -211,7 +211,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         $firstResult = ($pageNumber - 1) * $pageSize;
         $qb= $this->getEntityManager()
             ->createQueryBuilder('u')
-            ->select('u.id as userId, u.username,u.email,u.fullName,un.universityName,c.campusName,u.enabled')
+            ->select('u.id as userId, u.username,u.email,u.fullName,un.universityName,c.campusName,u.enabled,u.profilePicture')
             ->from('AppBundle:User', 'u')
             ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
             ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')

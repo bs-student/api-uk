@@ -101,6 +101,11 @@ class User extends BaseUser
      */
     private $standardEmail;
 
+    /**
+     * @var string
+     *
+     */
+    private $profilePicture;
 
 
     protected $enabled;
@@ -632,5 +637,28 @@ class User extends BaseUser
     public function getStandardEmail()
     {
         return $this->standardEmail;
+    }
+
+    /**
+     * Set profilePicture
+     *
+     * @param string $profilePicture
+     * @return User
+     */
+    public function setProfilePicture($profilePicture)
+    {
+        $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+    /**
+     * Get profilePicture
+     *
+     * @return string 
+     */
+    public function getProfilePicture()
+    {
+        return $this->profilePicture;
     }
 }
