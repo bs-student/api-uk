@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Validator\Constraints\DateTime;
-class WishListType extends AbstractType
+class StarType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -22,8 +22,8 @@ class WishListType extends AbstractType
 
 
         $builder
-            ->add('book', 'entity',array(
-                'class' => "AppBundle:Book",
+            ->add('bookDeal', 'entity',array(
+                'class' => "AppBundle:BookDeal",
                 'constraints' => array(
                     new NotBlank(),
                 )))
@@ -43,13 +43,13 @@ class WishListType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_wishlist_add';
+        return 'appbundle_star_add';
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\WishList',
+            'data_class' => 'AppBundle\Entity\Star',
             'csrf_protection' => false,
             'allow_extra_fields' => true,
         ));

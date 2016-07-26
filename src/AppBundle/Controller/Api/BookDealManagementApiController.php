@@ -886,6 +886,10 @@ class BookDealManagementApiController extends Controller
 
             //Set Subtitle For Selling Book Deals
             for ($i = 0; $i < count($sellingBookDeals); $i++) {
+                //Setting deal type selling or contacted
+                $sellingBookDeals[$i]['dealType']="sellingDeal";
+
+                //Setting Subtitle
                 $sellingBookDeals[$i]['contacts'] = array();
                 if (strpos($sellingBookDeals[$i]['bookTitle'], ":")) {
                     $sellingBookDeals[$i]['bookSubTitle'] = substr($sellingBookDeals[$i]['bookTitle'], strpos($sellingBookDeals[$i]['bookTitle'], ":") + 2);
@@ -901,6 +905,7 @@ class BookDealManagementApiController extends Controller
             }
             foreach ($contacts as $contact) {
                 for ($i = 0; $i < count($sellingBookDeals); $i++) {
+
                     if ((int)$contact['bookDealId'] == (int)$sellingBookDeals[$i]['bookDealId']) {
 
                         if ($contact['buyerNickName'] == null) {
@@ -923,6 +928,10 @@ class BookDealManagementApiController extends Controller
 
             //Set Subtitle in Book
             for ($i = 0; $i < count($contactedBookDeals); $i++) {
+                //Setting deal type selling or contacted
+                $contactedBookDeals[$i]['dealType']="contactedDeal";
+
+                //Setting Subtitle
                 $contactedBookDeals[$i]['contacts'] = array();
                 if (strpos($contactedBookDeals[$i]['bookTitle'], ":")) {
                     $contactedBookDeals[$i]['bookSubTitle'] = substr($contactedBookDeals[$i]['bookTitle'], strpos($contactedBookDeals[$i]['bookTitle'], ":") + 2);
@@ -939,12 +948,11 @@ class BookDealManagementApiController extends Controller
             }
             foreach ($contacts as $contact) {
 
-
                 for ($i = 0; $i < count($contactedBookDeals); $i++) {
 
                     if ((int)$contact['bookDealId'] == (int)$contactedBookDeals[$i]['bookDealId']) {
 
-
+                        $contact['profilePicture'] = $contactedBookDeals[$i]['sellerProfilePicture'];
                         $contact['contactName'] = $contactedBookDeals[$i]['sellerUsername'];
                         $contact['contactEmail'] = $contactedBookDeals[$i]['sellerEmail'];
                         $date = $contact['contactDateTime']->format('H:i d M Y');
@@ -956,11 +964,41 @@ class BookDealManagementApiController extends Controller
                 }
 
             }
-            $bookDeals =array();
 
+            //Merging and sorting array
             $bookDeals =array_merge($sellingBookDeals,$contactedBookDeals);
+            $deals=array();
+            foreach($bookDeals as $deal){
+                $deals[$deal['bookDealId']]=$deal;
+            }
+            krsort($deals);
+            $newArray=array();
+            foreach($deals as $deal){
+                array_push($newArray,$deal);
+            }
 
-            return $this->_createJsonResponse('success',array('successData'=>$bookDeals),200);
+
+            //Add Star into BookDeals
+
+            $starRepo = $em->getRepository("AppBundle:Star");
+            $starredBookDeals = $starRepo->findBy(array('user'=>$userEntity->getId()));
+            for($i=0;$i<count($newArray);$i++){
+                $newArray[$i]['starred']=false;
+                foreach($starredBookDeals as $deal){
+                    if($deal->getBookDeal()->getId()==$newArray[$i]['bookDealId']){
+                        $newArray[$i]['starred']=true;
+                    }
+                }
+            }
+
+            $finalArray=array();
+            foreach($newArray as $deal){
+                if(count($deal['contacts'])>0){
+                    array_push($finalArray,$deal);
+                }
+            }
+
+            return $this->_createJsonResponse('success',array('successData'=>$finalArray),200);
         }else{
             return $this->_createJsonResponse('error',array('errorTitle'=>"Sorry No Data was found"),400);
         }

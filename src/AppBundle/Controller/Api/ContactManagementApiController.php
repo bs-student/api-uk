@@ -251,6 +251,7 @@ class ContactManagementApiController extends Controller
                 array_push($data,array(
                     'messageId'=>$message->getId(),
                     'sender'=> $sender,
+                    'senderProfilePicture'=>$message->getUser()->getProfilePicture(),
                     'messageDateTime'=> $message->getMessageDateTime()->format('H:i, d-M-Y'),
                     'messageBody'=> $message->getMessageBody(),
                 ));
@@ -304,7 +305,8 @@ class ContactManagementApiController extends Controller
                         'sender'=>$message->getUser()->getUsername(),
                         'messageBody'=>$message->getMessageBody(),
                         'messageDateTime'=>$message->getMessageDateTime()->format('H:i, d-M-Y'),
-                        'messageId'=>$message->getId()
+                        'messageId'=>$message->getId(),
+                        'senderProfilePicture'=>$message->getUser()->getProfilePicture()
                     )
                 ),201);
             }else{
@@ -356,7 +358,8 @@ class ContactManagementApiController extends Controller
                         'sender'=>$message->getUser()->getUsername(),
                         'messageBody'=>$message->getMessageBody(),
                         'messageDateTime'=>$message->getMessageDateTime()->format('H:i, d-M-Y'),
-                        'messageId'=>$message->getId()
+                        'messageId'=>$message->getId(),
+                        'senderProfilePicture'=>$message->getUser()->getProfilePicture()
                     )
                 ),201);
             }else{

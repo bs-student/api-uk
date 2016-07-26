@@ -18,6 +18,7 @@ class User extends BaseUser
         $this->buyBooks = new ArrayCollection();
         $this->sellBooks = new ArrayCollection();
         $this->wishLists = new ArrayCollection();
+        $this->stars = new ArrayCollection();
         $this->contacts = new ArrayCollection();
         parent::__construct();
     }
@@ -123,6 +124,8 @@ class User extends BaseUser
     private $wishLists;
 
     private $contacts;
+
+    private $stars;
 
     /**
      * Get id
@@ -660,5 +663,39 @@ class User extends BaseUser
     public function getProfilePicture()
     {
         return $this->profilePicture;
+    }
+
+    /**
+     * Add stars
+     *
+     * @param \AppBundle\Entity\Star $stars
+     * @return User
+     */
+    public function addStar(\AppBundle\Entity\Star $stars)
+    {
+        $this->stars->add($stars);
+        $stars->setUser($this);
+        return $this;
+
+    }
+
+    /**
+     * Remove stars
+     *
+     * @param \AppBundle\Entity\Star $stars
+     */
+    public function removeStar(\AppBundle\Entity\Star $stars)
+    {
+        $this->stars->removeElement($stars);
+    }
+
+    /**
+     * Get stars
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStars()
+    {
+        return $this->stars;
     }
 }

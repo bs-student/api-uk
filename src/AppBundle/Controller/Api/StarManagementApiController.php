@@ -6,7 +6,9 @@ use AppBundle\Entity\Book;
 use AppBundle\Entity\BookDeal;
 use AppBundle\Entity\BookImage;
 use AppBundle\Entity\Campus;
+use AppBundle\Entity\Star;
 use AppBundle\Entity\WishList;
+use AppBundle\Form\Type\StarType;
 use AppBundle\Form\Type\BookDealType;
 use AppBundle\Form\Type\UniversityType;
 use AppBundle\Form\Type\UserType;
@@ -26,136 +28,57 @@ use Lsw\ApiCallerBundle\Call\HttpGetHtml;
 use AppBundle\Form\Type\BookType;
 use Symfony\Component\HttpFoundation\FileBag;
 
-class WishListManagementApiController extends Controller
+class StarManagementApiController extends Controller
 {
 
     /**
-     * Add book into WishList
+     * Add textbook deal into Star List
      */
-    public function addBookToWishListAction(Request $request){
+    public function addBookDealToStarListAction(Request $request){
 
         $em = $this->getDoctrine()->getManager();
-        $wishListRepo = $em->getRepository("AppBundle:WishList");
+        $starRepo = $em->getRepository("AppBundle:Star");
 
         $content = $request->getContent();
         $data = json_decode($content, true);
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-
-        $alreadyInserted = $wishListRepo->checkIfAlreadyAddedToWishList($user->getId(),$data['bookId']);
+        $alreadyInserted = $starRepo->checkIfAlreadyAddedToStarList($user->getId(),$data['bookDealId']);
 
         if(!$alreadyInserted){
-            $wishList = new WishList();
-            $wishListForm = $this->createForm(new WishListType(), $wishList);
-            $wishListForm->submit(array(
+            $star = new Star();
+            $starForm = $this->createForm(new StarType(), $star);
+            $starForm ->submit(array(
                 'user'=>$user->getId(),
-                'book'=>$data['bookId'],
+                'bookDeal'=>$data['bookDealId'],
             ));
 
-            if ($wishListForm->isValid()) {
-                $em->persist($wishList);
+            if ($starForm->isValid()) {
+                $em->persist($star);
                 $em->flush();
-                return $this->_createJsonResponse('success', array("successTitle" => "Book Successfully Added to WishList"), 200);
+                return $this->_createJsonResponse('success', array("successTitle" => "BookDeal Successfully Starred","successData"=>array("starred"=>true)), 200);
             } else {
-                return $this->_createJsonResponse('error', array("errorTitle" => "Couldn't Added to Wishlist","errorData" => $wishListForm), 400);
+                return $this->_createJsonResponse('error', array("errorTitle" => "Couldn't Starred","errorData" => $starForm), 400);
             }
         }else{
-            return $this->_createJsonResponse('error', array("errorTitle" => "Book is already in Wishlist"), 400);
-        }
 
+            $star = $starRepo->findBy(array('user'=>$user->getId(),'bookDeal'=>$data['bookDealId']));
 
-
-    }
-
-    /**
-     * GET My Wishlist
-     */
-    public function getMyWishListAction(Request $request){
-
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-
-        $wishListBooks = $user->getWishLists();
-
-        $books=array();
-        foreach($wishListBooks as $row){
-            $bookEntity=$row->getBook();
-            $book=array();
-
-            $book['bookId']=$bookEntity->getId();
-            $book['bookTitle']=$bookEntity->getBookTitle();
-            $book['bookDirectorAuthorArtist']=$bookEntity->getBookDirectorAuthorArtist();
-            $book['bookEdition']=$bookEntity->getBookEdition();
-            $book['bookPublisher']=$bookEntity->getBookPublisher();
-            $book['bookPublishDate']=$bookEntity->getBookPublishDate();
-            $book['bookBinding']=$bookEntity->getBookBinding();
-            $book['bookPage']=$bookEntity->getBookPage();
-            $book['bookLanguage']=$bookEntity->getBooklanguage();
-            $book['bookDescription']=$bookEntity->getBookDescription();
-            $book['bookIsbn10']=$bookEntity->getBookIsbn10();
-            $book['bookIsbn13']=$bookEntity->getBookIsbn13();
-            $book['bookImage']=$bookEntity->getBookImage();
-            $book['bookAmazonPrice']="$".$bookEntity->getBookAmazonPrice();
-
-
-            //Formatting Date
-            if ($book['bookPublishDate']!=null) {
-                $book['bookPublishDate'] = $book['bookPublishDate']->format('d M Y');
+            if($star[0] instanceof Star){
+                $em->remove($star[0]);
+                $em->flush();
+                return $this->_createJsonResponse('success', array("successTitle" => "BookDeal Successfully Unstarred","successData"=>array("starred"=>false)), 200);
+            }else{
+                return $this->_createJsonResponse('error', array("errorTitle" => "Couldn't Unstar"), 400);
             }
 
-            //Getting Images
-
-            //GET FIRST IMAGE OF THAT BOOK
-            $book['bookImages'] = array();
-
-            $image = array(
-                'image'=>$book['bookImage'],
-                'imageId'=>0
-            );
-            array_push($book['bookImages'],$image);
-
-            //Formatting Title & SubTitle
-            if (strpos($book['bookTitle'], ":")) {
-                $book['bookSubTitle'] = substr($book['bookTitle'], strpos($book['bookTitle'], ":") + 2);
-                $book['bookTitle'] = substr($book['bookTitle'], 0, strpos($book['bookTitle'], ":"));
-            }
-
-            array_push($books,$book);
-
         }
-
-        return $this->_createJsonResponse('success',array('successData'=>$books),200);
 
 
 
     }
 
-    /**
-     * Remove My Wishlist Item
-     */
-    public function removeWishListItemAction(Request $request){
-        $em = $this->getDoctrine()->getManager();
-        $wishListRepo = $em->getRepository("AppBundle:WishList");
-
-        $content = $request->getContent();
-        $data = json_decode($content, true);
-
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-
-        $data = $wishListRepo->findBy(array('book'=>$data['bookId'],'user'=>$user->getId()));
-
-
-        $em->remove($data[0]);
-
-        try {
-            $em->flush();
-            return $this->_createJsonResponse('success',array('successTitle'=>"Wish List Item has been removed"),200);
-        }catch (Exception $e){
-            return $this->_createJsonResponse('error',array('errorTitle'=>"Wish List Item could not be removed"),400);
-        }
-
-
-    }
 
     public function _createJsonResponse($key, $data, $code)
     {

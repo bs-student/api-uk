@@ -554,3 +554,19 @@ export_all_newsletter_data_into_csv:
     methods: [GET]
 
 
+#starList Management Api Controller
+
+add_book_deal_to_star_list:
+    path: /api/star/add_book_deal_to_star_list
+    defaults:  {_controller: AppBundle:Api/StarManagementApi:addBookDealToStarList}
+    methods: [POST]
+
+#get_my_wishlist:
+#    path: /api/wishlist/get_my_wishlist
+#    defaults:  {_controller: AppBundle:Api/WishListManagementApi:getMyWishList}
+#    methods: [GET]
+#
+#remove_wishlist_item:
+#    path: /api/wishlist/remove_wishlist_item
+#    defaults:  {_controller: AppBundle:Api/WishListManagementApi:removeWishListItem}
+#    methods: [POST]

@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="992c5a8c-cd64-41e9-9383-a47a89a328fa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Form/Type/ProfileType.php" afterPath="$PROJECT_DIR$/src/AppBundle/Form/Type/ProfileType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/Api/StarManagementApiController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Form/Type/StarType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php" afterPath="$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/Api/ContactManagementApiController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/Api/ContactManagementApiController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/User.orm.yml" afterPath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/User.orm.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/User.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/Api/UserApiController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/Api/UserApiController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Repository/UserRepository.php" afterPath="$PROJECT_DIR$/src/AppBundle/Repository/UserRepository.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" afterPath="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/routing.yml" afterPath="$PROJECT_DIR$/src/AppBundle/Resources/config/routing.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Student2StudentApi.iws" />
@@ -34,54 +37,216 @@
       <file leaf-file-name="app_routing.yml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="418" column="77" selection-start="12745" selection-end="12766" vertical-scroll-proportion="-12.64" vertical-offset="6790" max-vertical-offset="9554">
+            <state line="333" column="90" selection-start="9815" selection-end="9841" vertical-scroll-proportion="-12.36" vertical-offset="5352" max-vertical-offset="9809">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AdminUserApiController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminUserApiController.php">
+      <file leaf-file-name="ContactManagementApiController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/ContactManagementApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="62" selection-start="1567" selection-end="1597" vertical-scroll-proportion="-4.3333335" vertical-offset="357" max-vertical-offset="5015">
+            <state line="361" column="88" selection-start="17171" selection-end="17171" vertical-scroll-proportion="-9.137255" vertical-offset="5314" max-vertical-offset="6613">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserRepository.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/UserRepository.php">
+      <file leaf-file-name="BookDealManagementApiController.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="213" column="125" selection-start="6238" selection-end="6238" vertical-scroll-proportion="-0.22962113" vertical-offset="3821" max-vertical-offset="4692">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="User.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="109" column="0" selection-start="1577" selection-end="1577" vertical-scroll-proportion="146.31372" vertical-offset="9230" max-vertical-offset="11305">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="User.orm.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/User.orm.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="105" column="26" selection-start="2696" selection-end="2696" vertical-scroll-proportion="0.0" vertical-offset="1067" max-vertical-offset="2006">
+            <state line="954" column="101" selection-start="36907" selection-end="36907" vertical-scroll-proportion="1.2502857" vertical-offset="793" max-vertical-offset="3689">
               <folding>
-                <marker date="1469431516112" expanded="true" signature="2760:2837" placeholder="options:" />
+                <element signature="e#969#1018#0" expanded="false" />
+                <element signature="e#1023#4253#0" expanded="false" />
+                <element signature="e#1095#1119#0" expanded="false" />
+                <element signature="e#1860#2299#0" expanded="false" />
+                <element signature="e#1967#2288#0" expanded="false" />
+                <element signature="e#2309#4036#0" expanded="false" />
+                <element signature="e#2385#2534#0" expanded="false" />
+                <element signature="e#2547#2692#0" expanded="false" />
+                <element signature="e#2706#2845#0" expanded="false" />
+                <element signature="e#2892#3052#0" expanded="false" />
+                <element signature="e#2921#3051#0" expanded="false" />
+                <element signature="e#3245#3359#0" expanded="false" />
+                <element signature="e#3264#3358#0" expanded="false" />
+                <element signature="e#3436#3656#0" expanded="false" />
+                <element signature="e#3494#3641#0" expanded="false" />
+                <element signature="e#3513#3640#0" expanded="false" />
+                <element signature="e#3749#3778#0" expanded="false" />
+                <element signature="e#4054#4246#0" expanded="false" />
+                <element signature="e#4092#4240#0" expanded="false" />
+                <element signature="e#4128#4230#1" expanded="false" />
+                <element signature="e#4259#4306#0" expanded="false" />
+                <element signature="e#4311#8173#0" expanded="false" />
+                <element signature="e#4386#4441#0" expanded="false" />
+                <element signature="e#5279#5718#0" expanded="false" />
+                <element signature="e#5386#5707#0" expanded="false" />
+                <element signature="e#5773#5834#0" expanded="false" />
+                <element signature="e#5843#6476#0" expanded="false" />
+                <element signature="e#5890#6465#0" expanded="false" />
+                <element signature="e#5951#6451#0" expanded="false" />
+                <element signature="e#6044#6262#0" expanded="false" />
+                <element signature="e#6525#7957#0" expanded="false" />
+                <element signature="e#6600#6749#0" expanded="false" />
+                <element signature="e#6762#6907#0" expanded="false" />
+                <element signature="e#7097#7211#0" expanded="false" />
+                <element signature="e#7116#7210#0" expanded="false" />
+                <element signature="e#7288#7508#0" expanded="false" />
+                <element signature="e#7346#7493#0" expanded="false" />
+                <element signature="e#7365#7492#0" expanded="false" />
+                <element signature="e#7603#7658#0" expanded="false" />
+                <element signature="e#7974#8166#0" expanded="false" />
+                <element signature="e#8012#8160#0" expanded="false" />
+                <element signature="e#8048#8150#1" expanded="false" />
+                <element signature="e#8179#8217#0" expanded="false" />
+                <element signature="e#8222#13065#0" expanded="false" />
+                <element signature="e#8618#13057#0" expanded="false" />
+                <element signature="e#8746#12830#0" expanded="false" />
+                <element signature="e#8924#12580#0" expanded="false" />
+                <element signature="e#9165#9560#0" expanded="false" />
+                <element signature="e#9436#9560#0" expanded="false" />
+                <element signature="e#11680#12276#0" expanded="false" />
+                <element signature="e#12078#12276#0" expanded="false" />
+                <element signature="e#12297#12580#0" expanded="false" />
+                <element signature="e#12594#12830#0" expanded="false" />
+                <element signature="e#12623#12815#0" expanded="false" />
+                <element signature="e#12841#13057#0" expanded="false" />
+                <element signature="e#12866#13046#0" expanded="false" />
+                <element signature="e#12901#13041#0" expanded="false" />
+                <element signature="e#13071#13142#0" expanded="false" />
+                <element signature="e#13147#17410#0" expanded="false" />
+                <element signature="e#13225#13276#0" expanded="false" />
+                <element signature="e#14128#14567#0" expanded="false" />
+                <element signature="e#14235#14556#0" expanded="false" />
+                <element signature="e#14622#14683#0" expanded="false" />
+                <element signature="e#14692#15324#0" expanded="false" />
+                <element signature="e#14739#15313#0" expanded="false" />
+                <element signature="e#14800#15299#0" expanded="false" />
+                <element signature="e#14893#15111#0" expanded="false" />
+                <element signature="e#15373#17194#0" expanded="false" />
+                <element signature="e#15447#15797#0" expanded="false" />
+                <element signature="e#15617#15797#0" expanded="false" />
+                <element signature="e#15842#15991#0" expanded="false" />
+                <element signature="e#16004#16149#0" expanded="false" />
+                <element signature="e#16339#16453#0" expanded="false" />
+                <element signature="e#16358#16452#0" expanded="false" />
+                <element signature="e#16530#16750#0" expanded="false" />
+                <element signature="e#16588#16735#0" expanded="false" />
+                <element signature="e#16607#16734#0" expanded="false" />
+                <element signature="e#16844#16895#0" expanded="false" />
+                <element signature="e#17211#17403#0" expanded="false" />
+                <element signature="e#17249#17397#0" expanded="false" />
+                <element signature="e#17285#17387#1" expanded="false" />
+                <element signature="e#17416#17477#0" expanded="false" />
+                <element signature="e#17482#21768#0" expanded="false" />
+                <element signature="e#17543#17568#0" expanded="false" />
+                <element signature="e#18380#18819#0" expanded="false" />
+                <element signature="e#18487#18808#0" expanded="false" />
+                <element signature="e#18830#18866#0" expanded="false" />
+                <element signature="e#19586#21551#0" expanded="false" />
+                <element signature="e#19660#20010#0" expanded="false" />
+                <element signature="e#19830#20010#0" expanded="false" />
+                <element signature="e#20055#20204#0" expanded="false" />
+                <element signature="e#20217#20362#0" expanded="false" />
+                <element signature="e#20552#20666#0" expanded="false" />
+                <element signature="e#20571#20665#0" expanded="false" />
+                <element signature="e#20743#20963#0" expanded="false" />
+                <element signature="e#20801#20948#0" expanded="false" />
+                <element signature="e#20820#20947#0" expanded="false" />
+                <element signature="e#21051#21211#0" expanded="false" />
+                <element signature="e#21080#21210#0" expanded="false" />
+                <element signature="e#21265#21294#0" expanded="false" />
+                <element signature="e#21569#21761#0" expanded="false" />
+                <element signature="e#21607#21755#0" expanded="false" />
+                <element signature="e#21643#21745#1" expanded="false" />
+                <element signature="e#21774#21816#0" expanded="false" />
+                <element signature="e#21821#24135#0" expanded="false" />
+                <element signature="e#22255#24128#0" expanded="false" />
+                <element signature="e#23530#23990#0" expanded="false" />
+                <element signature="e#23658#23801#0" expanded="false" />
+                <element signature="e#23696#23795#0" expanded="false" />
+                <element signature="e#23818#23990#0" expanded="false" />
+                <element signature="e#24002#24128#0" expanded="false" />
+                <element signature="e#24141#24193#0" expanded="false" />
+                <element signature="e#24198#25028#0" expanded="false" />
+                <element signature="e#24694#25021#0" expanded="false" />
+                <element signature="e#24751#24903#0" expanded="false" />
+                <element signature="e#24788#24898#0" expanded="false" />
+                <element signature="e#24914#25021#0" expanded="false" />
+                <element signature="e#25034#25069#0" expanded="false" />
+                <element signature="e#25074#28916#0" expanded="false" />
+                <element signature="e#25777#25967#0" expanded="false" />
+                <element signature="e#25843#25956#0" expanded="false" />
+                <element signature="e#25866#25955#0" expanded="false" />
+                <element signature="e#25977#26544#0" expanded="false" />
+                <element signature="e#26017#26534#0" expanded="false" />
+                <element signature="e#26349#26456#0" expanded="false" />
+                <element signature="e#26372#26455#0" expanded="false" />
+                <element signature="e#26473#26534#0" expanded="false" />
+                <element signature="e#26983#28908#0" expanded="false" />
+                <element signature="e#27852#28058#0" expanded="false" />
+                <element signature="e#28106#28208#0" expanded="false" />
+                <element signature="e#28299#28683#0" expanded="false" />
+                <element signature="e#28560#28683#0" expanded="false" />
+                <element signature="e#28693#28908#0" expanded="false" />
+                <element signature="e#28922#28957#0" expanded="false" />
+                <element signature="e#28962#29814#0" expanded="false" />
+                <element signature="e#29391#29808#0" expanded="false" />
+                <element signature="e#29620#29808#0" expanded="false" />
+                <element signature="e#29820#32944#0" expanded="false" />
+                <element signature="e#30232#32937#0" expanded="false" />
+                <element signature="e#30578#30735#0" expanded="false" />
+                <element signature="e#30784#31247#0" expanded="false" />
+                <element signature="e#30899#31232#0" expanded="false" />
+                <element signature="e#31304#32478#0" expanded="false" />
+                <element signature="e#31387#31544#0" expanded="false" />
+                <element signature="e#31561#31714#0" expanded="false" />
+                <element signature="e#31924#32050#0" expanded="false" />
+                <element signature="e#31943#32049#0" expanded="false" />
+                <element signature="e#32135#32375#0" expanded="false" />
+                <element signature="e#32197#32356#0" expanded="false" />
+                <element signature="e#32499#32754#0" expanded="false" />
+                <element signature="e#32537#32748#0" expanded="false" />
+                <element signature="e#32767#32937#0" expanded="false" />
+                <element signature="e#32792#32926#0" expanded="false" />
+                <element signature="e#32828#32920#0" expanded="false" />
+                <element signature="e#32950#33027#0" expanded="false" />
+                <element signature="e#33937#34319#0" expanded="false" />
+                <element signature="e#34532#34601#0" expanded="false" />
+                <element signature="e#35927#36323#0" expanded="false" />
+                <element signature="e#36516#36585#0" expanded="false" />
+                <element signature="e#37539#37633#0" expanded="false" />
+                <element signature="e#37705#37789#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserApiController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/UserApiController.php">
+      <file leaf-file-name="StarManagementApiController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/StarManagementApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="442" column="35" selection-start="17688" selection-end="17688" vertical-scroll-proportion="-2.0784314" vertical-offset="7187" max-vertical-offset="8279">
+            <state line="66" column="0" selection-start="2390" selection-end="2390" vertical-scroll-proportion="-25.153847" vertical-offset="468" max-vertical-offset="1649">
+              <folding>
+                <element signature="e#44#70#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AdminNewsApiController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminNewsApiController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="104" column="25" selection-start="3581" selection-end="3581" vertical-scroll-proportion="-7.5384617" vertical-offset="1130" max-vertical-offset="6052">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BookDealRepository.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="779" column="63" selection-start="31935" selection-end="31935" vertical-scroll-proportion="-5.54902" vertical-offset="12960" max-vertical-offset="14212">
               <folding />
             </state>
           </provider>
@@ -90,16 +255,34 @@
       <file leaf-file-name="AdminQuoteApiController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminQuoteApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="350" column="5" selection-start="9548" selection-end="14452" vertical-scroll-proportion="-22.692308" vertical-offset="4952" max-vertical-offset="5848">
+            <state line="233" column="19" selection-start="9038" selection-end="9038" vertical-scroll-proportion="-11.461538" vertical-offset="3255" max-vertical-offset="5848">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProfileType.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/ProfileType.php">
+      <file leaf-file-name="StarType.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/StarType.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="37" selection-start="917" selection-end="917" vertical-scroll-proportion="-13.730769" vertical-offset="0" max-vertical-offset="1020">
+            <state line="29" column="30" selection-start="920" selection-end="920" vertical-scroll-proportion="-11.423077" vertical-offset="60" max-vertical-offset="935">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StarType.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/StarType.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="6" selection-start="195" selection-end="195" vertical-scroll-proportion="-3.9230769" vertical-offset="0" max-vertical-offset="748">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StarRepository.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/StarRepository.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="42" selection-start="264" selection-end="293" vertical-scroll-proportion="-9.153846" vertical-offset="0" max-vertical-offset="731">
               <folding />
             </state>
           </provider>
@@ -118,13 +301,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/AppBundle/RealTime/SubscribeAndPush.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminQuoteApiController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/QuoteApiController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Newsletter.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Newsletter.orm.yml" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Form/NewsletterType.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/routing.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/CRUD/NewsletterController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/routing/newsletter.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Form/Type/NewsletterType.php" />
@@ -143,13 +319,10 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Contact.orm.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Form/Type/ContactType.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Contact.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/SecurityController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/NewsletterRepository.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/NewsletterApiController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/mail_templates/share_sell_page_mail_with_friends.html.twig" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/mail_templates/share_mail_with_friends.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_method_to_buyer_mail.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_method_to_seller_mail.html.twig" />
@@ -163,12 +336,22 @@
         <option value="$PROJECT_DIR$/app/Resources/views/mail_templates/student2studentBoard_method_to_buyer_mail.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/mail_templates/student2studentBoard_method_to_seller_mail.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/ContactManagementApiController.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/User.orm.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Form/Type/ProfileType.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/UserApiController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/UserRepository.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Star.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Star.orm.yml" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/User.orm.yml" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/CRUD/StarController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/routing/star.yml" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Form/Type/StarType.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Repository/StarRepository.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/StarManagementApiController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/ContactManagementApiController.php" />
       </list>
     </option>
   </component>
@@ -273,7 +456,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Student2StudentApi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AppBundle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -710,10 +923,10 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\views\mail_templates" />
-      <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\service_key" />
       <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\src\AppBundle\Form\Type" />
       <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\src\AppBundle\Controller\Api" />
+      <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\views\mail_templates" />
+      <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\app\Resources\service_key" />
       <recent name="D:\Projects\WampServerProjects\wamp\www\Student2StudentApi\src\AppBundle\RealTime" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -755,6 +968,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24635416" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -765,11 +979,10 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -791,99 +1004,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Handler/RegistrationFormHandler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="5" selection-start="1760" selection-end="1857" vertical-scroll-proportion="-29.076923" vertical-offset="332" max-vertical-offset="1207" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Handler/ResettingFormHandler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="5" selection-start="1810" selection-end="1810" vertical-scroll-proportion="0.92228574" vertical-offset="128" max-vertical-offset="1071" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/RegistrationController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="167" column="23" selection-start="5638" selection-end="5862" vertical-scroll-proportion="-8.019608" vertical-offset="2056" max-vertical-offset="4488" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/registration_confirmation.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="24" selection-start="2637" selection-end="2637" vertical-scroll-proportion="-7.1923075" vertical-offset="765" max-vertical-offset="2006" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Controller/ResettingController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="89" selection-start="1471" selection-end="1496" vertical-scroll-proportion="-15.5" vertical-offset="175" max-vertical-offset="3060" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/reset_mail.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="94" selection-start="2847" selection-end="2847" vertical-scroll-proportion="0.5198188" vertical-offset="561" max-vertical-offset="2210" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/AppKernel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="0" selection-start="1530" selection-end="1530" vertical-scroll-proportion="0.0" vertical-offset="697" max-vertical-offset="1105" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ResettingController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="87" selection-start="1249" selection-end="1324" vertical-scroll-proportion="0.0" vertical-offset="731" max-vertical-offset="3808" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/ktamas77/firebase-php/src/firebaseLib.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="13" selection-start="681" selection-end="681" vertical-scroll-proportion="0.0" vertical-offset="295" max-vertical-offset="4386" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/services.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="69" selection-start="2136" selection-end="2176" vertical-scroll-proportion="0.0" vertical-offset="748" max-vertical-offset="2754" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Contact.orm.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="23" selection-start="1237" selection-end="1237" vertical-scroll-proportion="0.73752713" vertical-offset="187" max-vertical-offset="1156" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Contact.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="13" selection-start="1300" selection-end="1300" vertical-scroll-proportion="-0.018973215" vertical-offset="1547" max-vertical-offset="5508" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/ContactType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="35" selection-start="1917" selection-end="1917" vertical-scroll-proportion="0.39285713" vertical-offset="566" max-vertical-offset="1462" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_bundle_routing.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="63" selection-start="75" selection-end="83" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="765" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Resources/config/security.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="922" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Upgrade.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.62541807" vertical-offset="561" max-vertical-offset="1836" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle/FOS/UserBundle/Resources/config/routing/security.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="63" selection-start="528" selection-end="533" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="29" selection-start="1328" selection-end="1328" vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="3995" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/config/security.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="45" column="40" selection-start="1658" selection-end="1666" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="1836" />
@@ -907,11 +1027,6 @@
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/NewsletterApiController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="157" column="37" selection-start="6006" selection-end="6006" vertical-scroll-proportion="0.0" vertical-offset="2436" max-vertical-offset="3332" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="146" column="56" selection-start="4977" selection-end="4997" vertical-scroll-proportion="0.0" vertical-offset="2482" max-vertical-offset="17442" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/share_mail_with_friends.html.twig">
@@ -969,39 +1084,24 @@
         <state line="29" column="41" selection-start="626" selection-end="626" vertical-scroll-proportion="0.26840317" vertical-offset="256" max-vertical-offset="2924" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="33" selection-start="1487" selection-end="1507" vertical-scroll-proportion="0.0" vertical-offset="526" max-vertical-offset="14127">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/student2studentBoard_method_to_buyer_mail.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="60" selection-start="1799" selection-end="1799" vertical-scroll-proportion="0.0" vertical-offset="918" max-vertical-offset="2856">
-          <folding />
-        </state>
+        <state line="54" column="60" selection-start="1799" selection-end="1799" vertical-scroll-proportion="0.0" vertical-offset="918" max-vertical-offset="2856" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/student2studentBoard_method_to_seller_mail.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="62" selection-start="2096" selection-end="2096" vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="3094">
-          <folding />
-        </state>
+        <state line="57" column="62" selection-start="2096" selection-end="2096" vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="3094" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookManagementApiController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="225" column="0" selection-start="6740" selection-end="6740" vertical-scroll-proportion="0.0" vertical-offset="3825" max-vertical-offset="16235">
-          <folding />
-        </state>
+        <state line="225" column="0" selection-start="6740" selection-end="6740" vertical-scroll-proportion="0.0" vertical-offset="3825" max-vertical-offset="16235" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="222" column="0" selection-start="11147" selection-end="11147" vertical-scroll-proportion="0.0" vertical-offset="3774" max-vertical-offset="6681">
-          <folding />
-        </state>
+        <state line="222" column="0" selection-start="11147" selection-end="11147" vertical-scroll-proportion="0.0" vertical-offset="3774" max-vertical-offset="6681" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/ContactRepository.php">
@@ -1009,48 +1109,14 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/ContactManagementApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="150" column="57" selection-start="7468" selection-end="7468" vertical-scroll-proportion="2.0215175" vertical-offset="408" max-vertical-offset="6562">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="109" column="0" selection-start="1577" selection-end="1577" vertical-scroll-proportion="146.31372" vertical-offset="9230" max-vertical-offset="11305">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/service_key/Student2Student-f6013ec68c99.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="29" selection-start="1999" selection-end="1999" vertical-scroll-proportion="0.11551529" vertical-offset="0" max-vertical-offset="883">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/User.orm.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="26" selection-start="2696" selection-end="2696" vertical-scroll-proportion="0.0" vertical-offset="1067" max-vertical-offset="2006">
-          <folding>
-            <marker date="1469431516112" expanded="true" signature="2760:2837" placeholder="options:" />
-          </folding>
-        </state>
+        <state line="6" column="29" selection-start="1999" selection-end="1999" vertical-scroll-proportion="0.11551529" vertical-offset="0" max-vertical-offset="883" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/ProfileType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="37" selection-start="917" selection-end="917" vertical-scroll-proportion="-13.730769" vertical-offset="0" max-vertical-offset="1020">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminQuoteApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="350" column="5" selection-start="9548" selection-end="14452" vertical-scroll-proportion="-22.692308" vertical-offset="4952" max-vertical-offset="5848">
-          <folding />
-        </state>
+        <state line="29" column="37" selection-start="917" selection-end="917" vertical-scroll-proportion="-13.730769" vertical-offset="0" max-vertical-offset="1020" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/UserApiController.php">
@@ -1060,24 +1126,356 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/UserRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="418" column="77" selection-start="12745" selection-end="12766" vertical-scroll-proportion="-12.64" vertical-offset="6790" max-vertical-offset="9554">
-          <folding />
-        </state>
+        <state line="213" column="125" selection-start="6238" selection-end="6238" vertical-scroll-proportion="-0.22962113" vertical-offset="3821" max-vertical-offset="4692" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminUserApiController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="62" selection-start="1567" selection-end="1597" vertical-scroll-proportion="-4.3333335" vertical-offset="357" max-vertical-offset="5015">
+        <state line="46" column="62" selection-start="1567" selection-end="1597" vertical-scroll-proportion="0.0" vertical-offset="782" max-vertical-offset="5219">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/UserRepository.php">
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/State.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="213" column="125" selection-start="6238" selection-end="6238" vertical-scroll-proportion="-0.22962113" vertical-offset="3821" max-vertical-offset="4692">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2686">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/WishList.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1530">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Book.orm.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1292">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/WishList.orm.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="4" selection-start="131" selection-end="447" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Star.orm.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="32" selection-start="437" selection-end="437" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
+          <folding>
+            <marker date="1469527476791" expanded="true" signature="-1:-1" placeholder="manyToOne:" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/User.orm.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="28" selection-start="927" selection-end="927" vertical-scroll-proportion="0.0" vertical-offset="200" max-vertical-offset="2074">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Star.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="5" selection-start="968" selection-end="968" vertical-scroll-proportion="-22.692308" vertical-offset="498" max-vertical-offset="1394">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="678" column="0" selection-start="11663" selection-end="11663" vertical-scroll-proportion="-20.745098" vertical-offset="10383" max-vertical-offset="11934">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/routing/referral.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="45" selection-start="66" selection-end="71" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/routing/star.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="45" selection-start="686" selection-end="686" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/routing.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="0" selection-start="1104" selection-end="1104" vertical-scroll-proportion="0.0" vertical-offset="268" max-vertical-offset="1190">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/CRUD/StarController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="7" selection-start="288" selection-end="288" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="3842">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/WishListRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="4" selection-start="263" selection-end="811" vertical-scroll-proportion="-9.153846" vertical-offset="0" max-vertical-offset="1683">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/routing/wishlist.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="922">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/WishListType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="935">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/StarType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="30" selection-start="920" selection-end="920" vertical-scroll-proportion="-11.423077" vertical-offset="60" max-vertical-offset="935">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/StarType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="6" selection-start="195" selection-end="195" vertical-scroll-proportion="-3.9230769" vertical-offset="0" max-vertical-offset="748">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminNewsApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="104" column="25" selection-start="3581" selection-end="3581" vertical-scroll-proportion="-7.5384617" vertical-offset="1130" max-vertical-offset="6052">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminQuoteApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="233" column="19" selection-start="9038" selection-end="9038" vertical-scroll-proportion="-11.461538" vertical-offset="3255" max-vertical-offset="5848">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/StarRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="42" selection-start="264" selection-end="293" vertical-scroll-proportion="-9.153846" vertical-offset="0" max-vertical-offset="731">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/StarManagementApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="0" selection-start="2390" selection-end="2390" vertical-scroll-proportion="-25.153847" vertical-offset="468" max-vertical-offset="1649">
+          <folding>
+            <element signature="e#44#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="779" column="63" selection-start="31935" selection-end="31935" vertical-scroll-proportion="-5.54902" vertical-offset="12960" max-vertical-offset="14212">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="333" column="90" selection-start="9815" selection-end="9841" vertical-scroll-proportion="-12.36" vertical-offset="5352" max-vertical-offset="9809">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/ContactManagementApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="361" column="88" selection-start="17171" selection-end="17171" vertical-scroll-proportion="-9.137255" vertical-offset="5314" max-vertical-offset="6613">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="954" column="101" selection-start="36907" selection-end="36907" vertical-scroll-proportion="1.2502857" vertical-offset="793" max-vertical-offset="3689">
+          <folding>
+            <element signature="e#969#1018#0" expanded="false" />
+            <element signature="e#1023#4253#0" expanded="false" />
+            <element signature="e#1095#1119#0" expanded="false" />
+            <element signature="e#1860#2299#0" expanded="false" />
+            <element signature="e#1967#2288#0" expanded="false" />
+            <element signature="e#2309#4036#0" expanded="false" />
+            <element signature="e#2385#2534#0" expanded="false" />
+            <element signature="e#2547#2692#0" expanded="false" />
+            <element signature="e#2706#2845#0" expanded="false" />
+            <element signature="e#2892#3052#0" expanded="false" />
+            <element signature="e#2921#3051#0" expanded="false" />
+            <element signature="e#3245#3359#0" expanded="false" />
+            <element signature="e#3264#3358#0" expanded="false" />
+            <element signature="e#3436#3656#0" expanded="false" />
+            <element signature="e#3494#3641#0" expanded="false" />
+            <element signature="e#3513#3640#0" expanded="false" />
+            <element signature="e#3749#3778#0" expanded="false" />
+            <element signature="e#4054#4246#0" expanded="false" />
+            <element signature="e#4092#4240#0" expanded="false" />
+            <element signature="e#4128#4230#1" expanded="false" />
+            <element signature="e#4259#4306#0" expanded="false" />
+            <element signature="e#4311#8173#0" expanded="false" />
+            <element signature="e#4386#4441#0" expanded="false" />
+            <element signature="e#5279#5718#0" expanded="false" />
+            <element signature="e#5386#5707#0" expanded="false" />
+            <element signature="e#5773#5834#0" expanded="false" />
+            <element signature="e#5843#6476#0" expanded="false" />
+            <element signature="e#5890#6465#0" expanded="false" />
+            <element signature="e#5951#6451#0" expanded="false" />
+            <element signature="e#6044#6262#0" expanded="false" />
+            <element signature="e#6525#7957#0" expanded="false" />
+            <element signature="e#6600#6749#0" expanded="false" />
+            <element signature="e#6762#6907#0" expanded="false" />
+            <element signature="e#7097#7211#0" expanded="false" />
+            <element signature="e#7116#7210#0" expanded="false" />
+            <element signature="e#7288#7508#0" expanded="false" />
+            <element signature="e#7346#7493#0" expanded="false" />
+            <element signature="e#7365#7492#0" expanded="false" />
+            <element signature="e#7603#7658#0" expanded="false" />
+            <element signature="e#7974#8166#0" expanded="false" />
+            <element signature="e#8012#8160#0" expanded="false" />
+            <element signature="e#8048#8150#1" expanded="false" />
+            <element signature="e#8179#8217#0" expanded="false" />
+            <element signature="e#8222#13065#0" expanded="false" />
+            <element signature="e#8618#13057#0" expanded="false" />
+            <element signature="e#8746#12830#0" expanded="false" />
+            <element signature="e#8924#12580#0" expanded="false" />
+            <element signature="e#9165#9560#0" expanded="false" />
+            <element signature="e#9436#9560#0" expanded="false" />
+            <element signature="e#11680#12276#0" expanded="false" />
+            <element signature="e#12078#12276#0" expanded="false" />
+            <element signature="e#12297#12580#0" expanded="false" />
+            <element signature="e#12594#12830#0" expanded="false" />
+            <element signature="e#12623#12815#0" expanded="false" />
+            <element signature="e#12841#13057#0" expanded="false" />
+            <element signature="e#12866#13046#0" expanded="false" />
+            <element signature="e#12901#13041#0" expanded="false" />
+            <element signature="e#13071#13142#0" expanded="false" />
+            <element signature="e#13147#17410#0" expanded="false" />
+            <element signature="e#13225#13276#0" expanded="false" />
+            <element signature="e#14128#14567#0" expanded="false" />
+            <element signature="e#14235#14556#0" expanded="false" />
+            <element signature="e#14622#14683#0" expanded="false" />
+            <element signature="e#14692#15324#0" expanded="false" />
+            <element signature="e#14739#15313#0" expanded="false" />
+            <element signature="e#14800#15299#0" expanded="false" />
+            <element signature="e#14893#15111#0" expanded="false" />
+            <element signature="e#15373#17194#0" expanded="false" />
+            <element signature="e#15447#15797#0" expanded="false" />
+            <element signature="e#15617#15797#0" expanded="false" />
+            <element signature="e#15842#15991#0" expanded="false" />
+            <element signature="e#16004#16149#0" expanded="false" />
+            <element signature="e#16339#16453#0" expanded="false" />
+            <element signature="e#16358#16452#0" expanded="false" />
+            <element signature="e#16530#16750#0" expanded="false" />
+            <element signature="e#16588#16735#0" expanded="false" />
+            <element signature="e#16607#16734#0" expanded="false" />
+            <element signature="e#16844#16895#0" expanded="false" />
+            <element signature="e#17211#17403#0" expanded="false" />
+            <element signature="e#17249#17397#0" expanded="false" />
+            <element signature="e#17285#17387#1" expanded="false" />
+            <element signature="e#17416#17477#0" expanded="false" />
+            <element signature="e#17482#21768#0" expanded="false" />
+            <element signature="e#17543#17568#0" expanded="false" />
+            <element signature="e#18380#18819#0" expanded="false" />
+            <element signature="e#18487#18808#0" expanded="false" />
+            <element signature="e#18830#18866#0" expanded="false" />
+            <element signature="e#19586#21551#0" expanded="false" />
+            <element signature="e#19660#20010#0" expanded="false" />
+            <element signature="e#19830#20010#0" expanded="false" />
+            <element signature="e#20055#20204#0" expanded="false" />
+            <element signature="e#20217#20362#0" expanded="false" />
+            <element signature="e#20552#20666#0" expanded="false" />
+            <element signature="e#20571#20665#0" expanded="false" />
+            <element signature="e#20743#20963#0" expanded="false" />
+            <element signature="e#20801#20948#0" expanded="false" />
+            <element signature="e#20820#20947#0" expanded="false" />
+            <element signature="e#21051#21211#0" expanded="false" />
+            <element signature="e#21080#21210#0" expanded="false" />
+            <element signature="e#21265#21294#0" expanded="false" />
+            <element signature="e#21569#21761#0" expanded="false" />
+            <element signature="e#21607#21755#0" expanded="false" />
+            <element signature="e#21643#21745#1" expanded="false" />
+            <element signature="e#21774#21816#0" expanded="false" />
+            <element signature="e#21821#24135#0" expanded="false" />
+            <element signature="e#22255#24128#0" expanded="false" />
+            <element signature="e#23530#23990#0" expanded="false" />
+            <element signature="e#23658#23801#0" expanded="false" />
+            <element signature="e#23696#23795#0" expanded="false" />
+            <element signature="e#23818#23990#0" expanded="false" />
+            <element signature="e#24002#24128#0" expanded="false" />
+            <element signature="e#24141#24193#0" expanded="false" />
+            <element signature="e#24198#25028#0" expanded="false" />
+            <element signature="e#24694#25021#0" expanded="false" />
+            <element signature="e#24751#24903#0" expanded="false" />
+            <element signature="e#24788#24898#0" expanded="false" />
+            <element signature="e#24914#25021#0" expanded="false" />
+            <element signature="e#25034#25069#0" expanded="false" />
+            <element signature="e#25074#28916#0" expanded="false" />
+            <element signature="e#25777#25967#0" expanded="false" />
+            <element signature="e#25843#25956#0" expanded="false" />
+            <element signature="e#25866#25955#0" expanded="false" />
+            <element signature="e#25977#26544#0" expanded="false" />
+            <element signature="e#26017#26534#0" expanded="false" />
+            <element signature="e#26349#26456#0" expanded="false" />
+            <element signature="e#26372#26455#0" expanded="false" />
+            <element signature="e#26473#26534#0" expanded="false" />
+            <element signature="e#26983#28908#0" expanded="false" />
+            <element signature="e#27852#28058#0" expanded="false" />
+            <element signature="e#28106#28208#0" expanded="false" />
+            <element signature="e#28299#28683#0" expanded="false" />
+            <element signature="e#28560#28683#0" expanded="false" />
+            <element signature="e#28693#28908#0" expanded="false" />
+            <element signature="e#28922#28957#0" expanded="false" />
+            <element signature="e#28962#29814#0" expanded="false" />
+            <element signature="e#29391#29808#0" expanded="false" />
+            <element signature="e#29620#29808#0" expanded="false" />
+            <element signature="e#29820#32944#0" expanded="false" />
+            <element signature="e#30232#32937#0" expanded="false" />
+            <element signature="e#30578#30735#0" expanded="false" />
+            <element signature="e#30784#31247#0" expanded="false" />
+            <element signature="e#30899#31232#0" expanded="false" />
+            <element signature="e#31304#32478#0" expanded="false" />
+            <element signature="e#31387#31544#0" expanded="false" />
+            <element signature="e#31561#31714#0" expanded="false" />
+            <element signature="e#31924#32050#0" expanded="false" />
+            <element signature="e#31943#32049#0" expanded="false" />
+            <element signature="e#32135#32375#0" expanded="false" />
+            <element signature="e#32197#32356#0" expanded="false" />
+            <element signature="e#32499#32754#0" expanded="false" />
+            <element signature="e#32537#32748#0" expanded="false" />
+            <element signature="e#32767#32937#0" expanded="false" />
+            <element signature="e#32792#32926#0" expanded="false" />
+            <element signature="e#32828#32920#0" expanded="false" />
+            <element signature="e#32950#33027#0" expanded="false" />
+            <element signature="e#33937#34319#0" expanded="false" />
+            <element signature="e#34532#34601#0" expanded="false" />
+            <element signature="e#35927#36323#0" expanded="false" />
+            <element signature="e#36516#36585#0" expanded="false" />
+            <element signature="e#37539#37633#0" expanded="false" />
+            <element signature="e#37705#37789#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

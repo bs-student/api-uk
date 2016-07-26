@@ -32,6 +32,10 @@ AppBundle\Entity\User:
           targetEntity: Contact
           mappedBy: buyer
           cascade: [persist,remove]
+        stars:
+          targetEntity: Star
+          mappedBy: user
+          cascade: [persist,remove]
 
     id:
         id:

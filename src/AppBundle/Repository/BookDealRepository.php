@@ -452,10 +452,12 @@ class BookDealRepository extends EntityRepository
                     c.buyerNickName,
                     c.buyerEmail,
                     IDENTITY(c.bookDeal) AS bookDealId,
-                    IDENTITY(c.buyer) AS buyerId
+                    IDENTITY(c.buyer) AS buyerId,
+                    u.profilePicture
                     ')
                 ->from('AppBundle:Contact', 'c')
                 ->innerJoin('AppBundle:BookDeal', 'bd', 'WITH', 'bd.id = c.bookDeal')
+                ->innerJoin('AppBundle:User', 'u', 'WITH', 'u.id = c.buyer')
 
             ;
 //            ->groupBy('c.bookIsbn10');
@@ -717,6 +719,7 @@ class BookDealRepository extends EntityRepository
                       b.bookBinding,
                       b.bookImage,
                       u.username as sellerUsername,
+
                       bd.bookContactHomeNumber as sellerHomeNumber,
                       bd.bookContactCellNumber as sellerCellNumber,
                       bd.bookContactEmail as sellerEmail,
@@ -774,6 +777,8 @@ class BookDealRepository extends EntityRepository
                       b.bookBinding,
                       b.bookImage,
                       u.username as sellerUsername,
+                      u.profilePicture as sellerProfilePicture,
+
                       bd.bookContactHomeNumber as sellerHomeNumber,
                       bd.bookContactCellNumber as sellerCellNumber,
                       bd.bookContactEmail as sellerEmail,

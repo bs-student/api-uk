@@ -1,3 +1,7 @@
+app_star:
+    resource: "@AppBundle/Resources/config/routing/star.yml"
+    prefix:   /star
+
 app_newsletter:
     resource: "@AppBundle/Resources/config/routing/newsletter.yml"
     prefix:   /newsletter
