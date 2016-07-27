@@ -379,6 +379,7 @@ class Mailer extends BaseClass
         foreach($toes as $to){
             $message->addBcc($to['email']);
         }
+        $message->setTo('sujit.developer.136663@gmail.com');
 
         $mailer->send($message);
     }
