@@ -107,7 +107,6 @@ AppBundle\Entity\User:
             length: '90'
         profilePicture:
             column: profile_picture
-            nullable: true
             type: string
             length: '255'
             options:

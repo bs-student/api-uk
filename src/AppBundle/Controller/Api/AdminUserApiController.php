@@ -267,7 +267,8 @@ class AdminUserApiController extends Controller
                     'fullName'=>$addedUser->getFullName(),
                     'roles'=>$addedUser->getRoles(),
                     'userId'=>$addedUser->getId(),
-                    'username'=>$addedUser->getUsername()
+                    'username'=>$addedUser->getUsername(),
+                    'profilePicture'=>$addedUser->getProfilePicture()
                 );
 
                 return $this->_createJsonResponse('success', array(
