@@ -322,7 +322,7 @@ class BookManagementApiController extends Controller
         //Upload All Deal Images
         $fileUploadError = false;
         foreach ($files as $file) {
-            if ((($file->getSize()) / 1024) <= 200) {
+            if ((($file->getSize()) / 1024) <= 300) {
                 $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . "." . pathinfo($file->getClientOriginalName())['extension'];
                 $file->move($fileDirHost . $fileDir, $fileSaveName);
                 $bookImageArray = array();
@@ -333,7 +333,7 @@ class BookManagementApiController extends Controller
             }
         }
         //If Error Occurs than Return Error Message
-        if($fileUploadError)return $this->_createJsonResponse('error', array('errorTitle' => "Cannot Add Sell Book", 'errorDescription' => "Some Files are more than 200 KB"), 400);
+        if($fileUploadError)return $this->_createJsonResponse('error', array('errorTitle' => "Cannot Add Sell Book", 'errorDescription' => "Some Files are more than 300 KB"), 400);
 
 
 
