@@ -127,7 +127,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
 
 
-    function getNonApprovedUserSearchResult($searchQuery, $pageNumber, $pageSize,$sort){
+    function getNonApprovedUserSearchResult($searchQuery,$emailQuery , $pageNumber, $pageSize,$sort){
         $firstResult = ($pageNumber - 1) * $pageSize;
         $qb= $this->getEntityManager()
             ->createQueryBuilder('u')
@@ -136,9 +136,11 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
             ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
             ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.email LIKE :emailQuery ')
             ->andwhere('u.roles NOT LIKE :role ')
             ->andwhere("u.adminApproved= 'No'")
             ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('emailQuery', '%' . $emailQuery . '%')
             ->setParameter('role','%ROLE_ADMIN_USER%')
             ->setMaxResults($pageSize)
             ->setFirstResult($firstResult);
@@ -153,14 +155,16 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    public function getNonApprovedUserSearchNumber($searchQuery)
+    public function getNonApprovedUserSearchNumber($searchQuery,$emailQuery)
     {
         return $this->getEntityManager()->createQueryBuilder('u')
             ->select('COUNT(u)')
             ->from('AppBundle:User', 'u')
             ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.email LIKE :emailQuery ')
             ->andwhere('u.roles NOT LIKE :role ')
             ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('emailQuery', '%' . $emailQuery . '%')
             ->setParameter('role','%ROLE_ADMIN_USER%')
             ->andwhere("u.adminApproved= 'No'")
             ->getQuery()
@@ -169,16 +173,17 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
 
 
-    function getAdminUserSearchResult($searchQuery, $pageNumber, $pageSize,$sort){
+    function getAdminUserSearchResult($searchQuery,$emailQuery, $pageNumber, $pageSize,$sort){
         $firstResult = ($pageNumber - 1) * $pageSize;
         $qb= $this->getEntityManager()
             ->createQueryBuilder('u')
             ->select('u.id as userId, u.username,u.email,u.fullName,u.enabled,u.roles,u.profilePicture')
             ->from('AppBundle:User', 'u')
-
+            ->andwhere('u.email LIKE :emailQuery ')
             ->andwhere('u.username LIKE :query ')
             ->andwhere('u.roles LIKE :role ')
             ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('emailQuery', '%' . $emailQuery . '%')
             ->setParameter('role','%ROLE_ADMIN_USER%')
             ->setMaxResults($pageSize)
             ->setFirstResult($firstResult);
@@ -193,21 +198,23 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    public function getAdminUserSearchNumber($searchQuery)
+    public function getAdminUserSearchNumber($searchQuery,$emailQuery)
     {
         return $this->getEntityManager()->createQueryBuilder('u')
             ->select('COUNT(u)')
             ->from('AppBundle:User', 'u')
             ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.email LIKE :emailQuery ')
             ->andwhere('u.roles LIKE :role ')
             ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('emailQuery', '%' . $emailQuery . '%')
             ->setParameter('role','%ROLE_ADMIN_USER%')
             ->getQuery()
             ->getSingleScalarResult();
     }
 
 
-    function getApprovedUserSearchResult($searchQuery, $pageNumber, $pageSize,$sort){
+    function getApprovedUserSearchResult($searchQuery,$emailQuery, $pageNumber, $pageSize,$sort){
         $firstResult = ($pageNumber - 1) * $pageSize;
         $qb= $this->getEntityManager()
             ->createQueryBuilder('u')
@@ -216,9 +223,11 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
             ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
             ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.email LIKE :emailQuery ')
             ->andwhere('u.roles NOT LIKE :role ')
             ->andwhere("u.adminApproved= 'Yes'")
             ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('emailQuery', '%' . $emailQuery . '%')
             ->setParameter('role','%ROLE_ADMIN_USER%')
             ->setMaxResults($pageSize)
             ->setFirstResult($firstResult);
@@ -232,14 +241,16 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    public function getApprovedUserSearchNumber($searchQuery)
+    public function getApprovedUserSearchNumber($searchQuery,$emailQuery)
     {
         return $this->getEntityManager()->createQueryBuilder('u')
             ->select('COUNT(u)')
             ->from('AppBundle:User', 'u')
             ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.email LIKE :emailQuery ')
             ->andwhere('u.roles NOT LIKE :role ')
             ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('emailQuery', '%' . $emailQuery . '%')
             ->setParameter('role','%ROLE_ADMIN_USER%')
             ->andwhere("u.adminApproved= 'Yes'")
             ->getQuery()

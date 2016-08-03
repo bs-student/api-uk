@@ -38,13 +38,14 @@ class AdminUserApiController extends Controller
 
             $pageSize = $data["pageSize"];
             $searchQuery = filter_var($data["searchQuery"], FILTER_SANITIZE_STRING);
+            $emailQuery = filter_var($data["emailQuery"], FILTER_SANITIZE_STRING);
             $pageNumber = $data["pageNumber"];
             $sort = $data["sort"];
 
 
 
-            $totalNumber = $userRepo->getNonApprovedUserSearchNumber($searchQuery);
-            $users = $userRepo->getNonApprovedUserSearchResult($searchQuery, $pageNumber, $pageSize,$sort);
+            $totalNumber = $userRepo->getNonApprovedUserSearchNumber($searchQuery,$emailQuery);
+            $users = $userRepo->getNonApprovedUserSearchResult($searchQuery,$emailQuery, $pageNumber, $pageSize,$sort);
 
             $data = array(
                 'totalUsers' => $users ,
@@ -77,13 +78,14 @@ class AdminUserApiController extends Controller
 
             $pageSize = $data["pageSize"];
             $searchQuery = filter_var($data["searchQuery"], FILTER_SANITIZE_STRING);
+            $emailQuery = filter_var($data["emailQuery"], FILTER_SANITIZE_STRING);
             $pageNumber = $data["pageNumber"];
             $sort = $data["sort"];
 
 
 
-            $totalNumber = $userRepo->getApprovedUserSearchNumber($searchQuery);
-            $users = $userRepo->getApprovedUserSearchResult($searchQuery, $pageNumber, $pageSize,$sort);
+            $totalNumber = $userRepo->getApprovedUserSearchNumber($searchQuery,$emailQuery);
+            $users = $userRepo->getApprovedUserSearchResult($searchQuery,$emailQuery, $pageNumber, $pageSize,$sort);
 
 
             $data = array(
@@ -117,12 +119,13 @@ class AdminUserApiController extends Controller
 
             $pageSize = $data["pageSize"];
             $searchQuery = filter_var($data["searchQuery"], FILTER_SANITIZE_STRING);
+            $emailQuery = filter_var($data["emailQuery"], FILTER_SANITIZE_STRING);
             $pageNumber = $data["pageNumber"];
             $sort = $data["sort"];
 
 
-            $totalNumber = $userRepo->getAdminUserSearchNumber($searchQuery);
-            $users = $userRepo->getAdminUserSearchResult($searchQuery, $pageNumber, $pageSize,$sort);
+            $totalNumber = $userRepo->getAdminUserSearchNumber($searchQuery,$emailQuery);
+            $users = $userRepo->getAdminUserSearchResult($searchQuery,$emailQuery, $pageNumber, $pageSize,$sort);
 
             $data = array(
                 'totalUsers' => $users ,
