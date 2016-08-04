@@ -1005,6 +1005,65 @@ class BookDealManagementApiController extends Controller
 
     }
 
+    /**
+     * Get All Activated Selling and Contacted Book Deals of User
+     */
+    public function getAllDataForNewContactInMessageBoardAction(Request $request){
+
+        $userEntity = $this->container->get('security.token_storage')->getToken()->getUser();
+
+        //GET Request Data
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+
+        $em = $this->getDoctrine()->getManager();
+        $userRepo = $em->getRepository('AppBundle:User');
+        $bookDealRepo = $em->getRepository('AppBundle:BookDeal');
+        $contactData = $bookDealRepo->getAllDataForNewContactInMessageBoard($data['contactId'],$userEntity->getId());
+
+        for ($i = 0; $i < count($contactData); $i++) {
+            //Setting deal type selling or contacted
+            $contactData[$i]['dealType']="sellingDeal";
+
+            //Setting Subtitle
+            $contactData[$i]['contacts'] = array();
+            if (strpos($contactData[$i]['bookTitle'], ":")) {
+                $contactData[$i]['bookSubTitle'] = substr($contactData[$i]['bookTitle'], strpos($contactData[$i]['bookTitle'], ":") + 2);
+                $contactData[$i]['bookTitle'] = substr($contactData[$i]['bookTitle'], 0, strpos($contactData[$i]['bookTitle'], ":"));
+            }
+        }
+
+        //Getting Contacts For Selling Book Deals
+        $contacts = $bookDealRepo->getContactsOfBookDeals($contactData);
+
+        //Adding Contacts according to deals
+        if($contacts==null){
+            $contacts=array();
+        }
+        foreach ($contacts as $contact) {
+            for ($i = 0; $i < count($contactData); $i++) {
+
+                if ((int)$contact['bookDealId'] == (int)$contactData[$i]['bookDealId']) {
+
+                    if ($contact['buyerNickName'] == null) {
+                        $user = $userRepo->findById((int)$contact['buyerId']);
+                        $contact['contactName'] = $user[0]->getUsername();
+                    }
+                    $contact['contactEmail'] = $contact['buyerEmail'];
+                    $date = $contact['contactDateTime']->format('H:i d M Y');
+
+                    $contact['contactDateTimeFormatted']=$date;
+
+                    array_push($contactData[$i]['contacts'], $contact);
+                }
+            }
+        }
+
+        return $this->_createJsonResponse('success',array('successData'=>$contactData),200);
+
+    }
+
+
     // New Image  Resize function
     public function _resize($newWidth , $newHeight, $targetFile, $originalFile) {
 

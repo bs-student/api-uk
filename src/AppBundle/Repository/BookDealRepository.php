@@ -823,6 +823,54 @@ class BookDealRepository extends EntityRepository
             ->getResult();
     }
 
+    public function getAllDataForNewContactInMessageBoard($contactId,$userId){
+        return $this->getEntityManager()
+            ->createQueryBuilder('b')
+            ->select("b.id as bookId,
+                      b.bookIsbn10 as bookIsbn,
+                      b.bookIsbn13 as bookIsbn13,
+                      b.bookTitle,
+                      b.bookDirectorAuthorArtist,
+                      b.bookEdition,
+                      b.bookPublisher,
+                      b.bookPublishDate,
+                      b.bookBinding,
+                      b.bookImage,
+
+
+
+                      bd.bookContactHomeNumber as sellerHomeNumber,
+                      bd.bookContactCellNumber as sellerCellNumber,
+                      bd.bookContactEmail as sellerEmail,
+                      bd.id as bookDealId,
+                      bd.bookPriceSell,
+                      bd.bookCondition,
+                      bd.bookIsHighlighted,
+                      bd.bookHasNotes,
+                      bd.bookComment,
+                      bd.bookContactMethod,
+                      bd.bookPaymentMethodCaShOnExchange,
+                      bd.bookPaymentMethodCheque,
+                      bd.bookIsAvailablePublic,
+                      bd.bookAvailableDate,
+
+
+                      con.id as contactId,
+                      con.contactDateTime,
+                      con.buyerHomePhone,
+                      con.buyerCellPhone")
+
+            ->from('AppBundle:Book', 'b')
+            ->innerJoin('AppBundle:BookDeal', 'bd', 'WITH', 'b.id = bd.book')
+            ->innerJoin('AppBundle:Contact', 'con', 'WITH', 'con.bookDeal = bd.id')
+            ->andwhere('con.id = :contactId')
+            ->andwhere('bd.seller = :userId')
+            ->setParameter('contactId', $contactId)
+            ->setParameter('userId', $userId)
+
+            ->getQuery()
+            ->getResult();
+    }
 
 
 

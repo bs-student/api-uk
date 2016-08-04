@@ -391,6 +391,10 @@ get_all_activated_selling_and_contacted_book_of_user:
     defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getAllActivatedSellingAndContactedBookOfUser}
     methods: [POST]
 
+get_all_data_for_new_contact_in_message_board:
+    path: /api/star/get_all_data_for_new_contact_in_message_board
+    defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getAllDataForNewContactInMessageBoard}
+    methods: [POST]
 
 
 
