@@ -67,17 +67,33 @@
                                 </tr>
                                 <tr>
                                     <td align="left"  style="font-family:'Open Sans';">Email : </td>
-                                    <td  style="font-family:'Open Sans';">{{ buyerInfo.buyerEmail }}</td>
+                                    {% if buyerInfo.buyerEmail is empty %}
+                                        <td style="font-family:'Open Sans';">Not provided by the Buyer</td>
+                                    {% else %}
+                                        <td  style="font-family:'Open Sans';">{{ buyerInfo.buyerEmail }}</td>
+                                    {% endif %}
+
 
                                 </tr>
                                 <tr>
                                     <td  style="font-family:'Open Sans';">Cell Phone : </td>
-                                    <td  style="font-family:'Open Sans';">{{ buyerInfo.buyerCellPhone }}</td>
+                                    {% if buyerInfo.buyerCellPhone is empty %}
+                                        <td style="font-family:'Open Sans';">Not provided by the Buyer</td>
+                                    {% else %}
+                                        <td  style="font-family:'Open Sans';">{{ buyerInfo.buyerCellPhone }}</td>
+                                    {% endif %}
+
+
 
                                 </tr>
                                 <tr>
                                     <td  style="font-family:'Open Sans';">Home Phone : </td>
-                                    <td  style="font-family:'Open Sans';">{{ buyerInfo.buyerHomePhone }}</td>
+                                    {% if buyerInfo.buyerHomePhone is empty %}
+                                        <td style="font-family:'Open Sans';">Not provided by the Buyer</td>
+                                    {% else %}
+                                        <td  style="font-family:'Open Sans';">{{ buyerInfo.buyerHomePhone }}</td>
+                                    {% endif %}
+
 
                                 </tr>
 
