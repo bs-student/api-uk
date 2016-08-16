@@ -143,6 +143,11 @@ update_user_profile:
     defaults:  {_controller: AppBundle:Api/UserApi:updateUserProfile}
     methods: [POST]
 
+update_user_email_notification_status:
+    path: /api/update_user_email_notification_status
+    defaults:  {_controller: AppBundle:Api/UserApi:updateUserEmailNotification}
+    methods: [POST]
+
 
 #BookManagementApiController
 

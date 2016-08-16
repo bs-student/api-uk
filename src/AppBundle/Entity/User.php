@@ -127,6 +127,7 @@ class User extends BaseUser
 
     private $stars;
 
+    private $emailNotification;
     /**
      * Get id
      *
@@ -697,5 +698,28 @@ class User extends BaseUser
     public function getStars()
     {
         return $this->stars;
+    }
+
+    /**
+     * Set emailNotification
+     *
+     * @param string $emailNotification
+     * @return User
+     */
+    public function setEmailNotification($emailNotification)
+    {
+        $this->emailNotification = $emailNotification;
+
+        return $this;
+    }
+
+    /**
+     * Get emailNotification
+     *
+     * @return string 
+     */
+    public function getEmailNotification()
+    {
+        return $this->emailNotification;
     }
 }

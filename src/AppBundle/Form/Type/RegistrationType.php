@@ -109,6 +109,7 @@ class RegistrationType extends AbstractType
         ));
         $builder->add('adminApproved','text');
         $builder->add('profilePicture','text');
+        $builder->add('emailNotification','text');
     }
 
     public function getParent()

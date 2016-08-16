@@ -111,5 +111,11 @@ AppBundle\Entity\User:
             length: '255'
             options:
                 default: '/userImages/deafault_profile_picture.png'
+        emailNotification:
+            nullable: false
+            type: string
+            length: '5'
+            options:
+                default: 'On'
 
     lifecycleCallbacks: {  }

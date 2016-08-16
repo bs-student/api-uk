@@ -11,24 +11,12 @@ use Symfony\Component\Validator\Constraints\Email;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProfileType extends AbstractType
+class EmailNotificationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('campus', 'entity', array(
-            'class' => "AppBundle:Campus",
-            'property' => 'campusName',
-            'constraints' => array(
-                new NotBlank(),
-            )
-        ));
-
-        $builder->add('standardHomePhone','text');
-        $builder->add('standardCellPhone','text');
-        $builder->add('standardEmail','text');
-        $builder->add('profilePicture','text');
-        $builder->add('fullName','text',array(
+        $builder->add('emailNotification','text',array(
             'constraints' => array(
                 new NotBlank(),
             )
@@ -39,7 +27,7 @@ class ProfileType extends AbstractType
 
     public function getName()
     {
-        return 'app_created_user_update';
+        return 'app_email_notification_update';
     }
 
 

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Api;
 
+use AppBundle\Form\Type\EmailNotificationType;
 use AppBundle\Form\Type\ProfileType;
 use AppBundle\Validator\Constraints\UsernameConstraints;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -148,6 +149,7 @@ class UserApiController extends Controller
                 'standardEmail' => $user->getStandardEmail(),
                 'role'=>$user->getRoles(),
                 'profilePicture' => $user->getProfilePicture(),
+                'emailNotification'=>$user->getEmailNotification(),
             );
 
             return $this->_createJsonResponse('success',array(
@@ -333,6 +335,7 @@ class UserApiController extends Controller
                 $fileUploadError = true;
             }
         }
+
         //If Error Occurs than Return Error Message
         if($fileUploadError)return $this->_createJsonResponse('error', array('errorTitle' => "Cannot Update Profile", 'errorDescription' => "Image is more than 200 KB"), 400);
 
@@ -347,7 +350,9 @@ class UserApiController extends Controller
         if ($user != null) {
             $updateForm = $this->createForm(new ProfileType(), $user);
 
-
+            if(count($files)==0){
+                $data['profilePicture']=$user->getProfilePicture();
+            }
             $updateForm->submit($data);
 
 
@@ -367,6 +372,7 @@ class UserApiController extends Controller
                     'standardCellPhone'=>$user->getStandardCellPhone(),
                     'standardEmail'=>$user->getStandardEmail(),
                     'profilePicture'=>$user->getProfilePicture(),
+                    'emailNotification'=>$user->getEmailNotification(),
 
                 );
 
@@ -380,6 +386,60 @@ class UserApiController extends Controller
             }
         }
     }
+
+    /**
+     * Email Notification Update
+     */
+    public function updateUserEmailNotificationAction(Request $request){
+
+
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+
+
+
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+
+        if ($user != null) {
+            $updateForm = $this->createForm(new EmailNotificationType(), $user);
+
+            if(!strcmp('On',$data['emailNotification']) || !strcmp('Off',$data['emailNotification']) ){
+                $updateForm->submit($data);
+
+
+                if ($updateForm->isValid()) {
+                    $em->persist($user);
+                    $em->flush();
+
+                    $userData=array(
+                        'emailNotification'=>$user->getEmailNotification()
+                    );
+                    if(!strcmp("On",$user->getEmailNotification())){
+                        return $this->_createJsonResponse('success', array('successTitle' => 'Email Notification is successfully turned on','successData'=>$userData),200);
+                    }elseif(!strcmp("Off",$user->getEmailNotification())){
+                        return $this->_createJsonResponse('success', array('successTitle' => 'Email Notification is successfully turned off','successData'=>$userData),200);
+                    }
+
+                } else {
+                    return $this->_createJsonResponse('error', array(
+                        'errorTitle' => 'Email Notification Status is not updated',
+                        'errorDescription' => 'Sorry. Please check the form and submit again.',
+                        'errorData'=>$updateForm
+                    ),400);
+                }
+            }else {
+                return $this->_createJsonResponse('error', array(
+                    'errorTitle' => 'Email Notification Status is not updated',
+                    'errorDescription' => 'Sorry. Please check the form and submit again.',
+                    'errorData'=>$updateForm
+                ),400);
+            }
+
+        }
+    }
+
 
 //Image Resize Function
     function _smart_resize_image($file,

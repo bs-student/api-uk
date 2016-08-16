@@ -28,6 +28,7 @@ class RegistrationFormHandler extends BaseHandler
 
         $submittedData = json_decode($this->request->getContent(),true);
         $submittedData['profilePicture']="/userImages/deafault_profile_picture.png";
+        $submittedData['emailNotification']="Yes";
         $submittedData['plainPassword']=array(
             'first'=>$submittedData['new_password'],
             'second'=>$submittedData['confirm_password']
