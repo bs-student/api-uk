@@ -78,7 +78,8 @@ class ContactManagementApiController extends Controller
                                 $message="We have sent ".$bookDeals[0]->getSeller()->getUsername()." your contact information. ".$bookDeals[0]->getSeller()->getUsername()." will contact you as soon as possible.";
                                 $buyerInfo=array(
                                     'buyerNickName'=>$this->get('security.token_storage')->getToken()->getUser()->getUsername(),
-                                    'buyerEmail'=>$data['contact']['buyerEmail']
+                                    'buyerEmail'=>$data['contact']['buyerEmail'],
+                                    'buyerEntity'=>$this->get('security.token_storage')->getToken()->getUser()
                                 );
                                 if(array_key_exists('buyerCellPhone',$data['contact'])){
                                     $buyerInfo['buyerCellPhone']=$data['contact']['buyerCellPhone'];
@@ -95,7 +96,8 @@ class ContactManagementApiController extends Controller
                                 $message="You have successfully contacted ".$bookDeals[0]->getSeller()->getUsername().". Please go to message board to view replies.";
                                 $buyerInfo=array(
                                     'buyerNickName'=>$this->get('security.token_storage')->getToken()->getUser()->getUsername(),
-                                    'buyerEmail'=>$this->get('security.token_storage')->getToken()->getUser()->getEmail()
+                                    'buyerEmail'=>$this->get('security.token_storage')->getToken()->getUser()->getEmail(),
+                                    'buyerEntity'=>$this->get('security.token_storage')->getToken()->getUser()
                                 );
                             }
                             //Send Proper Mails to Buyer & Seller
