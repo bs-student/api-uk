@@ -71,7 +71,8 @@ class ContactManagementApiController extends Controller
                                 $message="We have sent you ".$bookDeals[0]->getSeller()->getUsername()."'s contact information over your mail. Please contact ".$bookDeals[0]->getSeller()->getUsername();
                                 $buyerInfo=array(
                                     'buyerNickName'=>$this->get('security.token_storage')->getToken()->getUser()->getUsername(),
-                                    'buyerEmail'=>$data['contact']['buyerEmail']
+                                    'buyerEmail'=>$data['contact']['buyerEmail'],
+                                    'buyerEntity'=>$this->get('security.token_storage')->getToken()->getUser()
                                 );
                             }elseif(!strcmp($bookDeals[0]->getBookContactMethod(),"sellerToBuyer")){
                                 $message="We have sent ".$bookDeals[0]->getSeller()->getUsername()." your contact information. ".$bookDeals[0]->getSeller()->getUsername()." will contact you as soon as possible.";
