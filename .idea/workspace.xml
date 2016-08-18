@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="992c5a8c-cd64-41e9-9383-a47a89a328fa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php" afterPath="$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_method_to_buyer_mail.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_method_to_buyer_mail.html.twig" />
     </list>
     <ignored path="Student2StudentApi.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,15 +25,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="User.orm.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/User.orm.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="100" column="24" selection-start="2554" selection-end="2554" vertical-scroll-proportion="0.0" vertical-offset="1258" max-vertical-offset="2159">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="app_routing.yml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml">
           <provider selected="true" editor-type-id="text-editor">
@@ -44,19 +34,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContactManagementApiController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/ContactManagementApiController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="299" column="75" selection-start="14334" selection-end="14362" vertical-scroll-proportion="0.0" vertical-offset="5083" max-vertical-offset="6970">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Mailer.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Mailer.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="209" column="44" selection-start="10487" selection-end="10512" vertical-scroll-proportion="-0.13805105" vertical-offset="3553" max-vertical-offset="7174">
+            <state line="107" column="37" selection-start="5009" selection-end="5021" vertical-scroll-proportion="-16.692308" vertical-offset="1266" max-vertical-offset="8330">
               <folding>
                 <element signature="e#290#316#0" expanded="true" />
               </folding>
@@ -64,47 +45,35 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserApiController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/UserApiController.php">
+      <file leaf-file-name="buyer_to_seller_method_to_seller_mail.html.twig" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_method_to_seller_mail.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="414" column="0" selection-start="15486" selection-end="15486" vertical-scroll-proportion="0.0" vertical-offset="6646" max-vertical-offset="9520">
+            <state line="65" column="25" selection-start="1990" selection-end="2299" vertical-scroll-proportion="-22.384615" vertical-offset="523" max-vertical-offset="3026">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserManagementController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/UserManagementController.php">
+      <file leaf-file-name="buyer_to_seller_method_to_buyer_mail.html.twig" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_method_to_buyer_mail.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="340">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StarManagementApiController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/StarManagementApiController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="42" selection-start="1296" selection-end="1330" vertical-scroll-proportion="0.0" vertical-offset="697" max-vertical-offset="1649">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProfileType.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/ProfileType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="6" selection-start="385" selection-end="385" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="1156">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EmailNotificationType.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/Type/EmailNotificationType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="11" selection-start="663" selection-end="663" vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="952">
-              <folding />
+            <state line="107" column="44" selection-start="4707" selection-end="4707" vertical-scroll-proportion="0.6738392" vertical-offset="1224" max-vertical-offset="3706">
+              <folding>
+                <element signature="n#style#0;n#img#0;n#a#0;n#td#0;n#tr#0;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#tr#0;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#tr#2;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#1;n#tr#2;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#2;n#tr#2;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#tr#3;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#1;n#tr#3;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#2;n#tr#3;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#tr#4;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#1;n#tr#4;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#2;n#tr#4;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -161,7 +130,6 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookManagementApiController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" />
-        <option value="$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_method_to_buyer_mail.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_method_to_seller_mail.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/mail_templates/seller_to_buyer_method_to_seller_mail.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
@@ -173,6 +141,7 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/UserApiController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_method_to_buyer_mail.html.twig" />
       </list>
     </option>
   </component>
@@ -209,6 +178,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -707,7 +677,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -762,14 +731,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24635416" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24635416" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -777,11 +746,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -803,11 +772,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/seller_to_buyer_message_mail_to_buyer.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="41" selection-start="626" selection-end="626" vertical-scroll-proportion="0.26840317" vertical-offset="256" max-vertical-offset="2924" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/student2studentBoard_method_to_buyer_mail.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state line="54" column="60" selection-start="1799" selection-end="1799" vertical-scroll-proportion="0.0" vertical-offset="918" max-vertical-offset="2856" />
@@ -963,24 +927,9 @@
         <state line="1062" column="0" selection-start="41135" selection-end="41135" vertical-scroll-proportion="0.0" vertical-offset="18054" max-vertical-offset="19091" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_method_to_seller_mail.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="88" selection-start="2084" selection-end="2084" vertical-scroll-proportion="0.0" vertical-offset="982" max-vertical-offset="3026" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_method_to_buyer_mail.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="93" column="51" selection-start="3940" selection-end="4327" vertical-scroll-proportion="0.0" vertical-offset="969" max-vertical-offset="3570" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/seller_to_buyer_method_to_seller_mail.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state line="95" column="0" selection-start="4292" selection-end="4292" vertical-scroll-proportion="0.0" vertical-offset="1530" max-vertical-offset="3740" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/seller_to_buyer_method_to_buyer_mail.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="71" selection-start="1822" selection-end="1822" vertical-scroll-proportion="-15.192307" vertical-offset="523" max-vertical-offset="2856" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/BookDeal.orm.yml">
@@ -1066,16 +1015,59 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/ContactManagementApiController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="299" column="75" selection-start="14334" selection-end="14362" vertical-scroll-proportion="0.0" vertical-offset="5083" max-vertical-offset="6970">
+        <state line="301" column="0" selection-start="14446" selection-end="14474" vertical-scroll-proportion="0.0" vertical-offset="5117" max-vertical-offset="6987">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_message_mail_to_buyer.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="25.5" vertical-offset="663" max-vertical-offset="3094">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/seller_to_buyer_method_to_buyer_mail.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="71" selection-start="1822" selection-end="1822" vertical-scroll-proportion="-13.230769" vertical-offset="574" max-vertical-offset="2856">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="209" column="44" selection-start="10487" selection-end="10512" vertical-scroll-proportion="-0.13805105" vertical-offset="3553" max-vertical-offset="7174">
+        <state line="107" column="37" selection-start="5009" selection-end="5021" vertical-scroll-proportion="-16.692308" vertical-offset="1266" max-vertical-offset="8330">
           <folding>
             <element signature="e#290#316#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_method_to_seller_mail.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="25" selection-start="1990" selection-end="2299" vertical-scroll-proportion="-22.384615" vertical-offset="523" max-vertical-offset="3026">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_method_to_buyer_mail.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="107" column="44" selection-start="4707" selection-end="4707" vertical-scroll-proportion="0.6738392" vertical-offset="1224" max-vertical-offset="3706">
+          <folding>
+            <element signature="n#style#0;n#img#0;n#a#0;n#td#0;n#tr#0;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#0;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#2;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#1;n#tr#2;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#2;n#tr#2;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#3;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#1;n#tr#3;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#2;n#tr#3;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#4;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#1;n#tr#4;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#2;n#tr#4;n#table#0;n#td#0;n#tr#1;n#table#0;n#td#0;n#tr#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
