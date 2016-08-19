@@ -834,13 +834,16 @@ class BookManagementApiController extends Controller
 
         if($simpleXml!=null){
             foreach ($simpleXml->Items->Item as $item) {
-                $booksArray[] = $this->_createJsonFromItemAmazon($item);
+                $book = $this->_createJsonFromItemAmazon($item);
+                if($book['bookIsbn']!='' && strcmp($book['bookPriceAmazon'],"Not Found")){
+                    array_push($booksArray,$book);
+                }
+
             }
             $totalSearchResults = (string)$simpleXml->Items->TotalResults;
         }else{
             $totalSearchResults = 0;
         }
-
 
 
         return array(
