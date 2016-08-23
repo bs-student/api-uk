@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="992c5a8c-cd64-41e9-9383-a47a89a328fa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Book.orm.yml" afterPath="$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/Book.orm.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookManagementApiController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookManagementApiController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Repository/WishListRepository.php" afterPath="$PROJECT_DIR$/src/AppBundle/Repository/WishListRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" afterPath="$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Student2StudentApi.iws" />
@@ -32,72 +29,25 @@
       <file leaf-file-name="app_routing.yml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="424" column="89" selection-start="13164" selection-end="13188" vertical-scroll-proportion="-22.56" vertical-offset="6644" max-vertical-offset="10030">
-              <folding>
-                <marker date="1471958501638" expanded="true" signature="2839:2985" placeholder="current_user_short_details:" />
-                <marker date="1471958501638" expanded="true" signature="2986:3129" placeholder="current_user_full_details:" />
-                <marker date="1471958501638" expanded="true" signature="3130:3587" placeholder="admin_all_users:" />
-                <marker date="1471958501638" expanded="true" signature="3588:3734" placeholder="update_user_profile:" />
-                <marker date="1471958501638" expanded="true" signature="3735:3958" placeholder="update_user_email_notification_status:" />
-                <marker date="1471958501638" expanded="true" signature="3959:4139" placeholder="books_search_by_keyword_amazon:" />
-                <marker date="1471958501638" expanded="true" signature="4140:4343" placeholder="books_search_by_keyword_amazon_api:" />
-                <marker date="1471958501638" expanded="true" signature="4344:4515" placeholder="books_search_by_asin_amazon:" />
-                <marker date="1471958501638" expanded="true" signature="4516:4691" placeholder="books_search_by_isbn_amazon:" />
-                <marker date="1471958501638" expanded="true" signature="4692:4880" placeholder="books_search_by_isbn_campus_books:" />
-                <marker date="1471958501638" expanded="true" signature="4881:5097" placeholder="get_lowest_online_price_campus_books_by_isbn:" />
-                <marker date="1471958501638" expanded="true" signature="5098:5274" placeholder="get_amazon_cart_create_url:" />
-                <marker date="1471958501638" expanded="true" signature="5275:5460" placeholder="get_campus_deals_by_isbn_api:" />
-                <marker date="1471958501638" expanded="true" signature="5461:5819" placeholder="get_campus_deals_by_isbn:" />
-                <marker date="1471958501638" expanded="true" signature="5820:5974" placeholder="add_new_sell_book:" />
-                <marker date="1471958501638" expanded="true" signature="5975:6182" placeholder="add_new_custom_sell_book:" />
-                <marker date="1471958501638" expanded="true" signature="6183:6344" placeholder="campus_list_by_university:" />
-                <marker date="1471958501638" expanded="true" signature="6345:6559" placeholder="campus_details_with_university_and_state:" />
-                <marker date="1471958501638" expanded="true" signature="6560:6701" placeholder="update_campus:" />
-                <marker date="1471958501638" expanded="true" signature="6702:6843" placeholder="save_new_campus:" />
-                <marker date="1471958501638" expanded="true" signature="6844:7031" placeholder="delete_university:" />
-                <marker date="1471958501638" expanded="true" signature="7032:7148" placeholder="all_countries:" />
-                <marker date="1471958501638" expanded="true" signature="7149:7312" placeholder="all_countries_api:" />
-                <marker date="1471958501638" expanded="true" signature="7313:7445" placeholder="all_referrals_api:" />
-                <marker date="1471958501638" expanded="true" signature="7446:7597" placeholder="all_referrals:" />
-                <marker date="1471958501638" expanded="true" signature="7598:7753" placeholder="all_states_by_country:" />
-                <marker date="1471958501638" expanded="true" signature="7754:7958" placeholder="all_states_by_country_api:" />
-                <marker date="1471958501638" expanded="true" signature="7959:8163" placeholder="university_list:" />
-                <marker date="1471958501638" expanded="true" signature="8164:8378" placeholder="university_name_list:" />
-                <marker date="1471958501638" expanded="true" signature="8379:8541" placeholder="university_search:" />
-                <marker date="1471958501638" expanded="true" signature="8542:8710" placeholder="update_university:" />
-                <marker date="1471958501638" expanded="true" signature="8711:8881" placeholder="save_new_university:" />
-                <marker date="1471958501638" expanded="true" signature="8882:9066" placeholder="save_new_university_admin:" />
-                <marker date="1471958501638" expanded="true" signature="9067:9257" placeholder="delete_university:" />
-                <marker date="1471958501638" expanded="true" signature="9258:9416" placeholder="add_contact_api:" />
-                <marker date="1471958501638" expanded="true" signature="9417:9560" placeholder="add_contact:" />
-                <marker date="1471958501638" expanded="true" signature="9561:9708" placeholder="get_messages:" />
-                <marker date="1471958501638" expanded="true" signature="9709:9859" placeholder="send_messages:" />
-                <marker date="1471958501638" expanded="true" signature="9860:10090" placeholder="send_messages_without_mailing:" />
-                <marker date="1471958501638" expanded="true" signature="10091:10301" placeholder="get_book_deals_i_have_contacted_for:" />
-                <marker date="1471958501638" expanded="true" signature="10302:10495" placeholder="get_book_deals_i_have_created:" />
-                <marker date="1471958501638" expanded="true" signature="10496:10659" placeholder="sell_book_to_user:" />
-                <marker date="1471958501638" expanded="true" signature="10660:10878" placeholder="get_book_deals_i_have_created_and_sold:" />
-                <marker date="1471958501638" expanded="true" signature="10879:11069" placeholder="get_book_deals_i_have_bought:" />
-                <marker date="1471958501638" expanded="true" signature="11070:11251" placeholder="change_book_deal_status:" />
-                <marker date="1471958501638" expanded="true" signature="11252:11447" placeholder="get_lowest_campus_deal_price:" />
-                <marker date="1471958501638" expanded="true" signature="11448:11609" placeholder="update_book_deal:" />
-                <marker date="1471958501638" expanded="true" signature="11610:11771" placeholder="delete_book_deal:" />
-                <marker date="1471958501638" expanded="true" signature="11772:11971" placeholder="get_activated_book_deal_of_user:" />
-                <marker date="1471958501638" expanded="true" signature="11972:12234" placeholder="get_all_activated_selling_and_contacted_book_of_user:" />
-                <marker date="1471958501638" expanded="true" signature="12235:12511" placeholder="get_all_data_for_new_contact_in_message_board:" />
-                <marker date="1471958501638" expanded="true" signature="12512:12685" placeholder="add_book_to_wish_list:" />
-                <marker date="1471958501638" expanded="true" signature="12686:12842" placeholder="get_my_wishlist:" />
-                <marker date="1471958501638" expanded="true" signature="12843:13015" placeholder="remove_wishlist_item:" />
-                <marker date="1471958501638" expanded="true" signature="13016:13238" placeholder="check_if_added_into_wishlist:" />
-              </folding>
+            <state line="395" column="109" selection-start="12168" selection-end="12212" vertical-scroll-proportion="-12.36" vertical-offset="6406" max-vertical-offset="10030">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WishListManagementApiController.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BookDealManagementApiController.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="952" column="142" selection-start="36846" selection-end="36846" vertical-scroll-proportion="0.47550777" vertical-offset="15412" max-vertical-offset="18717">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WishListManagementApiController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/WishListManagementApiController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="0" selection-start="1499" selection-end="1499" vertical-scroll-proportion="0.44685715" vertical-offset="0" max-vertical-offset="1819">
+            <state line="51" column="27" selection-start="1638" selection-end="1638" vertical-scroll-proportion="-17.653847" vertical-offset="0" max-vertical-offset="1819">
               <folding>
                 <element signature="e#1002#1043#0" expanded="false" />
                 <element signature="e#2661#2695#0" expanded="false" />
@@ -176,15 +126,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContactManagementApiController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/ContactManagementApiController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="145" column="28" selection-start="7371" selection-end="7371" vertical-scroll-proportion="0.0" vertical-offset="2465" max-vertical-offset="7021">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -230,7 +171,6 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Form/Handler/ResettingFormHandler.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/AdminUserApiController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/BookDealRepository.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_method_to_seller_mail.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/mail_templates/seller_to_buyer_method_to_seller_mail.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
@@ -249,6 +189,7 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/UserRepository.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Repository/WishListRepository.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/WishListManagementApiController.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php" />
       </list>
     </option>
   </component>
@@ -837,7 +778,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -994,11 +935,6 @@
         <state line="866" column="43" selection-start="35629" selection-end="35629" vertical-scroll-proportion="0.0" vertical-offset="14106" max-vertical-offset="15028" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1062" column="0" selection-start="41135" selection-end="41135" vertical-scroll-proportion="0.0" vertical-offset="18054" max-vertical-offset="19091" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/seller_to_buyer_method_to_seller_mail.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state line="95" column="0" selection-start="4292" selection-end="4292" vertical-scroll-proportion="0.0" vertical-offset="1530" max-vertical-offset="3740" />
@@ -1118,76 +1054,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookManagementApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="434" column="0" selection-start="14730" selection-end="14730" vertical-scroll-proportion="-7.882353" vertical-offset="6653" max-vertical-offset="15963">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="424" column="89" selection-start="13164" selection-end="13188" vertical-scroll-proportion="-22.56" vertical-offset="6644" max-vertical-offset="10030">
-          <folding>
-            <marker date="1471958501638" expanded="true" signature="2839:2985" placeholder="current_user_short_details:" />
-            <marker date="1471958501638" expanded="true" signature="2986:3129" placeholder="current_user_full_details:" />
-            <marker date="1471958501638" expanded="true" signature="3130:3587" placeholder="admin_all_users:" />
-            <marker date="1471958501638" expanded="true" signature="3588:3734" placeholder="update_user_profile:" />
-            <marker date="1471958501638" expanded="true" signature="3735:3958" placeholder="update_user_email_notification_status:" />
-            <marker date="1471958501638" expanded="true" signature="3959:4139" placeholder="books_search_by_keyword_amazon:" />
-            <marker date="1471958501638" expanded="true" signature="4140:4343" placeholder="books_search_by_keyword_amazon_api:" />
-            <marker date="1471958501638" expanded="true" signature="4344:4515" placeholder="books_search_by_asin_amazon:" />
-            <marker date="1471958501638" expanded="true" signature="4516:4691" placeholder="books_search_by_isbn_amazon:" />
-            <marker date="1471958501638" expanded="true" signature="4692:4880" placeholder="books_search_by_isbn_campus_books:" />
-            <marker date="1471958501638" expanded="true" signature="4881:5097" placeholder="get_lowest_online_price_campus_books_by_isbn:" />
-            <marker date="1471958501638" expanded="true" signature="5098:5274" placeholder="get_amazon_cart_create_url:" />
-            <marker date="1471958501638" expanded="true" signature="5275:5460" placeholder="get_campus_deals_by_isbn_api:" />
-            <marker date="1471958501638" expanded="true" signature="5461:5819" placeholder="get_campus_deals_by_isbn:" />
-            <marker date="1471958501638" expanded="true" signature="5820:5974" placeholder="add_new_sell_book:" />
-            <marker date="1471958501638" expanded="true" signature="5975:6182" placeholder="add_new_custom_sell_book:" />
-            <marker date="1471958501638" expanded="true" signature="6183:6344" placeholder="campus_list_by_university:" />
-            <marker date="1471958501638" expanded="true" signature="6345:6559" placeholder="campus_details_with_university_and_state:" />
-            <marker date="1471958501638" expanded="true" signature="6560:6701" placeholder="update_campus:" />
-            <marker date="1471958501638" expanded="true" signature="6702:6843" placeholder="save_new_campus:" />
-            <marker date="1471958501638" expanded="true" signature="6844:7031" placeholder="delete_university:" />
-            <marker date="1471958501638" expanded="true" signature="7032:7148" placeholder="all_countries:" />
-            <marker date="1471958501638" expanded="true" signature="7149:7312" placeholder="all_countries_api:" />
-            <marker date="1471958501638" expanded="true" signature="7313:7445" placeholder="all_referrals_api:" />
-            <marker date="1471958501638" expanded="true" signature="7446:7597" placeholder="all_referrals:" />
-            <marker date="1471958501638" expanded="true" signature="7598:7753" placeholder="all_states_by_country:" />
-            <marker date="1471958501638" expanded="true" signature="7754:7958" placeholder="all_states_by_country_api:" />
-            <marker date="1471958501638" expanded="true" signature="7959:8163" placeholder="university_list:" />
-            <marker date="1471958501638" expanded="true" signature="8164:8378" placeholder="university_name_list:" />
-            <marker date="1471958501638" expanded="true" signature="8379:8541" placeholder="university_search:" />
-            <marker date="1471958501638" expanded="true" signature="8542:8710" placeholder="update_university:" />
-            <marker date="1471958501638" expanded="true" signature="8711:8881" placeholder="save_new_university:" />
-            <marker date="1471958501638" expanded="true" signature="8882:9066" placeholder="save_new_university_admin:" />
-            <marker date="1471958501638" expanded="true" signature="9067:9257" placeholder="delete_university:" />
-            <marker date="1471958501638" expanded="true" signature="9258:9416" placeholder="add_contact_api:" />
-            <marker date="1471958501638" expanded="true" signature="9417:9560" placeholder="add_contact:" />
-            <marker date="1471958501638" expanded="true" signature="9561:9708" placeholder="get_messages:" />
-            <marker date="1471958501638" expanded="true" signature="9709:9859" placeholder="send_messages:" />
-            <marker date="1471958501638" expanded="true" signature="9860:10090" placeholder="send_messages_without_mailing:" />
-            <marker date="1471958501638" expanded="true" signature="10091:10301" placeholder="get_book_deals_i_have_contacted_for:" />
-            <marker date="1471958501638" expanded="true" signature="10302:10495" placeholder="get_book_deals_i_have_created:" />
-            <marker date="1471958501638" expanded="true" signature="10496:10659" placeholder="sell_book_to_user:" />
-            <marker date="1471958501638" expanded="true" signature="10660:10878" placeholder="get_book_deals_i_have_created_and_sold:" />
-            <marker date="1471958501638" expanded="true" signature="10879:11069" placeholder="get_book_deals_i_have_bought:" />
-            <marker date="1471958501638" expanded="true" signature="11070:11251" placeholder="change_book_deal_status:" />
-            <marker date="1471958501638" expanded="true" signature="11252:11447" placeholder="get_lowest_campus_deal_price:" />
-            <marker date="1471958501638" expanded="true" signature="11448:11609" placeholder="update_book_deal:" />
-            <marker date="1471958501638" expanded="true" signature="11610:11771" placeholder="delete_book_deal:" />
-            <marker date="1471958501638" expanded="true" signature="11772:11971" placeholder="get_activated_book_deal_of_user:" />
-            <marker date="1471958501638" expanded="true" signature="11972:12234" placeholder="get_all_activated_selling_and_contacted_book_of_user:" />
-            <marker date="1471958501638" expanded="true" signature="12235:12511" placeholder="get_all_data_for_new_contact_in_message_board:" />
-            <marker date="1471958501638" expanded="true" signature="12512:12685" placeholder="add_book_to_wish_list:" />
-            <marker date="1471958501638" expanded="true" signature="12686:12842" placeholder="get_my_wishlist:" />
-            <marker date="1471958501638" expanded="true" signature="12843:13015" placeholder="remove_wishlist_item:" />
-            <marker date="1471958501638" expanded="true" signature="13016:13238" placeholder="check_if_added_into_wishlist:" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/UserManagementController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="255">
@@ -1211,7 +1077,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/WishListManagementApiController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="0" selection-start="1499" selection-end="1499" vertical-scroll-proportion="0.44685715" vertical-offset="0" max-vertical-offset="1819">
+        <state line="51" column="27" selection-start="1638" selection-end="1638" vertical-scroll-proportion="-17.653847" vertical-offset="0" max-vertical-offset="1819">
           <folding>
             <element signature="e#1002#1043#0" expanded="false" />
             <element signature="e#2661#2695#0" expanded="false" />
@@ -1223,6 +1089,27 @@
             <element signature="e#4876#4918#0" expanded="false" />
             <element signature="e#6333#6602#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="395" column="109" selection-start="12168" selection-end="12212" vertical-scroll-proportion="-12.36" vertical-offset="6406" max-vertical-offset="10030">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookManagementApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="434" column="0" selection-start="14730" selection-end="14730" vertical-scroll-proportion="-7.882353" vertical-offset="6653" max-vertical-offset="15963">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/BookDealManagementApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="952" column="142" selection-start="36846" selection-end="36846" vertical-scroll-proportion="0.47550777" vertical-offset="15412" max-vertical-offset="18717">
+          <folding />
         </state>
       </provider>
     </entry>

@@ -950,7 +950,7 @@ class BookDealManagementApiController extends Controller
 
                 for ($i = 0; $i < count($contactedBookDeals); $i++) {
 
-                    if ((int)$contact['bookDealId'] == (int)$contactedBookDeals[$i]['bookDealId']) {
+                    if ((int)$contact['bookDealId'] == (int)$contactedBookDeals[$i]['bookDealId'] && $contact['buyerId']==$userEntity->getId()) {
 
                         $contact['profilePicture'] = $contactedBookDeals[$i]['sellerProfilePicture'];
                         $contact['contactName'] = $contactedBookDeals[$i]['sellerUsername'];
