@@ -422,7 +422,7 @@ class BookManagementApiController extends Controller
             if ($bookDealForm->isValid()) {
                 $em->persist($bookDeal);
                 $em->flush();
-                return $this->_createJsonResponse('success', array("successTitle" => "Book has been inserted into you selling List"), 200);
+                return $this->_createJsonResponse('success', array("successTitle" => "Book has been successfully posted"), 200);
             } else {
                 return $this->_createJsonResponse('error', array("errorData" => $bookDealForm), 400);
 

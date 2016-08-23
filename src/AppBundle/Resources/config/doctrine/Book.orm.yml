@@ -33,7 +33,7 @@ AppBundle\Entity\Book:
             type: string
             length: '30'
         bookIsbn13:
-            nullable: false
+            nullable: true
             type: string
             length: '30'
         bookPublisher:

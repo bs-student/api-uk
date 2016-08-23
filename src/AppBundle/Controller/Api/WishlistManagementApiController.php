@@ -45,7 +45,16 @@ class WishListManagementApiController extends Controller
 
         $alreadyInserted = $wishListRepo->checkIfAlreadyAddedToWishList($user->getId(),$data['bookId']);
 
-        if(!$alreadyInserted){
+
+        if($alreadyInserted instanceof WishList){
+            $em->remove($alreadyInserted);
+            try {
+                $em->flush();
+                return $this->_createJsonResponse('success',array('successTitle'=>"Wish List Item has been removed"),200);
+            }catch (Exception $e){
+                return $this->_createJsonResponse('error',array('errorTitle'=>"Wish List Item could not be removed"),400);
+            }
+        }else{
             $wishList = new WishList();
             $wishListForm = $this->createForm(new WishListType(), $wishList);
             $wishListForm->submit(array(
@@ -60,9 +69,8 @@ class WishListManagementApiController extends Controller
             } else {
                 return $this->_createJsonResponse('error', array("errorTitle" => "Couldn't Added to Wishlist","errorData" => $wishListForm), 400);
             }
-        }else{
-            return $this->_createJsonResponse('error', array("errorTitle" => "Book is already in Wishlist"), 400);
         }
+
 
 
 
@@ -156,6 +164,22 @@ class WishListManagementApiController extends Controller
 
 
     }
+
+    /**
+     * Check If Added into wishlist
+     */
+    public function checkIfAddedIntoWishlistAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $wishListRepo = $em->getRepository("AppBundle:WishList");
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+
+        $wishListData= $wishListRepo->checkIfBookAlreadyAddedByIsbn($user->getId(),$data['isbn']);
+        return $this->_createJsonResponse('success',array('successData'=>$wishListData),200);
+
+    }
+
 
     public function _createJsonResponse($key, $data, $code)
     {

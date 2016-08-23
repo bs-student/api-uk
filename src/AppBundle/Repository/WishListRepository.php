@@ -15,13 +15,41 @@ class WishListRepository extends EntityRepository
     function checkIfAlreadyAddedToWishList($userId,$bookId){
        $data =  $this->getEntityManager()
             ->createQueryBuilder('w')
-            ->select('w.id')
+            ->select('w')
 
             ->from('AppBundle:WishList', 'w')
             ->andwhere('w.user = :user')
             ->andwhere('w.book = :book')
 
             ->setParameter('book', $bookId)
+            ->setParameter('user', $userId)
+            ->getQuery()
+            ->getResult();
+
+
+        if(count($data)>0){
+            return $data[0];
+        }else{
+            return false;
+
+        }
+    }
+
+    function removeWishListItem($id){
+
+    }
+
+    function checkIfBookAlreadyAddedByIsbn($userId,$isbn){
+        $data =  $this->getEntityManager()
+            ->createQueryBuilder('q')
+            ->select('w.id')
+
+            ->from('AppBundle:WishList', 'w')
+            ->innerJoin('AppBundle:Book', 'b', 'WITH', 'b.id = w.book')
+            ->andwhere('w.user = :user')
+            ->andwhere('b.bookIsbn10 = :bookIsbn')
+
+            ->setParameter('bookIsbn', $isbn)
             ->setParameter('user', $userId)
             ->getQuery()
             ->getResult();
@@ -34,60 +62,4 @@ class WishListRepository extends EntityRepository
 
         }
     }
-
-    function removeWishListItem($id){
-
-    }
-
-//    function getMyWishListBooks($userId){
-//        return $this->getEntityManager()
-//            ->createQueryBuilder('w')
-//            ->select("b.id as bookId,
-//                      b.bookIsbn10,
-//                      b.bookIsbn13,
-//                      b.bookTitle,
-//                      b.bookDirectorAuthorArtist,
-//                      b.bookEdition,
-//                      b.bookPublisher,
-//                      b.bookPublishDate,
-//                      b.bookBinding,
-//                      b.bookPage,
-//                      b.bookImage,
-//                      u.username as sellerUsername,
-//                      bd.bookContactHomeNumber as sellerHomeNumber,
-//                      bd.bookContactCellNumber as sellerCellNumber,
-//                      bd.bookContactEmail as sellerEmail,
-//                      bd.id as bookDealId,
-//                      bd.bookPriceSell,
-//                      bd.bookCondition,
-//                      bd.bookIsHighlighted,
-//                      bd.bookHasNotes,
-//                      bd.bookComment,
-//                      bd.bookContactMethod,
-//                      bd.bookPaymentMethodCaShOnExchange,
-//                      bd.bookPaymentMethodCheque,
-//                      bd.bookIsAvailablePublic,
-//                      bd.bookAvailableDate,
-//                      bd.bookStatus,
-//                      bd.bookViewCount,
-//                      IDENTITY(bd.buyer) AS buyerId,
-//                      c.campusName,
-//                      un.universityName,
-//                      s.stateName,
-//                      s.stateShortName,
-//                      co.countryName,
-//                      con.id as contactId,
-//                      con.contactDateTime,
-//                      con.buyerHomePhone,
-//                      con.buyerCellPhone
-//                      ")
-//
-//            ->from('AppBundle:WishList', 'w')
-//            ->innerJoin('AppBundle:Book', 'b', 'WITH', 'w.book = b.id')
-//
-//            ->andwhere('w.user = :userId')
-//            ->setParameter('userId', $userId)
-//            ->getQuery()
-//            ->getResult();
-//    }
 }

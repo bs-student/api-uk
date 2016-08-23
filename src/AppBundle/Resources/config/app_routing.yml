@@ -420,6 +420,10 @@ remove_wishlist_item:
     defaults:  {_controller: AppBundle:Api/WishListManagementApi:removeWishListItem}
     methods: [POST]
 
+check_if_added_into_wishlist:
+    path: /api/wishlist/check_if_added_into_wishlist
+    defaults:  {_controller: AppBundle:Api/WishListManagementApi:checkIfAddedIntoWishlist}
+    methods: [POST]
 
 #Admin User Api Controller
 
