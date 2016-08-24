@@ -309,7 +309,8 @@ class ContactManagementApiController extends Controller
                         'messageBody'=>$message->getMessageBody(),
                         'messageDateTime'=>$message->getMessageDateTime()->format('H:i, d-M-Y'),
                         'messageId'=>$message->getId(),
-                        'senderProfilePicture'=>$message->getUser()->getProfilePicture()
+                        'senderProfilePicture'=>$message->getUser()->getProfilePicture(),
+                        'messageType'=>$message->getMessageType()
                     )
                 ),201);
             }else{

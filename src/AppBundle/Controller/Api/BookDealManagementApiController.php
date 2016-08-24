@@ -968,8 +968,9 @@ class BookDealManagementApiController extends Controller
             //Merging and sorting array
             $bookDeals =array_merge($sellingBookDeals,$contactedBookDeals);
             $deals=array();
-            foreach($bookDeals as $deal){
-                $deals[$deal['bookDealId']]=$deal;
+
+            for($i=0;$i<count($bookDeals);$i++){
+                $deals[$bookDeals[$i]['bookDealId']."_".$i]=$bookDeals[$i];
             }
             krsort($deals);
             $newArray=array();

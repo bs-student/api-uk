@@ -30,6 +30,11 @@ class MessageType extends AbstractType
                     new NotBlank()
                 )
             ))
+            ->add('messageType','text',array(
+                'constraints' => array(
+                    new NotBlank()
+                )
+            ))
             ->add('user','entity',array(
                 'class' => "AppBundle:User"/*,
                 'constraints' => array(

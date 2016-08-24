@@ -30,6 +30,11 @@ AppBundle\Entity\Message:
             nullable: true
             type: string
             length: '255'
+        messageType:
+            column: message_type
+            nullable: true
+            type: string
+            length: '50'
         messageDateTime:
             column: message_datetime
             type: datetime

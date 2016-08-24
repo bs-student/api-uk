@@ -24,6 +24,12 @@ class Message
     private $messageBody;
 
     /**
+     * @var string
+     *
+     */
+    private $messageType;
+
+    /**
      * @var datetime
      *
      */
@@ -161,5 +167,28 @@ class Message
     public function getContact()
     {
         return $this->contact;
+    }
+
+    /**
+     * Set messageType
+     *
+     * @param string $messageType
+     * @return Message
+     */
+    public function setMessageType($messageType)
+    {
+        $this->messageType = $messageType;
+
+        return $this;
+    }
+
+    /**
+     * Get messageType
+     *
+     * @return string 
+     */
+    public function getMessageType()
+    {
+        return $this->messageType;
     }
 }
