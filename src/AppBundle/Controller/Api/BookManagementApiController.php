@@ -216,7 +216,7 @@ class BookManagementApiController extends Controller
                             array_push($deals['buyerToSeller'], $deal);
                         } else if(strpos('sellerToBuyer', $deal['bookContactMethod'])!== false) {
                             array_push($deals['sellerToBuyer'], $deal);
-                        }else if(strpos('student2studentBoard', $deal['bookContactMethod'])!== false){
+                        } else if(strpos('student2studentBoard', $deal['bookContactMethod'])!== false){
                             array_push($deals['student2studentBoard'], $deal);
                         }
 
@@ -253,7 +253,8 @@ class BookManagementApiController extends Controller
             if (array_key_exists('isbn', $data) && array_key_exists('campusId', $data)) {
                 $deals = array(
                     'buyerToSeller' => array(),
-                    'sellerToBuyer' => array()
+                    'sellerToBuyer' => array(),
+                    'student2studentBoard' => array(),
                 );
                 $onCampusDeals = $bookDealRepo->getCampusDealsByIsbn($data['isbn'], $data['campusId']);
 
@@ -271,8 +272,10 @@ class BookManagementApiController extends Controller
                         //dividing via Contact Method
                         if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
                             array_push($deals['buyerToSeller'], $deal);
-                        } else {
+                        } else if(strpos('sellerToBuyer', $deal['bookContactMethod'])!== false) {
                             array_push($deals['sellerToBuyer'], $deal);
+                        }else if(strpos('student2studentBoard', $deal['bookContactMethod'])!== false){
+                            array_push($deals['student2studentBoard'], $deal);
                         }
 
                     }
@@ -476,6 +479,38 @@ class BookManagementApiController extends Controller
         /*$user = $this->container->get('security.token_storage')->getToken()->getUser();
         var_dump($user);*/
 
+        //Search for manually entered book
+        if(count($booksArray['books'])==0){
+            $em = $this->getDoctrine()->getManager();
+            $bookRepo = $em->getRepository("AppBundle:Book");
+            $customBooks = $bookRepo->findCustomBook($keyword);
+
+            if(count($customBooks)>0){
+                foreach($customBooks as $book){
+                    $bookData = array(
+                        'bookAsin'=>$book['bookIsbn10'],
+                        'bookTitle'=>$book['bookTitle'],
+                        'bookDirectorAuthorArtist'=>$book['bookDirectorAuthorArtist'],
+                        'bookPriceAmazon'=>"Not Found",
+                        'bookIsbn'=>$book['bookIsbn10'],
+                        'bookEan'=>array_key_exists('bookIsbn13',$book)?$book['bookIsbn13']:"",
+                        'bookEdition'=>array_key_exists('bookEdition',$book)?$book['bookEdition']:"",
+                        'bookPublisher'=>array_key_exists('bookPublisher',$book)?$book['bookPublisher']:"",
+                        'bookPublishDate'=>$book['bookPublishDate']->format('d-M-Y'),
+                        'bookBinding'=>array_key_exists('bookBinding',$book)?$book['bookBinding']:"",
+                        'bookDescription'=>array_key_exists('bookDescription',$book)?$book['bookDescription']:"",
+                        'bookPages'=>array_key_exists('bookPages',$book)?$book['bookPages']:"",
+                        'bookImages'=>array(
+                            array(
+                                'image'=>$_SERVER['HTTP_ORIGIN'].$_SERVER['BASE'].$book['bookImage'],
+                                'imageId'=>0
+                            )
+                        )
+                    );
+                    array_push($booksArray['books'],$bookData);
+                }
+            }
+        }
 
         if (count($booksArray['books']) > 0) {
             $em = $this->getDoctrine()->getManager();
@@ -536,6 +571,42 @@ class BookManagementApiController extends Controller
 
         $booksArray = $this->_parseMultipleBooksAmazonXmlResponse($xmlOutput);
 
+        //Search for manually entered book
+        if(count($booksArray['books'])==0){
+            $em = $this->getDoctrine()->getManager();
+            $bookRepo = $em->getRepository("AppBundle:Book");
+            $customBooks = $bookRepo->findCustomBookByIsbn($asin);
+
+            if(count($customBooks)>0){
+                foreach($customBooks as $book){
+                    $bookData = array(
+                        'bookAsin'=>$book['bookIsbn10'],
+                        'bookTitle'=>$book['bookTitle'],
+                        'bookDirectorAuthorArtist'=>$book['bookDirectorAuthorArtist'],
+                        'bookPriceAmazon'=>"Not Found",
+                        'bookIsbn'=>$book['bookIsbn10'],
+                        'bookEan'=>array_key_exists('bookIsbn13',$book)?$book['bookIsbn13']:"",
+                        'bookEdition'=>array_key_exists('bookEdition',$book)?$book['bookEdition']:"",
+                        'bookPublisher'=>array_key_exists('bookPublisher',$book)?$book['bookPublisher']:"",
+                        'bookPublishDate'=>$book['bookPublishDate']->format('d-M-Y'),
+                        'bookBinding'=>array_key_exists('bookBinding',$book)?$book['bookBinding']:"",
+                        'bookDescription'=>array_key_exists('bookDescription',$book)?$book['bookDescription']:"",
+                        'bookPages'=>array_key_exists('bookPages',$book)?$book['bookPages']:"",
+                        'bookImages'=>array(
+                            array(
+                                'image'=>$_SERVER['HTTP_ORIGIN'].$_SERVER['BASE'].$book['bookImage'],
+                                'imageId'=>0
+                            )
+                        )
+                    );
+                    array_push($booksArray['books'],$bookData);
+                }
+            }
+        }
+//        echo "<pre>";
+//        print_r($booksArray['books']);
+//        echo "</pre>";
+//        die();
         if(count($booksArray['books'])>0){
             //Insert Book INTo DB
             $insertedBookId = $this->_insertBookIntoDatabase($booksArray['books'][0]);
@@ -722,7 +793,7 @@ class BookManagementApiController extends Controller
 
         if (array_key_exists('status', $arrayData['response'])) {
             if (!strpos($arrayData['response']['status'], 'error')) {
-                return $this->_createJsonResponse('error', array('errorTitle' => "No Book was found", "errorDescription" => "Please provide real ISBN Number"), 400);
+                return $this->_createJsonResponse('error', array('errorTitle' => "No Online Book Deal was found"), 400);
             }
         } else {
             return $this->_createJsonResponse('success', array('successData' => $arrayData), 200);

@@ -31,4 +31,66 @@ class BookRepository extends EntityRepository
             ->getResult();
 
     }
+
+    function findCustomBook($keyword){
+        return $this->getEntityManager()
+            ->createQueryBuilder('b')
+            ->select('b.bookTitle,
+                     b.bookDirectorAuthorArtist,
+                     b.bookEdition,
+                     b.bookPublisher,
+                     b.bookPublishDate,
+                     b.bookBinding,
+                     b.bookPage,
+                     b.bookLanguage,
+                     b.bookDescription,
+                     b.bookIsbn10,
+                     b.bookIsbn13,
+                     b.bookImage,
+                     b.bookAmazonPrice
+                     ')
+
+            ->from('AppBundle:Book', 'b')
+
+            ->andwhere('b.bookTitle LIKE :keyword OR
+                        b.bookIsbn10 LIKE :keyword OR
+                        b.bookIsbn13 LIKE :keyword OR
+                        b.bookDirectorAuthorArtist LIKE :keyword
+                        ')
+
+
+
+            ->setParameter('keyword', "%".$keyword."%")
+            ->getQuery()
+            ->getResult();
+    }
+
+    function findCustomBookByIsbn($isbn){
+        return $this->getEntityManager()
+            ->createQueryBuilder('b')
+            ->select('b.bookTitle,
+                     b.bookDirectorAuthorArtist,
+                     b.bookEdition,
+                     b.bookPublisher,
+                     b.bookPublishDate,
+                     b.bookBinding,
+                     b.bookPage,
+                     b.bookLanguage,
+                     b.bookDescription,
+                     b.bookIsbn10,
+                     b.bookIsbn13,
+                     b.bookImage,
+                     b.bookAmazonPrice
+                     ')
+
+            ->from('AppBundle:Book', 'b')
+
+            ->andwhere('b.bookIsbn10 LIKE :isbn')
+
+
+
+            ->setParameter('isbn', $isbn)
+            ->getQuery()
+            ->getResult();
+    }
 }

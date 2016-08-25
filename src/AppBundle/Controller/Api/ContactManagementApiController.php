@@ -49,6 +49,7 @@ class ContactManagementApiController extends Controller
                         $data['contact']['contactDateTime'] =  gmdate('Y-m-d H:i:s');
                         $data['contact']['messages'][0]['messageDateTime'] =  gmdate('Y-m-d H:i:s');
                         $data['contact']['messages'][0]['user'] =  $userId;
+                        $data['contact']['messages'][0]['messageType'] =  "BuyerToSellerMessage";
                         $data['contact']['buyer']=$userId;
 
 
