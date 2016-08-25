@@ -40,7 +40,18 @@ class ContactManagementApiController extends Controller
 
                     $em = $this->getDoctrine()->getManager();
                     $contactRepo = $em->getRepository("AppBundle:Contact");
+                    $bookDealRepo = $em->getRepository("AppBundle:BookDeal");
                     $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
+
+
+                    //Check If its his own Deal
+                    $bookDealForContact = $bookDealRepo->findOneById($data['contact']['bookDeal']);
+                    if($bookDealForContact->getSeller()->getId()==$userId){
+                        return $this->_createJsonResponse('error', array(
+                            'errorTitle' => "Can't contact yourself",
+                            'errorDescription' => "You can't contact for your own textbook deal."
+                        ), 400);
+                    }
 
                     //Check If Already Contacted
                     if(!$contactRepo->alreadyContacted($data['contact'],$userId)){
