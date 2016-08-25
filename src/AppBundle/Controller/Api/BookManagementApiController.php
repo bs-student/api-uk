@@ -888,13 +888,13 @@ class BookManagementApiController extends Controller
         if (!empty($item->MediumImage->URL)) {
             $book_image_medium_url = (string)$item->MediumImage->URL;
         } else {
-            $book_image_medium_url = './images/misc/no_picture_100x125.jpg';
+            $book_image_medium_url = $_SERVER['HTTP_ORIGIN'].$_SERVER['BASE'].'/assets/images/no_image.jpg';
         }
 
         if (!empty($item->LargeImage->URL)) {
             $book_image_large_url = (string)$item->LargeImage->URL;
         } else {
-            $book_image_large_url = './images/misc/no_picture_100x125.jpg';
+            $book_image_large_url = $_SERVER['HTTP_ORIGIN'].$_SERVER['BASE'].'/assets/images/no_image.jpg';
         }
 
         //Getting Description
