@@ -869,9 +869,9 @@ class BookDealManagementApiController extends Controller
     }
 
     /**
-     * Get All Activated Selling and Contacted Book Deals of User
+     * Get All Activated Selling and Contacted and Sold and Bought Book Deals of User
      */
-    public function getAllActivatedSellingAndContactedBookOfUserAction(Request $request){
+    public function getAllActivatedDealsForMessageBoardAction(Request $request){
 
         $userEntity = $this->container->get('security.token_storage')->getToken()->getUser();
 
@@ -923,6 +923,10 @@ class BookDealManagementApiController extends Controller
             }
 
 
+
+
+
+
             //Getting Contacted Book Deals
             $contactedBookDeals = $bookDealRepo->getAllActivatedContactedBookOfUser($userEntity->getId());
 
@@ -965,13 +969,109 @@ class BookDealManagementApiController extends Controller
 
             }
 
+
+
+
+            //Getting Sold Book Deals
+            $soldBookDeals = $bookDealRepo->getAllActivatedSoldBookOfUser($userEntity->getId());
+
+            //Set Subtitle For Selling Book Deals
+            for ($i = 0; $i < count($soldBookDeals); $i++) {
+                //Setting deal type selling or contacted
+                $soldBookDeals[$i]['dealType']="soldDeal";
+
+                //Setting Subtitle
+                $soldBookDeals[$i]['contacts'] = array();
+                if (strpos($soldBookDeals[$i]['bookTitle'], ":")) {
+                    $soldBookDeals[$i]['bookSubTitle'] = substr($soldBookDeals[$i]['bookTitle'], strpos($soldBookDeals[$i]['bookTitle'], ":") + 2);
+                    $soldBookDeals[$i]['bookTitle'] = substr($soldBookDeals[$i]['bookTitle'], 0, strpos($soldBookDeals[$i]['bookTitle'], ":"));
+                }
+            }
+            //Getting Contacts For Selling Book Deals
+            $contacts = $bookDealRepo->getBuyerContactsOfBookDeals($soldBookDeals);
+
+            //Adding Contacts according to deals
+            if($contacts==null){
+                $contacts=array();
+            }
+            foreach ($contacts as $contact) {
+                for ($i = 0; $i < count($soldBookDeals); $i++) {
+
+                    if ((int)$contact['bookDealId'] == (int)$soldBookDeals[$i]['bookDealId']) {
+
+                        if ($contact['buyerNickName'] == null) {
+                            $user = $userRepo->findById((int)$contact['buyerId']);
+                            $contact['contactName'] = $user[0]->getUsername();
+                        }
+                        $contact['contactEmail'] = $contact['buyerEmail'];
+                        $date = $contact['contactDateTime']->format('H:i d M Y');
+
+                        $contact['contactDateTimeFormatted']=$date;
+
+                        array_push($soldBookDeals[$i]['contacts'], $contact);
+                    }
+                }
+            }
+
+
+
+
+
+
+            //Getting Bought Book Deals
+            $boughtBookDeals = $bookDealRepo->getAllActivatedBoughtBookOfUser($userEntity->getId());
+
+            //Set Subtitle in Book
+            for ($i = 0; $i < count($boughtBookDeals); $i++) {
+                //Setting deal type selling or contacted
+                $boughtBookDeals[$i]['dealType']="boughtDeal";
+
+                //Setting Subtitle
+                $boughtBookDeals[$i]['contacts'] = array();
+                if (strpos($boughtBookDeals[$i]['bookTitle'], ":")) {
+                    $boughtBookDeals[$i]['bookSubTitle'] = substr($boughtBookDeals[$i]['bookTitle'], strpos($boughtBookDeals[$i]['bookTitle'], ":") + 2);
+                    $boughtBookDeals[$i]['bookTitle'] = substr($boughtBookDeals[$i]['bookTitle'], 0, strpos($boughtBookDeals[$i]['bookTitle'], ":"));
+                }
+
+            }
+
+            //Getting Contacts
+            $contacts = $bookDealRepo->getContactsOfBookDeals($boughtBookDeals);
+            //Adding Contacts according to deals
+            if($contacts==null){
+                $contacts=array();
+            }
+            foreach ($contacts as $contact) {
+
+                for ($i = 0; $i < count($boughtBookDeals); $i++) {
+
+                    if ((int)$contact['bookDealId'] == (int)$boughtBookDeals[$i]['bookDealId'] && $contact['buyerId']==$userEntity->getId()) {
+
+                        $contact['profilePicture'] = $boughtBookDeals[$i]['sellerProfilePicture'];
+                        $contact['contactName'] = $boughtBookDeals[$i]['sellerUsername'];
+                        $contact['contactEmail'] = $boughtBookDeals[$i]['sellerEmail'];
+                        $date = $contact['contactDateTime']->format('H:i d M Y');
+
+                        $contact['contactDateTimeFormatted']=$date;
+
+                        array_push($boughtBookDeals[$i]['contacts'], $contact);
+                    }
+                }
+
+            }
+
+
+
+
             //Merging and sorting array
-            $bookDeals =array_merge($sellingBookDeals,$contactedBookDeals);
+            $bookDeals =array_merge($sellingBookDeals,$contactedBookDeals,$soldBookDeals,$boughtBookDeals);
             $deals=array();
 
             for($i=0;$i<count($bookDeals);$i++){
-                $deals[$bookDeals[$i]['bookDealId']."_".$i]=$bookDeals[$i];
+                $val = str_pad($bookDeals[$i]['bookDealId'], 10, "0", STR_PAD_LEFT);
+                $deals[$val]=$bookDeals[$i];
             }
+
             krsort($deals);
             $newArray=array();
             foreach($deals as $deal){

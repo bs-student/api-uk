@@ -391,9 +391,9 @@ get_activated_book_deal_of_user:
     defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getActivatedBookDealOfUser}
     methods: [POST]
 
-get_all_activated_selling_and_contacted_book_of_user:
-    path: /api/book_del/get_all_activated_selling_and_contacted_book_of_user
-    defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getAllActivatedSellingAndContactedBookOfUser}
+get_all_activated_deals_for_message_board:
+    path: /api/book_del/get_all_activated_deals_for_message_board
+    defaults:  {_controller: AppBundle:Api/BookDealManagementApi:getAllActivatedDealsForMessageBoard}
     methods: [POST]
 
 get_all_data_for_new_contact_in_message_board:
