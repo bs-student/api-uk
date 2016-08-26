@@ -256,7 +256,7 @@ class BookManagementApiController extends Controller
                     'sellerToBuyer' => array(),
                     'student2studentBoard' => array(),
                 );
-                $onCampusDeals = $bookDealRepo->getCampusDealsByIsbn($data['isbn'], $data['campusId']);
+                $onCampusDeals = $bookDealRepo->getPublicCampusDealsByIsbn($data['isbn'], $data['campusId']);
 
                 //Increase View Counter
                 if(count($onCampusDeals)>0){

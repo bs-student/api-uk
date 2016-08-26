@@ -82,6 +82,39 @@ class BookDealRepository extends EntityRepository
 
     }
 
+    function getPublicCampusDealsByIsbn($isbn,$campusId=null){
+        if($campusId == null){
+            return null;
+        }
+
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder('b')
+            ->select('b.id as bookId, bd.id as bookDealId,b.bookIsbn10, b.bookTitle, u.username, bd.bookPriceSell, bd.bookIsHighlighted, bd.bookHasNotes,
+                    bd.bookComment,bd.bookContactMethod,bd.bookPaymentMethodCaShOnExchange,bd.bookPaymentMethodCheque,
+                    bd.bookIsAvailablePublic,bd.bookAvailableDate,c.campusName,un.universityName,s.stateName,s.stateShortName,
+                    co.countryName')
+
+            ->from('AppBundle:Book', 'b')
+            ->innerJoin('AppBundle:BookDeal', 'bd', 'WITH', 'b.id = bd.book')
+            ->innerJoin('AppBundle:User', 'u', 'WITH', 'u.id = bd.seller')
+            ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'c.id = u.campus')
+            ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
+            ->innerJoin('AppBundle:State', 's', 'WITH', 's.id = c.state')
+            ->innerJoin('AppBundle:Country', 'co', 'WITH', 'co.id = s.country')
+            ->andwhere('b.bookIsbn10 = :isbn')
+            ->andwhere('bd.bookIsAvailablePublic = ' . "'Yes'")
+            ->andwhere('bd.bookStatus = ' . "'Activated'")
+            ->andwhere('bd.bookSellingStatus = ' . "'Selling'")
+            ->setParameter('isbn', $isbn);
+        if ($campusId != null) {
+            $qb->andwhere('u.campus = :campusId')
+                ->setParameter('campusId', $campusId);
+        }
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
     function getBooksIHaveContactedFor($userId,$pageNumber,$pageSize)
     {
         $firstResult = ($pageNumber - 1) * $pageSize;

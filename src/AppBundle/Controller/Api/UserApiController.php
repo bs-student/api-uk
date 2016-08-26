@@ -104,7 +104,8 @@ class UserApiController extends Controller
                 'standardHomePhone' => $user->getStandardHomePhone(),
                 'standardCellPhone' => $user->getStandardCellPhone(),
                 'standardEmail' => $user->getStandardEmail(),
-                'role'=>$user->getRoles()
+                'role'=>$user->getRoles(),
+                'campusDisplay'=>$user->getCampus()?$user->getCampus()->getUniversity()->getUniversityname().", ".$user->getCampus()->getCampusName().", ".$user->getCampus()->getState()->getStateShortName().", ".$user->getCampus()->getState()->getCountry()->getCountryName():'',
             );
 
 
