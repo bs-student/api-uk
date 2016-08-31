@@ -73,7 +73,7 @@ class BookDeal
     /**
      * @var boolean
      */
-    private $bookPaymentMethodCaShOnExchange;
+    private $bookPaymentMethodCashOnExchange;
 
     /**
      * @var boolean
@@ -361,28 +361,7 @@ class BookDeal
         return $this->bookIsAvailablePublic;
     }
 
-    /**
-     * Set bookPaymentMethodCaShOnExchange
-     *
-     * @param boolean $bookPaymentMethodCaShOnExchange
-     * @return BookDeal
-     */
-    public function setBookPaymentMethodCaShOnExchange($bookPaymentMethodCaShOnExchange)
-    {
-        $this->bookPaymentMethodCaShOnExchange = $bookPaymentMethodCaShOnExchange;
 
-        return $this;
-    }
-
-    /**
-     * Get bookPaymentMethodCaShOnExchange
-     *
-     * @return boolean 
-     */
-    public function getBookPaymentMethodCaShOnExchange()
-    {
-        return $this->bookPaymentMethodCaShOnExchange;
-    }
 
     /**
      * Set bookPaymentMethodCheque
@@ -656,5 +635,28 @@ class BookDeal
     public function getBookSubmittedDateTime()
     {
         return $this->bookSubmittedDateTime;
+    }
+
+    /**
+     * Set bookPaymentMethodCashOnExchange
+     *
+     * @param boolean $bookPaymentMethodCashOnExchange
+     * @return BookDeal
+     */
+    public function setBookPaymentMethodCashOnExchange($bookPaymentMethodCashOnExchange)
+    {
+        $this->bookPaymentMethodCashOnExchange = $bookPaymentMethodCashOnExchange;
+
+        return $this;
+    }
+
+    /**
+     * Get bookPaymentMethodCashOnExchange
+     *
+     * @return boolean 
+     */
+    public function getBookPaymentMethodCashOnExchange()
+    {
+        return $this->bookPaymentMethodCashOnExchange;
     }
 }

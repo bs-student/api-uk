@@ -81,7 +81,7 @@ AppBundle\Entity\BookDeal:
             nullable: false
             type: string
             length: '5'
-        bookPaymentMethodCaShOnExchange:
+        bookPaymentMethodCashOnExchange:
             nullable: true
             type: boolean
         bookPaymentMethodCheque:
