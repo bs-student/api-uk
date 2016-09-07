@@ -288,4 +288,95 @@ class DBManagementController extends Controller
         die();
     }
 
+    public function getBookImagesFromAmazonAction(){
+        $fileDir = '/../web/bookImages/';
+        $fileNameDir = '/bookImages/';
+        $fileDirHost = $this->container->getParameter('kernel.root_dir');
+
+        $em = $this->getDoctrine()->getManager();
+        $connection = $em->getConnection();
+
+        $statement = $connection->prepare(
+            'SELECT
+              id,book_image
+            FROM books limit 1000 OFFSET 6000'
+        );
+        $statement->execute();
+        $result = $statement->fetchAll();
+
+//        $query = 'UPDATE books SET book_image = CASE';
+
+        foreach($result as $row){
+            if($row['book_image']==null){
+                //Book Image Not Found
+                $row['book_image'] = $fileNameDir."no_image.jpg";
+
+                var_dump(">>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                echo "<br/>";
+                var_dump($row['book_image']);
+                echo "<br/>";
+            }else{
+                //Curl for Image
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $row['book_image']);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                $imageOutput = curl_exec($ch);
+                curl_close($ch);
+
+                if(strpos($imageOutput,'Not Found')!==false || $imageOutput==''){
+                    //No Image Found
+                    $row['book_image'] = $fileNameDir."no_image.jpg";
+
+                    var_dump(">>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                    echo "<br/>";
+                }else{
+
+                    //Image Found
+                    $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . ".jpg";
+                    $fp = fopen($fileDirHost . $fileDir . $fileSaveName, 'x');
+                    fwrite($fp, $imageOutput);
+                    fclose($fp);
+                    $row['book_image'] = $fileNameDir . $fileSaveName;
+                }
+                var_dump($row['book_image']);
+                echo "<br/>";
+
+            }
+
+            $fa = fopen($fileDirHost . $fileDir . "file.txt", 'a+');
+            fwrite($fa,$row['id'].",".$row['book_image']."\r\n");
+            fclose($fa);
+        }
+
+
+        die();
+
+    }
+
+
+    public function updateBookTableForPicturesAction(){
+        $fileDir = '/../web/bookImages/';
+        $fileDirHost = $this->container->getParameter('kernel.root_dir');
+
+        $fa = fopen($fileDirHost . $fileDir . "file.txt", 'r');
+
+        $query = 'UPDATE books SET book_image = CASE <br/>';
+
+        while(! feof($fa))
+        {
+            $line = fgets($fa);
+            $id = substr($line,0,strpos($line, ","));
+            $bookImage =  substr($line,strpos($line, ",")+1,strpos($line, "\r\n")-1);
+//            var_dump($id);
+//            var_dump($bookImage);
+
+            $query.= ' WHEN id = '.$id.' THEN "'.$bookImage.'" <br/>';
+
+        }
+        $query.='<br/> ELSE book_image <br/>
+            END;';
+       echo($query);
+       die();
+    }
+
 }

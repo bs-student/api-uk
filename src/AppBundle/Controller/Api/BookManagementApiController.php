@@ -163,7 +163,14 @@ class BookManagementApiController extends Controller
         }
 
         $addToCartAmazonUrl = $this->_addToCartAmazonUrl($bookOfferId);
-        $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($addToCartAmazonUrl, null, null));
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $addToCartAmazonUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $xmlOutput  = curl_exec($ch);
+        curl_close($ch);
+
+//        $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($addToCartAmazonUrl, null, null));
 
 
         $fileContents = str_replace(array("\n", "\r", "\t"), '', $xmlOutput);
@@ -356,7 +363,13 @@ class BookManagementApiController extends Controller
                 if(!strcmp('newSellBook',$bookData['bookType'])){
 
                     //Insert Book Image from amazon
-                    $imageOutput = $this->get('api_caller')->call(new HttpGetHtml($bookData['bookImage'], null, null));
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $bookData['bookImage']);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                    $imageOutput  = curl_exec($ch);
+                    curl_close($ch);
+//                    $imageOutput = $this->get('api_caller')->call(new HttpGetHtml($bookData['bookImage'], null, null));
+
                     $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . ".jpg";
                     $fp = fopen($fileDirHost . $fileDir . $fileSaveName, 'x');
                     fwrite($fp, $imageOutput);
@@ -472,7 +485,11 @@ class BookManagementApiController extends Controller
         $getUrl = $this->_getUrlWithSignature($amazonCredentials);
 
 
-        $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($getUrl, null, null));
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $getUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $xmlOutput  = curl_exec($ch);
+        curl_close($ch);
 
         $booksArray = $this->_parseMultipleBooksAmazonXmlResponse($xmlOutput);
 
@@ -567,7 +584,14 @@ class BookManagementApiController extends Controller
         $amazonCredentials['params']["ItemId"] = $asin;
         $amazonCredentials['params']["ResponseGroup"] = "Medium,Offers";
         $getUrl = $this->_getUrlWithSignature($amazonCredentials);
-        $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($getUrl, null, null));
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $getUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $xmlOutput  = curl_exec($ch);
+        curl_close($ch);
+
+//        $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($getUrl, null, null));
 
         $booksArray = $this->_parseMultipleBooksAmazonXmlResponse($xmlOutput);
 
@@ -679,7 +703,14 @@ class BookManagementApiController extends Controller
             $fileDir = '/../web/bookImages/';
             $fileNameDir = '/bookImages/';
 
-            $imageOutput = $this->get('api_caller')->call(new HttpGetHtml($book['bookImages'][0]['image'], null, null));
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $book['bookImages'][0]['image']);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            $imageOutput   = curl_exec($ch);
+            curl_close($ch);
+
+
+//            $imageOutput = $this->get('api_caller')->call(new HttpGetHtml($book['bookImages'][0]['image'], null, null));
             $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . ".jpg";
             $fp = fopen($fileDirHost . $fileDir . $fileSaveName, 'x');
             fwrite($fp, $imageOutput);
@@ -727,8 +758,13 @@ class BookManagementApiController extends Controller
 
         $getUrl = $this->_getUrlWithSignature($amazonCredentials);
 
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $getUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $xmlOutput  = curl_exec($ch);
+        curl_close($ch);
 
-        $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($getUrl, null, null));
+//        $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($getUrl, null, null));
 
         $booksArray = $this->_parseMultipleBooksAmazonXmlResponse($xmlOutput);
 
@@ -787,7 +823,13 @@ class BookManagementApiController extends Controller
 
         $url = $host . $uri . "?key=" . $apiKey . "&isbn=" . $isbn . "&format=json";
 
-        $jsonOutput = $this->get('api_caller')->call(new HttpGetHtml($url, null, null));
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $jsonOutput  = curl_exec($ch);
+        curl_close($ch);
+
+//        $jsonOutput = $this->get('api_caller')->call(new HttpGetHtml($url, null, null));
 
         $arrayData = (json_decode($jsonOutput, true));
 
@@ -811,7 +853,13 @@ class BookManagementApiController extends Controller
 
         $url = $host . $uri . "?key=" . $apiKey . "&isbn=" . $isbn;
 
-        $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($url, null, null));
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $xmlOutput  = curl_exec($ch);
+        curl_close($ch);
+
+//        $xmlOutput = $this->get('api_caller')->call(new HttpGetHtml($url, null, null));
 
 
         $fileContents = str_replace(array("\n", "\r", "\t"), '', $xmlOutput);

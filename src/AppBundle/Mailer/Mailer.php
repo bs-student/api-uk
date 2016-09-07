@@ -380,7 +380,7 @@ class Mailer extends BaseClass
         $message1 = \Swift_Message::newInstance();
         $rendered = $this->templating->render("mail_templates/contact_us_email.html.twig",$data);
         $message1->setBody($rendered,'text/html');
-        $this->_sendMail($message1,"Student2Student: Contact Message",$this->parameters['from_email']['resetting'], 'oliver.berchtold@web-care.ch');
+        $this->_sendContactUsMail($message1,"Student2Student: Contact Message",$this->parameters['from_email']['resetting'], 'sujit@brainstation-23.com');
     }
 
     function sendFriendsEmail($data){
@@ -455,9 +455,9 @@ class Mailer extends BaseClass
 //    }
 
     public function _sendMail($message,$subject,$from,$to){
-        $transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')
-            ->setUsername('sujit.developer.136663@gmail.com')
-            ->setPassword('maniac.sujit');
+        $transport = \Swift_SmtpTransport::newInstance('smtp.student2student.com', 25)
+            ->setUsername('no-reply@student2student.com')
+            ->setPassword('wWoc$868');
 
         $mailer = \Swift_Mailer::newInstance($transport);
 
@@ -467,11 +467,23 @@ class Mailer extends BaseClass
             ->setTo($to);
         $mailer->send($message);
     }
+    public function _sendContactUsMail($message,$subject,$from,$to){
+        $transport = \Swift_SmtpTransport::newInstance('smtp.student2student.com', 25)
+            ->setUsername('no-reply@student2student.com')
+            ->setPassword('wWoc$868');
 
+        $mailer = \Swift_Mailer::newInstance($transport);
+
+        $message
+            ->setSubject($subject)
+            ->setFrom($from)
+            ->setTo($to);
+        $mailer->send($message);
+    }
     public function _sendMailToMultiple($message,$subject,$from,$toes){
-        $transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')
-            ->setUsername('sujit.developer.136663@gmail.com')
-            ->setPassword('maniac.sujit');
+        $transport = \Swift_SmtpTransport::newInstance('smtp.student2student.com', 25)
+            ->setUsername('no-reply@student2student.com')
+            ->setPassword('wWoc$868');
 
         $mailer = \Swift_Mailer::newInstance($transport);
 

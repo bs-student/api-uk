@@ -621,3 +621,13 @@ add_book_deal_to_star_list:
 #    path: /add_messages_from_old_to_new
 #    defaults:  {_controller: AppBundle:DBManagement:addMessagesFromOldToNew}
 #    methods: [GET]
+
+#get_book_images:
+#    path: /get_book_images_from_amazon
+#    defaults:  {_controller: AppBundle:DBManagement:getBookImagesFromAmazon}
+#    methods: [GET]
+
+#update_book_database_for_images:
+#    path: /update_book_database_for_images
+#    defaults:  {_controller: AppBundle:DBManagement:updateBookTableForPictures}
+#    methods: [GET]
