@@ -29,7 +29,7 @@ class Mailer extends BaseClass
     public function sendConfirmationEmailMessage(UserInterface $user)
     {
         $message = \Swift_Message::newInstance();
-        $url = "http://168.61.173.224:8080/Student2Student/#/confirmRegistration/".$user->getConfirmationToken();
+        $url = "http://test.student2student.com/#/confirmRegistration/".$user->getConfirmationToken();
         $data = array(
             'user' => $user->getUsername(),
             'confirmationUrl' =>  $url,
@@ -51,7 +51,7 @@ class Mailer extends BaseClass
     {
 
         $message = \Swift_Message::newInstance();
-        $url = "http://168.61.173.224:8080/Student2Student/#/resetPassword/".$user->getConfirmationToken();
+        $url = "http://test.student2student.com/#/resetPassword/".$user->getConfirmationToken();
         $data = array(
             'user' => $user->getUsername(),
             'confirmationUrl' =>  $url,
@@ -285,6 +285,8 @@ class Mailer extends BaseClass
 
     public function _buyerToSellerMessageMail($data){
 
+        $sellerMailAddress = $data['bookDeal']->getBookContactEmail()==''?$data['seller']->getEmail():$data['bookDeal']->getBookContactEmail();
+
         if(!strcmp("On",$data['seller']->getEmailNotification())){
 
             $message1 = \Swift_Message::newInstance();
@@ -296,7 +298,7 @@ class Mailer extends BaseClass
             $rendered = $this->templating->render("mail_templates/buyer_to_seller_message_mail_to_seller.html.twig",$data);
 
             $message1->setBody($rendered,'text/html');
-            $this->_sendMail($message1,"Student2Student: Buyer ( ".$data['buyer']." ) Sent you message",$this->parameters['from_email']['resetting'], $data['bookDeal']->getBookContactEmail());
+            $this->_sendMail($message1,"Student2Student: Buyer ( ".$data['buyer']." ) Sent you message",$this->parameters['from_email']['resetting'], $sellerMailAddress);
         }
 
 
@@ -329,6 +331,8 @@ class Mailer extends BaseClass
     }
 
     public function _sellerToBuyerMessageMail($data){
+
+        $sellerMailAddress = $data['bookDeal']->getBookContactEmail()==''?$data['seller']->getEmail():$data['bookDeal']->getBookContactEmail();
 
         if($data['buyerEntity'] instanceof User){
             if(!strcmp("On",$data['buyerEntity']->getEmailNotification())){
@@ -368,7 +372,7 @@ class Mailer extends BaseClass
             $rendered = $this->templating->render("mail_templates/seller_to_buyer_message_mail_to_seller.html.twig",$data);
 
             $message2->setBody($rendered,'text/html');
-            $this->_sendMail($message2,"Student2Student: Message sent to Buyer ( ".$data['buyer']." )",$this->parameters['from_email']['resetting'], $data['bookDeal']->getBookContactEmail());
+            $this->_sendMail($message2,"Student2Student: Message sent to Buyer ( ".$data['buyer']." )",$this->parameters['from_email']['resetting'], $sellerMailAddress);
 
         }
 
@@ -380,7 +384,7 @@ class Mailer extends BaseClass
         $message1 = \Swift_Message::newInstance();
         $rendered = $this->templating->render("mail_templates/contact_us_email.html.twig",$data);
         $message1->setBody($rendered,'text/html');
-        $this->_sendContactUsMail($message1,"Student2Student: Contact Message",$this->parameters['from_email']['resetting'], 'sujit@brainstation-23.com');
+        $this->_sendContactUsMail($message1,"Student2Student: Contact Message",$this->parameters['from_email']['resetting'], 'support@student2student.com');
     }
 
     function sendFriendsEmail($data){
@@ -463,7 +467,7 @@ class Mailer extends BaseClass
 
         $message
             ->setSubject($subject)
-            ->setFrom($from)
+            ->setFrom('no-reply@student2student.com')
             ->setTo($to);
         $mailer->send($message);
     }
@@ -476,7 +480,7 @@ class Mailer extends BaseClass
 
         $message
             ->setSubject($subject)
-            ->setFrom($from)
+            ->setFrom('no-reply@student2student.com')
             ->setTo($to);
         $mailer->send($message);
     }
@@ -489,12 +493,12 @@ class Mailer extends BaseClass
 
         $message
             ->setSubject($subject)
-            ->setFrom($from);
+            ->setFrom('no-reply@student2student.com');
 
         foreach($toes as $to){
             $message->addBcc($to['email']);
         }
-        $message->setTo('sujit.developer.136663@gmail.com');
+        $message->setTo('no-reply@student2student.com');
 
         $mailer->send($message);
     }
