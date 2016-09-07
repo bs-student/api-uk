@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="992c5a8c-cd64-41e9-9383-a47a89a328fa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php" afterPath="$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/services.yml" afterPath="$PROJECT_DIR$/app/config/services.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Student2StudentApi.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,55 +25,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ContactManagementApiController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/ContactManagementApiController.php">
+      <file leaf-file-name="app_routing.yml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="314" column="75" selection-start="15369" selection-end="15397" vertical-scroll-proportion="0.0" vertical-offset="5338" max-vertical-offset="7242">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="parameters.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config/parameters.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="49" selection-start="310" selection-end="310" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routing.yml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="922">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routing_dev.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config/routing_dev.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="security.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config/security.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="914" max-vertical-offset="1836">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="services.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config/services.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="39" selection-start="1344" selection-end="1344" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="2754">
+            <state line="75" column="67" selection-start="2000" selection-end="2010" vertical-scroll-proportion="-11.96" vertical-offset="976" max-vertical-offset="10863">
               <folding />
             </state>
           </provider>
@@ -84,8 +37,9 @@
       <file leaf-file-name="Mailer.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="2" selection-start="63" selection-end="63" vertical-scroll-proportion="-2.6153846" vertical-offset="0" max-vertical-offset="8721">
+            <state line="21" column="19" selection-start="573" selection-end="581" vertical-scroll-proportion="-5.8846154" vertical-offset="204" max-vertical-offset="8721">
               <folding>
+                <element signature="e#7#259#0" expanded="true" />
                 <element signature="e#290#316#0" expanded="true" />
               </folding>
             </state>
@@ -95,25 +49,25 @@
       <file leaf-file-name="config.yml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/config/config.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="22" selection-start="783" selection-end="783" vertical-scroll-proportion="0.0" vertical-offset="1390" max-vertical-offset="3995">
+            <state line="21" column="22" selection-start="783" selection-end="783" vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="3995">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config_prod.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config/config_prod.yml">
+      <file leaf-file-name="services.yml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/config/services.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
+            <state line="27" column="39" selection-start="1344" selection-end="1344" vertical-scroll-proportion="0.17873304" vertical-offset="301" max-vertical-offset="2754">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config_dev.yml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config/config_dev.yml">
+      <file leaf-file-name="SocialRegistrationController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/SocialRegistrationController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="918">
+            <state line="44" column="42" selection-start="1388" selection-end="1388" vertical-scroll-proportion="-13.076923" vertical-offset="0" max-vertical-offset="7548">
               <folding />
             </state>
           </provider>
@@ -851,11 +805,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/doctrine/User.orm.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="24" selection-start="2554" selection-end="2554" vertical-scroll-proportion="0.0" vertical-offset="1258" max-vertical-offset="2159" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/mail_templates/buyer_to_seller_message_mail_to_buyer.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="25.5" vertical-offset="663" max-vertical-offset="3094" />
@@ -993,7 +942,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/leaseweb/api-caller-bundle/Lsw/ApiCallerBundle/Call/HttpGetHtml.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="51" selection-start="1035" selection-end="1047" vertical-scroll-proportion="0.0" vertical-offset="260" max-vertical-offset="1156" />
+        <state line="42" column="51" selection-start="1035" selection-end="1047" vertical-scroll-proportion="0.0" vertical-offset="260" max-vertical-offset="1156">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/ResettingController.php">
@@ -1070,36 +1021,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="333" column="76" selection-start="9825" selection-end="9837" vertical-scroll-proportion="0.0" vertical-offset="5243" max-vertical-offset="10863">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/ContactManagementApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="314" column="75" selection-start="15369" selection-end="15397" vertical-scroll-proportion="0.0" vertical-offset="5338" max-vertical-offset="7242">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="2" selection-start="63" selection-end="63" vertical-scroll-proportion="-2.6153846" vertical-offset="0" max-vertical-offset="8721">
-          <folding>
-            <element signature="e#290#316#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="22" selection-start="783" selection-end="783" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3995">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/config/config_prod.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="922">
@@ -1114,9 +1035,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/parameters.yml">
+    <entry file="file://$PROJECT_DIR$/app/config/security.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="49" selection-start="310" selection-end="310" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1836">
           <folding />
         </state>
       </provider>
@@ -1128,23 +1049,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/security.yml">
+    <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1836">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="922">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/parameters.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="49" selection-start="310" selection-end="310" vertical-scroll-proportion="0.16594361" vertical-offset="0" max-vertical-offset="922">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/Api/ContactManagementApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="287" column="33" selection-start="14154" selection-end="14167" vertical-scroll-proportion="-0.023310022" vertical-offset="4542" max-vertical-offset="6885">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="22" selection-start="783" selection-end="783" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3995">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Mailer/Mailer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="19" selection-start="573" selection-end="581" vertical-scroll-proportion="-5.8846154" vertical-offset="204" max-vertical-offset="8721">
+          <folding>
+            <element signature="e#7#259#0" expanded="true" />
+            <element signature="e#290#316#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Resources/config/app_routing.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="75" column="67" selection-start="2000" selection-end="2010" vertical-scroll-proportion="-11.96" vertical-offset="976" max-vertical-offset="10863">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/SocialRegistrationController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="42" selection-start="1388" selection-end="1388" vertical-scroll-proportion="-13.076923" vertical-offset="0" max-vertical-offset="7548">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/config/services.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="39" selection-start="1344" selection-end="1344" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="2754">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="922">
+        <state line="27" column="39" selection-start="1344" selection-end="1344" vertical-scroll-proportion="0.17873304" vertical-offset="301" max-vertical-offset="2754">
           <folding />
         </state>
       </provider>

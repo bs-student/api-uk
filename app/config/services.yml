@@ -33,8 +33,8 @@ parameters:
             host: "https://www.google.com/recaptcha/api/siteverify"
             secret: "6LeMeykTAAAAAGkVzMSHjJCBxAP_LmQ4BdmEm0YI"
     google_app_info:
-            client_id: "799265882325-g4jnl097bbst3popc0ainrstrtelicbk.apps.googleusercontent.com"
-            client_secret: "ecwlOs7uqXfte2kPoJLYxIpY"
+            client_id: "19322012790-7i3k71ps5r6cujo4h87j9husfvjombsn.apps.googleusercontent.com"
+            client_secret: "BiJIVDdNpq9MhyfEIyEyrp72"
     facebook_app_info:
             client_id: "1570785423241368"
             client_secret: "f2f0e7dd876ddd0ca62463619347767e"
