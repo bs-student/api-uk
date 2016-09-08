@@ -36,8 +36,8 @@ parameters:
             client_id: "19322012790-7i3k71ps5r6cujo4h87j9husfvjombsn.apps.googleusercontent.com"
             client_secret: "BiJIVDdNpq9MhyfEIyEyrp72"
     facebook_app_info:
-            client_id: "1570785423241368"
-            client_secret: "f2f0e7dd876ddd0ca62463619347767e"
+            client_id: "214816590624"
+            client_secret: "e88addcbad3ec32a03c135b7a9050b43"
 #    firebase_info:
 #            databaseUrl: "https://student2student-1205.firebaseio.com/"
 #            type: "service_account"
