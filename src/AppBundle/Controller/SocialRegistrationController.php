@@ -42,30 +42,51 @@ class SocialRegistrationController extends Controller
         $requestJson = $request->getContent();
         $requestData = json_decode($requestJson, true);
 
-        $client = new GuzzleHttp\Client();
+        $params = array(
 
-        $params = [
             'code' => $requestData['code'],
             'client_id' => $requestData['clientId'],
             'client_secret' => $this->container->getParameter('google_app_info')['client_secret'],
             'redirect_uri' => $requestData['redirectUri'],
-            'grant_type' => 'authorization_code',
-        ];
+            'grant_type' => 'authorization_code'
+
+        );
+
+
 
 
         // Step 1. Exchange authorization code for access token.
 
-        $accessTokenResponse = $client->request('POST', 'https://accounts.google.com/o/oauth2/token', [
-            'form_params' => $params
-        ]);
-        $accessToken = json_decode($accessTokenResponse->getBody(), true);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,"https://accounts.google.com/o/oauth2/token");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $accessTokenResponse = curl_exec($ch);
+        curl_close($ch);
 
+        $accessToken = json_decode($accessTokenResponse, true);
 
         // Step 2. Retrieve profile information about the current user.
-        $profileResponse = $client->request('GET', 'https://www.googleapis.com/plus/v1/people/me/openIdConnect', [
-            'headers' => array('Authorization' => 'Bearer ' . $accessToken['access_token'])
-        ]);
-        $profile = json_decode($profileResponse->getBody(), true);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,"https://www.googleapis.com/plus/v1/people/me/openIdConnect");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization' => 'Bearer ' . $accessToken['access_token']));
+        $profileResponse = curl_exec($ch);
+        curl_close($ch);
+
+        var_dump($profileResponse);
+        die();
+
+
+
+
+//        $profileResponse = $client->request('GET', 'https://www.googleapis.com/plus/v1/people/me/openIdConnect', [
+//            'headers' =>
+//        ]);
+//        $profile = json_decode($profileResponse->getBody(), true);
 
 
 
@@ -205,31 +226,39 @@ class SocialRegistrationController extends Controller
         $requestJson = $request->getContent();
         $requestData = json_decode($requestJson, true);
 
-        $client = new GuzzleHttp\Client();
-        $params = [
+        // Step 1. Exchange authorization code for access token.
+
+        $params=array(
             'code' => $requestData['code'],
             'client_id' => $requestData['clientId'],
             'client_secret' => $this->container->getParameter('facebook_app_info')['client_secret'],
             'redirect_uri' => $requestData['redirectUri']
-        ];
+        );
 
-        // Step 1. Exchange authorization code for access token.
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,"https://graph.facebook.com/v2.5/oauth/access_token");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $accessTokenResponse = curl_exec($ch);
+        curl_close($ch);
 
-        $accessTokenResponse = $client->request('GET', 'https://graph.facebook.com/v2.5/oauth/access_token', [
-            'query' => $params
-        ]);
-        $accessToken = json_decode($accessTokenResponse->getBody(), true);
+        $accessToken = json_decode($accessTokenResponse, true);
+
+
 
         // Step 2. Retrieve profile information about the current user.
 
         $fields = 'id,email,first_name,last_name,link,name';
-        $profileResponse = $client->request('GET', 'https://graph.facebook.com/v2.5/me', [
-            'query' => [
-                'access_token' => $accessToken['access_token'],
-                'fields' => $fields
-            ]
-        ]);
-        $profile = json_decode($profileResponse->getBody(), true);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,"https://graph.facebook.com/v2.5/me?access_token=".$accessToken['access_token']."&fields=".$fields);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $profileResponse = curl_exec($ch);
+        curl_close($ch);
+
+
+        $profile = json_decode($profileResponse, true);
 
 
         // Step 3a. If user is already signed in then link accounts.

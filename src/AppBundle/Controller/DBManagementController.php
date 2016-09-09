@@ -81,7 +81,7 @@ class DBManagementController extends Controller
 			gl_book.book_image_large_url,
 			gl_book.book_price_amazon_new
 
-            FROM gl_book'
+            FROM gl_book limit 9000 offset 6501'
         );
         $statement->execute();
         $affected_rows = $statement->rowCount();
@@ -134,7 +134,7 @@ class DBManagementController extends Controller
                       "No"
                  END)
 
-            FROM gl_info_members'
+            FROM gl_info_members limit 5000 offset 5954'
         );
         $statement->execute();
         $affected_rows = $statement->rowCount();
@@ -219,7 +219,7 @@ class DBManagementController extends Controller
                  END),
 			gl_sell_book.cleanup_notification_last_contact_deal
 
-            FROM gl_sell_book'
+            FROM gl_sell_book limit 5000 offset 7135'
         );
         $statement->execute();
         $affected_rows = $statement->rowCount();
@@ -251,7 +251,7 @@ class DBManagementController extends Controller
 			gl_sell_contact.contact_date,
 			"No"
 
-            FROM gl_sell_contact'
+            FROM gl_sell_contact limit 5000 offset 120'
         );
         $statement->execute();
         $affected_rows = $statement->rowCount();
@@ -280,7 +280,7 @@ class DBManagementController extends Controller
 			"BuyerToSellerMessage",
 			gl_sell_contact.contact_date
 
-            FROM gl_sell_contact'
+            FROM gl_sell_contact limit 5000 offset 120'
         );
         $statement->execute();
         $affected_rows = $statement->rowCount();
@@ -299,7 +299,7 @@ class DBManagementController extends Controller
         $statement = $connection->prepare(
             'SELECT
               id,book_image
-            FROM books limit 1000 OFFSET 6000'
+            FROM books limit 1000 OFFSET 6501'
         );
         $statement->execute();
         $result = $statement->fetchAll();

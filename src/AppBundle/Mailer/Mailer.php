@@ -29,7 +29,7 @@ class Mailer extends BaseClass
     public function sendConfirmationEmailMessage(UserInterface $user)
     {
         $message = \Swift_Message::newInstance();
-        $url = "http://test.student2student.com/#/confirmRegistration/".$user->getConfirmationToken();
+        $url = "http://student2student.com/#/confirmRegistration/".$user->getConfirmationToken();
         $data = array(
             'user' => $user->getUsername(),
             'confirmationUrl' =>  $url,
@@ -51,7 +51,7 @@ class Mailer extends BaseClass
     {
 
         $message = \Swift_Message::newInstance();
-        $url = "http://test.student2student.com/#/resetPassword/".$user->getConfirmationToken();
+        $url = "http://student2student.com/#/resetPassword/".$user->getConfirmationToken();
         $data = array(
             'user' => $user->getUsername(),
             'confirmationUrl' =>  $url,
