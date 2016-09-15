@@ -59,8 +59,7 @@ AppBundle\Entity\BookDeal:
             length: '5'
         bookComment:
             nullable: true
-            type: string
-            length: '255'
+            type: text
         bookContactMethod:
             nullable: false
             type: string
