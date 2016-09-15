@@ -126,6 +126,9 @@ class SocialRegistrationType extends AbstractType
             )
         ));
 
+        $builder->add('profilePicture','text');
+        $builder->add('emailNotification','text');
+
     }
 
 

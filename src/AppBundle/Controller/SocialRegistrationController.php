@@ -52,9 +52,6 @@ class SocialRegistrationController extends Controller
 
         );
 
-
-
-
         // Step 1. Exchange authorization code for access token.
 
         $ch = curl_init();
@@ -70,31 +67,18 @@ class SocialRegistrationController extends Controller
         // Step 2. Retrieve profile information about the current user.
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,"https://www.googleapis.com/plus/v1/people/me/openIdConnect");
+        curl_setopt($ch, CURLOPT_URL,"https://www.googleapis.com/plus/v1/people/me?access_token=".$accessToken['access_token']);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization' => 'Bearer ' . $accessToken['access_token']));
         $profileResponse = curl_exec($ch);
         curl_close($ch);
 
-        var_dump($profileResponse);
-        die();
-
-
-
-
-//        $profileResponse = $client->request('GET', 'https://www.googleapis.com/plus/v1/people/me/openIdConnect', [
-//            'headers' =>
-//        ]);
-//        $profile = json_decode($profileResponse->getBody(), true);
-
-
+        $profile = json_decode($profileResponse, true);
 
         // Step 3a. If user is already signed in then link accounts.
 
         $em = $this->getDoctrine()->getManager();
         $userRepo = $em->getRepository('AppBundle:User');
-        $user = $userRepo->findOneBy(array('email'=>$profile['email']));
+        $user = $userRepo->findOneBy(array('email'=>$profile['emails'][0]['value']));
 
         //Check if user found
         if($user instanceof User){
@@ -115,10 +99,12 @@ class SocialRegistrationController extends Controller
                 $userForm->remove('facebookId');
                 $userForm->remove('facebookEmail');
                 $userForm->remove('facebookToken');
+                $userForm->remove('profilePicture');
+                $userForm->remove('emailNotification');
 
                 $data=array(
-                    'googleId' =>$profile['sub'],
-                    'googleEmail' =>$profile['email'],
+                    'googleId' =>$profile['id'],
+                    'googleEmail' =>$profile['emails'][0]['value'],
                     'googleToken' => $accessToken['access_token'],
                 );
                 $userForm->submit($data);
@@ -176,16 +162,36 @@ class SocialRegistrationController extends Controller
             $userForm->remove('facebookEmail');
             $userForm->remove('facebookToken');
 
+            //Save image from google plus
+
+            $fileDirHost = $this->container->getParameter('kernel.root_dir');
+            $fileDir = '/../web/userImages/';
+            $fileNameDir = '/userImages/';
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $profile['image']['url']);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            $imageOutput   = curl_exec($ch);
+            curl_close($ch);
+
+            $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . ".jpg";
+            $fp = fopen($fileDirHost . $fileDir . $fileSaveName, 'x');
+            fwrite($fp, $imageOutput);
+            fclose($fp);
+            $this->_resize(200,200,$fileDirHost.$fileDir.$fileSaveName,$fileDirHost.$fileDir.$fileSaveName);
+
+
             $data=array(
-                'email'=>  $profile['email'],
-                'username'=>  $profile['given_name'].$profile['family_name'].intval(rand(1,9999999999)),
-                'fullName' => $profile['name'],
-                'googleId' =>$profile['sub'],
-                'googleEmail' =>$profile['email'],
+                'email'=>  $profile['emails'][0]['value'],
+                'username'=>  $profile['name']['givenName'].$profile['name']['familyName'].intval(rand(1,9999999999)),
+                'fullName' => $profile['displayName'],
+                'googleId' =>$profile['id'],
+                'googleEmail' =>$profile['emails'][0]['value'],
                 'googleToken' => $accessToken['access_token'],
                 'adminApproved' =>"No",
                 'registrationStatus'=>"incomplete",
-
+                'profilePicture'=>$fileNameDir . $fileSaveName,
+                'emailNotification'=>"On"
             );
 
             $userForm->submit($data);
@@ -249,7 +255,7 @@ class SocialRegistrationController extends Controller
 
         // Step 2. Retrieve profile information about the current user.
 
-        $fields = 'id,email,first_name,last_name,link,name';
+        $fields = 'id,email,first_name,last_name,link,name,picture';
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,"https://graph.facebook.com/v2.5/me?access_token=".$accessToken['access_token']."&fields=".$fields);
@@ -257,10 +263,7 @@ class SocialRegistrationController extends Controller
         $profileResponse = curl_exec($ch);
         curl_close($ch);
 
-
-        $profile = json_decode($profileResponse, true);
-
-
+        $profile = json_decode($profileResponse,true);
         // Step 3a. If user is already signed in then link accounts.
         $em = $this->getDoctrine()->getManager();
         $userRepo = $em->getRepository('AppBundle:User');
@@ -294,6 +297,8 @@ class SocialRegistrationController extends Controller
                 $userForm->remove('googleId');
                 $userForm->remove('googleEmail');
                 $userForm->remove('googleToken');
+                $userForm->remove('profilePicture');
+                $userForm->remove('emailNotification');
 
                 $data=array(
                     'facebookId' =>$profile['id'],
@@ -357,6 +362,24 @@ class SocialRegistrationController extends Controller
             $userForm->remove('googleEmail');
             $userForm->remove('googleToken');
 
+            //Save image from google plus
+
+            $fileDirHost = $this->container->getParameter('kernel.root_dir');
+            $fileDir = '/../web/userImages/';
+            $fileNameDir = '/userImages/';
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $profile['picture']['data']['url']);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            $imageOutput   = curl_exec($ch);
+            curl_close($ch);
+
+            $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . ".jpg";
+            $fp = fopen($fileDirHost . $fileDir . $fileSaveName, 'x');
+            fwrite($fp, $imageOutput);
+            fclose($fp);
+            $this->_resize(200,200,$fileDirHost.$fileDir.$fileSaveName,$fileDirHost.$fileDir.$fileSaveName);
+
             $data=array(
                 'email'=>  $email,
                 'username'=>  $profile['first_name'].$profile['last_name'].intval(rand(1,9999999999)),
@@ -366,7 +389,8 @@ class SocialRegistrationController extends Controller
                 'facebookToken' => $accessToken['access_token'],
                 'adminApproved' =>"No",
                 'registrationStatus'=>"incomplete",
-
+                'profilePicture'=>$fileNameDir . $fileSaveName,
+                'emailNotification'=>"On"
             );
 
             $userForm->submit($data);
@@ -438,6 +462,8 @@ class SocialRegistrationController extends Controller
             $userForm->remove('facebookId');
             $userForm->remove('facebookEmail');
             $userForm->remove('facebookToken');
+            $userForm->remove('profilePicture');
+            $userForm->remove('emailNotification');
 
             $data=array(
                 'registrationStatus'=>"complete",
@@ -480,7 +506,47 @@ class SocialRegistrationController extends Controller
 
     }
 
+    // New Image  Resize function
+    public function _resize($newWidth , $newHeight, $targetFile, $originalFile) {
 
+        $info = getimagesize($originalFile);
+        $mime = $info['mime'];
+
+        switch ($mime) {
+            case 'image/jpeg':
+                $image_create_func = 'imagecreatefromjpeg';
+                $image_save_func = 'imagejpeg';
+//                $new_image_ext = 'jpg';
+                break;
+
+            case 'image/png':
+                $image_create_func = 'imagecreatefrompng';
+                $image_save_func = 'imagepng';
+//                $new_image_ext = 'png';
+                break;
+
+            case 'image/gif':
+                $image_create_func = 'imagecreatefromgif';
+                $image_save_func = 'imagegif';
+//                $new_image_ext = 'gif';
+                break;
+
+            default:
+                throw new Exception('Unknown image type.');
+        }
+
+        $img = $image_create_func($originalFile);
+        list($width, $height) = getimagesize($originalFile);
+
+//        $newHeight = ($height / $width) * $newWidth;
+        $tmp = imagecreatetruecolor($newWidth, $newHeight);
+        imagecopyresampled($tmp, $img, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+        if (file_exists($targetFile)) {
+            unlink($targetFile);
+        }
+        $image_save_func($tmp, "$targetFile");
+    }
 
     public function _createJsonResponse($key, $data, $code)
     {
