@@ -7,6 +7,7 @@ use AppBundle\Repository\ReferralRepository;
 use AppBundle\Repository\CampusRepository;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class RegistrationType extends AbstractType
 {
@@ -110,6 +111,13 @@ class RegistrationType extends AbstractType
         $builder->add('adminApproved','text');
         $builder->add('profilePicture','text');
         $builder->add('emailNotification','text');
+        $builder->add('registrationDateTime','datetime',array(
+            'widget' => 'single_text',
+            'constraints' => array(
+                new DateTime(),
+                new NotBlank()
+            )
+        ));
     }
 
     public function getParent()

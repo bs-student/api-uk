@@ -5,6 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use AppBundle\Repository\ReferralRepository;
 use AppBundle\Repository\CampusRepository;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Email;
 
@@ -128,6 +129,13 @@ class SocialRegistrationType extends AbstractType
 
         $builder->add('profilePicture','text');
         $builder->add('emailNotification','text');
+        $builder->add('registrationDateTime','datetime',array(
+            'widget' => 'single_text',
+            'constraints' => array(
+                new DateTime(),
+                new NotBlank()
+            )
+        ));
 
     }
 

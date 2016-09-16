@@ -191,7 +191,8 @@ class SocialRegistrationController extends Controller
                 'adminApproved' =>"No",
                 'registrationStatus'=>"incomplete",
                 'profilePicture'=>$fileNameDir . $fileSaveName,
-                'emailNotification'=>"On"
+                'emailNotification'=>"On",
+                'registrationDateTime'=>gmdate('Y-m-d H:i:s')
             );
 
             $userForm->submit($data);
@@ -390,7 +391,8 @@ class SocialRegistrationController extends Controller
                 'adminApproved' =>"No",
                 'registrationStatus'=>"incomplete",
                 'profilePicture'=>$fileNameDir . $fileSaveName,
-                'emailNotification'=>"On"
+                'emailNotification'=>"On",
+                'registrationDateTime'=>gmdate('Y-m-d H:i:s')
             );
 
             $userForm->submit($data);

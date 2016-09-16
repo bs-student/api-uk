@@ -108,6 +108,7 @@ class User extends BaseUser
      */
     private $profilePicture;
 
+    private $registrationDateTime;
 
     protected $enabled;
 
@@ -128,6 +129,7 @@ class User extends BaseUser
     private $stars;
 
     private $emailNotification;
+
     /**
      * Get id
      *
@@ -721,5 +723,28 @@ class User extends BaseUser
     public function getEmailNotification()
     {
         return $this->emailNotification;
+    }
+
+    /**
+     * Set registrationDateTime
+     *
+     * @param \DateTime $registrationDateTime
+     * @return User
+     */
+    public function setRegistrationDateTime($registrationDateTime)
+    {
+        $this->registrationDateTime = $registrationDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get registrationDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getRegistrationDateTime()
+    {
+        return $this->registrationDateTime;
     }
 }

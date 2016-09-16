@@ -117,5 +117,9 @@ AppBundle\Entity\User:
             length: '5'
             options:
                 default: 'On'
+        registrationDateTime:
+            type: datetime
+            options:
+                default: '2016-09-05 12:00:00'
 
     lifecycleCallbacks: {  }

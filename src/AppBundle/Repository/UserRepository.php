@@ -131,7 +131,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         $firstResult = ($pageNumber - 1) * $pageSize;
         $qb= $this->getEntityManager()
             ->createQueryBuilder('u')
-            ->select('u.id as userId, u.username,u.email,u.fullName,un.universityName,c.campusName,u.enabled,u.roles,u.profilePicture')
+            ->select('u.id as userId, u.username,u.email,u.fullName,un.universityName,c.campusName,u.enabled,u.roles,u.profilePicture,u.registrationDateTime')
             ->from('AppBundle:User', 'u')
             ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
             ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')

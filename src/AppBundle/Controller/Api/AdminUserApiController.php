@@ -47,6 +47,11 @@ class AdminUserApiController extends Controller
             $totalNumber = $userRepo->getNonApprovedUserSearchNumber($searchQuery,$emailQuery);
             $users = $userRepo->getNonApprovedUserSearchResult($searchQuery,$emailQuery, $pageNumber, $pageSize,$sort);
 
+            for($i=0;$i<count($users);$i++){
+                $users[$i]['registrationDateTime'] =$users[$i]['registrationDateTime']->format('g:i A, d M Y');
+            }
+
+
             $data = array(
                 'totalUsers' => $users ,
                 'totalNumber' => $totalNumber
