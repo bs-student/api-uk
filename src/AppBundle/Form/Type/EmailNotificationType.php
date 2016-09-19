@@ -39,12 +39,7 @@ class EmailNotificationType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\User',
             'csrf_protection' => false,
-//            'validation_groups' => false,
             'allow_extra_fields' => true,
-//            'error_mapping' => array(
-//                'usernameAlreadyExist' => 'username',
-//            ),
-
         ));
     }
 

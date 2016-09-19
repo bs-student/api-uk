@@ -25,7 +25,6 @@ class NewsRepository extends EntityRepository
             ')
             ->from('AppBundle:News', 'n')
             ->andwhere('n.newsTitle LIKE :query ')
-//            ->andwhere('q.quoteType='."'Student'")
             ->setParameter('query', '%' . $searchQuery . '%')
             ->setMaxResults($pageSize)
             ->setFirstResult($firstResult);

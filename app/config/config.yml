@@ -118,40 +118,6 @@ fos_user:
                 handler:            app.form.handler.change_password
 
 
-#hwi_oauth:
-#        firewall_name: main
-##        connect:
-##                confirmation: true
-##                account_connector: hwi_oauth.user.provider.fosub_bridge
-##
-#        resource_owners:
-#          facebook:
-#              type:                facebook
-#              client_id:           1102199066466109
-#              client_secret:       b6178715d703f075f8c48fbf73616450
-#              scope: "email"
-#              infos_url:     "https://graph.facebook.com/me?fields=id,name,email"
-#          google:
-#              type:                google
-##              client_id:           338870697590-1f65buklbq4obeo964r9e9bd0hsodbcp.apps.googleusercontent.com
-##              client_secret:       aK3fcPBcF5FIIvpbEG20ccsC
-#              client_id:           799265882325-g4jnl097bbst3popc0ainrstrtelicbk.apps.googleusercontent.com
-#              client_secret:       ecwlOs7uqXfte2kPoJLYxIpY
-#              scope: "email profile"
-#              options:
-#                              access_type:     online
-#
-#        fosub:
-#            username_iterations: 30
-#            properties:
-#                facebook: facebookId
-#                google: googleId
-#        http_client:
-#                     verify_peer: false
-
-
-
-
 
 
 #nelmio_cors:
@@ -205,26 +171,3 @@ fos_oauth_server:
             storage:                fos_oauth_server.storage.default
             options:
                 access_token_lifetime: 3600
-
-#Services for Real TIme Notification Start
-
-#gos_web_socket:
-#    topics:
-#      - @app.real_time.subscribe_and_push
-#    server:
-#        port: 8000        #The port the socket server will listen on
-#        host: localhost   #The host ip to bind to
-#        router:
-#            resources:
-#                - @AppBundle/Resources/config/pubsub/routing.yml
-#    client:
-#        firewall: main #can be an array of firewalls
-#        session_handler: @session.handler.pdo
-#
-#    pushers:
-#        wamp:
-#            host: localhost
-#            port: 8000
-#
-
-#Services for Real TIme Notification END

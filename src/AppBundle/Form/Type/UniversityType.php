@@ -19,17 +19,10 @@ class UniversityType extends AbstractType
         $builder->add('universityName','text',array(
             'constraints' => array(
                 new NotBlank(),
-            ),
-//            'error_bubbling'=>true
+            )
         ));
 
-        $builder->add('universityUrl','text',array(
-
-//            'error_bubbling'=>true
-        ));
-
-
-
+        $builder->add('universityUrl','text');
 
         $builder->add('referral', 'entity', array(
             'class' => "AppBundle:Referral",
@@ -37,15 +30,13 @@ class UniversityType extends AbstractType
             'constraints' => array(
                 new NotBlank(),
 
-            ),
-//            'error_bubbling'=>true
+            )
 
         ));
         $builder->add('universityStatus','text',array(
             'constraints' => array(
                 new NotBlank(),
-            ),
-//            'error_bubbling'=>true
+            )
         ));
         $builder->add('campuses', 'collection', array(
             'type'         => new CampusType(),

@@ -158,13 +158,13 @@ class UniversityManagementApiController extends Controller
                     if (array_key_exists("universityStatus", $request_data))
                         $university_submitted_data['universityStatus'] = $request_data['universityStatus'];
 
-//                    var_dump($university_submitted_data);
+
 
                     $university_update_form->submit($university_submitted_data);
 
 
                     if ($university_update_form->isValid()) {
-//
+
                         $em->persist($university);
                         $em->flush();
                         array_push($message_array, array(
@@ -213,7 +213,7 @@ class UniversityManagementApiController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $serializer = $this->container->get('jms_serializer');
-        /*$stateRepo = $em->getRepository("AppBundle:State");*/
+
 
         $request_data = json_decode($request->getContent(), true);
 

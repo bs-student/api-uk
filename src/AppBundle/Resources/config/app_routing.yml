@@ -104,15 +104,6 @@ change_password:
 
 
 #UserApiController
-#update_created_profile:
-#    path: /api/user/update_created_profile
-#    defaults: {_controller: AppBundle:Api/UserApi:updateCreatedProfile}
-#    methods: [POST]
-
-#update_profile:
-#    path: /user/update_profile
-#    defaults:  {_controller: AppBundle:Api/UserApi:updateUser}
-#    methods: [GET,POST]
 
 current_user_short_details:
     path: /api/current_user_short_details
@@ -126,17 +117,6 @@ admin_all_users:
     path: /api/admin/all_users
     defaults:  {_controller: AppBundle:Api/UserApi:adminAllUsers}
 
-
-
-#user_update_full_name:
-#    path: /api/update_user_full_name
-#    defaults:  {_controller: AppBundle:Api/UserApi:updateUserFullNameData}
-#    methods: [POST]
-#
-#user_update_university_campus:
-#    path: /api/update_user_university_campus
-#    defaults:  {_controller: AppBundle:Api/UserApi:updateUserUniversityCampus}
-#    methods: [POST]
 
 update_user_profile:
     path: /api/update_user_profile
@@ -573,19 +553,6 @@ add_book_deal_to_star_list:
     path: /api/star/add_book_deal_to_star_list
     defaults:  {_controller: AppBundle:Api/StarManagementApi:addBookDealToStarList}
     methods: [POST]
-
-#get_my_wishlist:
-#    path: /api/wishlist/get_my_wishlist
-#    defaults:  {_controller: AppBundle:Api/WishListManagementApi:getMyWishList}
-#    methods: [GET]
-#
-#remove_wishlist_item:
-#    path: /api/wishlist/remove_wishlist_item
-#    defaults:  {_controller: AppBundle:Api/WishListManagementApi:removeWishListItem}
-#    methods: [POST]
-
-
-
 
 
 

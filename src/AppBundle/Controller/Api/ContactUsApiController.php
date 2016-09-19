@@ -42,9 +42,7 @@ class ContactUsApiController extends Controller
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
             $jsonOutput = curl_exec($ch);
             curl_close($ch);
-//            var_dump("Hello");
-//            die();
-//            $jsonOutput = $this->container->get('api_caller')->call(new HttpGetHtml($url, null, null));
+
             $captchaResponse = json_decode($jsonOutput,true);
 
             if($captchaResponse['success']){
@@ -90,9 +88,7 @@ class ContactUsApiController extends Controller
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
             $jsonOutput = curl_exec($ch);
             curl_close($ch);
-//            var_dump("Hello");
-//            die();
-//            $jsonOutput = $this->container->get('api_caller')->call(new HttpGetHtml($url, null, null));
+
             $captchaResponse = json_decode($jsonOutput,true);
             if($captchaResponse['success']){
 

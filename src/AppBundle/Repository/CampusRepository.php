@@ -18,8 +18,7 @@ class CampusRepository extends \Doctrine\ORM\EntityRepository
             ->add('from', 'AppBundle:Campus c')
             ->innerJoin('AppBundle:University', 'u')
             ->where('c.university = u.id')
-           /* ->getQuery()
-            ->getResult()*/;
+           ;
 
     }
 
@@ -53,26 +52,4 @@ class CampusRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-
-//    public function getCampusSearchResults($searchQuery){
-//
-//
-//
-//        return $this->getEntityManager()
-//            ->createQueryBuilder('c')
-//            ->select('c.id, u.universityName, c.campusName, s.stateShortName, co.countryName')
-//
-//            ->from('AppBundle:Campus', 'c')
-//            ->innerJoin('AppBundle:University', 'u','WITH', 'u.id = c.university')
-//            ->innerJoin('AppBundle:State', 's','WITH', 's.id = c.state')
-//            ->innerJoin('AppBundle:Country', 'co','WITH', 'co.id = s.country')
-//            ->andwhere('c.campusName LIKE :query OR u.universityName LIKE :query OR co.countryName LIKE :query OR s.stateName LIKE :query')
-//            ->andwhere('u.universityStatus="Activated"')
-//            ->setParameter('query', '%'.$searchQuery.'%')
-//            ->getQuery()
-//            ->getResult();
-//
-//
-//
-//    }
 }

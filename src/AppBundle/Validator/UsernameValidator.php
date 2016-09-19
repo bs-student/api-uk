@@ -37,7 +37,6 @@ class UsernameValidator extends ConstraintValidator
 
         $userRepo = $this->em->getRepository('AppBundle:User');
 
-//        return false;
         var_dump($userRepo->checkIfUsernameExistByUsername($value, $constraint->username));
 
         if(!$userRepo->checkIfUsernameExistByUsername($value, $constraint->username)){

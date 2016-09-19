@@ -493,23 +493,10 @@ class BookDealRepository extends EntityRepository
                 ->innerJoin('AppBundle:User', 'u', 'WITH', 'u.id = c.buyer')
 
             ;
-//            ->groupBy('c.bookIsbn10');
-
-
-
-
 
             $orX = $queryBuilderBook->expr()->orX();
             $orX->addMultiple($conditions);
             $queryBuilderBook->add('where', $orX);
-
-//            $queryBuilderBook->add('where', $orX);
-//            $queryBuilderBook->innerJoin('AppBundle:User', 'u', 'WITH', 'c.buyer = u.id');
-//        if($campusId!=null){
-//            $queryBuilderBook->andWhere('u.campus = '.$campusId);
-//        }
-
-//die($queryBuilderBook->getQuery()->getSQL());
 
             return ($queryBuilderBook->getQuery()->getResult());
         }
@@ -732,7 +719,6 @@ class BookDealRepository extends EntityRepository
             ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
             ->innerJoin('AppBundle:State', 's', 'WITH', 's.id = c.state')
             ->innerJoin('AppBundle:Country', 'co', 'WITH', 'co.id = s.country')
-//            ->innerJoin('AppBundle:Contact', 'con','WITH', 'con.bookDeal = bd.id')
 
 
             ->andwhere('bd.bookStatus = '."'Activated'")

@@ -15,27 +15,13 @@ class OAuthUserProvider extends BaseClass
     public function loadUserByOAuthUserResponse(UserResponseInterface $response) {
 
 
-//        $accessToken = $this->container->get('security.context')->getToken()->getAccessToken();
         $userId = $response->getUsername();
-        /*var_dump($response->getAccessToken());
-        die();*/
-
-
         $user = $this->userManager->findUserBy(array($this->getProperty($response) => $userId));
-       /* var_dump($user);
-        die();*/
-
-//        var_dump($user);
-//                var_dump($response->getResourceOwner()->getName());
-//        die();
 
         $email = $response->getEmail();
         $username = $response->getNickname() ?: $response->getRealName();
         if (null === $user) {
             $user = $this->userManager->findUserByUsernameAndEmail($username, $email);
-
-            /*var_dump($response);
-            die();*/
 
             if (null === $user || !$user instanceof UserInterface) {
                 $user = $this->userManager->createUser();
@@ -67,13 +53,11 @@ class OAuthUserProvider extends BaseClass
                     $user->setFacebookToken($response->getAccessToken());
                 }
 
-                //$user->setConfirmationToken($response->getAccessToken());
 
                 $this->userManager->updateUser($user);
             } else {
 
-                /*var_dump($user);
-                die();*/
+
                 if($response->getResourceOwner()->getName()=="google"){
                     $user->setGoogleId($userId);
                     $user->setGoogleToken($response->getAccessToken());

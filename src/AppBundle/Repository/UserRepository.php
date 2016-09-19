@@ -56,14 +56,9 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             'username' => $given_user->getUsername(),
         ));
 
-
-//        var_dump($searched_user);
-
         if (count($searched_user) == 1 && $own_username != $searched_user[0]->getUsername()) {
-//            echo "paise";
             return true;
         } else {
-//            echo "pai nai";
             return false;
         }
 
@@ -101,14 +96,9 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             'email' => $given_user->getEmail(),
         ));
 
-
-//        var_dump($searched_user);
-
         if (count($searched_user) == 1 && $own_mail != $searched_user[0]->getEmail()) {
-//            echo "paise";
             return true;
         } else {
-//            echo "pai nai";
             return false;
         }
     }

@@ -229,10 +229,7 @@ class AdminUserApiController extends Controller
      */
     public function addAdminUserAction(Request $request)
     {
-//        $content = $request->getContent();
-//        $data = json_decode($content, true);
-//        var_dump($data);
-//        die();
+
         $user = $this->container->get('security.context')->getToken()->getUser();
 
         if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){

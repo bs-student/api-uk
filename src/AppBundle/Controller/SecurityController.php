@@ -128,18 +128,5 @@ class SecurityController extends BaseController {
         return $response;
     }
 
-//    function _create_custom_token($data) {
-//
-//        $now_seconds = time();
-//        $payload = array(
-//            "iss" => $data['client_email'],
-//            "sub" => $data['client_email'],
-//            "aud" => "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit",
-//            "iat" => $now_seconds,
-//            "exp" => $now_seconds+(60*60),  // Maximum expiration time is one hour
-//            "uid" => $data['client_id'],
-//        );
-//        return JWT::encode($payload, $data['private_key'], "HS256");
-//    }
 
 } 

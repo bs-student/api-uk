@@ -66,9 +66,6 @@ class UniversityRepository extends \Doctrine\ORM\EntityRepository
 
     public function getActivatedUniversitySearchResults($searchQuery){
 
-//var_dump($searchQuery);
-//        die();
-
         return $this->getEntityManager()
             ->createQueryBuilder('u')
             ->select('c.id as campusId, u.universityName, c.campusName, s.stateShortName, co.countryName')
@@ -81,8 +78,6 @@ class UniversityRepository extends \Doctrine\ORM\EntityRepository
             ->andwhere('u.universityStatus=\'Activated\'')
             ->andwhere('c.campusName LIKE :query OR u.universityName LIKE :query OR co.countryName LIKE :query OR s.stateName LIKE :query')
 
-
-//            ->andwhere('u.universityName LIKE :query ')
             ->setParameter('query', '%'.$searchQuery.'%')
             ->getQuery()
             ->getResult();

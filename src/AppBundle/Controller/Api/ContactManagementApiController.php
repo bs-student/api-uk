@@ -154,17 +154,6 @@ class ContactManagementApiController extends Controller
 
         if (array_key_exists('contact', $data)) {
 
-//            if (array_key_exists('key', $data['contact'])) {
-//                $captchaApiInfo = $this->getParameter('google_re_captcha_info');
-//
-//                $host = $captchaApiInfo['host'];
-//                $secret = $captchaApiInfo['secret'];
-//
-//                $url = $host . "?secret=" . $secret . "&response=" . $data['contact']['key'];
-//
-//                $jsonOutput = $this->container->get('api_caller')->call(new HttpGetHtml($url, null, null));
-//                $captchaResponse = json_decode($jsonOutput, true);
-//                if ($captchaResponse['success']) {
 
             $em = $this->getDoctrine()->getManager();
 
@@ -219,19 +208,6 @@ class ContactManagementApiController extends Controller
 
             }
 
-
-//                }else {
-//                    return $this->_createJsonResponse('error', array(
-//                        'errorTitle' => "Getting Data was not Possible",
-//                        'errorDescription' => "Captcha was Wrong. Reload and try again."
-//                    ), 400);
-//                }
-//            } else {
-//                return $this->_createJsonResponse('error', array(
-//                    'errorTitle' => "Getting Data was not Possible",
-//                    'errorDescription' => "Captcha was Wrong. Reload and try again."
-//                ), 400);
-//            }
 
         } else {
             return $this->_createJsonResponse('error', array(

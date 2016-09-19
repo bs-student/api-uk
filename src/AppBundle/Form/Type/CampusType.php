@@ -21,42 +21,23 @@ class CampusType extends AbstractType
                 new NotBlank(),
 
             ),
-//            'error_bubbling'=>true
         ));
 
-//        $builder->add('university','entity',array(
-////            'validation_groups' => false
-//            'class' => "AppBundle:University",
-//            'constraints' => array(
-//                new NotBlank(),
-//
-//            ),
-////            'error_bubbling'=>true
-//        ));
 
         $builder->add('state','entity',array(
-//            'validation_groups' => false
             'class' => "AppBundle:State",
             'constraints' => array(
                 new NotBlank(),
 
             ),
-//            'error_bubbling'=>true
         ));
 
         $builder->add('campusStatus','text',array(
             'constraints' => array(
                 new NotBlank(),
             ),
-
-//            'error_bubbling'=>true
         ));
 
-
-
-//        $builder->add('save', 'button', array(
-//            'attr' => array('class' => 'save'),
-//        ));
     }
 
 
@@ -64,8 +45,6 @@ class CampusType extends AbstractType
     {
         return 'app_campus_update';
     }
-
-
 
 
     /**
@@ -76,11 +55,7 @@ class CampusType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Campus',
             'csrf_protection' => false,
-//            'validation_groups' => false,
             'allow_extra_fields' => true,
-//            'error_mapping' => array(
-//                'usernameAlreadyExist' => 'username',
-//            ),
 
         ));
     }

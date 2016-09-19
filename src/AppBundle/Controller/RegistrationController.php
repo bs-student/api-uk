@@ -91,17 +91,6 @@ class RegistrationController extends BaseController
             $jsonOutput = curl_exec($ch);
             curl_close($ch);
 
-//            if(curl_errno($ch))
-//            {
-//                echo 'Curl error: ' . curl_error($ch);
-//            }
-//            var_dump(curl_getinfo($ch));
-//            curl_close($ch);
-//
-//            var_dump($jsonOutput);
-//            die();
-//            $jsonOutput = $this->container->get('api_caller')->call(new HttpGetJson($url,array(),false,array()));
-
             $captchaResponse = json_decode($jsonOutput,true);
 
 

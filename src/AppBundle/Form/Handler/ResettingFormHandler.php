@@ -40,7 +40,7 @@ class ResettingFormHandler extends BaseHandler
             'first'=>$submittedData['password'],
             'second'=>$submittedData['passwordConfirm']
         );
-//        var_dump($submittedData);die();
+
         if ('POST' === $this->request->getMethod()) {
             $this->form->bind($submittedData);
 

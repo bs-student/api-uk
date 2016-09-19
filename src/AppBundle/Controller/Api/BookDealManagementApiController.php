@@ -35,11 +35,6 @@ class BookDealManagementApiController extends Controller
      */
     public function getBooksIHaveContactedForAction(Request $request)
     {
-//        May Need Later
-//        $deals = array(
-//            'buyerToSeller' => array(),
-//            'sellerToBuyer' => array()
-//        );
 
         $content = $request->getContent();
         $data = json_decode($content, true);
@@ -105,13 +100,6 @@ class BookDealManagementApiController extends Controller
             $deal['bookImages']=$images;
 
             array_push($deals,$deal);
-            //dividing via Contact Method
-//            if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
-//                array_push($deals['buyerToSeller'], $deal);
-//            } else {
-//                array_push($deals['sellerToBuyer'], $deal);
-//            }
-
 
         }
 
@@ -129,12 +117,6 @@ class BookDealManagementApiController extends Controller
      */
     public function getBooksIHaveCreatedAction(Request $request)
     {
-        //todo Dont delete follwing comment may be needed later
-//        $deals = array(
-//            'buyerToSeller' => array(),
-//            'sellerToBuyer' => array()
-//        );
-
         $content = $request->getContent();
         $data = json_decode($content, true);
 
@@ -213,13 +195,6 @@ class BookDealManagementApiController extends Controller
 
             array_push($deals,$deal);
 
-            //todo Dont delete follwing comment may be needed later
-            //dividing via Contact Method
-//            if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
-//                array_push($deals['buyerToSeller'], $deal);
-//            } else {
-//                array_push($deals['sellerToBuyer'], $deal);
-//            }
 
         }
 
@@ -348,11 +323,6 @@ class BookDealManagementApiController extends Controller
      */
     public function getBooksIHaveCreatedAndSoldAction(Request $request){
 
-        //TODO dont remove following comment. May be needed
-//        $deals = array(
-//            'buyerToSeller' => array(),
-//            'sellerToBuyer' => array()
-//        );
         $content = $request->getContent();
         $data = json_decode($content, true);
 
@@ -441,13 +411,6 @@ class BookDealManagementApiController extends Controller
 
             array_push($deals,$deal);
 
-            //TODO dont remove following comment. May be needed
-            //dividing via Contact Method
-//            if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
-//                array_push($deals['buyerToSeller'], $deal);
-//            } else {
-//                array_push($deals['sellerToBuyer'], $deal);
-//            }
 
         }
 
@@ -463,10 +426,6 @@ class BookDealManagementApiController extends Controller
      * Get Books I Have Have Bought (Buy Archive)
      */
     public function getBooksIHaveBoughtAction(Request $request){
-//        $deals = array(
-//            'buyerToSeller' => array(),
-//            'sellerToBuyer' => array()
-//        );
 
         $content = $request->getContent();
         $data = json_decode($content, true);
@@ -480,9 +439,6 @@ class BookDealManagementApiController extends Controller
         $bookDeals = $bookDealRepo->getBooksIHaveBought($userId,$data['pageNumber'],$data['pageSize']);
         $bookDealsNumber = $bookDealRepo->getBooksIHaveBoughtTotalNumber($userId);
 
-        //Getting Contacts of Deals
-//        $contacts = $bookDealRepo->getContactsOfBookDeals($bookDeals);
-
 
         //Set Subtitle in Book
         for ($i = 0; $i < count($bookDeals); $i++) {
@@ -493,24 +449,6 @@ class BookDealManagementApiController extends Controller
             }
 
         }
-
-
-        //Adding Contacts according to deals
-//        foreach ($contacts as $contact) {
-//
-//            for ($i = 0; $i < count($bookDeals); $i++) {
-//                if ((int)$contact['bookDealId'] == (int)$bookDeals[$i]['bookDealId']) {
-//
-//                    if ($contact['buyerNickName'] == null) {
-//                        $user = $userRepo->findById((int)$contact['buyerId']);
-//                        $contact['buyerNickName'] = $user[0]->getUsername();
-//                    }
-//                    $contact['contactDateTime'] = $contact['contactDateTime']->format('H:i d M Y');
-//                    array_push($bookDeals[$i]['contacts'], $contact);
-//                }
-//            }
-//
-//        }
 
         //Getting Deals I have created
         foreach ($bookDeals as $deal) {
@@ -561,12 +499,6 @@ class BookDealManagementApiController extends Controller
 
             array_push($deals,$deal);
 
-            //dividing via Contact Method
-//            if (strpos('buyerToSeller', $deal['bookContactMethod']) !== false) {
-//                array_push($deals['buyerToSeller'], $deal);
-//            } else {
-//                array_push($deals['sellerToBuyer'], $deal);
-//            }
 
         }
 

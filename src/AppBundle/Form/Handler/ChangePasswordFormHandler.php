@@ -37,21 +37,14 @@ class ChangePasswordFormHandler extends BaseHandler
 
         $submittedData = json_decode($this->request->getContent(),true);
 
-//        var_dump(array_key_exists('oldPassword',$submittedData));
-//        die();
-
         $submittedData['current_password'] = array_key_exists('oldPassword',$submittedData)? $submittedData['oldPassword']:null;
         $newPassword = array_key_exists('newPassword',$submittedData)? $submittedData['newPassword']:null;
         $newPasswordConfirm = array_key_exists('newPasswordConfirm',$submittedData)? $submittedData['newPasswordConfirm']:null;
 
-
-//        $submittedData['current_password'] = $submittedData['oldPassword'];
         $submittedData['new']=array(
             'first'=>$newPassword,
             'second'=>$newPasswordConfirm
         );
-//        var_dump($submittedData);
-//        die();
 
         if ('POST' === $this->request->getMethod()) {
             $this->form->bind($submittedData);

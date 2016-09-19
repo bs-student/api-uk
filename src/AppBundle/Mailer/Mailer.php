@@ -29,7 +29,7 @@ class Mailer extends BaseClass
     public function sendConfirmationEmailMessage(UserInterface $user)
     {
         $message = \Swift_Message::newInstance();
-        $url = "http://student2student.com/#/confirmRegistration/".$user->getConfirmationToken();
+        $url = "http://student2student.com/confirmRegistration/".$user->getConfirmationToken();
         $data = array(
             'user' => $user->getUsername(),
             'confirmationUrl' =>  $url,
@@ -51,7 +51,7 @@ class Mailer extends BaseClass
     {
 
         $message = \Swift_Message::newInstance();
-        $url = "http://student2student.com/#/resetPassword/".$user->getConfirmationToken();
+        $url = "http://student2student.com/resetPassword/".$user->getConfirmationToken();
         $data = array(
             'user' => $user->getUsername(),
             'confirmationUrl' =>  $url,
@@ -418,45 +418,6 @@ class Mailer extends BaseClass
 
 
 
-    /**
-     * @param string $renderedTemplate
-     * @param string $toEmail
-     */
-//    function sendEmailMessage($renderedTemplate,$fromEmail, $toEmail)
-//    {
-//        // Render the email, use the first line as the subject, and the rest as the body
-////        $renderedLines = explode("\n", trim($renderedTemplate));
-////        $subject = $renderedLines[0];
-////        $body = implode("\n", array_slice($renderedLines, 1));
-//        $transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')
-//            ->setUsername('sujit.developer.136663@gmail.com')
-//            ->setPassword('maniac.sujit');
-//        $mailer = \Swift_Mailer::newInstance($transport);
-//
-//        var_dump($toEmail);
-//        die();
-//        $message = \Swift_Message::newInstance()
-//            ->setSubject("SUBJECT")
-//            ->setFrom($fromEmail)
-//            ->setTo($toEmail)
-//            ->setBody('<a href="#">sdrgd</a>','text/html');
-//
-//        $mailer->send($message);
-//    }
-
-//    public function sendEmail($template,$subject,$from,$to){
-//        $transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')
-//            ->setUsername('sujit.developer.136663@gmail.com')
-//            ->setPassword('maniac.sujit');
-//        $mailer = \Swift_Mailer::newInstance($transport);
-//        $message = \Swift_Message::newInstance()
-//            ->setSubject($subject)
-//            ->setFrom($from)
-//            ->setTo($to)
-//            ->setBody($template,'text/html');
-//
-//        $mailer->send($message);
-//    }
 
     public function _sendMail($message,$subject,$from,$to){
         $transport = \Swift_SmtpTransport::newInstance('smtp.student2student.com', 25)

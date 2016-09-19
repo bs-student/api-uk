@@ -56,56 +56,46 @@ class SocialRegistrationType extends AbstractType
             'constraints' => array(
                 new NotBlank(),
 
-            ),
-//            'error_bubbling'=>true
+            )
         ));
 
         $builder->add('facebookId','text',array(
             'constraints' => array(
                 new NotBlank(),
 
-            ),
-//            'error_bubbling'=>true
+            )
         ));
 
         $builder->add('registrationStatus','text',array(
             'constraints' => array(
                 new NotBlank(),
-
-            ),
-//            'error_bubbling'=>true
+            )
         ));
 
         $builder->add('googleEmail','text',array(
             'constraints' => array(
                 new NotBlank(),
-
-            ),
-//            'error_bubbling'=>true
+            )
         ));
 
         $builder->add('googleToken','text',array(
             'constraints' => array(
                 new NotBlank(),
 
-            ),
-//            'error_bubbling'=>true
+            )
         ));
 
         $builder->add('facebookEmail','text',array(
             'constraints' => array(
                 new NotBlank(),
 
-            ),
-//            'error_bubbling'=>true
+            )
         ));
 
         $builder->add('facebookToken','text',array(
             'constraints' => array(
                 new NotBlank(),
-
-            ),
-//            'error_bubbling'=>true
+            )
         ));
 
         $builder->add('referral', 'entity', array(
@@ -156,12 +146,7 @@ class SocialRegistrationType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\User',
             'csrf_protection' => false,
-//            'validation_groups' => false,
             'allow_extra_fields' => true,
-//            'error_mapping' => array(
-//                'usernameAlreadyExist' => 'username',
-//            ),
-
         ));
     }
 

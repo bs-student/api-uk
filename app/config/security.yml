@@ -5,12 +5,8 @@ security:
 
         ROLE_NORMAL_USER:      [ROLE_USER]
         ROLE_ADMIN:      [ROLE_ADMIN]
-#            ROLE_AUTHOR:      [ROLE_USER]
+
 #            ROLE_STAFFER:     [ROLE_USER,ROLE_AUTHOR]
-#            ROLE_SR_STAFFER:  [ROLE_USER,ROLE_AUTHOR]
-#            ROLE_EDITOR:      [ROLE_USER,ROLE_AUTHOR]
-#            ROLE_ADMIN:       [ROLE_USER,ROLE_AUTHOR,ROLE_EDITOR]
-#            ROLE_SUPER_ADMIN: [ROLE_USER,ROLE_AUTHOR,ROLE_EDITOR,ROLE_ADMIN]
     providers:
         fos_userbundle:
                     id: fos_user.user_provider.username_email
@@ -28,20 +24,7 @@ security:
                     stateless:  true
 
         main:
-#                    guard:
-#                        authenticators:
-#                            - app.token_authenticator
-#                    pattern: ^/
 
-#                    oauth:
-#                        failure_path: /secure_area/connect
-#                        login_path: /secure_area/connect
-#                        check_path: /secure_area/connect
-#                        provider: fos_userbundle
-#                        resource_owners:
-#                            google:           "/secure_area/login/check-google"
-#                        oauth_user_provider:
-#                            service: hwi_oauth.user.provider.fosub_bridge
                     form_login:
                                 provider: fos_userbundle
 #                                csrf_provider: form.csrf_provider
@@ -50,19 +33,7 @@ security:
                                 always_use_default_target_path: false
                                 default_target_path:            /user/dashboard
 
-#                    oauth:
-#                            resource_owners:
-#                                facebook: "/login/check-facebook"
-#                                google: "/login/check-google"
-#                            login_path: /login
-#
-#                            failure_path: /login
-#                            oauth_user_provider:
-#                                service: hwi_oauth.user.provider.fosub_bridge
-#                            always_use_default_target_path: false
-#                            default_target_path:            /user/dashboard
-#                            target_path_parameter:          _target_path
-#                            use_referer:                    false
+
                     anonymous:    true
                     logout: true
                     security: true
