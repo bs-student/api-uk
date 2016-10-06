@@ -282,14 +282,57 @@ save_new_university:
     methods: [POST]
 
 
-save_new_university_admin:
-    path: /api/university/save_new_university
-    defaults:  {_controller: AppBundle:Api/UniversityManagementApi:saveNewUniversityAdmin}
+save_new_university_logged_in_user:
+    path: /api/university/save_new_university_logged_in_user
+    defaults:  {_controller: AppBundle:Api/UniversityManagementApi:saveNewUniversityLoggedInUser}
     methods: [POST]
 
 delete_university:
     path: /api/university/delete
     defaults:  {_controller: AppBundle:Api/UniversityManagementApi:deleteUniversity}
+    methods: [POST]
+
+
+# Admin Univesity Management Api Controller
+
+get_all_non_approved_universities:
+    path: /api/admin/get_all_non_approved_universities
+    defaults:  {_controller: AppBundle:Api/AdminUniversityManagementApi:getAllNonApprovedUniversities}
+    methods: [POST]
+
+get_all_activated_universities:
+    path: /api/admin/get_all_activated_universities
+    defaults:  {_controller: AppBundle:Api/AdminUniversityManagementApi:getAllActivatedUniversities}
+    methods: [POST]
+
+get_all_deactivated_universities:
+    path: /api/admin/get_all_deactivated_universities
+    defaults:  {_controller: AppBundle:Api/AdminUniversityManagementApi:getAllDeactivatedUniversities}
+    methods: [POST]
+
+save_edited_university_data_only:
+    path: /api/admin/save_edited_university_data_only
+    defaults:  {_controller: AppBundle:Api/AdminUniversityManagementApi:saveEditedUniversityDataOnly}
+    methods: [POST]
+
+approve_multiple_universities:
+    path: /api/admin/approve_multiple_universities
+    defaults:  {_controller: AppBundle:Api/AdminUniversityManagementApi:approveMultipleUniversities}
+    methods: [POST]
+
+update_university_details:
+    path: /api/admin/update_university_details
+    defaults:  {_controller: AppBundle:Api/AdminUniversityManagementApi:updateUniversityDetails}
+    methods: [POST]
+
+get_all_similar_universities:
+    path: /api/admin/get_all_similar_universities
+    defaults:  {_controller: AppBundle:Api/AdminUniversityManagementApi:getAllSimilarUniversities}
+    methods: [POST]
+
+merge_universities:
+    path: /api/admin/merge_universities
+    defaults:  {_controller: AppBundle:Api/AdminUniversityManagementApi:mergeUniversities}
     methods: [POST]
 
 #ContactManagementApiController

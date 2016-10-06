@@ -40,6 +40,16 @@ class University
      */
     private $universityStatus;
 
+    /**
+     * @var string
+     *
+     */
+    private $adminApproved;
+
+    /**
+     * @var datetime
+     */
+    private $creationDateTime;
 
     private $referral;
 
@@ -197,5 +207,51 @@ class University
     public function getUniversityStatus()
     {
         return $this->universityStatus;
+    }
+
+    /**
+     * Set adminApproved
+     *
+     * @param string $adminApproved
+     * @return University
+     */
+    public function setAdminApproved($adminApproved)
+    {
+        $this->adminApproved = $adminApproved;
+
+        return $this;
+    }
+
+    /**
+     * Get adminApproved
+     *
+     * @return string 
+     */
+    public function getAdminApproved()
+    {
+        return $this->adminApproved;
+    }
+
+    /**
+     * Set creationDateTime
+     *
+     * @param \DateTime $creationDateTime
+     * @return University
+     */
+    public function setCreationDateTime($creationDateTime)
+    {
+        $this->creationDateTime = $creationDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get creationDateTime
+     *
+     * @return \DateTime 
+     */
+    public function getCreationDateTime()
+    {
+        return $this->creationDateTime;
     }
 }

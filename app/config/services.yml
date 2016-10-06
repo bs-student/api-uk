@@ -5,40 +5,6 @@ parameters:
     sujit.my_mailer.class : AppBundle\Mailer\Mailer
 
 
-    api_caller.options:
-            timeout: 50  # maximum transport + execution duration of the call in sec.
-            ssl_verifypeer: false  # to stop cURL from verifying the peer's certificate.
-            useragent: "LeaseWeb API Caller"  # contents of the "User-Agent: " header.
-#            useragent: "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36"
-            followlocation: true  # to follow any "Location: " header that the server sends.
-            sslversion: 3  # set to 3 to avoid any bugs that relate to automatic version selection.
-            fresh_connect: true  # set to true to force full reconnect every call.
-    amazon_api_info:
-            host : "webservices.amazon.com"
-            uri : "/onca/xml"
-            method: "GET"
-            private_key: "RTBhZb/XIdaaPZvg4nfWAAKICREnH2vawxX+0aVU"
-            aws_access_key_id: "AKIAJPTFUP4HCJFII7MQ"
-            associate_tag: "stud2stud-20"
-            version: "2013-08-01"
-    campus_books_api_info:
-            host : "http://api2.campusbooks.com"
-            uri : "/12/rest/bookprices"
-            api_key: "s2SmHJAVMOykHAOdaG55"
-    campus_books_api_info_lowest_price:
-            host : "http://api2.campusbooks.com"
-            uri : "/12/rest/prices"
-            api_key: "s2SmHJAVMOykHAOdaG55"
-    google_re_captcha_info:
-            host: "https://www.google.com/recaptcha/api/siteverify"
-            secret: "6LeMeykTAAAAAGkVzMSHjJCBxAP_LmQ4BdmEm0YI"
-    google_app_info:
-            client_id: "19322012790-7i3k71ps5r6cujo4h87j9husfvjombsn.apps.googleusercontent.com"
-            client_secret: "BiJIVDdNpq9MhyfEIyEyrp72"
-    facebook_app_info:
-            client_id: "214816590624"
-            client_secret: "e88addcbad3ec32a03c135b7a9050b43"
-
 
 services:
 

@@ -16,386 +16,376 @@ use Symfony\Component\HttpFoundation\Response;
 use Lsw\ApiCallerBundle\Call\HttpGetJson;
 use Lsw\ApiCallerBundle\Call\HttpGetHtml;
 
-class UniversityManagementApiController extends Controller
+class AdminUniversityManagementApiController extends Controller
 {
-
-
     /**
-     * Activated Universities When Under Search
+     * get All NonApproved Universities Admin api
      */
-    public function universityAutocompleteActivatedSearchListAction(Request $request)
-    {
+    public function getAllNonApprovedUniversitiesAction(Request $request){
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
+        if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
 
-        $query = $request->request->get('query');
-        $em = $this->getDoctrine()->getManager();
-
-        if ($query == null||$query == "") {
-
-            $responseData= array(
-                'university' => ""
-            );
-            return $this->_createJsonResponse('success',array('successData'=>$responseData),200);
-        }
-
-        $universities = $em->getRepository('AppBundle:University')->getActivatedUniversitySearchResults($query);
-        $data = array();
-        foreach ($universities as $university) {
-            array_push($data, array(
-                'display' => $university['universityName'] . ", " . $university['campusName'] . ", " . $university['stateShortName'] . ", " . $university['countryName'],
-                'value' => $university['campusId']
-            ));
-
-        }
-
-        return $this->_createJsonResponse('success',array('successData'=>$data),200);
-
-    }
-
-    /**
-     * University Search Autocomplete When Search By Name
-     */
-    public function universityAutocompleteNameSearchListAction(Request $request)
-    {
-        $query = $request->request->get('query');
-        $em = $this->getDoctrine()->getManager();
-
-
-        if ($query == null) {
-
-            return $this->_createJsonResponse('success',array('successData'=>array('university' => "")),200);
-
-        } else {
-            $universities = $em->getRepository('AppBundle:University')->getUniversitySearchResults($query);
-
-            return $this->_createJsonResponse('success',array('successData'=>$universities),200);
-
-        }
-
-    }
-
-    /**
-     * University Search for Admin
-     */
-    public function universitySearchAdminAction(Request $request)
-    {
-
-        $content = $request->getContent();
-        $data = json_decode($content, true);
-        $searchQuery = $data["searchQuery"];
-        $pageSize = $data["pageSize"];
-        $pageNumber = $data["pageNumber"];
-
-        $em = $this->getDoctrine()->getManager();
-
-//        var_dump($request);
-        $totalNumber = $em->getRepository('AppBundle:University')->getUniversitySearchResultNumberAdmin($searchQuery);
-        $universities = $em->getRepository('AppBundle:University')->getUniversitySearchResultAdmin($searchQuery, $pageNumber, $pageSize);
-
-
-        return $this->_createJsonResponse('success',array('successData'=>array(
-            'universities' => $universities,
-            'totalNumber' => $totalNumber
-        )),200);
-
-
-    }
-
-    /**
-     * Update University
-     */
-    public function updateUniversityAction(Request $request)
-    {
-        //Initialize Repositories
-        $em = $this->getDoctrine()->getManager();
-        $universityRepo = $em->getRepository('AppBundle:University');
-        $serializer = $this->container->get('jms_serializer');
-
-
-
-
-        //Getting Request Data
-        $data = null;
-        $content = $request->getContent();
-        if (!empty($content)) {
+            $content = $request->getContent();
             $data = json_decode($content, true);
-        }
+            $em = $this->getDoctrine()->getManager();
+            $universityRepo=$em->getRepository('AppBundle:University');
 
-        if (count($data) > 0) {
+            $pageSize = $data["pageSize"];
+            $searchQuery = filter_var($data["searchQuery"], FILTER_SANITIZE_STRING);
+            $pageNumber = $data["pageNumber"];
+            $sort = $data["sort"];
 
-            $message_array = array();
+            $totalNumber = $universityRepo->getAllNonApprovedUniversitiesSearchNumber($searchQuery);
+            $searchResults= $universityRepo->getAllNonApprovedUniversitiesSearchResult($searchQuery, $pageNumber, $pageSize,$sort);
 
-            foreach ($data as $request_data) {
-                //Initializing Variables
-                $oldUniversityUrl = "";
-                $oldUniversityName = "";
-                $oldUniversityStatus = "";
-
-
-                if (array_key_exists("universityId", $request_data)) {
-
-
-                    $university = $universityRepo->findOneBy(array(
-                        'id' => $request_data['universityId']
+            for($i=0;$i<count($searchResults);$i++){
+                $searchResults[$i]['campuses']=array();
+                $campuses = $universityRepo->findOneById($searchResults[$i]['universityId'])->getCampuses();
+                $searchResults[$i]['creationDateTime']=$searchResults[$i]['creationDateTime']->format('h:i A, d-M-Y');
+                foreach($campuses as $campus){
+                    array_push($searchResults[$i]['campuses'],array(
+                        'campusId'=>$campus->getId(),
+                        'campusName'=>$campus->getCampusName(),
+                        'stateShortName'=>$campus->getState()->getStateShortName(),
+                        'stateName'=>$campus->getState()->getStateName(),
+                        'countryName'=>$campus->getState()->getCountry()->getCountryName(),
+                        'campusStatus'=>$campus->getCampusStatus()
                     ));
-
-                    $oldUniversityName = $university->getUniversityName();
-                    $oldUniversityUrl = $university->getUniversityUrl();
-                    $oldUniversityStatus = $university->getUniversityStatus();
-
-                    $university_update_form = $this->createForm(new UniversityType(), $university);
-                    $university_update_form->remove('campuses');
-                    $university_update_form->remove('referral');
-
-                    $university_submitted_data = array();
-
-                    if (array_key_exists("universityUrl", $request_data))
-                        $university_submitted_data['universityUrl'] = $request_data['universityUrl'];
-
-                    if (array_key_exists("universityName", $request_data))
-                        $university_submitted_data['universityName'] = $request_data['universityName'];
-
-                    if (array_key_exists("universityStatus", $request_data))
-                        $university_submitted_data['universityStatus'] = $request_data['universityStatus'];
-
-
-
-                    $university_update_form->submit($university_submitted_data);
-
-
-                    if ($university_update_form->isValid()) {
-
-                        $em->persist($university);
-                        $em->flush();
-                        array_push($message_array, array(
-                            'success' => "University Updated Successfully",
-                            'universityId' => $request_data['universityId']
-                        ));
-                        $university_form_decode['children']['universityId']['value'] = "University Updated Successfully";
-
-                    } else {
-                        $em->clear();
-                        $university_form = $serializer->serialize($university_update_form, 'json');
-                        $university_form_decode = json_decode($university_form, true);
-                        $university_form_decode['children']['universityName']['value'] = $oldUniversityName;
-                        $university_form_decode['children']['universityStatus']['value'] = $oldUniversityStatus;
-                        $university_form_decode['children']['universityUrl']['value'] = $oldUniversityUrl;
-                        $university_form_decode['children']['universityId']['value'] = $request_data['universityId'];
-
-                        array_push($message_array, $university_form_decode);
-                    }
-
-
                 }
 
             }
 
-            return $this->_createJsonResponse('success',array(
-                'successTitle'=>'University Updated Successfully',
-                'successData'=>$message_array
-            ),200);
+            $data = array(
+                'totalUniversities' => $searchResults ,
+                'totalNumber' => $totalNumber
+            );
 
-        } else {
-
-            return $this->_createJsonResponse('error',array(
-                'errorTitle'=>'University was not Updated',
-                'errorDescription'=>'Please Check the form and submit again'
-            ),400);
-        }
-
-
-    }
-
-    /**
-     * Save new Universities.
-     */
-    public function saveNewUniversityAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $serializer = $this->container->get('jms_serializer');
-
-
-        $request_data = json_decode($request->getContent(), true);
-
-        if(array_key_exists('key',$request_data)){
-
-            $captchaApiInfo = $this->getParameter('google_re_captcha_info');
-
-            $host = $captchaApiInfo['host'];
-            $secret = $captchaApiInfo['secret'];
-
-            $url= $host."?secret=".$secret."&response=".$request_data['key'];
-
-
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-            $jsonOutput  = curl_exec($ch);
-            curl_close($ch);
-
-            $captchaResponse = json_decode($jsonOutput,true);
-
-            if($captchaResponse['success']){
-                $universityData=array();
-
-
-
-                $universityData['universityName']=$request_data['universityName'];
-                $universityData['universityStatus']='Activated';
-                $universityData['universityUrl']=$request_data['universityUrl'];
-                $universityData['referral']=$request_data['referral'];
-                $universityData['campuses']=array();
-                $universityData['adminApproved']="No";
-                $universityData['creationDateTime']=gmdate('Y-m-d H:i:s');
-
-                for($i=0; $i<count($request_data['campuses']);$i++){
-
-                    array_push($universityData['campuses'],array(
-                        'campusName'=>$request_data['campuses'][$i]['campusName'],
-                        'state'=>$request_data['campuses'][$i]['state'],
-                        'campusStatus'=>'Activated'
-                    ));
-
-                }
-
-
-                $universityEntity = new University();
-
-                $universityForm = $this->createForm(new UniversityType(), $universityEntity);
-
-                $universityForm->submit($universityData);
-
-                if ($universityForm->isValid()) {
-
-                    $em->persist($universityEntity);
-                    $em->flush();
-
-                    return $this->_createJsonResponse('success',array(
-                        'successTitle'=>"University Successfully Created"
-                    ),201);
-
-                } else {
-
-                    $formErrorData = json_decode($serializer->serialize($universityForm, 'json'),true);
-
-                    return $this->_createJsonResponse('error',array(
-                        'errorTitle'=>"University Creation Unsuccessful",
-                        'errorDescription'=>"Please fill up the form again & submit.",
-                        'errorData'=>$formErrorData
-                    ),400);
-
-                }
-
-
-            }else{
-                return $this->_createJsonResponse('error',array(
-                    'errorTitle'=>"University Creation Unsuccessful",
-                    'errorDescription'=>"Captcha was Wrong. Reload and try again."
-                ),400);
-            }
+            return $this->_createJsonResponse('success', array('successData'=>array('universities'=>$data)), 200);
         }else{
-            return $this->_createJsonResponse('error',array(
-                'errorTitle'=>"University Creation Unsuccessful",
-                'errorDescription'=>"Sorry we were unable to create university. FillUp the form and try again."
-            ),400);
+            return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
         }
-
-
     }
 
     /**
-     * Save new Universities Admin Api.
+     * get All Activated Universities Admin api
      */
-    public function saveNewUniversityAdminAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $serializer = $this->container->get('jms_serializer');
-        $stateRepo = $em->getRepository("AppBundle:State");
-        $request_data = json_decode($request->getContent(), true);
+    public function getAllActivatedUniversitiesAction(Request $request){
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
-        $message_array=array();
-        foreach ($request_data as $university) {
+        if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
 
-            $university['universityStatus']="Activated";
-            $universityEntity = new University();
+            $content = $request->getContent();
+            $data = json_decode($content, true);
+            $em = $this->getDoctrine()->getManager();
+            $universityRepo=$em->getRepository('AppBundle:University');
 
-            foreach($university['campuses'] as $campus){
-                $campusName = null;
-                $state = null;
-                $campusEntity = new Campus();
-                if(array_key_exists('campusName',$campus))$campusEntity->setCampusName($campus['campusName']);
-                if(array_key_exists('state',$campus))$campusEntity->setState($stateRepo->findOneById($campus['state']));
-                $campusEntity->setCampusStatus('Activated');     //TODO Its not working
-                $universityEntity->addCampus($campusEntity);
+            $pageSize = $data["pageSize"];
+            $searchQuery = filter_var($data["searchQuery"], FILTER_SANITIZE_STRING);
+            $pageNumber = $data["pageNumber"];
+            $sort = $data["sort"];
+
+            $totalNumber = $universityRepo->getAllActivatedUniversitiesSearchNumber($searchQuery);
+            $searchResults= $universityRepo->getAllActivatedUniversitiesSearchResult($searchQuery, $pageNumber, $pageSize,$sort);
+
+            for($i=0;$i<count($searchResults);$i++){
+                $searchResults[$i]['campuses']=array();
+                $campuses = $universityRepo->findOneById($searchResults[$i]['universityId'])->getCampuses();
+                $searchResults[$i]['creationDateTime']=$searchResults[$i]['creationDateTime']->format('h:i A, d-M-Y');
+                foreach($campuses as $campus){
+                    array_push($searchResults[$i]['campuses'],array(
+                        'campusId'=>$campus->getId(),
+                        'campusName'=>$campus->getCampusName(),
+                        'stateShortName'=>$campus->getState()->getStateShortName(),
+                        'stateName'=>$campus->getState()->getStateName(),
+                        'countryName'=>$campus->getState()->getCountry()->getCountryName(),
+                        'campusStatus'=>$campus->getCampusStatus()
+                    ));
+                }
+
             }
 
-            $universityForm = $this->createForm(new UniversityType(), $universityEntity);
+            $data = array(
+                'totalUniversities' => $searchResults ,
+                'totalNumber' => $totalNumber
+            );
 
-            //TODO work on response
-            $universityForm->submit($university);
+            return $this->_createJsonResponse('success', array('successData'=>array('universities'=>$data)), 200);
+        }else{
+            return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
+        }
+    }
 
-            if ($universityForm->isValid()) {
-                $em->persist($universityEntity);
+    /**
+     * get All Deactivated Universities Admin api
+     */
+    public function getAllDeactivatedUniversitiesAction(Request $request){
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+        if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
+
+            $content = $request->getContent();
+            $data = json_decode($content, true);
+            $em = $this->getDoctrine()->getManager();
+            $universityRepo=$em->getRepository('AppBundle:University');
+
+            $pageSize = $data["pageSize"];
+            $searchQuery = filter_var($data["searchQuery"], FILTER_SANITIZE_STRING);
+            $pageNumber = $data["pageNumber"];
+            $sort = $data["sort"];
+
+            $totalNumber = $universityRepo->getAllDeactivatedUniversitiesSearchNumber($searchQuery);
+            $searchResults= $universityRepo->getAllDeactivatedUniversitiesSearchResult($searchQuery, $pageNumber, $pageSize,$sort);
+
+            for($i=0;$i<count($searchResults);$i++){
+                $searchResults[$i]['campuses']=array();
+                $campuses = $universityRepo->findOneById($searchResults[$i]['universityId'])->getCampuses();
+                $searchResults[$i]['creationDateTime']=$searchResults[$i]['creationDateTime']->format('h:i A, d-M-Y');
+                foreach($campuses as $campus){
+                    array_push($searchResults[$i]['campuses'],array(
+                        'campusId'=>$campus->getId(),
+                        'campusName'=>$campus->getCampusName(),
+                        'stateShortName'=>$campus->getState()->getStateShortName(),
+                        'stateName'=>$campus->getState()->getStateName(),
+                        'countryName'=>$campus->getState()->getCountry()->getCountryName(),
+                        'campusStatus'=>$campus->getCampusStatus()
+                    ));
+                }
+
+            }
+
+            $data = array(
+                'totalUniversities' => $searchResults ,
+                'totalNumber' => $totalNumber
+            );
+
+            return $this->_createJsonResponse('success', array('successData'=>array('universities'=>$data)), 200);
+        }else{
+            return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
+        }
+    }
+
+    /**
+     * Save Edited University Data Only Admin api
+     */
+    public function saveEditedUniversityDataOnlyAction(Request $request){
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+        if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
+
+            $content = $request->getContent();
+            $data = json_decode($content, true);
+            $em = $this->getDoctrine()->getManager();
+            $universityRepo=$em->getRepository('AppBundle:University');
+
+            if(array_key_exists('universityId',$data)){
+                $university = $universityRepo->findOneById($data['universityId']);
+                $university->setUniversityName($data['universityName']);
+                $university->setUniversityUrl(array_key_exists('universityUrl',$data)?$data['universityUrl']:'');
+                if($data["adminApproved"]=="Yes"){
+                    $university->setAdminApproved("Yes");
+                }else{
+                    $university->setAdminApproved("No");
+                }
+                $university->setUniversityStatus($data['universityStatus']);
+                $em->persist($university);
                 $em->flush();
 
-                array_push($message_array,array(
-                    'success'=>'University Successfully Created'
-                ));
-            } else {
-                $em->clear();
-                $universityFormErrorJson = $serializer->serialize($universityForm, 'json');
-                array_push($message_array,json_decode($universityFormErrorJson,true));
+                return $this->_createJsonResponse('success', array(
+                        'successTitle'=>"University has been updated successfully",
+                        'successData'=>array(
+                            'universityName'=>$university->getUniversityName(),
+                            'universityUrl'=>$university->getUniversityUrl(),
+                            'universityStatus'=>$university->getUniversityStatus()
+                        )
+                    ), 200
+                );
+
+            }else{
+                return $this->_createJsonResponse('error', array('errorTitle'=>"Invalid Data Provided."), 400);
             }
 
+        }else{
+            return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
         }
-
-        $json = $serializer->serialize($message_array, 'json');
-        $response = new Response($json , 200);
-        return $response;
-
-
 
     }
 
     /**
-     * Displays a form to update an Just Created User entity.
-     *
-     * @Route("/api/university/delete", name="delete_university")
-     * @Method({"POST"})
+     * Approve Multiple Universities Admin api
      */
-    public function deleteUniversityAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $serializer = $this->container->get('jms_serializer');
-        $universityRepo = $em->getRepository("AppBundle:University");
-        $request_data = json_decode($request->getContent(), true);
+    public function approveMultipleUniversitiesAction(Request $request){
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
-        $university = $universityRepo->findOneById($request_data['deleteId']);
+        if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
 
-        $message_array = null;
-        if (!$university) {
-            $message_array  = array(
-                'errorTitle'=> 'University cannot be deleted',
-                'errorDescription'=>'No University was found.'
-            );
-
-            return $this->_createJsonResponse('error',$message_array,400);
+            $content = $request->getContent();
+            $data = json_decode($content, true);
+            $em = $this->getDoctrine()->getManager();
+            $universityRepo=$em->getRepository('AppBundle:University');
+            $updated = $universityRepo->approveUniversities($data);
+            if($updated){
+                return $this->_createJsonResponse('success', array(
+                        'successTitle'=>"Universities has been approved successfully"
+                    ), 200
+                );
+            }else{
+                return $this->_createJsonResponse('error', array('errorTitle'=>"Sorry, Universities are not updated"), 400);
+            }
 
         }else{
-            $em->remove($university);
-            $em->flush();
-            $message_array  = array(
-                'successTitle'=>'University has been removed.'
-            );
-            return $this->_createJsonResponse('success',$message_array,200);
+            return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
         }
-
-
     }
 
-    public function getAllNonApprovedUniversitiesAction(Request $request){
-        $content = $request->getContent();
-        $data = json_decode($content, true);
+    /**
+     * update university details
+     */
+    public function updateUniversityDetailsAction(Request $request){
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+        if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
+
+            $content = $request->getContent();
+            $data = json_decode($content, true);
+
+            $em = $this->getDoctrine()->getManager();
+            $universityRepo = $em->getRepository('AppBundle:University');
+
+            $university = $universityRepo->findOneById($data['universityId']);
+
+            for($i=0; $i<count($data['campuses']); $i++){
+                $data['campuses'][$i]['id'] = $data['campuses'][$i]['campusId'];
+                unset($data['campuses'][$i]['campusId']);
+
+            }
+
+            for($i=0; $i<count($data['newCampuses']); $i++){
+                unset($data['newCampuses'][$i]['campusId']);
+                $data['newCampuses'][$i]['campusStatus']="Activated";
+                array_push($data['campuses'],$data['newCampuses'][$i]);
+            }
+
+
+            $universityForm = $this->createForm(new UniversityType(), $university);
+            $universityForm->remove('creationDateTime');
+            $universityForm->remove('referral');
+
+            $universityForm->submit($data);
+
+            if ($universityForm->isValid()) {
+                $em->persist($university);
+                $em->flush();
+                return $this->_createJsonResponse('success', array(
+                        'successTitle'=>"University has been updated & approved successfully"
+                    ), 200
+                );
+
+
+            } else {
+                return $this->_createJsonResponse('error', array("errorTitle"=>"Sorry, Could not update university",
+                    "errorDescription" => "Check the form and submit again",
+                    "errorData" => $universityForm),
+                    400);
+            }
+
+        }else{
+            return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
+        }
+    }
+
+    /**
+     * Get all similar universities
+     */
+    public function getAllSimilarUniversitiesAction(Request $request){
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+        if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
+
+            $content = $request->getContent();
+            $data = json_decode($content, true);
+            $em = $this->getDoctrine()->getManager();
+            $universityRepo=$em->getRepository('AppBundle:University');
+
+            $pageSize = $data["pageSize"];
+            $searchQuery = filter_var($data["searchQuery"], FILTER_SANITIZE_STRING);
+            $pageNumber = $data["pageNumber"];
+            $sort = $data["sort"];
+
+
+            $searchResults= $universityRepo->getSimilarUniversitiesSearchResult($searchQuery, $pageNumber, $pageSize,$sort);
+            $totalNumber = $universityRepo->getSimilarUniversitiesSearchNumber($searchQuery);
+
+            for($i=0;$i<count($searchResults);$i++){
+                if($searchResults[$i]['universityId']!=$data['universityId']){
+                    $searchResults[$i]['campuses']=array();
+                    $campuses = $universityRepo->findOneById($searchResults[$i]['universityId'])->getCampuses();
+                    $searchResults[$i]['creationDateTime']=$searchResults[$i]['creationDateTime']->format('h:i A, d-M-Y');
+                    foreach($campuses as $campus){
+                        array_push($searchResults[$i]['campuses'],array(
+                            'campusId'=>$campus->getId(),
+                            'campusName'=>$campus->getCampusName(),
+                            'stateShortName'=>$campus->getState()->getStateShortName(),
+                            'stateName'=>$campus->getState()->getStateName(),
+                            'countryName'=>$campus->getState()->getCountry()->getCountryName(),
+                            'campusStatus'=>$campus->getCampusStatus()
+                        ));
+                    }
+                }else{
+                    unset($searchResults[$i]);
+                }
+
+
+            }
+
+            $data = array(
+                'totalUniversities' => $searchResults ,
+                'totalNumber' => $totalNumber
+            );
+
+            return $this->_createJsonResponse('success', array('successData'=>array('universities'=>$data)), 200);
+        }else{
+            return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
+        }
+    }
+
+    /**
+     * merge universities
+     */
+    public function mergeUniversitiesAction(Request $request){
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+        if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
+
+            $content = $request->getContent();
+            $data = json_decode($content, true);
+            $em = $this->getDoctrine()->getManager();
+            $universityRepo=$em->getRepository('AppBundle:University');
+
+            $mergeFromUniversity = $universityRepo->findOneById($data['mergeFromUniversityId']);
+            $mergeToUniversity = $universityRepo->findOneById($data['mergeToUniversityId']);
+
+
+            foreach($mergeFromUniversity->getCampuses() as $campus){
+                $campus->setUniversity($mergeToUniversity);
+                $em->persist($campus);
+                $em->flush();
+            }
+            $em->clear();
+
+            //Reinitializing after merging campus
+            $mergeFromUniversity = $universityRepo->findOneById($data['mergeFromUniversityId']);
+            $em->remove($mergeFromUniversity);
+            $em->flush();
+
+            return $this->_createJsonResponse('success', array(
+                    'successTitle'=>"University has been merged successfully"
+                ), 200
+            );
+
+        }else{
+            return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
+        }
     }
 
     public function _createJsonResponse($key, $data,$code)

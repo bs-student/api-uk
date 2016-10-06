@@ -5,6 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use AppBundle\Repository\ReferralRepository;
 use AppBundle\Repository\CampusRepository;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use AppBundle\Form\Type\CampusType;
 
@@ -42,8 +43,20 @@ class UniversityType extends AbstractType
             'type'         => new CampusType(),
             'allow_add'    => true,
             'by_reference' =>false
-        ))
-        ;
+        ));
+
+        $builder->add('adminApproved','text',array(
+            'constraints' => array(
+                new NotBlank(),
+            )
+        ));
+        $builder->add('creationDateTime','datetime',array(
+            'widget' => 'single_text',
+            'constraints' => array(
+                new DateTime(),
+                new NotBlank()
+            )
+        ));
 
     }
 

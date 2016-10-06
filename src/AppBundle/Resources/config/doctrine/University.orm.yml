@@ -39,5 +39,17 @@ AppBundle\Entity\University:
             length: '20'
             options:
                 default: 'Activated'
+        adminApproved:
+            column: admin_approved
+            nullable: false
+            type: string
+            length: '20'
+            options:
+                default: 'No'
+        creationDateTime:
+            column: creation_datetime
+            type: datetime
+            options:
+                default: '2016-09-05 08:00:00'
 
     lifecycleCallbacks: {  }

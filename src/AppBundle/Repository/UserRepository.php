@@ -150,6 +150,8 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         return $this->getEntityManager()->createQueryBuilder('u')
             ->select('COUNT(u)')
             ->from('AppBundle:User', 'u')
+            ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
+            ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
             ->andwhere('u.username LIKE :query ')
             ->andwhere('u.email LIKE :emailQuery ')
             ->andwhere('u.roles NOT LIKE :role ')

@@ -11,17 +11,19 @@ namespace AppBundle\Repository;
 class UniversityRepository extends \Doctrine\ORM\EntityRepository
 {
 
-    public function getUniversitySearchResults($searchQuery){
+    public function getUniversitySearchResults($searchQuery)
+    {
         return $this->getEntityManager()
             ->createQueryBuilder('u')
             ->select('u.universityName')
 
             ->from('AppBundle:University', 'u')
             ->andwhere('u.universityName LIKE :query ')
-            ->setParameter('query', '%'.$searchQuery.'%')
+            ->setParameter('query', '%' . $searchQuery . '%')
             ->getQuery()
             ->getResult();
     }
+
     public function getAllUniversities()
     {
 
@@ -64,7 +66,8 @@ class UniversityRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function getActivatedUniversitySearchResults($searchQuery){
+    public function getActivatedUniversitySearchResults($searchQuery)
+    {
 
         return $this->getEntityManager()
             ->createQueryBuilder('u')
@@ -72,20 +75,280 @@ class UniversityRepository extends \Doctrine\ORM\EntityRepository
 
             ->from('AppBundle:University', 'u')
 
-            ->innerJoin('AppBundle:Campus', 'c','WITH', 'u.id = c.university')
-            ->innerJoin('AppBundle:State', 's','WITH', 's.id = c.state')
-            ->innerJoin('AppBundle:Country', 'co','WITH', 'co.id = s.country')
+            ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.id = c.university')
+            ->innerJoin('AppBundle:State', 's', 'WITH', 's.id = c.state')
+            ->innerJoin('AppBundle:Country', 'co', 'WITH', 'co.id = s.country')
             ->andwhere('u.universityStatus=\'Activated\'')
             ->andwhere('c.campusName LIKE :query OR u.universityName LIKE :query OR co.countryName LIKE :query OR s.stateName LIKE :query')
 
-            ->setParameter('query', '%'.$searchQuery.'%')
+            ->setParameter('query', '%' . $searchQuery . '%')
             ->getQuery()
             ->getResult();
 
 
+    }
+
+    function getAllNonApprovedUniversitiesSearchResult($searchQuery, $pageNumber, $pageSize, $sort)
+    {
+        $firstResult = ($pageNumber - 1) * $pageSize;
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder('u')
+            ->select("u.id as universityId,
+                      u.universityName,
+                      u.universityUrl,
+                      u.universityStatus,
+                      u.adminApproved,
+                      u.creationDateTime")
+
+            ->from('AppBundle:University', 'u')
+            ->andwhere('u.adminApproved = ' . "'No'")
+            ->andwhere('u.universityName LIKE :query ')
+            ->setParameter('query', '%' . $searchQuery . '%');
 
 
 
+        foreach ($sort as $key => $value) {
+            $qb->addOrderBy("u." . $key, $value);
+        }
+
+
+        return $qb->setMaxResults($pageSize)
+            ->setFirstResult($firstResult)
+            ->getQuery()
+            ->getResult();
+    }
+
+    function getAllNonApprovedUniversitiesSearchNumber($searchQuery)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder('u')
+            ->select("count(u)")
+
+            ->from('AppBundle:University', 'u')
+            ->andwhere('u.adminApproved = ' . "'No'")
+            ->andwhere('u.universityName LIKE :query ')
+            ->setParameter('query', '%' . $searchQuery . '%')
+
+            ->getQuery()
+            ->getSingleScalarResult();
 
     }
+
+
+    function getAllActivatedUniversitiesSearchResult($searchQuery, $pageNumber, $pageSize, $sort)
+    {
+        $firstResult = ($pageNumber - 1) * $pageSize;
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder('u')
+            ->select("u.id as universityId,
+                      u.universityName,
+                      u.universityUrl,
+                      u.universityStatus,
+                      u.adminApproved,
+                      u.creationDateTime")
+
+            ->from('AppBundle:University', 'u')
+            ->andwhere('u.adminApproved = ' . "'Yes'")
+            ->andwhere('u.universityStatus = ' . "'Activated'")
+            ->andwhere('u.universityName LIKE :query ')
+            ->setParameter('query', '%' . $searchQuery . '%');
+
+
+
+        foreach ($sort as $key => $value) {
+            $qb->addOrderBy("u." . $key, $value);
+        }
+
+
+        return $qb->setMaxResults($pageSize)
+            ->setFirstResult($firstResult)
+            ->getQuery()
+            ->getResult();
+    }
+
+    function getAllActivatedUniversitiesSearchNumber($searchQuery)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder('u')
+            ->select("count(u)")
+
+            ->from('AppBundle:University', 'u')
+            ->andwhere('u.adminApproved = ' . "'Yes'")
+            ->andwhere('u.universityStatus = ' . "'Activated'")
+            ->andwhere('u.universityName LIKE :query ')
+            ->setParameter('query', '%' . $searchQuery . '%')
+
+            ->getQuery()
+            ->getSingleScalarResult();
+
+    }
+
+
+    function getAllDeactivatedUniversitiesSearchResult($searchQuery, $pageNumber, $pageSize, $sort)
+    {
+        $firstResult = ($pageNumber - 1) * $pageSize;
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder('u')
+            ->select("u.id as universityId,
+                      u.universityName,
+                      u.universityUrl,
+                      u.universityStatus,
+                      u.adminApproved,
+                      u.creationDateTime")
+
+            ->from('AppBundle:University', 'u')
+            ->andwhere('u.adminApproved = ' . "'Yes'")
+            ->andwhere('u.universityStatus = ' . "'Deactivated'")
+            ->andwhere('u.universityName LIKE :query ')
+            ->setParameter('query', '%' . $searchQuery . '%');
+
+
+
+        foreach ($sort as $key => $value) {
+            $qb->addOrderBy("u." . $key, $value);
+        }
+
+
+        return $qb->setMaxResults($pageSize)
+            ->setFirstResult($firstResult)
+            ->getQuery()
+            ->getResult();
+    }
+
+    function getAllDeactivatedUniversitiesSearchNumber($searchQuery)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder('u')
+            ->select("count(u)")
+
+            ->from('AppBundle:University', 'u')
+            ->andwhere('u.adminApproved = ' . "'Yes'")
+            ->andwhere('u.universityStatus = ' . "'Deactivated'")
+            ->andwhere('u.universityName LIKE :query ')
+            ->setParameter('query', '%' . $searchQuery . '%')
+
+            ->getQuery()
+            ->getSingleScalarResult();
+
+    }
+
+    function approveUniversities($universities){
+        $conditions = array();
+        foreach ($universities as $university) {
+            array_push($conditions, "u.id = '" . $university['universityId'] . "'");
+        }
+
+        $queryBuilderUser = $this->getEntityManager()->createQueryBuilder('u');
+
+
+        $queryBuilderUser
+            ->update('AppBundle:University', 'u')
+            ->set('u.adminApproved', "'Yes'")
+            ->set('u.universityStatus',"'".$university['universityStatus']."'");
+
+        $orX = $queryBuilderUser->expr()->orX();
+        $orX->addMultiple($conditions);
+        $queryBuilderUser->add('where', $orX);
+
+
+        return $queryBuilderUser->getQuery()->execute();
+    }
+
+    function getSimilarUniversitiesSearchResult($searchQuery, $pageNumber, $pageSize, $sort)
+    {
+
+        //Strip unimportant keywords
+        $searchQuery = explode(" ",strtolower($searchQuery));
+        $searchArray=array();
+        foreach($searchQuery as $word){
+            if(strlen($word)>2 && strcmp("university",$word)){
+                array_push($searchArray,$word);
+            }
+        }
+        $finalArray=array();
+
+        for($i=0;$i<count($searchArray);$i++){
+            $finalArray['search_'.$i]= "%".$searchArray[$i]."%";
+        }
+
+
+        $conditions = array();
+        foreach ($finalArray as $key => $value) {
+            array_push($conditions, "u.universityName LIKE :".$key);
+        }
+
+
+        $firstResult = ($pageNumber - 1) * $pageSize;
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder('u')
+            ->select("u.id as universityId,
+                      u.universityName,
+                      u.universityUrl,
+                      u.universityStatus,
+                      u.adminApproved,
+                      u.creationDateTime")
+
+            ->from('AppBundle:University', 'u')
+            ->andwhere('u.adminApproved = ' . "'Yes'")
+            ->andwhere('u.universityStatus = ' . "'Activated'");
+
+        $orX = $qb->expr()->orX();
+        $orX->addMultiple($conditions);
+        $qb->setParameters($finalArray);
+        $qb->andWhere($orX);
+
+        foreach ($sort as $key => $value) {
+            $qb->addOrderBy("u." . $key, $value);
+        }
+
+
+        return $qb->setMaxResults($pageSize)
+            ->setFirstResult($firstResult)
+            ->getQuery()
+            ->getResult();
+    }
+
+    function getSimilarUniversitiesSearchNumber($searchQuery)
+    {
+        //Strip unimportant keywords
+        $searchQuery = explode(" ",strtolower($searchQuery));
+        $searchArray=array();
+        foreach($searchQuery as $word){
+            if(strlen($word)>2 && strcmp("university",$word)){
+                array_push($searchArray,$word);
+            }
+        }
+        $finalArray=array();
+
+        for($i=0;$i<count($searchArray);$i++){
+            $finalArray['search_'.$i]= "%".$searchArray[$i]."%";
+        }
+
+
+        $conditions = array();
+        foreach ($finalArray as $key => $value) {
+            array_push($conditions, "u.universityName LIKE :".$key);
+        }
+
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder('u')
+            ->select("count(u)")
+
+            ->from('AppBundle:University', 'u')
+            ->andwhere('u.adminApproved = ' . "'Yes'")
+            ->andwhere('u.universityStatus = ' . "'Activated'")
+            ->setParameters($finalArray);
+
+        $orX = $qb->expr()->orX();
+        $orX->addMultiple($conditions);
+        $qb->setParameters($finalArray);
+        $qb->andWhere($orX);
+
+
+
+        return    $qb ->getQuery()
+            ->getSingleScalarResult();
+
+    }
+
 }
