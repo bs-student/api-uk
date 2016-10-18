@@ -1,173 +1,333 @@
 <!doctype html>
-    <html>
-    <head>
-        <meta charset="utf-8">
-        <title>textbook exchange made easy: student2student.com newsletter</title>
-        <style type="text/css">
-            body, td, th {
-                font-family:'Open Sans';
-                font-size: 11pt;
-            }
-            a:link {
-                color: #000000;
-                text-decoration: none;
-            }
-			.blue-text{
-					color: #0072AE;
-			}
-			.orange-text{
-					color: #FF530D;
-			}
-			.head-text{
-					font-size:18px;
-					
-			}
-			.sub-text{
-					font-size:15px;
-					
-			}
-			.uppercase{
-				text-transform:uppercase;
-			}
-			
-        </style>
-    </head>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>textbook exchange made easy: student2student.com newsletter</title>
+    <style type="text/css">
 
-    <body style="background: #EBEEFA;align-content: center;">
+        body, td, th {
+            font-family: 'Segoe UI',proxima_nova,'Open Sans','Lucida Grande',Arial,Verdana,'Lucida Sans Unicode',Tahoma,'Sans Serif';
+            font-size: 11pt;
+        }
 
-    <table  bgcolor="#ebeefa" cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="padding: 20px;">
-        <tr>
-            <td>
-                <table cellpadding="0" cellspacing="0" border="0" align="center" width="500" bgcolor="#FFFFFF">
-                    <tr>
-                        <td align="center">
-                            <a href="http://www.student2student.com/" target="_blank">
-                                <img  src="{{ header_image }}" alt="Student2student logo" style="width:100%;height:90px;display: block;    z-index: 10;    position: relative;" title="Student2student logo"></a>
+    </style>
+</head>
 
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td align="left" style="padding: 20px;font-family:'Open Sans';">
-                            <br>
-                            Hello {{ seller.username }},<br /><br />
-                            Your Contact Information has been requested by a new buyer ({{ buyerInfo.buyerNickName }}). We have sent your contact information to ({{ buyerInfo.buyerNickName }}).<br>
-                            {{ buyerInfo.buyerNickName }} will contact you soon
-                        </td>
-                    </tr>
-
-                    <tr >
-                        <td align="left" style="padding: 20px;font-family:'Open Sans';">
-
-                            <strong>Buyer Message:</strong><br />
-                            {{ buyerMessage.messageBody }}
-                            <br>
-                        </td>
-                    </tr>
+<body style="background: #EBEEFA;align-content: center;">
 
 
-                    <tr>
-                        <td style="padding: 20px;font-family:'Open Sans';">
-                            <table  width="500" cellpadding="0" cellspacing="0" border="0" align="left" >
-                                <tr>
-                                    <td align="left" valign="middle">
-                                        <img src="{{ book_image }}" alt="activate my account button" style="width: 200px !important;height: 300px !important;" title="Book Image">
-                                    </td>
-                                    <td width="26">
-
-                                    </td>
-                                    <td align="left" valign="top" style="font-family:'Open Sans';">
-                                        <text class="orange-text uppercase head-text">{{ book.bookTitle }}</text><br/><br/>
-
-                                        <text class="blue-text sub-text">ISBN: </text><text class="sub-text">{{ book.bookIsbn10 }}</text><br/><br/>
-                                        <text class="blue-text sub-text">Author: </text><text class="sub-text">{{ book.bookDirectorAuthorArtist }}</text><br/><br/>
-                                        <text class="blue-text sub-text">Publisher: </text><text class="sub-text">{{ book.bookPublisher }}</text><br/><br/>
-                                        <text class="blue-text sub-text">Publish Date: </text><text class="sub-text">{{ book.bookPublishDate|date("d M Y") }}</text><br/><br/>
+<div class="grey-background body-text padding-top-20 padding-bottom-20" align="center" width="600">
 
 
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr >
-                        <td style="padding: 20px;font-family:'Open Sans';">
-                            <table width="500" cellpadding="0" cellspacing="0" border="0" align="left">
-                                <tr>
-                                    <td colspan="2" style=" font-size:18px;font-family: 'Open Sans';">
+<table bgcolor="#ebeefa" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+<tr>
+    <td>
+        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="">
+            <tr>
+                <td><img style="display: block;" src="{{ header_image }}"/></td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td>
+        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="">
+            <tr>
+                <td>
+                    <div style="background:#0A87C9;width:600px;text-align: center;">
+                        <h1 style="text-transform: uppercase;font-size:2em;color: #ffffff;margin-bottom: 10px;margin-top: 0px;">
+                            New Message</h1>
+                        <img style="margin: auto;display:block;" src="{{ envelop_image }}"/>
 
-                                        The Deal Information:
-                                        <br>
-                                        <br>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="font-family:'Open Sans';" align="left">Price : </td>
-                                    <td style="font-family:'Open Sans';">$ {{ bookDeal.bookPriceSell }}</td>
+                        <h2 style="color:#000000;font-size:1.5em;margin-top: 0px;margin-bottom: 0px;">Hello , how
+                            are you?</h2>
+                        <h5 style="color: #ffffff;font-size: 1em;margin-top: 10px;margin-bottom: 10px;">Message is
+                            sent to buyer (test.user.1)</h5>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td>
+        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+            <tr>
+                <td width="220"></td>
+                <td width="160">
+                    <div style="text-align: center;">
+                        <img width="143" height="37" style="vertical-align:top;display: block;"
+                             src="{{ previous_image }}"/>
+                    </div>
 
-                                </tr>
-                                <tr>
-                                    <td style="font-family:'Open Sans';" align="left">Book Has Notes : </td>
-                                    <td style="font-family:'Open Sans';">{{ bookDeal.bookHasNotes }}</td>
+                </td>
+                <td width="220"></td>
+            </tr>
 
-                                </tr>
-                                <tr>
-                                    <td style="font-family:'Open Sans';">Book Is Highlighted : </td>
-                                    <td style="font-family:'Open Sans';">{{ bookDeal.bookIsHighlighted }}</td>
+        </table>
+    </td>
+</tr>
 
-                                </tr>
-                                <tr>
-                                    <td style="font-family:'Open Sans';">Available Date : </td>
-                                    <td style="font-family:'Open Sans';">{{ bookDeal.bookAvailableDate|date("d M Y") }}
-                                    </td>
+<tr>
+    <td>
+        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+            <tr>
+                <td style="padding-top: 10px;padding-bottom: 10px;" width="50"></td>
+                <td style="padding-top: 10px;padding-bottom: 10px;padding-right: 10px;" width="100">
+                    <div style="margin: auto;text-align: right;">
+                        <img style="height: 50px;width: 50px;border-radius: 50%;" src="{{ profile_image }}"/>
+                    </div>
+                </td>
+                <td style="padding-top: 10px;padding-bottom: 10px;" width="220">
+                    <div style="margin: auto;text-align: left;">
+                        <h5 style="color:#000000;font-size: 1em;margin-top: 0px;margin-bottom: 0px;">User name 2</h5>
 
-                                </tr>
-                                <tr>
-                                    <td style="font-family:'Open Sans';">Payment : </td>
-                                    <td style="font-family:'Open Sans';">{%if bookDeal.bookPaymentMethodCaShOnExchange and bookDeal.bookPaymentMethodCheque %}
-                                            Cheque, Cash
-                                        {% elseif bookDeal.bookPaymentMethodCaShOnExchange and bookDeal.bookPaymentMethodCheque!=true %}
-                                            Cash
-                                        {% elseif bookDeal.bookPaymentMethodCaShOnExchange!=true and bookDeal.bookPaymentMethodCheque %}
-                                            Cheque
-                                        {% endif %}
-                                    </td>
+                        <span style="color:#000000;margin-left: 10px;font-size: 12px;">Hello thereHello thereHello thereHello there, how are you. I need your number</span>
+                    </div>
+                </td>
+                <td style="padding-top: 10px;padding-bottom: 10px;" width="180">
+                    <div style="margin: auto;text-align: center;">
+                        <span style="color:#000000;font-size: 12px;">Message from Buyer</span><br/>
+                        <span style="color:#000000;font-size: 12px;">12:00 PM 12-May-2016</span>
+                    </div>
+                </td>
+                <td style="padding-top: 10px;padding-bottom: 10px;" width="50"></td>
+            </tr>
 
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
+            <tr>
+                <td style="padding-top: 10px;padding-bottom: 10px;" width="50"></td>
+                <td style="padding-top: 10px;padding-bottom: 10px;background: #F1F1F1;padding-right: 10px;" width="100">
+                    <div style="margin: auto;text-align: right;">
+                        <img style="height: 50px;width: 50px;border-radius: 50%;" src="{{ profile_image }}"/>
+                    </div>
+                </td>
+                <td style="padding-top: 10px;padding-bottom: 10px;background: #F1F1F1;" width="260">
+                    <div style="margin: auto;text-align: left;">
+                        <h5 style="color:#000000;font-size: 1em;margin-top: 0px;margin-bottom: 0px;">User name 2</h5>
 
-                    <tr >
-                        <td style="padding: 20px;font-family: 'Open Sans';font-size:18px" align="left" >
-                            Don't forget about our online price comparison feature.<br />
-                            Yes, we tell you the cheapest price online!<br /><br />
+                        <span style="color:#000000;margin-left: 10px;font-size: 12px;">Hello thereHello thereHello thereHello there, how are you. I need your number</span>
+                    </div>
+                </td>
+                <td style="padding-top: 10px;padding-bottom: 10px;background: #F1F1F1;" width="140">
+                    <div style="margin: auto;text-align: center;">
+                        <span style="color:#000000;font-size: 12px;">Message from Buyer</span><br/>
+                        <span style="color:#000000;font-size: 12px;">12:00 PM 12-May-2016</span>
+                    </div>
+                </td>
+                <td style="padding-top: 10px;padding-bottom: 10px;" width="50"></td>
+            </tr>
 
-<span >Cheers,<br />
-Your Student 2 Student Team</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center">
-                            <img src="{{ share_image }}" alt="Student2student main hero image" style="display:block;width: 100%;height: 108px;" title="Student2student main hero image">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center">
-                            <img  src="{{ footer_image }}" alt="Student2student main hero image" style="display:block;height: 3px;width: 100%;margin-top: 20px;" title="Student2student main hero image">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" style="padding:20px;font-family: 'Open Sans'; font-size:14px">2007 - 2016 Student 2 Student, All Rights Reserved</td>
-                    </tr>
+            <tr>
+                <td style="padding-top: 10px;padding-bottom: 10px;" width="50"></td>
+                <td style="padding-top: 10px;padding-bottom: 10px;padding-right: 10px;" width="100">
+                    <div style="margin: auto;text-align: right;">
+                        <img style="height: 50px;width: 50px;border-radius: 50%;" src="{{ profile_image }}"/>
+                    </div>
+                </td>
+                <td style="padding-top: 10px;padding-bottom: 10px;" width="220">
+                    <div style="margin: auto;text-align: left;">
+                        <h5 style="color:#000000;font-size: 1em;margin-top: 0px;margin-bottom: 0px;">User name 2</h5>
+
+                        <span style="color:#000000;margin-left: 10px;font-size: 12px;">Hello thereHello thereHello thereHello there, how are you. I need your number</span>
+                    </div>
+                </td>
+                <td style="padding-top: 10px;padding-bottom: 10px;" width="180">
+                    <div style="margin: auto;text-align: center;">
+                        <span style="color:#000000;font-size: 12px;">Message from Buyer</span><br/>
+                        <span style="color:#000000;font-size: 12px;">12:00 PM 12-May-2016</span>
+                    </div>
+                </td>
+                <td style="padding-top: 10px;padding-bottom: 10px;" width="50"></td>
+            </tr>
+
+            <tr>
+                <td style="padding-top: 10px;padding-bottom: 10px;" width="50"></td>
+                <td style="padding-top: 10px;padding-bottom: 10px;background: #F1F1F1;padding-right: 10px;" width="100">
+                    <div style="margin: auto;text-align: right;">
+                        <img style="height: 50px;width: 50px;border-radius: 50%;" src="{{ profile_image }}"/>
+                    </div>
+                </td>
+                <td style="padding-top: 10px;padding-bottom: 10px;background: #F1F1F1;" width="260">
+                    <div style="margin: auto;text-align: left;">
+                        <h5 style="color:#000000;font-size: 1em;margin-top: 0px;margin-bottom: 0px;">User name 2</h5>
+
+                        <span style="color:#000000;margin-left: 10px;font-size: 12px;">Hello thereHello thereHello thereHello there, how are you. I need your number</span>
+                    </div>
+                </td>
+                <td style="padding-top: 10px;padding-bottom: 10px;background: #F1F1F1;" width="140">
+                    <div style="margin: auto;text-align: center;">
+                        <span style="color:#000000;font-size: 12px;">Message from Buyer</span><br/>
+                        <span style="color:#000000;font-size: 12px;">12:00 PM 12-May-2016</span>
+                    </div>
+                </td>
+                <td style="padding-top: 10px;padding-bottom: 10px;" width="50"></td>
+            </tr>
 
 
-                </table>
-            </td>
-        </tr>
-    </table>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td>
+        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+            <tr>
+                <td width="220"></td>
+                <td width="160" style="padding-top:20px;text-align: center;">
+                    <div style="text-align: center;background-color: #FF530D;">
+                        <p style="color:#ffffff;padding: 5px 10px 5px 10px;">View & Reply</p>
+                    </div>
+                </td>
+                <td width="220"></td>
+            </tr>
+        </table>
+    </td>
+</tr>
+
+<tr>
+    <td>
+        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+            <tr>
+                <td style="text-align: center;padding-top:20px;">
+                    <p style="color:#000000;margin-bottom: 20px;">The Contact Information of seller (test.user.1) is
+                        given below -</p>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+
+<tr>
+    <td>
+        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+            <tr>
+                <td width="50"></td>
+                <td width="50" style="background: #0A87C9;padding-top: 10px;"></td>
+                <td width="200" style="padding-top:10px;padding-bottom:10px;text-align: left;background: #0A87C9;">
+                    <span style="color:#ffffff;font-size: 1em;">Nick Name :</span><br/>
+                    <span style="color:#ffffff;font-size: 1em;">Email :</span><br/>
+                    <span style="color:#ffffff;font-size: 1em;">Cell Phone :</span><br/>
+                    <span style="color:#ffffff;font-size: 1em;">Home Phone :</span>
+                </td>
 
 
+                <td width="250" style="padding-top:10px;padding-bottom:10px;text-align: left;background: #0A87C9;">
+                    <span style="color:#ffffff;font-size: 1em;">sujit.user.1</span><br/>
+                    <span style="color:#ffffff;font-size: 1em;">sujit@brainstation-23.com</span><br/>
+                    <span style="color:#ffffff;font-size: 1em;">016549874</span><br/>
+                    <span style="color:#ffffff;font-size: 1em;">68461468</span>
+                </td>
+                <td width="50"></td>
+            </tr>
+        </table>
+    </td>
+</tr>
 
-    </body>
-    </html>
+<tr>
+    <td>
+        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+            <tr>
+                <td width="50"></td>
+                <td width="140" style="padding-top: 10px;">
+
+                </td>
+                <td width="180"
+                    style="padding-right:10px;padding-left: 10px;padding-top:10px;padding-bottom:10px;padding-right:10px;text-align: left;">
+                    <p style="color:#0A87C9;font-size: 1em;font-style: italic;">BOOK INFORMATION</p>
+                </td>
+                <td width="180"
+                    style="border-left:1px solid #ffffff;padding-top:10px;padding-left: 30px;padding-bottom:10px;text-align: left;">
+                    <p style="color:#0A87C9;font-size: 1em;font-style: italic;">DEAL INFORMATION</p>
+                </td>
+                <td width="50"></td>
+            </tr>
+        </table>
+    </td>
+</tr>
+
+<tr>
+    <td>
+        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+            <tr>
+                <td width="50"></td>
+                <td width="140" style="padding-top: 10px;vertical-align: top;">
+                    <img width="120" height="170" src="{{ book_image }}"/>
+                </td>
+                <td width="180"
+                    style="padding-right:10px;padding-top:10px;padding-bottom:10px;text-align: left;vertical-align: top;padding-left: 10px;margin-bottom:20px;">
+                    <span style="color:#FF530D;font-size: 1em;">Book Title : </span><span
+                            style="color:#000000;font-size: 1em;">Contagious, A good book</span><br/>
+                    <span style="color:#FF530D;font-size: 1em;">ISBN : </span><span
+                            style="color:#000000;font-size: 1em;">1634567864</span><br/>
+                    <span style="color:#FF530D;font-size: 1em;">Author : </span><span
+                            style="color:#000000;font-size: 1em;">Sujit Ghosh</span><br/>
+                    <span style="color:#FF530D;font-size: 1em;">Publisher : </span><span
+                            style="color:#000000;font-size: 1em;">ContagiousMy publisher</span>
+                    <span style="color:#FF530D;font-size: 1em;">Publish Date : </span><span
+                            style="color:#000000;font-size: 1em;">13 May 2016</span>
+                </td>
+
+                <td width="180"
+                    style="border-left:1px solid #ECECEC;padding-top:10px;padding-bottom:10px;text-align: left;vertical-align: top;padding-left: 30px;margin-bottom:20px;">
+                    <span style="color:#FF530D;font-size: 1em;">Price : </span><span
+                            style="color:#000000;font-size: 1em;">Contagious, A good book</span><br/>
+                    <span style="color:#FF530D;font-size: 1em;">Book Has Notes : </span><span
+                            style="color:#000000;font-size: 1em;">No</span><br/>
+                    <span style="color:#FF530D;font-size: 1em;">Book Is Highlighted : </span><span
+                            style="color:#000000;font-size: 1em;">Yes</span><br/>
+                    <span style="color:#FF530D;font-size: 1em;">Available Date : </span><span
+                            style="color:#000000;font-size: 1em;">13 May 2016</span>
+                    <span style="color:#FF530D;font-size: 1em;">Payment : </span><span
+                            style="color:#000000;font-size: 1em;">Cash</span>
+                </td>
+                <td width="50"></td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td>
+        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="">
+            <tr>
+                <td style="text-align: center;background-color: #0A87C9;padding-top: 20px;padding-bottom: 20px;">
+                    <p style="text-transform: uppercase;font-size: 1em;color: #ffffff;">
+                        Don't Forget about our online price comparison feature<br/>
+                        Yes, We will tell you the cheapest price online!
+                    </p>
+
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td>
+        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="">
+            <tr>
+                <td >
+                    <img style="vertical-align: top;" height="3" src="{{ footer_image }}"/>
+
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td>
+        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="">
+            <tr>
+                <td style="text-align: center;">
+                    <p style="color: #000000;">2007-2016 Student 2 Student, All Rights Reserved</p>
+
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+</table>
+
+
+</div>
+
+</body>
+</html>
