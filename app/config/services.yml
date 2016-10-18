@@ -13,11 +13,9 @@ services:
         class: "%sujit.my_mailer.class%"
         arguments: ["@mailer", "@router","@templating",{"confirmation.template":"%fos_user.registration.confirmation.template%","resetting.template":"%fos_user.resetting.email.template%","from_email":{"confirmation":"%fos_user.registration.confirmation.from_email%","resetting":"%fos_user.resetting.email.from_email%"}}]
 
-
     sujit.user_manager :
         class: "%sujit.user_manager.class%"
         arguments: ["@security.encoder_factory", "@fos_user.util.username_canonicalizer","@fos_user.util.email_canonicalizer","@fos_user.entity_manager", "%fos_user.model.user.class%"]
-
 
     app.form.registration:
             class: AppBundle\Form\Type\RegistrationType
@@ -50,7 +48,6 @@ services:
                 scope: request
                 public: false
 
-
     app.validator.username_exist:
             class: AppBundle\Validator\UsernameValidator
             arguments: ["@doctrine.orm.entity_manager"]
@@ -58,17 +55,17 @@ services:
             tags:
                 - { name: validator.constraint_validator, alias: app.validator.username_exist }
 
-
     app.user.repository:
             class: Doctrine\ORM\EntityRepository
             factory: [@doctrine.orm.entity_manager, getRepository]
             arguments:
                 - AppBundle\Entity\User
 
-
-
     app.oauth.social_plugin_grant_extension:
             class: AppBundle\OAuth\SocialPluginGrantExtension
             arguments: ["@app.user.repository"]
             tags:
                 - { name: fos_oauth_server.grant_extension, uri: 'http://platform.local/grants/social_plugin' }
+
+    app.circle_image:
+            class: AppBundle\Service\CircleImage

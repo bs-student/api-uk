@@ -11,4 +11,18 @@ namespace AppBundle\Repository;
 class MessageRepository extends \Doctrine\ORM\EntityRepository
 {
 
+    function getLastFourMessages($contactId){
+        $qb= $this->getEntityManager()
+            ->createQueryBuilder('m')
+            ->select('m.id as messageId,
+                      IDENTITY(m.contact) AS contactId,
+                      m.messageBody,
+                      m.messageType,
+                      m.messageDateTime
+            ')
+            ->from('AppBundle:Message', 'm')
+            ->innerJoin('AppBundle:Contact', 'c', 'WITH', 'm.contactId = c.id')
+            ->andwhere('c.id = :contactId')
+            ->setParameter('contactId',  $contactId );
+    }
 }

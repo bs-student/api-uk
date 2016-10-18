@@ -11,6 +11,7 @@
 /bin/
 /composer.phar
 /web/bookImages/
+/web/assets/testEmail/
 /web/newsImages/
 /web/quoteImages/
 /web/newsletterEmails/

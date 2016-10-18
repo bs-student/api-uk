@@ -70,7 +70,7 @@
         <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
             <tr>
                 <td style="text-align: center;padding-top:20px;">
-                    <p style="color:#000000;margin-bottom: 20px;">Your Contact Information as seller ({{ seller.username }}) is given to buyer ({{ buyerInfo.buyerNickName }}) as below -</p>
+                    <p style="color:#000000;margin-bottom: 20px;">Buyer ({{ buyerInfo.buyerNickName }}) Contact Information is given below -</p>
                 </td>
             </tr>
         </table>
@@ -92,10 +92,10 @@
 
 
                 <td width="250" style="padding-top:10px;padding-bottom:10px;text-align: left;background: #0A87C9;">
-                    <span style="color:#ffffff;font-size: 1em;">{{ seller.username }}</span><br/>
-                    <span style="color:#ffffff;font-size: 1em;text-decoration: none;">{{ bookDeal.bookContactEmail }}</span><br/>
-                    <span style="color:#ffffff;font-size: 1em;">{{ bookDeal.bookContactCellNumber }}</span><br/>
-                    <span style="color:#ffffff;font-size: 1em;">{{ bookDeal.bookContactHomeNumber }}</span>
+                    <span style="color:#ffffff;font-size: 1em;">{{ buyerInfo.buyerNickName }}</span><br/>
+                    <span style="color:#ffffff;font-size: 1em;text-decoration: none;">{{ buyerInfo.buyerEmail }}</span><br/>
+                    <span style="color:#ffffff;font-size: 1em;">{{ buyerInfo.buyerCellPhone }}</span><br/>
+                    <span style="color:#ffffff;font-size: 1em;">{{ buyerInfo.buyerHomePhone }}</span>
                 </td>
                 <td width="50"></td>
             </tr>

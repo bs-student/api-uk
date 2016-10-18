@@ -37,10 +37,9 @@
                 <td>
                     <div style="background:#0A87C9;width:600px;text-align: center;">
                         <h1 style="text-transform: uppercase;font-size:2em;color: #ffffff;margin-bottom: 10px;margin-top: 0px;">
-                            Message Sent & Seller Information Received</h1>
+                           Message Sent</h1>
                         <img style="margin: auto;display:block;" src="{{ envelop_image }}"/>
-
-                        <h2 style="color:#000000;font-size:1.5em;margin-top: 0px;margin-bottom: 0px;">{{ buyerMessage.messageBody }}</h2>
+                        <h2 style="color:#000000;font-size:1.5em;margin-top: 0px;margin-bottom: 0px;">{{ message.messageBody }}</h2>
                         <h5 style="color: #ffffff;font-size: 1em;margin-top: 10px;margin-bottom: 10px;">Message sent to seller ({{ seller.username }})</h5>
                     </div>
                 </td>
@@ -48,7 +47,88 @@
         </table>
     </td>
 </tr>
+{%if messageArray|length > 0 %}
+    <tr>
+        <td>
+            <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+                <tr>
+                    <td width="220"></td>
+                    <td width="160">
+                        <div style="text-align: center;">
+                            <img width="143" height="37" style="vertical-align:top;display: block;"
+                                 src="{{ previous_image }}"/>
+                        </div>
 
+                    </td>
+                    <td width="220"></td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+
+
+                {% for key,individualMessage in messageArray %}
+
+                    {%if key is even %}
+
+                        <tr>
+                            <td style="padding-top: 10px;padding-bottom: 10px;" width="50"></td>
+                            <td style="padding-top: 10px;padding-bottom: 10px;padding-right: 10px;" width="100">
+                                <div style="margin: auto;text-align: right;">
+                                    <img style="height: 50px;width: 50px;border-radius: 50%;" src="{{ individualMessage.embedProfilePicture }}"/>
+                                </div>
+                            </td>
+                            <td style="padding-top: 10px;padding-bottom: 10px;" width="220">
+                                <div style="margin: auto;text-align: left;">
+                                    <h5 style="color:#000000;font-size: 1em;margin-top: 0px;margin-bottom: 0px;">{{ individualMessage.sender }}</h5>
+
+                                    <span style="color:#000000;margin-left: 10px;font-size: 12px;">{{ individualMessage.messageBody }}</span>
+                                </div>
+                            </td>
+                            <td style="padding-top: 10px;padding-bottom: 10px;" width="180">
+                                <div style="margin: auto;text-align: center;">
+                                    <span style="color:#000000;font-size: 12px;">{{ individualMessage.messageType }}</span><br/>
+                                    <span style="color:#000000;font-size: 12px;">{{ individualMessage.messageDateTime }}</span>
+                                </div>
+                            </td>
+                            <td style="padding-top: 10px;padding-bottom: 10px;" width="50"></td>
+                        </tr>
+
+                    {% elseif key is odd %}
+                        <tr>
+                            <td style="padding-top: 10px;padding-bottom: 10px;" width="50"></td>
+                            <td style="padding-top: 10px;padding-bottom: 10px;background: #F1F1F1;padding-right: 10px;" width="100">
+                                <div style="margin: auto;text-align: right;">
+                                    <img style="height: 50px;width: 50px;border-radius: 50%;" src="{{ individualMessage.embedProfilePicture }}"/>
+                                </div>
+                            </td>
+                            <td style="padding-top: 10px;padding-bottom: 10px;background: #F1F1F1;" width="260">
+                                <div style="margin: auto;text-align: left;">
+                                    <h5 style="color:#000000;font-size: 1em;margin-top: 0px;margin-bottom: 0px;">{{ individualMessage.sender }}</h5>
+
+                                    <span style="color:#000000;margin-left: 10px;font-size: 12px;">{{ individualMessage.messageBody }}</span>
+                                </div>
+                            </td>
+                            <td style="padding-top: 10px;padding-bottom: 10px;background: #F1F1F1;" width="140">
+                                <div style="margin: auto;text-align: center;">
+                                    <span style="color:#000000;font-size: 12px;">{{ individualMessage.messageType }}</span><br/>
+                                    <span style="color:#000000;font-size: 12px;">{{ individualMessage.messageDateTime }}</span>
+                                </div>
+                            </td>
+                            <td style="padding-top: 10px;padding-bottom: 10px;" width="50"></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+
+
+            </table>
+        </td>
+    </tr>
+{% endif %}
 <tr>
     <td>
         <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
@@ -64,44 +144,87 @@
         </table>
     </td>
 </tr>
+{%if contactMethod=="buyerToSeller" %}
+    <tr>
+        <td>
+            <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+                <tr>
+                    <td style="text-align: center;padding-top:20px;">
+                        <p style="color:#000000;margin-bottom: 20px;">Seller ({{ seller.username }}) Contact Information is given below -</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
 
-<tr>
-    <td>
-        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
-            <tr>
-                <td style="text-align: center;padding-top:20px;">
-                    <p style="color:#000000;margin-bottom: 20px;">The Contact Information of seller ({{ seller.username }}) is given below -</p>
-                </td>
-            </tr>
-        </table>
-    </td>
-</tr>
-
-<tr>
-    <td>
-        <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
-            <tr>
-                <td width="50"></td>
-                <td width="50" style="background: #0A87C9;padding-top: 10px;"></td>
-                <td width="200" style="padding-top:10px;padding-bottom:10px;text-align: left;background: #0A87C9;">
-                    <span style="color:#ffffff;font-size: 1em;">Nick Name :</span><br/>
-                    <span style="color:#ffffff;font-size: 1em;">Email :</span><br/>
-                    <span style="color:#ffffff;font-size: 1em;">Cell Phone :</span><br/>
-                    <span style="color:#ffffff;font-size: 1em;">Home Phone :</span>
-                </td>
+    <tr>
+        <td>
+            <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+                <tr>
+                    <td width="50"></td>
+                    <td width="50" style="background: #0A87C9;padding-top: 10px;"></td>
+                    <td width="200" style="padding-top:10px;padding-bottom:10px;text-align: left;background: #0A87C9;">
+                        <span style="color:#ffffff;font-size: 1em;">Nick Name :</span><br/>
+                        <span style="color:#ffffff;font-size: 1em;">Email :</span><br/>
+                        <span style="color:#ffffff;font-size: 1em;">Cell Phone :</span><br/>
+                        <span style="color:#ffffff;font-size: 1em;">Home Phone :</span>
+                    </td>
 
 
-                <td width="250" style="padding-top:10px;padding-bottom:10px;text-align: left;background: #0A87C9;">
-                    <span style="color:#ffffff;font-size: 1em;">{{ seller.username }}</span><br/>
-                    <span style="color:#ffffff;font-size: 1em;text-decoration: none;">{{ bookDeal.bookContactEmail }}</span><br/>
-                    <span style="color:#ffffff;font-size: 1em;">{{ bookDeal.bookContactCellNumber }}</span><br/>
-                    <span style="color:#ffffff;font-size: 1em;">{{ bookDeal.bookContactHomeNumber }}</span>
-                </td>
-                <td width="50"></td>
-            </tr>
-        </table>
-    </td>
-</tr>
+                    <td width="250" style="padding-top:10px;padding-bottom:10px;text-align: left;background: #0A87C9;">
+                        <span style="color:#ffffff;font-size: 1em;">{{ seller.username }}</span><br/>
+                        <span style="color:#ffffff;font-size: 1em;text-decoration: none;">{{ bookDeal.bookContactEmail }}</span><br/>
+                        <span style="color:#ffffff;font-size: 1em;">{{ bookDeal.bookContactCellNumber }}</span><br/>
+                        <span style="color:#ffffff;font-size: 1em;">{{ bookDeal.bookContactHomeNumber }}</span>
+                    </td>
+                    <td width="50"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+
+{% elseif contactMethod=="sellerToBuyer" %}
+
+    <tr>
+        <td>
+            <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+                <tr>
+                    <td style="text-align: center;padding-top:20px;">
+                        <p style="color:#000000;margin-bottom: 20px;">Your Contact Information as Buyer ({{ buyer }}) is given to Seller ({{ seller.username }}) as below -</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
+                <tr>
+                    <td width="50"></td>
+                    <td width="50" style="background: #0A87C9;padding-top: 10px;"></td>
+                    <td width="200" style="padding-top:10px;padding-bottom:10px;text-align: left;background: #0A87C9;">
+                        <span style="color:#ffffff;font-size: 1em;">Nick Name :</span><br/>
+                        <span style="color:#ffffff;font-size: 1em;">Email :</span><br/>
+                        <span style="color:#ffffff;font-size: 1em;">Cell Phone :</span><br/>
+                        <span style="color:#ffffff;font-size: 1em;">Home Phone :</span>
+                    </td>
+
+
+                    <td width="250" style="padding-top:10px;padding-bottom:10px;text-align: left;background: #0A87C9;">
+                        <span style="color:#ffffff;font-size: 1em;">{{ buyer }}</span><br/>
+                        <span style="color:#ffffff;font-size: 1em;text-decoration: none;">{{ contact.buyerEmail }}</span><br/>
+                        <span style="color:#ffffff;font-size: 1em;">{{ contact.buyerCellPhone }}</span><br/>
+                        <span style="color:#ffffff;font-size: 1em;">{{ contact.buyerHomePhone }}</span>
+                    </td>
+                    <td width="50"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+{% endif %}
 
 <tr>
     <td>

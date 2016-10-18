@@ -110,7 +110,7 @@ AppBundle\Entity\User:
             type: string
             length: '255'
             options:
-                default: '/userImages/deafault_profile_picture.png'
+                default: '/userImages/default_profile_picture.jpg'
         emailNotification:
             nullable: false
             type: string

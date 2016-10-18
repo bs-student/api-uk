@@ -33,7 +33,7 @@ class Mailer extends BaseClass
         $data = array(
             'user' => $user->getUsername(),
             'confirmationUrl' =>  $url,
-            'header_image'=>$message->embed(\Swift_Image::fromPath('assets/images/header.jpg')),
+            'header_image'=>$message->embed(\Swift_Image::fromPath('assets/images/header_big.jpg')),
             'button_activate_account_image'=>$message->embed(\Swift_Image::fromPath('assets/images/activate_button.jpg')),
             'button_tell_friends_image'=>$message->embed(\Swift_Image::fromPath('assets/images/tell_friend_button.jpg')),
             'share_image'=>$message->embed(\Swift_Image::fromPath('assets/images/share.jpg')),
@@ -55,7 +55,7 @@ class Mailer extends BaseClass
         $data = array(
             'user' => $user->getUsername(),
             'confirmationUrl' =>  $url,
-            'header_image'=>$message->embed(\Swift_Image::fromPath('assets/images/header.jpg')),
+            'header_image'=>$message->embed(\Swift_Image::fromPath('assets/images/header_big.jpg')),
             'button_reset_password_image'=>$message->embed(\Swift_Image::fromPath('assets/images/reset.jpg')),
             'button_tell_friends_image'=>$message->embed(\Swift_Image::fromPath('assets/images/tell_friend_button.jpg')),
             'share_image'=>$message->embed(\Swift_Image::fromPath('assets/images/share.jpg')),
@@ -87,9 +87,11 @@ class Mailer extends BaseClass
                     'book' => $book,
                     'buyerMessage' => $buyerMessage,
                     'book_image' => $message1->embed(\Swift_Image::fromPath(substr($book->getBookImage(), 1))),
-                    'header_image' => $message1->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg')),
-                    'share_image' => $message1->embed(\Swift_Image::fromPath('assets/images/share.jpg')),
-                    'footer_image' => $message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+
+                    'header_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/header.jpg')),
+                    'footer_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                    'envelop_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/envelop.png'))
+
                 ));
 
                 $message1->setBody($toSellerRendered, 'text/html');
@@ -107,9 +109,9 @@ class Mailer extends BaseClass
                         'book' => $book,
                         'buyerMessage' => $buyerMessage,
                         'book_image' => $message2->embed(\Swift_Image::fromPath(substr($book->getBookImage(), 1))),
-                        'header_image' => $message2->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg')),
-                        'share_image' => $message2->embed(\Swift_Image::fromPath('assets/images/share.jpg')),
-                        'footer_image' => $message2->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                        'header_image'=>$message2->embed(\Swift_Image::fromPath('assets/images/header.jpg')),
+                        'footer_image'=>$message2->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                        'envelop_image'=>$message2->embed(\Swift_Image::fromPath('assets/images/envelop.png'))
                     ));
                     $message2->setBody($toBuyerRendered, 'text/html');
                     $this->_sendMail($message2, "Student2Student: Seller Contact Information ", $this->parameters['from_email']['resetting'], $buyerInfo['buyerEmail']);
@@ -123,9 +125,9 @@ class Mailer extends BaseClass
                     'book' => $book,
                     'buyerMessage' => $buyerMessage,
                     'book_image' => $message2->embed(\Swift_Image::fromPath(substr($book->getBookImage(), 1))),
-                    'header_image' => $message2->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg')),
-                    'share_image' => $message2->embed(\Swift_Image::fromPath('assets/images/share.jpg')),
-                    'footer_image' => $message2->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                    'header_image'=>$message2->embed(\Swift_Image::fromPath('assets/images/header.jpg')),
+                    'footer_image'=>$message2->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                    'envelop_image'=>$message2->embed(\Swift_Image::fromPath('assets/images/envelop.png'))
                 ));
                 $message2->setBody($toBuyerRendered, 'text/html');
                 $this->_sendMail($message2, "Student2Student: Seller Contact Information ", $this->parameters['from_email']['resetting'], $buyerInfo['buyerEmail']);
@@ -144,9 +146,9 @@ class Mailer extends BaseClass
                     'book' => $book,
                     'buyerMessage' => $buyerMessage,
                     'book_image' => $message1->embed(\Swift_Image::fromPath(substr($book->getBookImage(), 1))),
-                    'header_image' => $message1->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg')),
-                    'share_image' => $message1->embed(\Swift_Image::fromPath('assets/images/share.jpg')),
-                    'footer_image' => $message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                    'header_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/header.jpg')),
+                    'footer_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                    'envelop_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/envelop.png'))
                 ));
 
 
@@ -167,9 +169,9 @@ class Mailer extends BaseClass
                         'book' => $book,
                         'buyerMessage' => $buyerMessage,
                         'book_image' => $message2->embed(\Swift_Image::fromPath(substr($book->getBookImage(), 1))),
-                        'header_image' => $message2->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg')),
-                        'share_image' => $message2->embed(\Swift_Image::fromPath('assets/images/share.jpg')),
-                        'footer_image' => $message2->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                        'header_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/header.jpg')),
+                        'footer_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                        'envelop_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/envelop.png'))
                     ));
                     $message2->setBody($toBuyerRendered, 'text/html');
                     $this->_sendMail($message2, "Student2Student: Sent Information to Seller", $this->parameters['from_email']['resetting'], $buyerInfo['buyerEmail']);
@@ -184,9 +186,9 @@ class Mailer extends BaseClass
                     'book' => $book,
                     'buyerMessage' => $buyerMessage,
                     'book_image' => $message2->embed(\Swift_Image::fromPath(substr($book->getBookImage(), 1))),
-                    'header_image' => $message2->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg')),
-                    'share_image' => $message2->embed(\Swift_Image::fromPath('assets/images/share.jpg')),
-                    'footer_image' => $message2->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                    'header_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/header.jpg')),
+                    'footer_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                    'envelop_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/envelop.png'))
                 ));
                 $message2->setBody($toBuyerRendered, 'text/html');
                 $this->_sendMail($message2, "Student2Student: Sent Information to Seller", $this->parameters['from_email']['resetting'], $buyerInfo['buyerEmail']);
@@ -205,9 +207,9 @@ class Mailer extends BaseClass
                     'book' => $book,
                     'buyerMessage' => $buyerMessage,
                     'book_image' => $message1->embed(\Swift_Image::fromPath(substr($book->getBookImage(), 1))),
-                    'header_image' => $message1->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg')),
-                    'share_image' => $message1->embed(\Swift_Image::fromPath('assets/images/share.jpg')),
-                    'footer_image' => $message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                    'header_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/header.jpg')),
+                    'footer_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                    'envelop_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/envelop.png'))
                 ));
             }
 
@@ -227,9 +229,9 @@ class Mailer extends BaseClass
                         'book' => $book,
                         'buyerMessage' => $buyerMessage,
                         'book_image' => $message2->embed(\Swift_Image::fromPath(substr($book->getBookImage(), 1))),
-                        'header_image' => $message2->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg')),
-                        'share_image' => $message2->embed(\Swift_Image::fromPath('assets/images/share.jpg')),
-                        'footer_image' => $message2->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                        'header_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/header.jpg')),
+                        'footer_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                        'envelop_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/envelop.png'))
                     ));
                     $message2->setBody($toBuyerRendered, 'text/html');
                     $this->_sendMail($message2, "Student2Student: Contacted Seller ", $this->parameters['from_email']['resetting'], $buyerInfo['buyerEmail']);
@@ -244,9 +246,9 @@ class Mailer extends BaseClass
                     'book' => $book,
                     'buyerMessage' => $buyerMessage,
                     'book_image' => $message2->embed(\Swift_Image::fromPath(substr($book->getBookImage(), 1))),
-                    'header_image' => $message2->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg')),
-                    'share_image' => $message2->embed(\Swift_Image::fromPath('assets/images/share.jpg')),
-                    'footer_image' => $message2->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                    'header_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/header.jpg')),
+                    'footer_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                    'envelop_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/envelop.png'))
                 ));
                 $message2->setBody($toBuyerRendered, 'text/html');
                 $this->_sendMail($message2, "Student2Student: Contacted Seller ", $this->parameters['from_email']['resetting'], $buyerInfo['buyerEmail']);
@@ -255,7 +257,7 @@ class Mailer extends BaseClass
 
     }
 
-    public function operateMessageMailingProcess($contact,$message,$messageType){
+    public function operateMessageMailingProcess($contact,$message,$messageType,$messageFinalArray){
 
         $buyerEntity = null;
         if($contact->getBuyer()!=null){
@@ -271,7 +273,9 @@ class Mailer extends BaseClass
             'buyer'=>$buyer,
             'buyerEntity'=>$buyerEntity,
             'book'=>$contact->getBookDeal()->getBook(),
-            'message'=>$message
+            'message'=>$message,
+            'messageArray'=>$messageFinalArray,
+            'contactMethod'=>$contact->getBookDeal()->getBookContactMethod()
         );
 
         if(!strcmp($messageType,"buyerSendingToSeller")){
@@ -291,10 +295,17 @@ class Mailer extends BaseClass
 
             $message1 = \Swift_Message::newInstance();
 
+            for($i=0;$i<count($data['messageArray']);$i++){
+                $data['messageArray'][$i]['embedProfilePicture'] =$message1->embed(\Swift_Image::fromPath($data['messageArray'][$i]['senderProfilePicture']));
+            }
             $data['book_image']=$message1->embed(\Swift_Image::fromPath(substr($data['book']->getBookImage(),1)));
-            $data['header_image']=$message1->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg'));
-            $data['share_image']=$message1->embed(\Swift_Image::fromPath('assets/images/share.jpg'));
+            $data['header_image']=$message1->embed(\Swift_Image::fromPath('assets/images/header.jpg'));
+            $data['envelop_image']=$message1->embed(\Swift_Image::fromPath('assets/images/envelop.png'));
             $data['footer_image']=$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg'));
+            if(count($data['messageArray'])){
+                $data['previous_image']=$message1->embed(\Swift_Image::fromPath('assets/images/previous.jpg'));
+            }
+
             $rendered = $this->templating->render("mail_templates/buyer_to_seller_message_mail_to_seller.html.twig",$data);
 
             $message1->setBody($rendered,'text/html');
@@ -306,10 +317,17 @@ class Mailer extends BaseClass
             if(!strcmp("On",$data['buyerEntity']->getEmailNotification())){
                 $message2 = \Swift_Message::newInstance();
 
+                for($i=0;$i<count($data['messageArray']);$i++){
+                    $data['messageArray'][$i]['embedProfilePicture'] =$message2->embed(\Swift_Image::fromPath($data['messageArray'][$i]['senderProfilePicture']));
+                }
                 $data['book_image']=$message2->embed(\Swift_Image::fromPath(substr($data['book']->getBookImage(),1)));
-                $data['header_image']=$message2->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg'));
-                $data['share_image']=$message2->embed(\Swift_Image::fromPath('assets/images/share.jpg'));
+                $data['header_image']=$message2->embed(\Swift_Image::fromPath('assets/images/header.jpg'));
+                $data['envelop_image']=$message2->embed(\Swift_Image::fromPath('assets/images/envelop.png'));
                 $data['footer_image']=$message2->embed(\Swift_Image::fromPath('assets/images/footer.jpg'));
+                if(count($data['messageArray'])){
+                    $data['previous_image']=$message2->embed(\Swift_Image::fromPath('assets/images/previous.jpg'));
+                }
+
                 $rendered = $this->templating->render("mail_templates/buyer_to_seller_message_mail_to_buyer.html.twig",$data);
 
                 $message2->setBody($rendered,'text/html');
@@ -318,15 +336,27 @@ class Mailer extends BaseClass
         }else{
             $message2 = \Swift_Message::newInstance();
 
+            for($i=0;$i<count($data['messageArray']);$i++){
+                $data['messageArray'][$i]['embedProfilePicture'] =$message2->embed(\Swift_Image::fromPath($data['messageArray'][$i]['senderProfilePicture']));
+            }
             $data['book_image']=$message2->embed(\Swift_Image::fromPath(substr($data['book']->getBookImage(),1)));
-            $data['header_image']=$message2->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg'));
-            $data['share_image']=$message2->embed(\Swift_Image::fromPath('assets/images/share.jpg'));
+            $data['header_image']=$message2->embed(\Swift_Image::fromPath('assets/images/header.jpg'));
+            $data['envelop_image']=$message2->embed(\Swift_Image::fromPath('assets/images/envelop.png'));
             $data['footer_image']=$message2->embed(\Swift_Image::fromPath('assets/images/footer.jpg'));
+            if(count($data['messageArray'])){
+                $data['previous_image']=$message2->embed(\Swift_Image::fromPath('assets/images/previous.jpg'));
+            }
+
             $rendered = $this->templating->render("mail_templates/buyer_to_seller_message_mail_to_buyer.html.twig",$data);
 
             $message2->setBody($rendered,'text/html');
             $this->_sendMail($message2,"Student2Student: Message sent to Seller ( ".$data['seller']->getUsername()." )",$this->parameters['from_email']['resetting'], $data['contact']->getBuyerEmail());
         }
+
+        foreach($data['messageArray'] as $messageRow){
+            if(file_exists($messageRow['senderProfilePicture']))unlink($messageRow['senderProfilePicture']);
+        }
+
 
     }
 
@@ -338,10 +368,17 @@ class Mailer extends BaseClass
             if(!strcmp("On",$data['buyerEntity']->getEmailNotification())){
                 $message1 = \Swift_Message::newInstance();
 
+                for($i=0;$i<count($data['messageArray']);$i++){
+                    $data['messageArray'][$i]['embedProfilePicture'] =$message1->embed(\Swift_Image::fromPath($data['messageArray'][$i]['senderProfilePicture']));
+                }
                 $data['book_image']=$message1->embed(\Swift_Image::fromPath(substr($data['book']->getBookImage(),1)));
-                $data['header_image']=$message1->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg'));
-                $data['share_image']=$message1->embed(\Swift_Image::fromPath('assets/images/share.jpg'));
+                $data['header_image']=$message1->embed(\Swift_Image::fromPath('assets/images/header.jpg'));
+                $data['envelop_image']=$message1->embed(\Swift_Image::fromPath('assets/images/envelop.png'));
                 $data['footer_image']=$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg'));
+                if(count($data['messageArray'])){
+                    $data['previous_image']=$message1->embed(\Swift_Image::fromPath('assets/images/previous.jpg'));
+                }
+
                 $rendered = $this->templating->render("mail_templates/seller_to_buyer_message_mail_to_buyer.html.twig",$data);
 
                 $message1->setBody($rendered,'text/html');
@@ -350,10 +387,16 @@ class Mailer extends BaseClass
         }else{
             $message1 = \Swift_Message::newInstance();
 
+            for($i=0;$i<count($data['messageArray']);$i++){
+                $data['messageArray'][$i]['embedProfilePicture'] =$message1->embed(\Swift_Image::fromPath($data['messageArray'][$i]['senderProfilePicture']));
+            }
             $data['book_image']=$message1->embed(\Swift_Image::fromPath(substr($data['book']->getBookImage(),1)));
-            $data['header_image']=$message1->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg'));
-            $data['share_image']=$message1->embed(\Swift_Image::fromPath('assets/images/share.jpg'));
+            $data['header_image']=$message1->embed(\Swift_Image::fromPath('assets/images/header.jpg'));
+            $data['envelop_image']=$message1->embed(\Swift_Image::fromPath('assets/images/envelop.png'));
             $data['footer_image']=$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg'));
+            if(count($data['messageArray'])){
+                $data['previous_image']=$message1->embed(\Swift_Image::fromPath('assets/images/previous.jpg'));
+            }
             $rendered = $this->templating->render("mail_templates/seller_to_buyer_message_mail_to_buyer.html.twig",$data);
 
             $message1->setBody($rendered,'text/html');
@@ -365,10 +408,16 @@ class Mailer extends BaseClass
 
             $message2 = \Swift_Message::newInstance();
 
+            for($i=0;$i<count($data['messageArray']);$i++){
+                $data['messageArray'][$i]['embedProfilePicture'] =$message2->embed(\Swift_Image::fromPath($data['messageArray'][$i]['senderProfilePicture']));
+            }
             $data['book_image']=$message2->embed(\Swift_Image::fromPath(substr($data['book']->getBookImage(),1)));
-            $data['header_image']=$message2->embed(\Swift_Image::fromPath('assets/images/stu2stu.jpg'));
-            $data['share_image']=$message2->embed(\Swift_Image::fromPath('assets/images/share.jpg'));
+            $data['header_image']=$message2->embed(\Swift_Image::fromPath('assets/images/header.jpg'));
+            $data['envelop_image']=$message2->embed(\Swift_Image::fromPath('assets/images/envelop.png'));
             $data['footer_image']=$message2->embed(\Swift_Image::fromPath('assets/images/footer.jpg'));
+            if(count($data['messageArray'])){
+                $data['previous_image']=$message2->embed(\Swift_Image::fromPath('assets/images/previous.jpg'));
+            }
             $rendered = $this->templating->render("mail_templates/seller_to_buyer_message_mail_to_seller.html.twig",$data);
 
             $message2->setBody($rendered,'text/html');
@@ -376,7 +425,9 @@ class Mailer extends BaseClass
 
         }
 
-
+        foreach($data['messageArray'] as $messageRow){
+            if(file_exists($messageRow['senderProfilePicture']))unlink($messageRow['senderProfilePicture']);
+        }
 
     }
 
@@ -390,7 +441,7 @@ class Mailer extends BaseClass
     function sendFriendsEmail($data){
         $message1 = \Swift_Message::newInstance();
 
-        $data['header_image']=$message1->embed(\Swift_Image::fromPath('assets/images/header.jpg'));
+        $data['header_image']=$message1->embed(\Swift_Image::fromPath('assets/images/header_big.jpg'));
         $data['share_image']=$message1->embed(\Swift_Image::fromPath('assets/images/share.jpg'));
         $data['footer_image']=$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg'));
         $data['join_button']=$message1->embed(\Swift_Image::fromPath('assets/images/joinButton.jpg'));
@@ -403,7 +454,7 @@ class Mailer extends BaseClass
     function sendShareSellPageEmailToFriends($data){
         $message1 = \Swift_Message::newInstance();
 
-        $data['header_image']=$message1->embed(\Swift_Image::fromPath('assets/images/header.jpg'));
+        $data['header_image']=$message1->embed(\Swift_Image::fromPath('assets/images/header_big.jpg'));
         $data['share_image']=$message1->embed(\Swift_Image::fromPath('assets/images/share.jpg'));
         $data['footer_image']=$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg'));
         $data['buy_my_textbooks_button_image']=$message1->embed(\Swift_Image::fromPath('assets/images/buy_my_textbooks.jpg'));
@@ -423,6 +474,9 @@ class Mailer extends BaseClass
         $transport = \Swift_SmtpTransport::newInstance('smtp.student2student.com', 25)
             ->setUsername('no-reply@student2student.com')
             ->setPassword('wWoc$868');
+//        $transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465,'ssl')
+//            ->setUsername('sujit.developer.136661@gmail.com')
+//            ->setPassword('maniac.sujit');
 
         $mailer = \Swift_Mailer::newInstance($transport);
 

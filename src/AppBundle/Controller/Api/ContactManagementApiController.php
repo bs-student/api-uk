@@ -267,6 +267,7 @@ class ContactManagementApiController extends Controller
         $em = $this->getDoctrine()->getManager();
         $contactRepo = $em->getRepository("AppBundle:Contact");
         $userRepo = $em->getRepository("AppBundle:User");
+        $messageRepo = $em->getRepository("AppBundle:Message");
         $userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
         if(array_key_exists('contactId',$data)){
 
@@ -288,7 +289,25 @@ class ContactManagementApiController extends Controller
                 $messageType = $this->_whatTypeOfMessage($contact[0],$userId);
 
                 //Send Proper Mails
-                $this->get('fos_user.mailer')->operateMessageMailingProcess($contact[0],$message,$messageType);
+
+                $messageArray = $messageRepo->findBy(
+                    array('contact'=>$contact[0]),
+                    array('id' => 'DESC'),
+                    4,1
+                );
+                $messageFinalArray=array();
+                foreach($messageArray as $messageRow){
+                    array_push($messageFinalArray,array(
+                        'messageId'=>$messageRow->getId(),
+                        'sender'=> $messageRow->getUser()->getUsername(),
+                        'senderProfilePicture'=>$this->_makeCircleProfilePicture($messageRow->getUser()->getProfilePicture()),
+                        'messageDateTime'=> $messageRow->getMessageDateTime()->format('h:i A, d-M-Y'),
+                        'messageBody'=> $messageRow->getMessageBody(),
+                        'messageType'=> $messageRow->getMessageType()=="BuyerToSellerMessage"?"Message From Buyer":"Message From Seller",
+                    ));
+                }
+
+                $this->get('fos_user.mailer')->operateMessageMailingProcess($contact[0],$message,$messageType,$messageFinalArray);
 
                 return $this->_createJsonResponse('success',array(
                     'successTitle'=>"Successfully Sent Message",
@@ -385,6 +404,18 @@ class ContactManagementApiController extends Controller
         }
 
     }
+
+    public function _makeCircleProfilePicture($profilePicPath){
+
+        $image = $this->get('app.circle_image');
+        $newImage = $image->resize(substr($profilePicPath,1),50,50);
+        $image->initiate($newImage);
+        $image->circleCrop();
+        $imageName = $image->saveImage();
+        return $imageName;
+
+    }
+
     public function _createJsonResponse($key, $data, $code)
     {
         $serializer = $this->container->get('jms_serializer');

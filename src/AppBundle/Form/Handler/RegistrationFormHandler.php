@@ -27,7 +27,7 @@ class RegistrationFormHandler extends BaseHandler
         $this->form->setData($user);
 
         $submittedData = json_decode($this->request->getContent(),true);
-        $submittedData['profilePicture']="/userImages/deafault_profile_picture.png";
+        $submittedData['profilePicture']="/userImages/default_profile_picture.jpg";
         $submittedData['emailNotification']="On";
         $submittedData['registrationDateTime']=gmdate('Y-m-d H:i:s');
         $submittedData['plainPassword']=array(

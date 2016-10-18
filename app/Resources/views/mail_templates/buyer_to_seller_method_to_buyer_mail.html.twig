@@ -37,11 +37,11 @@
                 <td>
                     <div style="background:#0A87C9;width:600px;text-align: center;">
                         <h1 style="text-transform: uppercase;font-size:2em;color: #ffffff;margin-bottom: 10px;margin-top: 0px;">
-                            New Buyer Contacted</h1>
+                            Message Sent & Seller Information Received</h1>
                         <img style="margin: auto;display:block;" src="{{ envelop_image }}"/>
 
                         <h2 style="color:#000000;font-size:1.5em;margin-top: 0px;margin-bottom: 0px;">{{ buyerMessage.messageBody }}</h2>
-                        <h5 style="color: #ffffff;font-size: 1em;margin-top: 10px;margin-bottom: 10px;">Message from buyer ({{ buyerInfo.buyerNickName }})</h5>
+                        <h5 style="color: #ffffff;font-size: 1em;margin-top: 10px;margin-bottom: 10px;">Message sent to seller ({{ seller.username }})</h5>
                     </div>
                 </td>
             </tr>
@@ -56,7 +56,7 @@
                 <td width="220"></td>
                 <td width="160" style="padding-top:20px;text-align: center;">
                     <div style="text-align: center;background-color: #FF530D;">
-                        <p style="color:#ffffff;padding: 5px 10px 5px 10px;"><a style="color:#ffffff;text-decoration: none;" href="http://student2student.com/sellingBookList">View & Reply</a></p>
+                        <p style="color:#ffffff;padding: 5px 10px 5px 10px;"><a style="color:#ffffff;text-decoration: none;" href="http://student2student.com/contactedBookList">View & Reply</a></p>
                     </div>
                 </td>
                 <td width="220"></td>
@@ -70,7 +70,7 @@
         <table bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" width="600">
             <tr>
                 <td style="text-align: center;padding-top:20px;">
-                    <p style="color:#000000;margin-bottom: 20px;">Your Contact Information as seller ({{ seller.username }}) is given to buyer ({{ buyerInfo.buyerNickName }}) as below -</p>
+                    <p style="color:#000000;margin-bottom: 20px;">The Contact Information of seller ({{ seller.username }}) is given below -</p>
                 </td>
             </tr>
         </table>
@@ -142,7 +142,7 @@
                     <span style="color:#FF530D;font-size: 1em;">Author : </span><span
                             style="color:#000000;font-size: 1em;">{{ book.bookDirectorAuthorArtist }}</span><br/>
                     <span style="color:#FF530D;font-size: 1em;">Publisher : </span><span
-                            style="color:#000000;font-size: 1em;">{{ book.bookPublisher }}</span>
+                            style="color:#000000;font-size: 1em;">{{ book.bookPublisher }}</span><br/>
                     <span style="color:#FF530D;font-size: 1em;">Publish Date : </span><span
                             style="color:#000000;font-size: 1em;">{{ book.bookPublishDate|date("d M Y") }}</span>
                 </td>
