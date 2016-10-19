@@ -39,13 +39,15 @@ class AdminUserApiController extends Controller
             $pageSize = $data["pageSize"];
             $searchQuery = filter_var($data["searchQuery"], FILTER_SANITIZE_STRING);
             $emailQuery = filter_var($data["emailQuery"], FILTER_SANITIZE_STRING);
+            $fullNameQuery = filter_var($data["fullNameQuery"], FILTER_SANITIZE_STRING);
+            $enabledQuery = $data["enabledQuery"];
             $pageNumber = $data["pageNumber"];
             $sort = $data["sort"];
 
 
 
-            $totalNumber = $userRepo->getNonApprovedUserSearchNumber($searchQuery,$emailQuery);
-            $users = $userRepo->getNonApprovedUserSearchResult($searchQuery,$emailQuery, $pageNumber, $pageSize,$sort);
+            $totalNumber = $userRepo->getNonApprovedUserSearchNumber($searchQuery,$emailQuery,$fullNameQuery,$enabledQuery);
+            $users = $userRepo->getNonApprovedUserSearchResult($searchQuery,$emailQuery,$fullNameQuery,$enabledQuery, $pageNumber, $pageSize,$sort);
 
             for($i=0;$i<count($users);$i++){
                 $users[$i]['registrationDateTime'] =$users[$i]['registrationDateTime']->format('g:i A, d M Y');
@@ -84,14 +86,21 @@ class AdminUserApiController extends Controller
             $pageSize = $data["pageSize"];
             $searchQuery = filter_var($data["searchQuery"], FILTER_SANITIZE_STRING);
             $emailQuery = filter_var($data["emailQuery"], FILTER_SANITIZE_STRING);
+            $fullNameQuery = filter_var($data["fullNameQuery"], FILTER_SANITIZE_STRING);
+            $universityNameQuery = filter_var($data["universityNameQuery"], FILTER_SANITIZE_STRING);
+            $campusNameQuery = filter_var($data["campusNameQuery"], FILTER_SANITIZE_STRING);
+            $enabledQuery = $data["enabledQuery"];
             $pageNumber = $data["pageNumber"];
             $sort = $data["sort"];
 
 
 
-            $totalNumber = $userRepo->getApprovedUserSearchNumber($searchQuery,$emailQuery);
-            $users = $userRepo->getApprovedUserSearchResult($searchQuery,$emailQuery, $pageNumber, $pageSize,$sort);
+            $totalNumber = $userRepo->getApprovedUserSearchNumber($searchQuery,$emailQuery,$fullNameQuery,$universityNameQuery,$campusNameQuery,$enabledQuery);
+            $users = $userRepo->getApprovedUserSearchResult($searchQuery,$emailQuery,$fullNameQuery,$universityNameQuery,$campusNameQuery,$enabledQuery, $pageNumber, $pageSize,$sort);
 
+            for($i=0;$i<count($users);$i++){
+                $users[$i]['registrationDateTime'] =$users[$i]['registrationDateTime']->format('g:i A, d M Y');
+            }
 
             $data = array(
                 'totalUsers' => $users ,
