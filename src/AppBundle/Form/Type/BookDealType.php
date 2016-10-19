@@ -64,7 +64,7 @@ class BookDealType extends AbstractType
                     new NotBlank(),
 
                 ),))
-            ->add('bookPaymentMethodCaShOnExchange')
+            ->add('bookPaymentMethodCashOnExchange')
             ->add('bookPaymentMethodCheque')
             ->add('bookAvailableDate', 'date', array(
                 'widget' => 'single_text',

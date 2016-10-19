@@ -254,7 +254,7 @@ class BookDealManagementApiController extends Controller
                     $bookDealForm->remove('bookContactCellNumber');
                     $bookDealForm->remove('bookContactEmail');
                     $bookDealForm->remove('bookIsAvailablePublic');
-                    $bookDealForm->remove('bookPaymentMethodCaShOnExchange');
+                    $bookDealForm->remove('bookPaymentMethodCashOnExchange');
                     $bookDealForm->remove('bookPaymentMethodCheque');
                     $bookDealForm->remove('bookAvailableDate');
                     $bookDealForm->remove('bookSubmittedDateTime');
@@ -539,7 +539,7 @@ class BookDealManagementApiController extends Controller
             $bookDealForm->remove('bookContactCellNumber');
             $bookDealForm->remove('bookContactEmail');
             $bookDealForm->remove('bookIsAvailablePublic');
-            $bookDealForm->remove('bookPaymentMethodCaShOnExchange');
+            $bookDealForm->remove('bookPaymentMethodCashOnExchange');
             $bookDealForm->remove('bookPaymentMethodCheque');
             $bookDealForm->remove('bookAvailableDate');
             $bookDealForm->remove('seller');
