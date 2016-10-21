@@ -641,3 +641,15 @@ add_book_deal_to_star_list:
 #    path: /update_book_database_for_images
 #    defaults:  {_controller: AppBundle:DBManagement:updateBookTableForPictures}
 #    methods: [GET]
+#get_book_images_from_amazon:
+#    path: /get_book_images_from_amazon
+#    defaults:  {_controller: AppBundle:DBManagement:getImagesFromAmazon}
+#    methods: [GET]
+#get_failed_book_images_from_amazon:
+#    path: /get_failed_book_images_from_amazon
+#    defaults:  {_controller: AppBundle:DBManagement:getFailedImageLink}
+#    methods: [GET]
+#get_real_book_images_from_amazon:
+#    path: /get_real_book_images_from_amazon
+#    defaults:  {_controller: AppBundle:DBManagement:getRealImagesFromAmazon}
+#    methods: [GET]

@@ -379,4 +379,300 @@ class DBManagementController extends Controller
        die();
     }
 
+    public function getImagesFromAmazonAction(){
+
+
+        $data = file_get_contents ('./assets/books.json');
+        $json = json_decode($data, TRUE);
+
+
+        $amazonCredentials = $this->_getAmazonSearchParams();
+
+        $amazonCredentials['params']['Operation'] = "ItemLookup";
+
+        $amazonCredentials['params']["ResponseGroup"] = "Images";
+
+
+
+
+        foreach( $json as $row ){
+            if($row['book_image']!="/bookImages/no_image.jpg"){
+                $amazonCredentials['params']["ItemId"] = $row['book_isbn10'];
+                $getUrl = $this->_getUrlWithSignature($amazonCredentials);
+
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $getUrl);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                $xmlOutput  = curl_exec($ch);
+                curl_close($ch);
+                $booksLargeImage = $this->_parseMultipleBooksAmazonXmlResponse($xmlOutput);
+                if($booksLargeImage){
+
+
+                    $fa = fopen("./bookImages/new/file.txt", 'a+');
+                    fwrite($fa,$row['id']."===".$row['book_image']."===".$booksLargeImage."\r\n");
+                    fclose($fa);
+
+//                    //Curl for Image
+//                    $ch = curl_init();
+//                    curl_setopt($ch, CURLOPT_URL, $booksLargeImage);
+//                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+//                    $imageOutput = curl_exec($ch);
+//                    curl_close($ch);
+//
+//
+//                    if(strpos($imageOutput,'Not Found')!==false || $imageOutput==''){
+//
+//                        $fx = fopen("./bookImages/new/file_not_found.txt", 'a+');
+//                        fwrite($fx,$json[$i]['book_image']."\r\n");
+//                        fclose($fx);
+//
+//                    }else{
+//                        //Image Found
+//
+//                        $fp = fopen(".".$json[$i]['book_image'], 'x');
+//                        fwrite($fp, $imageOutput);
+//                        fclose($fp);
+//
+//                        $fa = fopen("./bookImages/new/file.txt", 'a+');
+//                        fwrite($fa,$json[$i]['book_image']."\r\n");
+//                        fclose($fa);
+//
+//                    }
+
+
+                }else{
+                    $fk = fopen("./bookImages/new/file_could_not_get_link.txt", 'a+');
+                    fwrite($fk,$row['id']."===".$row['book_isbn10']."===".$row['book_image']."\r\n");
+                    fclose($fk);
+
+                }
+
+            }else{
+                $fy = fopen("./bookImages/new/file_was_not_there.txt", 'a+');
+                fwrite($fy,$row['id']."===".$row['book_isbn10']." = ".$row['book_image']."\r\n");
+                fclose($fy);
+            }
+        }
+
+        var_dump("Done");
+
+
+//        echo ('<pre> print the json ');
+//        print_r ($json);
+//        echo ('</pre>');
+//        var_dump($json);
+        die();
+    }
+
+    public function getFailedImageLinkAction(){
+
+
+        $fa = fopen("./assets/file_could_not_get_link_test.txt", 'r');
+        $amazonCredentials = $this->_getAmazonSearchParams();
+
+        $amazonCredentials['params']['Operation'] = "ItemLookup";
+
+        $amazonCredentials['params']["ResponseGroup"] = "Images";
+
+        while(! feof($fa))
+        {
+            $line = fgets($fa);
+            $array = explode("===",$line);
+
+
+            if(count($array)==3){
+
+                $amazonCredentials['params']["ItemId"] = $array[1];
+                $getUrl = $this->_getUrlWithSignature($amazonCredentials);
+
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $getUrl);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                $xmlOutput  = curl_exec($ch);
+                curl_close($ch);
+
+
+                $booksLargeImage = $this->_parseMultipleBooksAmazonXmlResponse($xmlOutput);
+                if($booksLargeImage){
+                    $fx = fopen("./assets/file_newly_link_found.txt", 'a+');
+                    fwrite($fx,$array[0]."===".substr($array[2],0,strlen($array[2])-1)."===".$booksLargeImage."\r\n");
+                    fclose($fx);
+                }else{
+                    $fk = fopen("./assets/file_newly_link_not_found.txt", 'a+');
+                    fwrite($fk,$array[0]."===".$array[1]."===".substr($array[2],0,strlen($array[2])-1)."\r\n");
+                    fclose($fk);
+
+                }
+
+            }else{
+                $fw = fopen("./assets/file_newly_link_tried_asin_not_found.txt", 'a+');
+                fwrite($fw,$array[0]."===".$array[1]."===".substr($array[2],0,strlen($array[2])-1)."\r\n");
+                fclose($fw);
+            }
+
+
+
+
+
+        }
+
+
+        die();
+    }
+
+
+
+    public function _getAmazonSearchParams()
+    {
+
+
+        $amazonApiInfo = $this->getParameter('amazon_api_info');
+
+        $apiInfo = array();
+        $apiInfo['method'] = $amazonApiInfo['method'];
+        $apiInfo['host'] = $amazonApiInfo['host'];
+        $apiInfo['uri'] = $amazonApiInfo['uri'];
+        $apiInfo['privateKey'] = $amazonApiInfo['private_key'];
+
+
+        $params = array();
+
+        $params["AWSAccessKeyId"] = $amazonApiInfo['aws_access_key_id'];
+        $params["AssociateTag"] = $amazonApiInfo['associate_tag'];
+        $params["Service"] = "AWSECommerceService";
+        $params["Timestamp"] = gmdate("Y-m-d\TH:i:s\Z");
+        $params["Version"] = $amazonApiInfo['version'];
+        $params["Power"] = "binding:hardcover or library or paperback";
+
+
+        return array(
+            'apiInfo' => $apiInfo,
+            'params' => $params
+        );
+
+    }
+
+    public function _getUrlWithSignature($amazonCredentials)
+    {
+        // sort the parameters
+        ksort($amazonCredentials['params']);
+        // create the canonicalization  query
+        $canonicalizedQuery = array();
+        foreach ($amazonCredentials['params'] as $param => $value) {
+            $param = str_replace("%7E", "~", rawurlencode($param));
+            $value = str_replace("%7E", "~", rawurlencode($value));
+            $canonicalizedQuery[] = $param . "=" . $value;
+        }
+        $canonicalizedQuery = implode("&", $canonicalizedQuery);
+
+        // create the string to sign
+        $string_to_sign = $amazonCredentials['apiInfo']['method'] . "\n" . $amazonCredentials['apiInfo']['host'] . "\n" . $amazonCredentials['apiInfo']['uri'] . "\n" . $canonicalizedQuery;
+
+        // calculate HMAC with SHA256 and base64-encoding
+        $signature = base64_encode(hash_hmac("sha256", $string_to_sign, $amazonCredentials['apiInfo']['privateKey'], true));
+
+        // encode the signature for the request
+        $signature = str_replace("%7E", "~", rawurlencode($signature));
+        $url = "http://" . $amazonCredentials['apiInfo']['host'] . $amazonCredentials['apiInfo']['uri'] . "?" . $canonicalizedQuery . "&Signature=" . $signature;
+
+        return $url;
+    }
+
+    public function _parseMultipleBooksAmazonXmlResponse($xml)
+    {
+
+        $fileContents = str_replace(array("\n", "\r", "\t"), '', $xml);
+        $fileContents = trim(str_replace('"', "'", $fileContents));
+        $simpleXml = simplexml_load_string($fileContents);
+
+        var_dump( (string)$simpleXml)."<br/>";
+
+        if($simpleXml!=null){
+
+            if($simpleXml->Items!=null){
+
+                if($simpleXml->Items->Item!=null){
+                    if($simpleXml->Items->Item->LargeImage!=null){
+                        return((string)$simpleXml->Items->Item->LargeImage->URL);
+                    }else{
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+
+        }else{
+            return false;
+        }
+
+    }
+
+
+    public function getRealImagesFromAmazonAction(){
+        $fa = fopen("./assets/file_test.txt", 'r');
+
+
+        while(! feof($fa))
+        {
+            $line = fgets($fa);
+            $array = explode("===",$line);
+
+
+            if(count($array)==3){
+
+                $link = (substr($array[2],0,strlen($array[2])-2));
+
+//                Curl for Image
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $link);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+
+                curl_setopt($ch,CURLOPT_HTTPHEADER,array(
+                    'User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36',
+                    'Accept-Encoding: gzip, deflate, sdch',
+                    'Accept-Language: en-US,en;q=0.8',
+                    'Host: ecx.images-amazon.com',
+                    'Connection: keep-alive',
+                    'Pragma: no-cache',
+                    'Cache-Control: no-cache',
+                    'Upgrade-Insecure-Requests: 1'
+                ));
+                $imageOutput = curl_exec($ch);
+                curl_close($ch);
+
+                    if(strpos($imageOutput,'Not Found')!==false || $imageOutput==''){
+
+                        $fx = fopen("./assets/image_not_found.txt", 'a+');
+                        fwrite($fx,$array[0]."===".$array[1]."===".$link."\r\n");
+                        fclose($fx);
+
+                    }else{
+                        //Image Found
+
+                        $fp = fopen(".".$array[1], 'x');
+                        fwrite($fp, $imageOutput);
+                        fclose($fp);
+
+                        $fq = fopen("./assets/image_file_found.txt", 'a+');
+                        fwrite($fq,$array[0]."===".$array[1]."===".$link."\r\n");
+                        fclose($fq);
+
+                    }
+
+            }
+
+
+        }
+
+
+        die();
+    }
+
+
+
 }
