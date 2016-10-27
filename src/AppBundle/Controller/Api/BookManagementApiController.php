@@ -81,7 +81,12 @@ class BookManagementApiController extends Controller
         $isbn = $request->query->get('isbn');
         if ($isbn != null) {
             $lowestOnlinePrice = $this->_getBooksLowestPriceByIsbnCampusBooks($isbn);
-            return $this->_createJsonResponse('success', array('successData' => array('bookPriceOnlineLowest' => $lowestOnlinePrice)), 200);
+            if($lowestOnlinePrice){
+                return $this->_createJsonResponse('success', array('successData' => array('bookPriceOnlineLowest' => $lowestOnlinePrice)), 200);
+            }else{
+                return $this->_createJsonResponse('error', array('errorTitle' => "No Price Found"), 400);
+            }
+
         } else {
             return $this->_createJsonResponse('error', array('errorTitle' => "Invalid Isbn"), 400);
         }
@@ -852,15 +857,32 @@ class BookManagementApiController extends Controller
 
 
         $priceArray = array();
-        foreach ($simpleXml->page->offers->condition as $condition) {
+        if($simpleXml!=null){
+            if($simpleXml->page!=null){
+                if($simpleXml->page->offers!=null){
+                    if($simpleXml->page->offers->condition!=null){
+                        foreach ($simpleXml->page->offers->condition as $condition) {
+                            foreach ($condition->offer as $offer) {
+                                array_push($priceArray, (floatval($offer->total_price[0])));
+                            }
 
-            foreach ($condition->offer as $offer) {
-                array_push($priceArray, (floatval($offer->total_price[0])));
+                        }
+                        return "$" . min($priceArray);
+                    }else{
+                        return false;
+                    }
+
+                }else{
+                    return false;
+                }
+
+            }else{
+                return false;
             }
 
+        }else{
+            return false;
         }
-
-        return "$" . min($priceArray);
 
 
     }
