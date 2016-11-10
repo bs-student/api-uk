@@ -8,7 +8,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Log;
 use AppBundle\Entity\User;
+use AppBundle\Form\Type\LogType;
 use AppBundle\Form\Type\RegistrationType;
 use Lsw\ApiCallerBundle\Call\HttpPost;
 use Lsw\ApiCallerBundle\Call\HttpPostJson;
@@ -115,7 +117,18 @@ class RegistrationController extends BaseController
                 $process = $formHandler->process($confirmationEnabled);
 
                 if ($process) {
+
                     $user = $form->getData();
+
+                    $logData = array(
+                        'user'=>$user->getId(),
+                        'logType'=>"Registration",
+                        'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                        'logDescription'=> $user->getUsername()." has Registered",
+                        'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                        'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                    );
+                    $this->_saveLog($logData);
 
                     $authUser = false;
                     if ($confirmationEnabled) {
@@ -163,11 +176,6 @@ class RegistrationController extends BaseController
                 'errorDescription'=>"Sorry we were unable to register you. FillUp the form and try again."
             ),400);
         }
-
-
-
-
-
 
 
     }
@@ -259,6 +267,18 @@ class RegistrationController extends BaseController
 
     }
 
+
+    public function _saveLog($logData){
+        $em = $this->container->get('doctrine')->getManager();
+        $log = new Log();
+        $logForm = $this->container->get('form.factory')->create(new LogType(), $log);
+
+        $logForm->submit($logData);
+        if($logForm->isValid()){
+            $em->persist($log);
+            $em->flush();
+        }
+    }
 
     public function _createJsonResponse($key, $data, $code)
     {

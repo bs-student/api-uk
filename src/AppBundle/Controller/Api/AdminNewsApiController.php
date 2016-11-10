@@ -6,10 +6,12 @@ use AppBundle\Entity\Book;
 use AppBundle\Entity\BookImage;
 use AppBundle\Entity\Campus;
 use AppBundle\Entity\Contact;
+use AppBundle\Entity\Log;
 use AppBundle\Entity\News;
 use AppBundle\Entity\Quote;
 use AppBundle\Form\Type\BookDealType;
 use AppBundle\Form\Type\ContactType;
+use AppBundle\Form\Type\LogType;
 use AppBundle\Form\Type\NewsType;
 use AppBundle\Form\Type\QuoteType;
 use AppBundle\Form\Type\UniversityType;
@@ -109,6 +111,17 @@ class AdminNewsApiController extends Controller
                 if ($newsForm->isValid()) {
                     $em->persist($news);
                     $em->flush();
+
+                    $logData = array(
+                        'user'=>$user->getId(),
+                        'logType'=>"Update News",
+                        'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                        'logDescription'=> $news->getNewsStatus()=="Activated"?$user->getUsername()." has updated & activated news titled '".$news->getNewsTitle()."'":$user->getUsername()." has updated & deactivated news titled '".$news->getNewsTitle()."'",
+                        'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                        'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                    );
+                    $this->_saveLog($logData);
+
                     return $this->_createJsonResponse('success', array(
                         'successTitle' => "News has been updated"
                     ), 200);
@@ -186,6 +199,16 @@ class AdminNewsApiController extends Controller
                 $em->persist($news);
                 $em->flush();
 
+                $logData = array(
+                    'user'=>$user->getId(),
+                    'logType'=>"Add News",
+                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                    'logDescription'=> $user->getUsername()." has added a news titled '".$news->getNewsTitle()."'",
+                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                    'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                );
+                $this->_saveLog($logData);
+
                 $images = $news->getNewsImages();
                 $imageData=array();
                 foreach($images as $image){
@@ -260,6 +283,17 @@ class AdminNewsApiController extends Controller
         $image_save_func($tmp, "$targetFile");
     }
 
+    public function _saveLog($logData){
+        $em = $this->container->get('doctrine')->getManager();
+        $log = new Log();
+        $logForm = $this->container->get('form.factory')->create(new LogType(), $log);
+
+        $logForm->submit($logData);
+        if($logForm->isValid()){
+            $em->persist($log);
+            $em->flush();
+        }
+    }
 
     public function _createJsonResponse($key, $data, $code)
     {

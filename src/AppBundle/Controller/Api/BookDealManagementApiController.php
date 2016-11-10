@@ -6,8 +6,10 @@ use AppBundle\Entity\Book;
 use AppBundle\Entity\BookImage;
 use AppBundle\Entity\Campus;
 use AppBundle\Entity\Contact;
+use AppBundle\Entity\Log;
 use AppBundle\Form\Type\BookDealType;
 use AppBundle\Form\Type\ContactType;
+use AppBundle\Form\Type\LogType;
 use AppBundle\Form\Type\UniversityType;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -286,6 +288,17 @@ class BookDealManagementApiController extends Controller
                         $em->persist($bookDeal);
                         $em->persist($contact);
                         $em->flush();
+
+                        $logData = array(
+                            'user'=>$this->get('security.token_storage')->getToken()->getUser()->getId(),
+                            'logType'=>"Sold Book",
+                            'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                            'logDescription'=> $this->get('security.token_storage')->getToken()->getUser()->getUsername()." has sold '".$bookDeal->getBook()->getBookTitle()."' book to buyer named ".$buyerName,
+                            'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                            'logUserType'=> in_array("ROLE_ADMIN_USER",$this->get('security.token_storage')->getToken()->getUser()->getRoles())?"Admin User":"Normal User"
+                        );
+                        $this->_saveLog($logData);
+
                         return $this->_createJsonResponse('success', array(
                             'successTitle' => "Book Sold to ".$buyerName
                         ), 200);
@@ -555,6 +568,17 @@ class BookDealManagementApiController extends Controller
                 $em->persist($bookDeal);
 
                 $em->flush();
+
+                $logData = array(
+                    'user'=>$this->get('security.token_storage')->getToken()->getUser()->getId(),
+                    'logType'=>"Update Book Deal",
+                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                    'logDescription'=> $data['bookStatus']=="Activated"?$this->get('security.token_storage')->getToken()->getUser()->getUsername()." has activated a book deal":$this->get('security.token_storage')->getToken()->getUser()->getUsername()." has deactivated a book deal",
+                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                    'logUserType'=> in_array("ROLE_ADMIN_USER",$this->get('security.token_storage')->getToken()->getUser()->getRoles())?"Admin User":"Normal User"
+                );
+                $this->_saveLog($logData);
+
                 return $this->_createJsonResponse('success', array(
                     'successTitle' => "Textbook Deal Successfully Updated"
                 ), 200);
@@ -685,6 +709,17 @@ class BookDealManagementApiController extends Controller
             if ($bookDealForm->isValid()) {
                 $em->persist($bookDeal);
                 $em->flush();
+
+                $logData = array(
+                    'user'=>$this->get('security.token_storage')->getToken()->getUser()->getId(),
+                    'logType'=>"Update Book Deal",
+                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                    'logDescription'=> $this->get('security.token_storage')->getToken()->getUser()->getUsername()." has updated a book deal",
+                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                    'logUserType'=> in_array("ROLE_ADMIN_USER",$this->get('security.token_storage')->getToken()->getUser()->getRoles())?"Admin User":"Normal User"
+                );
+                $this->_saveLog($logData);
+
                 return $this->_createJsonResponse('success', array("successTitle" => "Book Deal has been updated into you selling List"), 200);
             } else {
                 return $this->_createJsonResponse('error', array("errorData" => $bookDealForm), 400);
@@ -712,6 +747,17 @@ class BookDealManagementApiController extends Controller
         if($bookDeal->getSeller()->getId()==$userId){
             $em->remove($bookDeal);
             $em->flush();
+
+            $logData = array(
+                'user'=>$this->get('security.token_storage')->getToken()->getUser()->getId(),
+                'logType'=>"Delete Book Deal",
+                'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                'logDescription'=> $this->get('security.token_storage')->getToken()->getUser()->getUsername()." has deleted a book deal named ".$bookDeal->getBook()->getBookTitle(),
+                'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                'logUserType'=> in_array("ROLE_ADMIN_USER",$this->get('security.token_storage')->getToken()->getUser()->getRoles())?"Admin User":"Normal User"
+            );
+            $this->_saveLog($logData);
+
             return $this->_createJsonResponse('success', array('successTitle' => "Book Deal is Deleted"), 200);
         }else{
             return $this->_createJsonResponse('error', array('errorTitle' => "Cannot Delete Book Deal", 'errorDescription' => "You are not owner of that book deal."), 400);
@@ -1137,6 +1183,18 @@ class BookDealManagementApiController extends Controller
             unlink($targetFile);
         }
         $image_save_func($tmp, "$targetFile");
+    }
+
+    public function _saveLog($logData){
+        $em = $this->container->get('doctrine')->getManager();
+        $log = new Log();
+        $logForm = $this->container->get('form.factory')->create(new LogType(), $log);
+
+        $logForm->submit($logData);
+        if($logForm->isValid()){
+            $em->persist($log);
+            $em->flush();
+        }
     }
 
     public function _createJsonResponse($key, $data, $code)

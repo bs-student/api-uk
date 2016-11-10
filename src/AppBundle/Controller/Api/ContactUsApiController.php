@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller\Api;
 
+use AppBundle\Entity\Log;
+use AppBundle\Form\Type\LogType;
 use AppBundle\Validator\Constraints\UsernameConstraints;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -132,6 +134,16 @@ class ContactUsApiController extends Controller
 
             $this->get('fos_user.mailer')->sendShareSellPageEmailToFriends($data);
 
+            $logData = array(
+                'user'=>$user->getId(),
+                'logType'=>"Promote Sell Page",
+                'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                'logDescription'=> $user->getUsername()." has promoted own Sell Page",
+                'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+            );
+            $this->_saveLog($logData);
+
             return $this->_createJsonResponse('success',array(
                 'successTitle'=>"Emails have successfully sent to your Friends",
                 'successDescription'=>"Thank you for sharing your sell page."
@@ -146,6 +158,17 @@ class ContactUsApiController extends Controller
 
     }
 
+    public function _saveLog($logData){
+        $em = $this->container->get('doctrine')->getManager();
+        $log = new Log();
+        $logForm = $this->container->get('form.factory')->create(new LogType(), $log);
+
+        $logForm->submit($logData);
+        if($logForm->isValid()){
+            $em->persist($log);
+            $em->flush();
+        }
+    }
 
     public function _createJsonResponse($key, $data,$code)
     {

@@ -5,8 +5,10 @@ namespace AppBundle\Controller\Api;
 use AppBundle\Entity\Book;
 use AppBundle\Entity\BookImage;
 use AppBundle\Entity\Campus;
+use AppBundle\Entity\Log;
 use AppBundle\Entity\Message;
 use AppBundle\Form\Type\ContactType;
+use AppBundle\Form\Type\LogType;
 use AppBundle\Form\Type\MessageType;
 use AppBundle\Form\Type\UniversityType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -74,6 +76,16 @@ class ContactManagementApiController extends Controller
                         if($contactForm->isValid()){
                             $em->persist($contact);
                             $em->flush();
+
+                            $logData = array(
+                                'user'=>$this->get('security.token_storage')->getToken()->getUser()->getId(),
+                                'logType'=>"Buyer Contacted",
+                                'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                                'logDescription'=> $this->get('security.token_storage')->getToken()->getUser()->getUsername()." has contacted ".$bookDealForContact->getSeller()->getUsername()." for book '".$bookDealForContact->getBook()->getBookTitle()."'",
+                                'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                                'logUserType'=> in_array("ROLE_ADMIN_USER",$this->get('security.token_storage')->getToken()->getUser()->getRoles())?"Admin User":"Normal User"
+                            );
+                            $this->_saveLog($logData);
 
                             //Prepare Proper Message
                             $bookDealRepo = $em->getRepository("AppBundle:BookDeal");
@@ -414,6 +426,18 @@ class ContactManagementApiController extends Controller
         $imageName = $image->saveImage();
         return $imageName;
 
+    }
+
+    public function _saveLog($logData){
+        $em = $this->container->get('doctrine')->getManager();
+        $log = new Log();
+        $logForm = $this->container->get('form.factory')->create(new LogType(), $log);
+
+        $logForm->submit($logData);
+        if($logForm->isValid()){
+            $em->persist($log);
+            $em->flush();
+        }
     }
 
     public function _createJsonResponse($key, $data, $code)

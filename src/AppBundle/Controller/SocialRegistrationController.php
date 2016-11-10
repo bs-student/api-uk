@@ -8,7 +8,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Log;
 use AppBundle\Entity\User;
+use AppBundle\Form\Type\LogType;
 use AppBundle\Form\Type\RegistrationType;
 use AppBundle\Form\Type\SocialRegistrationType;
 use AppBundle\Form\Type\UserType;
@@ -110,6 +112,17 @@ class SocialRegistrationController extends Controller
                 $userForm->submit($data);
 
                 if ($userForm->isValid()) {
+
+                    $logData = array(
+                        'user'=>$user->getId(),
+                        'logType'=>"Social Login",
+                        'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                        'logDescription'=> $user->getUsername()." has Logged In via Google",
+                        'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                        'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                    );
+                    $this->_saveLog($logData);
+
                     $em->persist($user);
                     $em->flush();
                     return $this->_createJsonResponse('success',array(
@@ -198,6 +211,17 @@ class SocialRegistrationController extends Controller
             $userForm->submit($data);
 
             if ($userForm->isValid()) {
+
+                $logData = array(
+                    'user'=>$userEntity->getId(),
+                    'logType'=>"Social Login",
+                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                    'logDescription'=> $userEntity->getUsername()." has Logged In via Google",
+                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                    'logUserType'=> in_array("ROLE_ADMIN_USER",$userEntity->getRoles())?"Admin User":"Normal User"
+                );
+                $this->_saveLog($logData);
+
                 $em->persist($userEntity);
                 $em->flush();
                 return $this->_createJsonResponse('success',array(
@@ -309,6 +333,16 @@ class SocialRegistrationController extends Controller
                 $userForm->submit($data);
 
                 if ($userForm->isValid()) {
+                    $logData = array(
+                        'user'=>$user->getId(),
+                        'logType'=>"Social Login",
+                        'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                        'logDescription'=> $user->getUsername()." has Logged In via Facebook",
+                        'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                        'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                    );
+                    $this->_saveLog($logData);
+
                     $em->persist($user);
                     $em->flush();
                     return $this->_createJsonResponse('success',array(
@@ -398,6 +432,17 @@ class SocialRegistrationController extends Controller
             $userForm->submit($data);
 
             if ($userForm->isValid()) {
+
+                $logData = array(
+                    'user'=>$userEntity->getId(),
+                    'logType'=>"Social Login",
+                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                    'logDescription'=> $userEntity->getUsername()." has Logged In via Facebook",
+                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                    'logUserType'=> in_array("ROLE_ADMIN_USER",$userEntity->getRoles())?"Admin User":"Normal User"
+                );
+                $this->_saveLog($logData);
+
                 $em->persist($userEntity);
                 $em->flush();
                 return $this->_createJsonResponse('success',array(
@@ -548,6 +593,19 @@ class SocialRegistrationController extends Controller
             unlink($targetFile);
         }
         $image_save_func($tmp, "$targetFile");
+    }
+
+
+    public function _saveLog($logData){
+        $em = $this->container->get('doctrine')->getManager();
+        $log = new Log();
+        $logForm = $this->container->get('form.factory')->create(new LogType(), $log);
+
+        $logForm->submit($logData);
+        if($logForm->isValid()){
+            $em->persist($log);
+            $em->flush();
+        }
     }
 
     public function _createJsonResponse($key, $data, $code)

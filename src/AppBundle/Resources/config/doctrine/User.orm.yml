@@ -36,6 +36,9 @@ AppBundle\Entity\User:
           targetEntity: Star
           mappedBy: user
           cascade: [persist,remove]
+        logs:
+          targetEntity: Log
+          mappedBy: user
 
     id:
         id:

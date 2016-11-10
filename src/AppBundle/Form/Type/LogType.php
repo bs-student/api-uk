@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\DateTime;
-class MessageType extends AbstractType
+class LogType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,20 +17,30 @@ class MessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('messageBody','text',array(
+            ->add('logDescription','text',array(
                 'constraints' => array(
                     new NotBlank(),
 
                 )
             ))
-            ->add('messageDateTime','datetime',array(
+            ->add('logDateTime','datetime',array(
                 'widget' => 'single_text',
                 'constraints' => array(
                     new DateTime(),
                     new NotBlank()
                 )
             ))
-            ->add('messageType','text',array(
+            ->add('logType','text',array(
+                'constraints' => array(
+                    new NotBlank()
+                )
+            ))
+            ->add('userIpAddress','text',array(
+                'constraints' => array(
+                    new NotBlank()
+                )
+            ))
+            ->add('logUserType','text',array(
                 'constraints' => array(
                     new NotBlank()
                 )
@@ -51,7 +61,7 @@ class MessageType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_message';
+        return 'appbundle_log';
     }
 
     /**
@@ -60,7 +70,7 @@ class MessageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Message',
+            'data_class' => 'AppBundle\Entity\Log',
             'csrf_protection' => false,
             'allow_extra_fields' => true,
 

@@ -15,6 +15,7 @@ class User extends BaseUser
 
     public function __construct()
     {
+        $this->logs = new ArrayCollection();
         $this->buyBooks = new ArrayCollection();
         $this->sellBooks = new ArrayCollection();
         $this->wishLists = new ArrayCollection();
@@ -127,6 +128,8 @@ class User extends BaseUser
     private $contacts;
 
     private $stars;
+
+    private $logs;
 
     private $emailNotification;
 
@@ -746,5 +749,39 @@ class User extends BaseUser
     public function getRegistrationDateTime()
     {
         return $this->registrationDateTime;
+    }
+
+    /**
+     * Add logs
+     *
+     * @param \AppBundle\Entity\Log $logs
+     * @return User
+     */
+    public function addLog(\AppBundle\Entity\Log $logs)
+    {
+        $this->logs[] = $logs;
+//        $this->logs->add($logs);
+//        $logs->setUser($this);
+        return $this;
+    }
+
+    /**
+     * Remove logs
+     *
+     * @param \AppBundle\Entity\Log $logs
+     */
+    public function removeLog(\AppBundle\Entity\Log $logs)
+    {
+        $this->logs->removeElement($logs);
+    }
+
+    /**
+     * Get logs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLogs()
+    {
+        return $this->logs;
     }
 }

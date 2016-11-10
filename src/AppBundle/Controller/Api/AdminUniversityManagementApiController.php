@@ -3,6 +3,8 @@
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Campus;
+use AppBundle\Entity\Log;
+use AppBundle\Form\Type\LogType;
 use AppBundle\Form\Type\UniversityType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -191,6 +193,16 @@ class AdminUniversityManagementApiController extends Controller
                 $em->persist($university);
                 $em->flush();
 
+                $logData = array(
+                    'user'=>$user->getId(),
+                    'logType'=>"Update University",
+                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                    'logDescription'=> $university->getUniversityStatus()=="Activated"?$user->getUsername()." has updated & activated university named '".$university->getUniversityname():$user->getUsername()." has updated & deactivated university named '".$university->getUniversityname()."'",
+                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                    'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                );
+                $this->_saveLog($logData);
+
                 return $this->_createJsonResponse('success', array(
                         'successTitle'=>"University has been updated successfully",
                         'successData'=>array(
@@ -223,14 +235,33 @@ class AdminUniversityManagementApiController extends Controller
             $data = json_decode($content, true);
             $em = $this->getDoctrine()->getManager();
             $universityRepo=$em->getRepository('AppBundle:University');
-            $updated = $universityRepo->approveUniversities($data);
-            if($updated){
-                return $this->_createJsonResponse('success', array(
-                        'successTitle'=>"Universities has been approved successfully"
-                    ), 200
+
+            if(count($data)>0){
+                $updated = $universityRepo->approveUniversities($data);
+
+                $universities = "";
+                foreach($data as $universityRow){
+                    $universities.="'".$universityRow['universityName']."', ";
+                }
+
+                $logData = array(
+                    'user'=>$user->getId(),
+                    'logType'=>"Approve University",
+                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                    'logDescription'=> $user->getUsername()." has approved universities named '".$universities,
+                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                    'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
                 );
-            }else{
-                return $this->_createJsonResponse('error', array('errorTitle'=>"Sorry, Universities are not updated"), 400);
+                $this->_saveLog($logData);
+
+                if($updated){
+                    return $this->_createJsonResponse('success', array(
+                            'successTitle'=>"Universities has been approved successfully"
+                        ), 200
+                    );
+                }else{
+                    return $this->_createJsonResponse('error', array('errorTitle'=>"Sorry, Universities are not updated"), 400);
+                }
             }
 
         }else{
@@ -276,6 +307,17 @@ class AdminUniversityManagementApiController extends Controller
             if ($universityForm->isValid()) {
                 $em->persist($university);
                 $em->flush();
+
+                $logData = array(
+                    'user'=>$user->getId(),
+                    'logType'=>"Update University",
+                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                    'logDescription'=> $university->getUniversityStatus()=="Activated"?$user->getUsername()." has updated in details & activated university named '".$university->getUniversityname():$user->getUsername()." has updated & deactivated university named '".$university->getUniversityname()."'",
+                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                    'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                );
+                $this->_saveLog($logData);
+
                 return $this->_createJsonResponse('success', array(
                         'successTitle'=>"University has been updated & approved successfully"
                     ), 200
@@ -378,6 +420,16 @@ class AdminUniversityManagementApiController extends Controller
             $em->remove($mergeFromUniversity);
             $em->flush();
 
+            $logData = array(
+                'user'=>$user->getId(),
+                'logType'=>"Merge University",
+                'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                'logDescription'=> $user->getUsername()." has merged university named '".$mergeFromUniversity->getUniversityName()."' to university named '".$mergeToUniversity->getUniversityName()."'",
+                'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+            );
+            $this->_saveLog($logData);
+
             return $this->_createJsonResponse('success', array(
                     'successTitle'=>"University has been merged successfully"
                 ), 200
@@ -385,6 +437,18 @@ class AdminUniversityManagementApiController extends Controller
 
         }else{
             return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
+        }
+    }
+
+    public function _saveLog($logData){
+        $em = $this->container->get('doctrine')->getManager();
+        $log = new Log();
+        $logForm = $this->container->get('form.factory')->create(new LogType(), $log);
+
+        $logForm->submit($logData);
+        if($logForm->isValid()){
+            $em->persist($log);
+            $em->flush();
         }
     }
 

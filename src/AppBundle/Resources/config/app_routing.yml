@@ -597,6 +597,13 @@ add_book_deal_to_star_list:
     defaults:  {_controller: AppBundle:Api/StarManagementApi:addBookDealToStarList}
     methods: [POST]
 
+#admin log Api Controller
+
+get_log:
+    path: /api/admin/get_log
+    defaults:  {_controller: AppBundle:Api/AdminLogApi:getLog}
+    methods: [POST]
+
 
 
 

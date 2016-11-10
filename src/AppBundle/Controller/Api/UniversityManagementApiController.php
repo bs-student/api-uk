@@ -3,6 +3,8 @@
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Campus;
+use AppBundle\Entity\Log;
+use AppBundle\Form\Type\LogType;
 use AppBundle\Form\Type\UniversityType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -373,6 +375,16 @@ class UniversityManagementApiController extends Controller
                     $em->persist($universityEntity);
                     $em->flush();
 
+                    $logData = array(
+                        'user'=>$user->getId(),
+                        'logType'=>"Add University",
+                        'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                        'logDescription'=> $user->getUsername()." has created university named '".$universityEntity->getUniversityName()."'",
+                        'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                        'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                    );
+                    $this->_saveLog($logData);
+
                     return $this->_createJsonResponse('success',array(
                         'successTitle'=>"University Successfully Created"
                     ),201);
@@ -443,6 +455,17 @@ class UniversityManagementApiController extends Controller
 
     }
 
+    public function _saveLog($logData){
+        $em = $this->container->get('doctrine')->getManager();
+        $log = new Log();
+        $logForm = $this->container->get('form.factory')->create(new LogType(), $log);
+
+        $logForm->submit($logData);
+        if($logForm->isValid()){
+            $em->persist($log);
+            $em->flush();
+        }
+    }
 
     public function _createJsonResponse($key, $data,$code)
     {

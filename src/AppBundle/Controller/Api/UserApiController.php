@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller\Api;
 
+use AppBundle\Entity\Log;
 use AppBundle\Form\Type\EmailNotificationType;
+use AppBundle\Form\Type\LogType;
 use AppBundle\Form\Type\ProfileType;
 use AppBundle\Validator\Constraints\UsernameConstraints;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -192,6 +194,16 @@ class UserApiController extends Controller
 
                 );
 
+                $logData = array(
+                    'user'=>$user->getId(),
+                    'logType'=>"Profile Update",
+                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                    'logDescription'=> $user->getUsername()." has updated own profile information.",
+                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                    'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                );
+                $this->_saveLog($logData);
+
                 return $this->_createJsonResponse('success', array('successTitle' => 'Profile is Updated','successData'=>$userData),200);
             } else {
                 return $this->_createJsonResponse('error', array(
@@ -233,8 +245,26 @@ class UserApiController extends Controller
                         'emailNotification'=>$user->getEmailNotification()
                     );
                     if(!strcmp("On",$user->getEmailNotification())){
+                        $logData = array(
+                            'user'=>$user->getId(),
+                            'logType'=>"Email Notification Change",
+                            'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                            'logDescription'=> $user->getUsername()." has turned on Email Notification",
+                            'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                            'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                        );
+                        $this->_saveLog($logData);
                         return $this->_createJsonResponse('success', array('successTitle' => 'Email Notification is successfully turned on','successData'=>$userData),200);
                     }elseif(!strcmp("Off",$user->getEmailNotification())){
+                        $logData = array(
+                            'user'=>$user->getId(),
+                            'logType'=>"Email Notification Change",
+                            'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                            'logDescription'=> $user->getUsername()." has turned off Email Notification",
+                            'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                            'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                        );
+                        $this->_saveLog($logData);
                         return $this->_createJsonResponse('success', array('successTitle' => 'Email Notification is successfully turned off','successData'=>$userData),200);
                     }
 
@@ -360,6 +390,19 @@ class UserApiController extends Controller
         }
         return true;
     }
+
+    public function _saveLog($logData){
+        $em = $this->container->get('doctrine')->getManager();
+        $log = new Log();
+        $logForm = $this->container->get('form.factory')->create(new LogType(), $log);
+
+        $logForm->submit($logData);
+        if($logForm->isValid()){
+            $em->persist($log);
+            $em->flush();
+        }
+    }
+
     public function _createJsonResponse($key, $data,$code)
     {
         $serializer = $this->container->get('jms_serializer');

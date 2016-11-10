@@ -6,7 +6,9 @@ use AppBundle\Entity\Book;
 use AppBundle\Entity\BookDeal;
 use AppBundle\Entity\BookImage;
 use AppBundle\Entity\Campus;
+use AppBundle\Entity\Log;
 use AppBundle\Form\Type\BookDealType;
+use AppBundle\Form\Type\LogType;
 use AppBundle\Form\Type\UniversityType;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -407,6 +409,17 @@ class BookManagementApiController extends Controller
                     $em->persist($book);
                     $em->flush();
                     $bookId = $book->getId();
+
+                    $logData = array(
+                        'user'=>$this->get('security.token_storage')->getToken()->getUser()->getId(),
+                        'logType'=>"Add Book",
+                        'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                        'logDescription'=> $this->get('security.token_storage')->getToken()->getUser()->getUsername()." has added a book named ".$book->getBookTitle(),
+                        'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                        'logUserType'=> in_array("ROLE_ADMIN_USER",$this->get('security.token_storage')->getToken()->getUser()->getRoles())?"Admin User":"Normal User"
+                    );
+                    $this->_saveLog($logData);
+
                 } else {
                     return $this->_createJsonResponse('error', array("errorData" => $bookForm), 400);
                 }
@@ -440,6 +453,17 @@ class BookManagementApiController extends Controller
             if ($bookDealForm->isValid()) {
                 $em->persist($bookDeal);
                 $em->flush();
+
+                $logData = array(
+                    'user'=>$this->get('security.token_storage')->getToken()->getUser()->getId(),
+                    'logType'=>"Add Book Deal",
+                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                    'logDescription'=> $this->get('security.token_storage')->getToken()->getUser()->getUsername()." has added a book deal priced $".$bookDealData['bookPriceSell'],
+                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                    'logUserType'=> in_array("ROLE_ADMIN_USER",$this->get('security.token_storage')->getToken()->getUser()->getRoles())?"Admin User":"Normal User"
+                );
+                $this->_saveLog($logData);
+
                 return $this->_createJsonResponse('success', array("successTitle" => "Book has been successfully posted"), 200);
             } else {
                 return $this->_createJsonResponse('error', array("errorData" => $bookDealForm), 400);
@@ -1049,6 +1073,18 @@ class BookManagementApiController extends Controller
             'bookOfferId' => $offerId,
 //            'bookLanguage'=> (string)$item->ItemAttributes->Languages->Language->Name,
         );
+    }
+
+    public function _saveLog($logData){
+        $em = $this->container->get('doctrine')->getManager();
+        $log = new Log();
+        $logForm = $this->container->get('form.factory')->create(new LogType(), $log);
+
+        $logForm->submit($logData);
+        if($logForm->isValid()){
+            $em->persist($log);
+            $em->flush();
+        }
     }
 
     public function _createJsonResponse($key, $data, $code)

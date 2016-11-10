@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller\Api;
 
+use AppBundle\Entity\Log;
+use AppBundle\Form\Type\LogType;
 use AppBundle\Validator\Constraints\UsernameConstraints;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -176,7 +178,7 @@ class AdminUserApiController extends Controller
                         'errorTitle'=>"Can't Approve User",
                         'errorDescription'=> "Username '" . $request_data['username'] . "' Already Exist",
                         'errorData'=> array(
-                            'username'=> $user->getusername()
+                            'username'=> $user->getUsername()
                         )
                     ),400);
 
@@ -187,6 +189,16 @@ class AdminUserApiController extends Controller
                     $editedUser->setAdminApproved('Yes');
                     $em->persist($editedUser);
                     $em->flush();
+
+                    $logData = array(
+                        'user'=>$user->getId(),
+                        'logType'=>"Update User",
+                        'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                        'logDescription'=> $editedUser->isEnabled()?$user->getUsername()." has updated & activated user named ".$editedUser->getUsername():$user->getUsername()." has updated & deactivated user named ".$editedUser->getUsername(),
+                        'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                        'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                    );
+                    $this->_saveLog($logData);
 
                     return $this->_createJsonResponse('success',array(
                         'successTitle'=>"User Approved",
@@ -216,7 +228,22 @@ class AdminUserApiController extends Controller
         if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
 
             if(count($data)>0){
-                $data = $userRepo->approveUsers($data);
+                $userRepo->approveUsers($data);
+
+                $users = "";
+                foreach($data as $userRow){
+                    $users.=$userRow['username'].", ";
+                }
+
+                $logData = array(
+                    'user'=>$user->getId(),
+                    'logType'=>"Approve User",
+                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                    'logDescription'=> $user->getUsername()." has approved users named ".$users,
+                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                    'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                );
+                $this->_saveLog($logData);
 
                 return $this->_createJsonResponse('success',array(
                     'successTitle'=>"Users been Approved",
@@ -275,6 +302,16 @@ class AdminUserApiController extends Controller
                 $em->persist($addedUser);
                 $em->flush();
 
+                $logData = array(
+                    'user'=>$user->getId(),
+                    'logType'=>"Add Admin User",
+                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                    'logDescription'=> $user->getUsername()." has created another admin user named ".$addedUser->getUsername(),
+                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                    'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                );
+                $this->_saveLog($logData);
+
                 $addedUserData=array(
                     'email'=>$addedUser->getEmail(),
                     'enabled'=>$addedUser->isEnabled(),
@@ -304,6 +341,18 @@ class AdminUserApiController extends Controller
             return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
         }
 
+    }
+
+    public function _saveLog($logData){
+        $em = $this->container->get('doctrine')->getManager();
+        $log = new Log();
+        $logForm = $this->container->get('form.factory')->create(new LogType(), $log);
+
+        $logForm->submit($logData);
+        if($logForm->isValid()){
+            $em->persist($log);
+            $em->flush();
+        }
     }
 
     public function _createJsonResponse($key, $data,$code)

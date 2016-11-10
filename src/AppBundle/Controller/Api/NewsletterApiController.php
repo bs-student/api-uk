@@ -6,10 +6,12 @@ use AppBundle\Entity\Book;
 use AppBundle\Entity\BookImage;
 use AppBundle\Entity\Campus;
 use AppBundle\Entity\Contact;
+use AppBundle\Entity\Log;
 use AppBundle\Entity\Newsletter;
 use AppBundle\Entity\Quote;
 use AppBundle\Form\Type\BookDealType;
 use AppBundle\Form\Type\ContactType;
+use AppBundle\Form\Type\LogType;
 use AppBundle\Form\Type\NewsletterType;
 use AppBundle\Form\Type\QuoteType;
 use AppBundle\Form\Type\UniversityType;
@@ -171,10 +173,33 @@ class NewsletterApiController extends Controller
             }
 
             fclose($handle);
+
+            $logData = array(
+                'user'=>$user->getId(),
+                'logType'=>"Newsletter Export",
+                'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                'logDescription'=> $user->getUsername()." has exported newsletter into a csv file.",
+                'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+            );
+            $this->_saveLog($logData);
+
             return $this->_createJsonResponse('success', array('successTitle'=>"CSV is generated",'successData'=>array("link"=>"/newsletterEmails/newsletterEmails.csv")), 200);
 
         }else{
             return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
+        }
+    }
+
+    public function _saveLog($logData){
+        $em = $this->container->get('doctrine')->getManager();
+        $log = new Log();
+        $logForm = $this->container->get('form.factory')->create(new LogType(), $log);
+
+        $logForm->submit($logData);
+        if($logForm->isValid()){
+            $em->persist($log);
+            $em->flush();
         }
     }
 

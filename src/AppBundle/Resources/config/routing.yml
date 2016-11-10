@@ -1,3 +1,7 @@
+app_log:
+    resource: "@AppBundle/Resources/config/routing/log.yml"
+    prefix:   /log
+
 app_star:
     resource: "@AppBundle/Resources/config/routing/star.yml"
     prefix:   /star

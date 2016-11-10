@@ -8,6 +8,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Log;
+use AppBundle\Form\Type\LogType;
 use AppBundle\Form\Type\UserType;
 //use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\UserBundle\Controller\SecurityController as BaseController;
@@ -107,6 +109,16 @@ class SecurityController extends BaseController {
 
         }elseif($user->getRegistrationStatus()=="complete"){
 
+            $logData = array(
+                'user'=>$user->getId(),
+                'logType'=>"Login",
+                'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                'logDescription'=> $user->getUsername()." has Logged In",
+                'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+            );
+            $this->_saveLog($logData);
+
             return $this->_createJsonResponse('success',array(
                 'successTitle' => "Login Successful"
             ),200);
@@ -118,6 +130,19 @@ class SecurityController extends BaseController {
             ),400);
         }
 
+    }
+
+
+    public function _saveLog($logData){
+        $em = $this->container->get('doctrine')->getManager();
+        $log = new Log();
+        $logForm = $this->container->get('form.factory')->create(new LogType(), $log);
+
+        $logForm->submit($logData);
+        if($logForm->isValid()){
+            $em->persist($log);
+            $em->flush();
+        }
     }
 
     public function _createJsonResponse($key, $data, $code)
