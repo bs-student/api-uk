@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Log</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Logtype</th>
+                <td>{{ entity.logType }}</td>
+            </tr>
+            <tr>
+                <th>Logdatetime</th>
+                <td>{{ entity.logDateTime|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Logdescription</th>
+                <td>{{ entity.logDescription }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('log') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('log_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
