@@ -604,6 +604,22 @@ get_log:
     defaults:  {_controller: AppBundle:Api/AdminLogApi:getLog}
     methods: [POST]
 
+#admin Databases Api Controller
+
+get_all_databases:
+    path: /api/admin/get_all_databases
+    defaults:  {_controller: AppBundle:Api/AdminDatabaseApi:getAllDatabases}
+    methods: [POST]
+
+download_database:
+    path: /api/admin/download_database
+    defaults:  {_controller: AppBundle:Api/AdminDatabaseApi:downloadDatabases}
+    methods: [POST]
+
+clear_public_database_directory:
+    path: /clear_public_database_directory
+    defaults:  {_controller: AppBundle:Api/AdminDatabaseApi:clearPublicDatabaseDirectory}
+    methods: [GET]
 
 
 
@@ -659,4 +675,8 @@ get_log:
 #get_real_book_images_from_amazon:
 #    path: /get_real_book_images_from_amazon
 #    defaults:  {_controller: AppBundle:DBManagement:getRealImagesFromAmazon}
+#    methods: [GET]
+#get_db_backup:
+#    path: /get_db_backup
+#    defaults:  {_controller: AppBundle:DBManagement:getDatabaseBackup}
 #    methods: [GET]

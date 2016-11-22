@@ -31,7 +31,9 @@
         "cboden/ratchet": "^0.3.5",
         "gos/web-socket-bundle": "^1.8",
         "react/zmq": "^0.3.0",
-        "firebase/php-jwt": "^3.0"
+        "firebase/php-jwt": "^3.0",
+        "dizda/cloud-backup-bundle": "^3.4",
+        "backup-manager/symfony": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

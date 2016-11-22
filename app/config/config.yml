@@ -157,6 +157,34 @@ fos_user:
 #    routing_loader:
 #        default_format: json
 
+dizda_cloud_backup:
+    # By default backup files will have your servers hostname as prefix
+    # such as: hostname_2014-01-01_21-08-39.tar
+    output_file_prefix: student2student
+    timeout: 300
+    processor:
+        type: 7z # Required: tar|zip|7z
+        options:
+            compression_ratio: 6
+            password: maniac.sujit
+            # Split into many files of `split_size` bytes
+            split:
+                enable: false # Default false
+                split_size: 1000 # Make each zip files no larger than "split_size" in bytes
+                storages: [ Dropbox, CloudApp, GoogleDrive, Gaufrette ] # Which cloud storages will upload split files
+    #folders: [ web/Book_image ]
+    cloud_storages:
+        # Local storage definition
+        local:
+            path: data/databaseBackup # Required
+    databases:
+        mysql:
+            all_databases: false # Only required when no database is set
+            database: stu2stu_new          # Required if all_databases is false
+            db_host: localhost   # This, and following is not required and if not specified, the bundle will take ORM configuration in parameters.yml
+            db_port: 3306           # Default 3306
+            db_user: root
+            db_password:
 
 
 fos_oauth_server:
@@ -171,3 +199,4 @@ fos_oauth_server:
             storage:                fos_oauth_server.storage.default
             options:
                 access_token_lifetime: 3600
+

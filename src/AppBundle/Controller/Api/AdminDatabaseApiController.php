@@ -19,53 +19,81 @@ use Symfony\Component\Form\Extension\Validator\ViolationMapper\ViolationMapper;
 use Symfony\Component\Validator\ConstraintViolation;
 
 
-class AdminLogApiController extends Controller
+class AdminDatabaseApiController extends Controller
 {
 
 
     /**
-     * Get Logs
+     * Get Databases
      *
      */
-    public function getLogAction(Request $request){
+    public function getAllDatabasesAction(Request $request){
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
         if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
-
+            $fileDirHost = $this->container->getParameter('kernel.root_dir');
+            $fileDir = '/../data/databaseBackup/';
             $content = $request->getContent();
             $data = json_decode($content, true);
-            $em = $this->getDoctrine()->getManager();
-            $logRepo=$em->getRepository('AppBundle:Log');
-
-
             $pageSize = $data["pageSize"];
-            $usernameQuery = filter_var($data["usernameQuery"], FILTER_SANITIZE_STRING);
-            $logTypeQuery = filter_var($data["logTypeQuery"], FILTER_SANITIZE_STRING);
-            $logUserTypeQuery = filter_var($data["logUserTypeQuery"], FILTER_SANITIZE_STRING);
-
             $pageNumber = $data["pageNumber"];
-            $sort = $data["sort"];
 
-            $totalNumber = $logRepo->getLogSearchNumber($usernameQuery,$logTypeQuery,$logUserTypeQuery);
-            $logs = $logRepo->getLogSearchResult($usernameQuery,$logTypeQuery,$logUserTypeQuery, $pageNumber, $pageSize,$sort);
+            $fi = new \FilesystemIterator($fileDirHost.$fileDir, \FilesystemIterator::SKIP_DOTS);
 
-
-            for($i=0;$i<count($logs);$i++){
-                $logs[$i]['logDateTime'] =$logs[$i]['logDateTime']->format('g:i A, d M Y');
+            $databaseListArray=array();
+            foreach($fi as $file)
+            {
+                $databaseListArray[filectime($file)]=array(
+                    'fileName' => $file->getFilename(),
+                    'fileSize' =>round((floatval(filesize($file)/1024)),2) ." KB",
+                    'fileTime'=>date('g:i A, d M Y',filectime($file))
+                );
             }
+            krsort($databaseListArray);
 
+            $selectedFiles = array_slice($databaseListArray,$pageNumber-1,$pageSize);
+
+            $totalNumber = iterator_count($fi);
 
             $data = array(
-                'totalLogs' => $logs,
+                'totalDatabaseList' => $selectedFiles,
                 'totalNumber' => $totalNumber
             );
 
-            return $this->_createJsonResponse('success', array('successData'=>array('logs'=>$data)), 200);
+            return $this->_createJsonResponse('success', array('successData'=>array('databaseList'=>$data)), 200);
         }else{
             return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
         }
     }
 
+    /**
+     * Download Database Backup
+     *
+     */
+    public function downloadDatabasesAction(Request $request){
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+
+        if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
+            $fileDirHost = $this->container->getParameter('kernel.root_dir');
+            $sourceFileDir = '/../data/databaseBackup/';
+            $destinationFileDir = '/../web/databaseBackup/';
+            $content = $request->getContent();
+            $data = json_decode($content, true);
+
+            copy($fileDirHost.$sourceFileDir.$data['databaseName'],$fileDirHost.$destinationFileDir.$data['databaseName']);
+
+            return $this->_createJsonResponse('success', array('successTitle'=>"Database is Generated",'successData'=>array("link"=>"/databaseBackup/".$data['databaseName'])), 200);
+        }else{
+            return $this->_createJsonResponse('error', array('errorTitle'=>"You are not authorized to see this page."), 400);
+        }
+    }
+
+    public function clearPublicDatabaseDirectoryAction(Request $request){
+        $fileDirHost = $this->container->getParameter('kernel.root_dir');
+        $sourceFileDir = '/../web/databaseBackup/';
+        array_map('unlink', glob($fileDirHost.$sourceFileDir."*"));
+        return $this->_createJsonResponse('success', array('successTitle'=>"Public Database Directory is Cleared"), 200);
+    }
 
     public function _createJsonResponse($key, $data,$code)
     {

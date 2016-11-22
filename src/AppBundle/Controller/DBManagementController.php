@@ -675,4 +675,12 @@ class DBManagementController extends Controller
 
 
 
+    public function getDatabaseBackupAction(){
+
+
+        $this->get('backup_manager')->makeBackup()->run('development', array('local'),'gzip');
+
+        die();
+    }
+
 }
