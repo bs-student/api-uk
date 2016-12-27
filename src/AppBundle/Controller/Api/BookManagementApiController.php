@@ -576,7 +576,7 @@ class BookManagementApiController extends Controller
                 // Getting Campus Lowest Price
                 foreach ($studentBooks as $studentBook) {
                     if (!strcmp(strval($studentBook['bookIsbn10']), strval($booksArray['books'][$i]['bookIsbn']))) {
-                        $booksArray['books'][$i]['bookPriceStudentLowest'] = "$" . $studentBook['bookPriceSell'];
+                        $booksArray['books'][$i]['bookPriceStudentLowest'] = "£" . $studentBook['bookPriceSell'];
                         $booksArray['books'][$i]['bookPriceStudentLowestFound'] = true;
                         break;
                     }
@@ -745,7 +745,7 @@ class BookManagementApiController extends Controller
             $book['bookPublishDate'] = (new \DateTime($book['bookPublishDate']))->format("Y-m-d");
             $book['bookPage'] = $book['bookPages'];
             $book['bookDescription'] = strip_tags($book['bookDescription']);
-            $book['bookAmazonPrice'] = substr($book['bookPriceAmazon'],1);
+            $book['bookAmazonPrice'] = substr($book['bookPriceAmazon'],2);
 
             $bookForm->submit($book);
 
@@ -958,7 +958,8 @@ class BookManagementApiController extends Controller
         $params["Timestamp"] = gmdate("Y-m-d\TH:i:s\Z");
         $params["Version"] = $amazonApiInfo['version'];
         $params["Power"] = "binding:hardcover or library or paperback";
-
+        $params['Condition'] = "New";
+        $params['MerchantId'] = 'All';
 
         return array(
             'apiInfo' => $apiInfo,
