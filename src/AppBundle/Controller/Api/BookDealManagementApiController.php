@@ -608,7 +608,7 @@ class BookDealManagementApiController extends Controller
 
         if($lowestPriceOnCampus[0][1]!=null){
             return $this->_createJsonResponse('success',array('successData'=>array(
-                'lowestCampusPrice'=>"$".$lowestPriceOnCampus[0][1]
+                'lowestCampusPrice'=>"£".$lowestPriceOnCampus[0][1]
             )),200);
         }else{
             return $this->_createJsonResponse('success',array('successData'=>array()),200);

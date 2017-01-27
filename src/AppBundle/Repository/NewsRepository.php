@@ -21,7 +21,9 @@ class NewsRepository extends EntityRepository
                       n.newsTitle,
                       n.newsDescription,
                       n.newsStatus,
-                      n.newsDateTime
+                      n.newsDateTime,
+                      n.newsType,
+                      n.newsVideoEmbedCode
             ')
             ->from('AppBundle:News', 'n')
             ->andwhere('n.newsTitle LIKE :query ')
@@ -60,7 +62,9 @@ class NewsRepository extends EntityRepository
                       n.newsTitle,
                       n.newsDescription,
                       n.newsStatus,
-                      n.newsDateTime
+                      n.newsDateTime,
+                      n.newsType,
+                      n.newsVideoEmbedCode
             ')
             ->from('AppBundle:News', 'n')
             ->andwhere('n.newsTitle LIKE :query ')

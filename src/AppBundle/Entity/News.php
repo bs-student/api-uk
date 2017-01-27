@@ -30,6 +30,16 @@ class News
     private $newsDescription;
 
     /**
+     * @var string
+     */
+    private $newsType;
+
+    /**
+     * @var string
+     */
+    private $newsVideoEmbedCode;
+
+    /**
      * @var \DateTime
      */
     private $newsDateTime;
@@ -181,4 +191,74 @@ class News
     {
         return $this->newsImages;
     }
+
+    /**
+     * Set newsType
+     *
+     * @param string $newsType
+     * @return News
+     */
+    public function setNewsType($newsType)
+    {
+        $this->newsType = $newsType;
+
+        return $this;
+    }
+
+    /**
+     * Get newsType
+     *
+     * @return string 
+     */
+    public function getNewsType()
+    {
+        return $this->newsType;
+    }
+
+    /**
+     * Set newsVideoLink
+     *
+     * @param string $newsVideoLink
+     * @return News
+     */
+    public function setNewsVideoLink($newsVideoLink)
+    {
+        $this->newsVideoLink = $newsVideoLink;
+
+        return $this;
+    }
+
+    /**
+     * Get newsVideoLink
+     *
+     * @return string 
+     */
+    public function getNewsVideoLink()
+    {
+        return $this->newsVideoLink;
+    }
+
+    /**
+     * Set newsVideoEmbedCode
+     *
+     * @param string $newsVideoEmbedCode
+     * @return News
+     */
+    public function setNewsVideoEmbedCode($newsVideoEmbedCode)
+    {
+        $this->newsVideoEmbedCode = $newsVideoEmbedCode;
+
+        return $this;
+    }
+
+    /**
+     * Get newsVideoEmbedCode
+     *
+     * @return string 
+     */
+    public function getNewsVideoEmbedCode()
+    {
+        return $this->newsVideoEmbedCode;
+    }
+
 }

@@ -22,6 +22,14 @@ AppBundle\Entity\News:
             type: text
         newsDateTime:
             type: datetime
+        newsType:
+            type: string
+            length: '20'
+            options:
+                default: 'imageType'
+        newsVideoEmbedCode:
+            type: text
+            nullable: true
         newsStatus:
             type: string
             length: '20'

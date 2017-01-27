@@ -808,7 +808,7 @@ class BookManagementApiController extends Controller
             $lowestPriceOnCampus = $bookDealRepo->getLowestDealPriceInCampus($userCampusId,$newBookArray[0]['bookIsbn']);
 
             if($lowestPriceOnCampus[0][1]!=null){
-                $newBookArray[0]['campusLowestPrice']= "$".$lowestPriceOnCampus[0][1];
+                $newBookArray[0]['campusLowestPrice']= "£".$lowestPriceOnCampus[0][1];
 
             }
         }

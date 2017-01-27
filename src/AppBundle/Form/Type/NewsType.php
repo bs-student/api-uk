@@ -57,7 +57,19 @@ class NewsType extends AbstractType
 //                'allow_delete'    => true,
                 'by_reference' =>false
 
-            ));
+            ))
+            ->add('newsVideoEmbedCode', 'text', array(
+                'constraints' => array(
+                    new NotBlank(),
+
+                ),))
+
+            ->add('newsType', 'text', array(
+                'constraints' => array(
+                    new NotBlank(),
+
+                ),))
+        ;
 
     }
 

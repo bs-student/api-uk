@@ -105,6 +105,7 @@ class AdminNewsApiController extends Controller
             if($news!=null){
                 $newsForm = $this->createForm(new NewsType(), $news);
                 $newsForm->remove('newsImages');
+                $newsForm->remove('newsVideoEmbedCode');
                 $data['newsDateTime']=gmdate('Y-m-d H:i:s');
                 $newsForm->submit($data);
 
@@ -150,47 +151,59 @@ class AdminNewsApiController extends Controller
             $data = json_decode($content, true);
             $em = $this->getDoctrine()->getManager();
 
-            //Prepare File
-            $fileDirHost = $this->container->getParameter('kernel.root_dir');
-            $fileDir = '/../web/newsImages/';
-            $fileNameDir = '/newsImages/';
-            $files = $request->files;
+            if(!strcmp($data['newsType'],"imageType")){
+                //Prepare File
+                $fileDirHost = $this->container->getParameter('kernel.root_dir');
+                $fileDir = '/../web/newsImages/';
+                $fileNameDir = '/newsImages/';
+                $files = $request->files;
 
-            //Return Error if image not found
-            if(count($files)==0){
-                return $this->_createJsonResponse('error', array('errorTitle' => "Cannot Add News", 'errorDescription' => "Image not Found"), 400);
-            }
+                //Return Error if image not found
+                if(count($files)==0){
+                    return $this->_createJsonResponse('error', array('errorTitle' => "Cannot Add News", 'errorDescription' => "Image not Found"), 400);
+                }
 
-            //Upload Image
-            $fileUploadError = false;
-            $data['newsImages']=array();
-            foreach ($files as $file) {
-                if ((($file->getSize()) / 1024) <= 200) {
-                    $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . "." . 'jpg';
-                    $file->move($fileDirHost . $fileDir, $fileSaveName);
+                //Upload Image
+                $fileUploadError = false;
+                $data['newsImages']=array();
+                foreach ($files as $file) {
+                    if ((($file->getSize()) / 1024) <= 300) {
+                        $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . "." . 'jpg';
+                        $file->move($fileDirHost . $fileDir, $fileSaveName);
 
 //                    $this->_smart_resize_image($fileDirHost.$fileDir.$fileSaveName , null, 780 , 490 , false , $fileDirHost.$fileDir.$fileSaveName , false , false ,100 );
-                    $this->_resize(780,490,$fileDirHost.$fileDir.$fileSaveName,$fileDirHost.$fileDir.$fileSaveName);
-                    array_push($data['newsImages'],array(
-                        'newsImageUrl'=>$fileNameDir . $fileSaveName
-                    ));
-                } else {
-                    $fileUploadError = true;
+                        $this->_resize(780,490,$fileDirHost.$fileDir.$fileSaveName,$fileDirHost.$fileDir.$fileSaveName);
+                        array_push($data['newsImages'],array(
+                            'newsImageUrl'=>$fileNameDir . $fileSaveName
+                        ));
+                    } else {
+                        $fileUploadError = true;
+                    }
                 }
+                //If Error Occurs than Return Error Message
+                if($fileUploadError)return $this->_createJsonResponse('error', array('errorTitle' => "Cannot Add News", 'errorDescription' => "Image is more than 300 KB"), 400);
+
+            }elseif(!strcmp($data['newsType'],"videoType")){
+
+                $pieces = explode("src=\"", $data['newsVideoEmbedCode']);
+                $finalPieces = explode("\" frameborder", $pieces[1]);
+
+                $data['newsVideoEmbedCode']='<iframe class="video-iframe" src="'.$finalPieces[0].'" frameborder="0" allowfullscreen></iframe>';
             }
-            //If Error Occurs than Return Error Message
-            if($fileUploadError)return $this->_createJsonResponse('error', array('errorTitle' => "Cannot Add News", 'errorDescription' => "Image is more than 200 KB"), 400);
-
-
-
 
             $news = new News();
 
             $data['newsStatus']='Activated';
-            $data['newsDateTime']=gmdate('Y-m-d H:i:s');
-
+            $submitDate=date_create($data['newsDateTime']);
+            $data['newsDateTime']=date_format($submitDate, 'Y-m-d H:i:s');
 
             $newsForm = $this->createForm(new NewsType(), $news);
+
+            if(!strcmp($data['newsType'],"imageType")){
+                $newsForm->remove('newsVideoEmbedCode');
+            }elseif(!strcmp($data['newsType'],"imageType")){
+                $newsForm->remove('newsImages');
+            }
 
             $newsForm->submit($data);
 
@@ -222,11 +235,13 @@ class AdminNewsApiController extends Controller
                     'successTitle' => "News has been created",
                     'successData'=>array(
                         'newsId'=>$news->getId(),
+                        'newsType'=>$news->getNewsType(),
                         'newsTitle'=>$news->getNewsTitle(),
                         'newsDescription'=>$news->getNewsDescription(),
                         'newsDateTime'=>$news->getNewsDateTime()->format('d M Y'),
                         'newsStatus'=>$news->getNewsStatus(),
-                        'newsImages'=>$imageData
+                        'newsImages'=>$imageData,
+                        'newsVideoEmbedCode'=>$news->getNewsVideoEmbedCode()
                     )
                 ), 201);
 

@@ -61,6 +61,9 @@ class SecurityController extends BaseController {
             // TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
             $error = $error->getMessage();
         }
+        if(!strcmp($error,"User account is disabled.")){
+            $error.=" Please Check Your Email for the Activation Link.";
+        }
 
         return $this->_createJsonResponse('error',array("errorTitle" => "Login Unsuccessful", "errorDescription" => $error),400);
     }

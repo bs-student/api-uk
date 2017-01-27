@@ -95,6 +95,8 @@ class NewsApiController extends Controller
             $news['newsTitle']=$newsEntity->getNewsTitle();
             $news['newsDescription']=$newsEntity->getNewsDescription();
             $news['newsDateTime']=$newsEntity->getNewsDateTime()->format('d M Y');
+            $news['newsType']=$newsEntity->getNewsType();
+            $news['newsVideoEmbedCode']=$newsEntity->getNewsVideoEmbedCode();
             $news['newsImages']=array();
             foreach($newsEntity->getNewsImages() as $image){
                 array_push($news['newsImages'], array(
