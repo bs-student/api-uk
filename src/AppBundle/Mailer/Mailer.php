@@ -471,12 +471,12 @@ class Mailer extends BaseClass
 
 
     public function _sendMail($message,$subject,$from,$to){
-        $transport = \Swift_SmtpTransport::newInstance('smtp.student2student.co.uk', 25)
-            ->setUsername('no-reply@student2student.co.uk')
-            ->setPassword('wWoc$868');
-//        $transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465,'ssl')
-//            ->setUsername('sujit.developer.136661@gmail.com')
-//            ->setPassword('maniac.sujit');
+//        $transport = \Swift_SmtpTransport::newInstance('smtp.student2student.co.uk', 25)
+//            ->setUsername('no-reply@student2student.co.uk')
+//            ->setPassword('wWoc$868');
+        $transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465,'ssl')
+            ->setUsername('sujit.developer.136661@gmail.com')
+            ->setPassword('maniac.sujit');
 
         $mailer = \Swift_Mailer::newInstance($transport);
 

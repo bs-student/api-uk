@@ -61,4 +61,12 @@ class LogRepository extends EntityRepository
         return $qb->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function getUsersLog($startDate, $endDate, $logType)
+    {
+        $sql = "SELECT COUNT(id) as count,date_format(log_date_time,'%d-%b-%Y') as logDate,log_type FROM `logs` WHERE (log_type='" . $logType . "' ) and (log_date_time BETWEEN '" . $startDate . "' AND '" . $endDate . "') GROUP by date_format(log_date_time,'%y-%m-%d'),log_type";
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }

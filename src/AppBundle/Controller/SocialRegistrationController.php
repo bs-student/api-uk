@@ -14,8 +14,6 @@ use AppBundle\Form\Type\LogType;
 use AppBundle\Form\Type\RegistrationType;
 use AppBundle\Form\Type\SocialRegistrationType;
 use AppBundle\Form\Type\UserType;
-use Lsw\ApiCallerBundle\Call\HttpPost;
-use Lsw\ApiCallerBundle\Call\HttpPostJson;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerAware;
@@ -26,9 +24,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Lsw\ApiCallerBundle\Call\HttpGetJson;
-use Lsw\ApiCallerBundle\Call\HttpGetHtml;
-use GuzzleHttp;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
@@ -101,21 +96,62 @@ class SocialRegistrationController extends Controller
                 $userForm->remove('facebookId');
                 $userForm->remove('facebookEmail');
                 $userForm->remove('facebookToken');
-                $userForm->remove('profilePicture');
-                $userForm->remove('emailNotification');
 
-                $data=array(
-                    'googleId' =>$profile['id'],
-                    'googleEmail' =>$profile['emails'][0]['value'],
-                    'googleToken' => $accessToken['access_token'],
-                );
+                $userForm->remove('emailNotification');
+                $userForm->remove('registrationDateTime');
+
+                $data=array();
+                //If default Picture is found
+                if(!strcmp($user->getProfilePicture(),"/userImages/default_profile_picture.jpg")){
+
+                    //Save image from google plus
+
+                    $fileDirHost = $this->container->getParameter('kernel.root_dir');
+                    $fileDir = '/../web/userImages/';
+                    $fileNameDir = '/userImages/';
+
+
+                    if (strpos($profile['image']['url'], '?sz=') !== false) {
+                        $profile['image']['url'] = substr($profile['image']['url'],0,strpos($profile['image']['url'], '?sz='))."?sz=200";
+                    }else{
+                        $profile['image']['url']  = $profile['image']['url']."?sz=200";
+                    }
+
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $profile['image']['url']);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                    $imageOutput   = curl_exec($ch);
+                    curl_close($ch);
+
+                    $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . ".jpg";
+                    $fp = fopen($fileDirHost . $fileDir . $fileSaveName, 'x');
+                    fwrite($fp, $imageOutput);
+                    fclose($fp);
+                    $this->_resize(200,200,$fileDirHost.$fileDir.$fileSaveName,$fileDirHost.$fileDir.$fileSaveName);
+
+                    $data['profilePicture']= $fileNameDir . $fileSaveName;
+
+
+                }else{
+                    $userForm->remove('profilePicture');
+                }
+
+
+                $data['googleId'] =$profile['id'];
+                $data['googleEmail'] =$profile['emails'][0]['value'];
+                $data['googleToken'] = $accessToken['access_token'];
+
+
                 $userForm->submit($data);
 
                 if ($userForm->isValid()) {
 
+                    $em->persist($user);
+                    $em->flush();
+
                     $logData = array(
                         'user'=>$user->getId(),
-                        'logType'=>"Social Login",
+                        'logType'=>"Login",
                         'logDateTime'=>gmdate('Y-m-d H:i:s'),
                         'logDescription'=> $user->getUsername()." has Logged In via Google",
                         'userIpAddress'=>$this->container->get('request')->getClientIp(),
@@ -123,8 +159,6 @@ class SocialRegistrationController extends Controller
                     );
                     $this->_saveLog($logData);
 
-                    $em->persist($user);
-                    $em->flush();
                     return $this->_createJsonResponse('success',array(
                             'successTitle'=>"You account has been merged with Google Account.",
                             'successData'=>array(
@@ -144,6 +178,15 @@ class SocialRegistrationController extends Controller
                         ,400);
                 }
             }else{
+                $logData = array(
+                    'user'=>$user->getId(),
+                    'logType'=>"Login",
+                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                    'logDescription'=> $user->getUsername()." has Logged In via Google",
+                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                    'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                );
+                $this->_saveLog($logData);
                 // Google Data is merged so Return Data to Login
                 return $this->_createJsonResponse('success',array(
                         'successData'=>array(
@@ -181,6 +224,13 @@ class SocialRegistrationController extends Controller
             $fileDir = '/../web/userImages/';
             $fileNameDir = '/userImages/';
 
+
+            if (strpos($profile['image']['url'], '?sz=') !== false) {
+                $profile['image']['url'] = substr($profile['image']['url'],0,strpos($profile['image']['url'], '?sz='))."?sz=200";
+            }else{
+                $profile['image']['url']  = $profile['image']['url']."?sz=200";
+            }
+
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $profile['image']['url']);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -212,18 +262,19 @@ class SocialRegistrationController extends Controller
 
             if ($userForm->isValid()) {
 
+                $em->persist($userEntity);
+                $em->flush();
+
                 $logData = array(
                     'user'=>$userEntity->getId(),
-                    'logType'=>"Social Login",
+                    'logType'=>"Registration",
                     'logDateTime'=>gmdate('Y-m-d H:i:s'),
-                    'logDescription'=> $userEntity->getUsername()." has Logged In via Google",
+                    'logDescription'=> $userEntity->getUsername()." has Registered via Google",
                     'userIpAddress'=>$this->container->get('request')->getClientIp(),
                     'logUserType'=> in_array("ROLE_ADMIN_USER",$userEntity->getRoles())?"Admin User":"Normal User"
                 );
                 $this->_saveLog($logData);
 
-                $em->persist($userEntity);
-                $em->flush();
                 return $this->_createJsonResponse('success',array(
                         'successTitle'=>"You have been registered.",
                         'successDescription'=>"Please Fill Up the Next form to complete registration Process",
@@ -280,7 +331,7 @@ class SocialRegistrationController extends Controller
 
         // Step 2. Retrieve profile information about the current user.
 
-        $fields = 'id,email,first_name,last_name,link,name,picture';
+        $fields = 'id,email,first_name,last_name,link,name,picture.type(large)';
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,"https://graph.facebook.com/v2.5/me?access_token=".$accessToken['access_token']."&fields=".$fields);
@@ -322,20 +373,51 @@ class SocialRegistrationController extends Controller
                 $userForm->remove('googleId');
                 $userForm->remove('googleEmail');
                 $userForm->remove('googleToken');
-                $userForm->remove('profilePicture');
-                $userForm->remove('emailNotification');
 
-                $data=array(
-                    'facebookId' =>$profile['id'],
-                    'facebookEmail' =>$email,
-                    'facebookToken' => $accessToken['access_token'],
-                );
+                $userForm->remove('emailNotification');
+                $userForm->remove('registrationDateTime');
+
+                $data=array();
+                //If default Picture is found
+                if(!strcmp($user->getProfilePicture(),"/userImages/default_profile_picture.jpg")){
+
+                    //Save image from facebook
+
+                    $fileDirHost = $this->container->getParameter('kernel.root_dir');
+                    $fileDir = '/../web/userImages/';
+                    $fileNameDir = '/userImages/';
+
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $profile['picture']['data']['url']);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                    $imageOutput   = curl_exec($ch);
+                    curl_close($ch);
+
+                    $fileSaveName = gmdate("Y-d-m_h_i_s_") . rand(0, 99999999) . ".jpg";
+                    $fp = fopen($fileDirHost . $fileDir . $fileSaveName, 'x');
+                    fwrite($fp, $imageOutput);
+                    fclose($fp);
+                    $this->_resize(200,200,$fileDirHost.$fileDir.$fileSaveName,$fileDirHost.$fileDir.$fileSaveName);
+
+                    $data['profilePicture']= $fileNameDir . $fileSaveName;
+
+                }else{
+                    $userForm->remove('profilePicture');
+                }
+
+                $data['facebookId'] =$profile['id'];
+                $data['facebookEmail'] =$email;
+                $data['facebookToken'] = $accessToken['access_token'];
+
                 $userForm->submit($data);
 
                 if ($userForm->isValid()) {
+                    $em->persist($user);
+                    $em->flush();
+
                     $logData = array(
                         'user'=>$user->getId(),
-                        'logType'=>"Social Login",
+                        'logType'=>"Login",
                         'logDateTime'=>gmdate('Y-m-d H:i:s'),
                         'logDescription'=> $user->getUsername()." has Logged In via Facebook",
                         'userIpAddress'=>$this->container->get('request')->getClientIp(),
@@ -343,8 +425,7 @@ class SocialRegistrationController extends Controller
                     );
                     $this->_saveLog($logData);
 
-                    $em->persist($user);
-                    $em->flush();
+
                     return $this->_createJsonResponse('success',array(
                             'successTitle'=>"You account has been merged with Facebook Account.",
                             'successData'=>array(
@@ -365,6 +446,14 @@ class SocialRegistrationController extends Controller
                         ,400);
                 }
             }else{
+                $logData = array(
+                    'user'=>$user->getId(),
+                    'logType'=>"Login",
+                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                    'logDescription'=> $user->getUsername()." has Logged In via Facebook",
+                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                    'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                );
                 // Google Data is merged so Return Data to Login
                 return $this->_createJsonResponse('success',array(
                         'successData'=>array(
@@ -397,7 +486,7 @@ class SocialRegistrationController extends Controller
             $userForm->remove('googleEmail');
             $userForm->remove('googleToken');
 
-            //Save image from google plus
+            //Save image from facebook
 
             $fileDirHost = $this->container->getParameter('kernel.root_dir');
             $fileDir = '/../web/userImages/';
@@ -433,18 +522,19 @@ class SocialRegistrationController extends Controller
 
             if ($userForm->isValid()) {
 
+                $em->persist($userEntity);
+                $em->flush();
+
                 $logData = array(
                     'user'=>$userEntity->getId(),
-                    'logType'=>"Social Login",
+                    'logType'=>"Registration",
                     'logDateTime'=>gmdate('Y-m-d H:i:s'),
-                    'logDescription'=> $userEntity->getUsername()." has Logged In via Facebook",
+                    'logDescription'=> $userEntity->getUsername()." has Registered via Facebook",
                     'userIpAddress'=>$this->container->get('request')->getClientIp(),
                     'logUserType'=> in_array("ROLE_ADMIN_USER",$userEntity->getRoles())?"Admin User":"Normal User"
                 );
                 $this->_saveLog($logData);
 
-                $em->persist($userEntity);
-                $em->flush();
                 return $this->_createJsonResponse('success',array(
                         'successTitle'=>"You have been registered.",
                         'successDescription'=>"Please Fill Up the Next form to complete registration Process",
@@ -517,7 +607,8 @@ class SocialRegistrationController extends Controller
                 'referral'=>$requestData['user']['referral'],
                 'campus'=>$requestData['user']['campus'],
                 'username'=>$requestData['user']['username'],
-                'email'=>$requestData['user']['email']
+                'email'=>$requestData['user']['email'],
+                'registrationDateTime'=>gmdate('Y-m-d H:i:s')
             );
 
             $userForm->submit($data);

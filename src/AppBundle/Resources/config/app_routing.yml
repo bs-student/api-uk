@@ -151,14 +151,14 @@ books_search_by_isbn_amazon:
     defaults:  {_controller: AppBundle:Api/BookManagementApi:searchByIsbnAmazonApi}
     methods: [POST]
 
-books_search_by_isbn_campus_books:
-    path: /book/search_by_isbn_campus_books
-    defaults:  {_controller: AppBundle:Api/BookManagementApi:searchByIsbnCampusBooksApi}
+search_by_isbn_online:
+    path: /book/search_by_isbn_online
+    defaults:  {_controller: AppBundle:Api/BookManagementApi:searchByIsbnOnlineBooksApi}
     methods: [POST]
 
-get_lowest_online_price_campus_books_by_isbn:
-    path: /book/get_lowest_price_by_isbn_campus_books
-    defaults:  {_controller: AppBundle:Api/BookManagementApi:getLowestPriceByIsbnCampusBooksApi}
+get_lowest_online_price_by_isbn:
+    path: /book/get_lowest_price_by_isbn_online
+    defaults:  {_controller: AppBundle:Api/BookManagementApi:getLowestPriceByIsbnOnlineApi}
     methods: [GET]
 
 get_amazon_cart_create_url:
@@ -487,6 +487,11 @@ get_all_book_deals:
     defaults:  {_controller: AppBundle:Api/AdminBookDealApi:getAllBookDeals}
     methods: [POST]
 
+get_all_sold_book_deals:
+    path: /api/admin/get_all_sold_book_deals
+    defaults:  {_controller: AppBundle:Api/AdminBookDealApi:getAllSoldBookDeals}
+    methods: [POST]
+
 #AdminQuoteManagementApiController
 
 get_student_quotes:
@@ -621,7 +626,36 @@ clear_public_database_directory:
     defaults:  {_controller: AppBundle:Api/AdminDatabaseApi:clearPublicDatabaseDirectory}
     methods: [GET]
 
+#admin Dashboard Api Controller
+get_all_normal_and_social_user_data:
+    path: /api/admin/get_all_normal_and_social_user_data
+    defaults:  {_controller: AppBundle:Api/AdminReportApi:getAllNormalAndSocialUserData}
+    methods: [POST]
 
+get_login_and_registration_user_data:
+    path: /api/admin/get_login_and_registration_user_data
+    defaults:  {_controller: AppBundle:Api/AdminReportApi:getLoginAndRegistrationUserData}
+    methods: [POST]
+
+get_book_deal_and_contact_data:
+    path: /api/admin/get_book_deal_and_contact_data
+    defaults:  {_controller: AppBundle:Api/AdminReportApi:getBookDealAnDContactData}
+    methods: [POST]
+
+get_book_deal_method_data:
+    path: /api/admin/get_book_deal_method_data
+    defaults:  {_controller: AppBundle:Api/AdminReportApi:getBookDealMethodData}
+    methods: [POST]
+
+get_universities_user_data:
+    path: /api/admin/get_universities_user_data
+    defaults:  {_controller: AppBundle:Api/AdminReportApi:getUniversitiesUserData}
+    methods: [POST]
+
+get_google_access_token:
+    path: /api/admin/get_google_access_token
+    defaults:  {_controller: AppBundle:Api/AdminReportApi:getGoogleAccessToken}
+    methods: [GET]
 
 # DB refactoring API
 

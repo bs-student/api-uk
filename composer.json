@@ -24,16 +24,9 @@
         "jms/serializer-bundle": "^1.1",
         "nelmio/cors-bundle": "^1.4",
         "friendsofsymfony/oauth-server-bundle": "dev-master",
-        "leaseweb/api-caller-bundle": "^1.2",
-        "leaseweb/guzzle-bundle": "^1.0",
-        "guzzlehttp/guzzle": "~6.0",
-        "liip/imagine-bundle": "^1.5",
-        "cboden/ratchet": "^0.3.5",
-        "gos/web-socket-bundle": "^1.8",
-        "react/zmq": "^0.3.0",
-        "firebase/php-jwt": "^3.0",
         "dizda/cloud-backup-bundle": "^3.4",
-        "backup-manager/symfony": "^1.0"
+        "backup-manager/symfony": "^1.0",
+        "google/apiclient": "1.1.8"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

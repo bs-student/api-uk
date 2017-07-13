@@ -4,7 +4,6 @@ namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Book;
 use AppBundle\Entity\BookDeal;
-use AppBundle\Entity\BookImage;
 use AppBundle\Entity\Campus;
 use AppBundle\Entity\Star;
 use AppBundle\Entity\WishList;
@@ -14,7 +13,6 @@ use AppBundle\Form\Type\UniversityType;
 use AppBundle\Form\Type\UserType;
 use AppBundle\Form\Type\WishListType;
 use Doctrine\Common\Collections\ArrayCollection;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Form\Type\CampusType;
@@ -23,8 +21,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Response;
-use Lsw\ApiCallerBundle\Call\HttpGetJson;
-use Lsw\ApiCallerBundle\Call\HttpGetHtml;
 use AppBundle\Form\Type\BookType;
 use Symfony\Component\HttpFoundation\FileBag;
 

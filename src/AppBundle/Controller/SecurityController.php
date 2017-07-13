@@ -11,7 +11,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Log;
 use AppBundle\Form\Type\LogType;
 use AppBundle\Form\Type\UserType;
-//use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\UserBundle\Controller\SecurityController as BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

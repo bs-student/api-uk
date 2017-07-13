@@ -15,8 +15,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Response;
-use Lsw\ApiCallerBundle\Call\HttpGetJson;
-use Lsw\ApiCallerBundle\Call\HttpGetHtml;
 
 class AdminUniversityManagementApiController extends Controller
 {

@@ -106,7 +106,6 @@ class UniversityRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('query', '%' . $searchQuery . '%');
 
 
-
         foreach ($sort as $key => $value) {
             $qb->addOrderBy("u." . $key, $value);
         }
@@ -152,7 +151,6 @@ class UniversityRepository extends \Doctrine\ORM\EntityRepository
             ->andwhere('u.universityStatus = ' . "'Activated'")
             ->andwhere('u.universityName LIKE :query ')
             ->setParameter('query', '%' . $searchQuery . '%');
-
 
 
         foreach ($sort as $key => $value) {
@@ -203,7 +201,6 @@ class UniversityRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('query', '%' . $searchQuery . '%');
 
 
-
         foreach ($sort as $key => $value) {
             $qb->addOrderBy("u." . $key, $value);
         }
@@ -232,7 +229,8 @@ class UniversityRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
-    function approveUniversities($universities){
+    function approveUniversities($universities)
+    {
         $conditions = array();
         foreach ($universities as $university) {
             array_push($conditions, "u.id = '" . $university['universityId'] . "'");
@@ -244,7 +242,7 @@ class UniversityRepository extends \Doctrine\ORM\EntityRepository
         $queryBuilderUser
             ->update('AppBundle:University', 'u')
             ->set('u.adminApproved', "'Yes'")
-            ->set('u.universityStatus',"'".$university['universityStatus']."'");
+            ->set('u.universityStatus', "'" . $university['universityStatus'] . "'");
 
         $orX = $queryBuilderUser->expr()->orX();
         $orX->addMultiple($conditions);
@@ -258,23 +256,23 @@ class UniversityRepository extends \Doctrine\ORM\EntityRepository
     {
 
         //Strip unimportant keywords
-        $searchQuery = explode(" ",strtolower($searchQuery));
-        $searchArray=array();
-        foreach($searchQuery as $word){
-            if(strlen($word)>2 && strcmp("university",$word)){
-                array_push($searchArray,$word);
+        $searchQuery = explode(" ", strtolower($searchQuery));
+        $searchArray = array();
+        foreach ($searchQuery as $word) {
+            if (strlen($word) > 2 && strcmp("university", $word)) {
+                array_push($searchArray, $word);
             }
         }
-        $finalArray=array();
+        $finalArray = array();
 
-        for($i=0;$i<count($searchArray);$i++){
-            $finalArray['search_'.$i]= "%".$searchArray[$i]."%";
+        for ($i = 0; $i < count($searchArray); $i++) {
+            $finalArray['search_' . $i] = "%" . $searchArray[$i] . "%";
         }
 
 
         $conditions = array();
         foreach ($finalArray as $key => $value) {
-            array_push($conditions, "u.universityName LIKE :".$key);
+            array_push($conditions, "u.universityName LIKE :" . $key);
         }
 
 
@@ -311,23 +309,23 @@ class UniversityRepository extends \Doctrine\ORM\EntityRepository
     function getSimilarUniversitiesSearchNumber($searchQuery)
     {
         //Strip unimportant keywords
-        $searchQuery = explode(" ",strtolower($searchQuery));
-        $searchArray=array();
-        foreach($searchQuery as $word){
-            if(strlen($word)>2 && strcmp("university",$word)){
-                array_push($searchArray,$word);
+        $searchQuery = explode(" ", strtolower($searchQuery));
+        $searchArray = array();
+        foreach ($searchQuery as $word) {
+            if (strlen($word) > 2 && strcmp("university", $word)) {
+                array_push($searchArray, $word);
             }
         }
-        $finalArray=array();
+        $finalArray = array();
 
-        for($i=0;$i<count($searchArray);$i++){
-            $finalArray['search_'.$i]= "%".$searchArray[$i]."%";
+        for ($i = 0; $i < count($searchArray); $i++) {
+            $finalArray['search_' . $i] = "%" . $searchArray[$i] . "%";
         }
 
 
         $conditions = array();
         foreach ($finalArray as $key => $value) {
-            array_push($conditions, "u.universityName LIKE :".$key);
+            array_push($conditions, "u.universityName LIKE :" . $key);
         }
 
         $qb = $this->getEntityManager()
@@ -345,10 +343,65 @@ class UniversityRepository extends \Doctrine\ORM\EntityRepository
         $qb->andWhere($orX);
 
 
-
-        return    $qb ->getQuery()
+        return $qb->getQuery()
             ->getSingleScalarResult();
 
     }
+
+
+    function getTotalActiveUniversityUserData($pageSize, $pageNumber, $searchQuery)
+    {
+        $firstResult = ($pageNumber - 1) * $pageSize;
+        $sql = "SELECT COUNT(users.id) as count, universities.university_name as universityName,universities.id as universityId
+from universities
+left join campuses on universities.id = campuses.university_id
+left join (SELECT * from users where registration_status='complete' and enabled = 1) as users on users.campus_id  = campuses.id
+
+WHERE universities.university_name like '%" . $searchQuery . "%' and
+universities.university_status='Activated'
+and campuses.campus_status='Activated'
+
+
+group by universities.id ORDER by COUNT(users.id) DESC, universities.university_name asc LIMIT " . $firstResult . "," . $pageSize . ";";
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+
+    }
+
+    function getTotalActiveUniversityUserNumberData($searchQuery)
+    {
+
+        $sql = "SELECT COUNT(users.id) as count, universities.university_name,universities.id as university_id
+from universities
+left join campuses on universities.id = campuses.university_id
+left join (SELECT * from users where registration_status='complete' and enabled = 1) as users on users.campus_id  = campuses.id
+
+WHERE universities.university_name like '%" . $searchQuery . "%' and
+universities.university_status='Activated'
+and campuses.campus_status='Activated'
+
+
+group by universities.id ORDER by COUNT(users.id) DESC, universities.university_name asc ;";
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->execute();
+        return $stmt->rowCount();
+
+    }
+
+    function getTotalActiveUniversityCountData()
+    {
+        $sql = "SELECT COUNT(universities.id) as count
+from universities
+left join campuses on universities.id = campuses.university_id
+WHERE universities.university_status='Activated'
+and campuses.campus_status='Activated'
+group by universities.id ;";
+        $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->execute();
+        return $stmt->rowCount();
+
+    }
+
 
 }

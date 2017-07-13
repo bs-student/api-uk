@@ -12,8 +12,6 @@ use AppBundle\Entity\Log;
 use AppBundle\Entity\User;
 use AppBundle\Form\Type\LogType;
 use AppBundle\Form\Type\RegistrationType;
-use Lsw\ApiCallerBundle\Call\HttpPost;
-use Lsw\ApiCallerBundle\Call\HttpPostJson;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerAware;
@@ -25,9 +23,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Lsw\ApiCallerBundle\Call\HttpGetJson;
-use Lsw\ApiCallerBundle\Call\HttpGetHtml;
-use GuzzleHttp;
 
 
 class RegistrationController extends BaseController

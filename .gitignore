@@ -2,6 +2,7 @@
 /app/bootstrap.php.cache
 /app/cache/*
 /app/config/parameters.yml
+/app/config/parameters.yml.dist
 /app/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
@@ -17,3 +18,5 @@
 /web/newsletterEmails/
 /web/userImages/
 /NEVER DEL ! important
+/app/Resources/secret_files/*
+.idea

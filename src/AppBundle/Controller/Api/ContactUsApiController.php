@@ -17,7 +17,6 @@ use FOS\RestBundle\Util\Codes;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\Extension\Validator\ViolationMapper\ViolationMapper;
 use Symfony\Component\Validator\ConstraintViolation;
-use Lsw\ApiCallerBundle\Call\HttpGetHtml;
 
 class ContactUsApiController extends Controller
 {

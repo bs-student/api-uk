@@ -8,7 +8,7 @@ class AppKernel extends Kernel
 
     public function __construct($environment, $debug)
     {
-        date_default_timezone_set( 'America/Chicago' );
+        date_default_timezone_set( 'Europe/London' );
         parent::__construct($environment, $debug);
     }
 
@@ -25,19 +25,15 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
+
+
             new FOS\UserBundle\FOSUserBundle(),
 //            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
-
             new FOS\RestBundle\FOSRestBundle(),
-//
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
-
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
-            new Lsw\ApiCallerBundle\LswApiCallerBundle(),
-
             new Dizda\CloudBackupBundle\DizdaCloudBackupBundle(),
-//            new BM\BackupManagerBundle\BMBackupManagerBundle(),
 
         );
 
