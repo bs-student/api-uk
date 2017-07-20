@@ -102,7 +102,7 @@ class AdminReportApiController extends Controller
             $period=new \DatePeriod($begin,$interval,$end);
 
             foreach ($period as $d){
-                $daysArray[]=$d->format('d-M-Y');
+                $daysArray[]=$d->format('l,d-M-Y');
                 $loginCount=0;
                 $registrationCount=0;
                 foreach($loggedInUserLog as $row){
@@ -174,7 +174,7 @@ class AdminReportApiController extends Controller
             $period=new \DatePeriod($begin,$interval,$end);
 
             foreach ($period as $d){
-                $daysArray[]=$d->format('d-M-Y');
+                $daysArray[]=$d->format('l,d-M-Y');
                 $bookDealCount=0;
                 $contactCount=0;
                 $soldCount=0;
