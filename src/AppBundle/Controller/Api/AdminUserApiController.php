@@ -43,16 +43,27 @@ class AdminUserApiController extends Controller
             $emailQuery = filter_var($data["emailQuery"], FILTER_SANITIZE_STRING);
             $fullNameQuery = filter_var($data["fullNameQuery"], FILTER_SANITIZE_STRING);
             $enabledQuery = $data["enabledQuery"];
+            $typeQuery = $data["typeQuery"];
             $pageNumber = $data["pageNumber"];
             $sort = $data["sort"];
 
 
 
-            $totalNumber = $userRepo->getNonApprovedUserSearchNumber($searchQuery,$emailQuery,$fullNameQuery,$enabledQuery);
-            $users = $userRepo->getNonApprovedUserSearchResult($searchQuery,$emailQuery,$fullNameQuery,$enabledQuery, $pageNumber, $pageSize,$sort);
+            $totalNumber = $userRepo->getNonApprovedUserSearchNumber($searchQuery,$emailQuery,$fullNameQuery,$enabledQuery,$typeQuery);
+            $users = $userRepo->getNonApprovedUserSearchResult($searchQuery,$emailQuery,$fullNameQuery,$enabledQuery, $pageNumber, $pageSize,$sort,$typeQuery);
 
             for($i=0;$i<count($users);$i++){
                 $users[$i]['registrationDateTime'] =$users[$i]['registrationDateTime']->format('g:i A, d M Y');
+
+                if($users[$i]['googleId']!=null && $users[$i]['facebookId']==null){
+                    $users[$i]['userType']="Google User";
+                }elseif($users[$i]['googleId']==null && $users[$i]['facebookId']!=null){
+                    $users[$i]['userType']="Facebook User";
+                }elseif($users[$i]['googleId']!=null && $users[$i]['facebookId']!=null){
+                    $users[$i]['userType']="Google & Facebook User";
+                }elseif($users[$i]['googleId']==null && $users[$i]['facebookId']==null){
+                    $users[$i]['userType']="Normal User";
+                }
             }
 
 
@@ -91,17 +102,27 @@ class AdminUserApiController extends Controller
             $fullNameQuery = filter_var($data["fullNameQuery"], FILTER_SANITIZE_STRING);
             $universityNameQuery = filter_var($data["universityNameQuery"], FILTER_SANITIZE_STRING);
             $campusNameQuery = filter_var($data["campusNameQuery"], FILTER_SANITIZE_STRING);
+            $typeQuery = $data["typeQuery"];
             $enabledQuery = $data["enabledQuery"];
             $pageNumber = $data["pageNumber"];
             $sort = $data["sort"];
 
 
 
-            $totalNumber = $userRepo->getApprovedUserSearchNumber($searchQuery,$emailQuery,$fullNameQuery,$universityNameQuery,$campusNameQuery,$enabledQuery);
-            $users = $userRepo->getApprovedUserSearchResult($searchQuery,$emailQuery,$fullNameQuery,$universityNameQuery,$campusNameQuery,$enabledQuery, $pageNumber, $pageSize,$sort);
+            $totalNumber = $userRepo->getApprovedUserSearchNumber($searchQuery,$emailQuery,$fullNameQuery,$universityNameQuery,$campusNameQuery,$enabledQuery,$typeQuery);
+            $users = $userRepo->getApprovedUserSearchResult($searchQuery,$emailQuery,$fullNameQuery,$universityNameQuery,$campusNameQuery,$enabledQuery, $pageNumber, $pageSize,$sort,$typeQuery);
 
             for($i=0;$i<count($users);$i++){
                 $users[$i]['registrationDateTime'] =$users[$i]['registrationDateTime']->format('g:i A, d M Y');
+                if($users[$i]['googleId']!=null && $users[$i]['facebookId']==null){
+                    $users[$i]['userType']="Google User";
+                }elseif($users[$i]['googleId']==null && $users[$i]['facebookId']!=null){
+                    $users[$i]['userType']="Facebook User";
+                }elseif($users[$i]['googleId']!=null && $users[$i]['facebookId']!=null){
+                    $users[$i]['userType']="Google & Facebook User";
+                }elseif($users[$i]['googleId']==null && $users[$i]['facebookId']==null){
+                    $users[$i]['userType']="Normal User";
+                }
             }
 
             $data = array(

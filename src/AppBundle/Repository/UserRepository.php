@@ -116,12 +116,12 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    function getNonApprovedUserSearchResult($searchQuery, $emailQuery, $fullNameQuery, $enabledQuery, $pageNumber, $pageSize, $sort)
+    function getNonApprovedUserSearchResult($searchQuery, $emailQuery, $fullNameQuery, $enabledQuery, $pageNumber, $pageSize, $sort,$typeQuery)
     {
         $firstResult = ($pageNumber - 1) * $pageSize;
         $qb = $this->getEntityManager()
             ->createQueryBuilder('u')
-            ->select('u.id as userId, u.username,u.email,u.fullName,un.universityName,c.campusName,u.enabled,u.roles,u.profilePicture,u.registrationDateTime')
+            ->select('u.id as userId, u.username,u.email,u.fullName,un.universityName,c.campusName,u.enabled,u.roles,u.profilePicture,u.registrationDateTime,u.googleId,u.facebookId')
             ->from('AppBundle:User', 'u')
             ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
             ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
@@ -138,6 +138,14 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('role', '%ROLE_ADMIN_USER%')
             ->setMaxResults($pageSize)
             ->setFirstResult($firstResult);
+
+        if ($typeQuery === "Facebook") {
+            $qb->andwhere('u.facebookId is not null');
+        } elseif ($typeQuery === "Google") {
+            $qb->andwhere('u.googleId is not null');
+        }elseif ($typeQuery === "Normal") {
+            $qb->andwhere("u.password !=''");
+        }
 
         if ($enabledQuery === true) {
             $qb->andwhere('u.enabled =:enabledQuery')
@@ -156,7 +164,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    public function getNonApprovedUserSearchNumber($searchQuery, $emailQuery, $fullNameQuery, $enabledQuery)
+    public function getNonApprovedUserSearchNumber($searchQuery, $emailQuery, $fullNameQuery, $enabledQuery,$typeQuery)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('u')
             ->select('COUNT(u)')
@@ -174,6 +182,15 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
             ->setParameter('role', '%ROLE_ADMIN_USER%')
             ->andwhere("u.adminApproved= 'No'");
+
+        if ($typeQuery === "Facebook") {
+            $qb->andwhere('u.facebookId is not null');
+        } elseif ($typeQuery === "Google") {
+            $qb->andwhere('u.googleId is not null');
+        }elseif ($typeQuery === "Normal") {
+            $qb->andwhere("u.password !=''");
+        }
+
         if ($enabledQuery === true) {
             $qb->andwhere('u.enabled =:enabledQuery')
                 ->setParameter('enabledQuery', $enabledQuery);
@@ -228,12 +245,12 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    function getApprovedUserSearchResult($searchQuery, $emailQuery, $fullNameQuery, $universityNameQuery, $campusNameQuery, $enabledQuery, $pageNumber, $pageSize, $sort)
+    function getApprovedUserSearchResult($searchQuery, $emailQuery, $fullNameQuery, $universityNameQuery, $campusNameQuery, $enabledQuery, $pageNumber, $pageSize, $sort,$typeQuery)
     {
         $firstResult = ($pageNumber - 1) * $pageSize;
         $qb = $this->getEntityManager()
             ->createQueryBuilder('u')
-            ->select('u.id as userId, u.username,u.email,u.fullName,un.universityName,c.campusName,u.enabled,u.profilePicture,u.registrationDateTime')
+            ->select('u.id as userId, u.username,u.email,u.fullName,un.universityName,c.campusName,u.enabled,u.profilePicture,u.registrationDateTime,u.googleId,u.facebookId')
             ->from('AppBundle:User', 'u')
             ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
             ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
@@ -253,6 +270,14 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             ->setMaxResults($pageSize)
             ->setFirstResult($firstResult);
 
+        if ($typeQuery === "Facebook") {
+            $qb->andwhere('u.facebookId is not null');
+        } elseif ($typeQuery === "Google") {
+            $qb->andwhere('u.googleId is not null');
+        }elseif ($typeQuery === "Normal") {
+            $qb->andwhere("u.password !=''");
+        }
+
         if ($enabledQuery === true) {
             $qb->andwhere('u.enabled =:enabledQuery')
                 ->setParameter('enabledQuery', $enabledQuery);
@@ -270,7 +295,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    public function getApprovedUserSearchNumber($searchQuery, $emailQuery, $fullNameQuery, $universityNameQuery, $campusNameQuery, $enabledQuery)
+    public function getApprovedUserSearchNumber($searchQuery, $emailQuery, $fullNameQuery, $universityNameQuery, $campusNameQuery, $enabledQuery,$typeQuery)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('u')
             ->select('COUNT(u)')
@@ -290,6 +315,14 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('campusNameQuery', '%' . $campusNameQuery . '%')
             ->setParameter('role', '%ROLE_ADMIN_USER%')
             ->andwhere("u.adminApproved= 'Yes'");
+
+        if ($typeQuery === "Facebook") {
+            $qb->andwhere('u.facebookId is not null');
+        } elseif ($typeQuery === "Google") {
+            $qb->andwhere('u.googleId is not null');
+        }elseif ($typeQuery === "Normal") {
+            $qb->andwhere("u.password !=''");
+        }
 
         if ($enabledQuery === true) {
             $qb->andwhere('u.enabled =:enabledQuery')
