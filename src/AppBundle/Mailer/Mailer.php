@@ -435,7 +435,7 @@ class Mailer extends BaseClass
         $message1 = \Swift_Message::newInstance();
         $rendered = $this->templating->render("mail_templates/contact_us_email.html.twig",$data);
         $message1->setBody($rendered,'text/html');
-        $this->_sendContactUsMail($message1,"Student2Student.COM : Contact Message",$this->parameters['host_info']['no_reply_email'], 'support@student2student.com');
+        $this->_sendContactUsMail($message1,"Student2Student.CO.UK : Contact Message",$this->parameters['host_info']['no_reply_email'], 'support@student2student.com');
     }
 
     function sendFriendsEmail($data){

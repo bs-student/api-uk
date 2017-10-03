@@ -160,7 +160,7 @@ fos_user:
 dizda_cloud_backup:
     # By default backup files will have your servers hostname as prefix
     # such as: hostname_2014-01-01_21-08-39.tar
-    output_file_prefix: student2student
+    output_file_prefix: student2student_uk
     timeout: 300
     processor:
         type: 7z # Required: tar|zip|7z
