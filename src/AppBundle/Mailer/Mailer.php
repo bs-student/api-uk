@@ -211,14 +211,13 @@ class Mailer extends BaseClass
                     'footer_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
                     'envelop_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/envelop.png'))
                 ));
+                $message1->setBody($toSellerRendered, 'text/html');
+
+                $this->_sendMail($message1, "Student2Student : New Contact Received", $this->parameters['host_info']['no_reply_email'], $seller->getEmail());
             }
 
             if($buyerInfo['buyerEntity'] instanceof User) {
                 if (!strcmp("On", $buyerInfo['buyerEntity']->getEmailNotification())) {
-                    $message1->setBody($toSellerRendered, 'text/html');
-
-                    $this->_sendMail($message1, "Student2Student : New Contact Received", $this->parameters['host_info']['no_reply_email'], $seller->getEmail());
-
                     //Sending 2nd Mail
                     $message2 = \Swift_Message::newInstance();
 
@@ -229,9 +228,9 @@ class Mailer extends BaseClass
                         'book' => $book,
                         'buyerMessage' => $buyerMessage,
                         'book_image' => $message2->embed(\Swift_Image::fromPath(substr($book->getBookImage(), 1))),
-                        'header_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/header.jpg')),
-                        'footer_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
-                        'envelop_image'=>$message1->embed(\Swift_Image::fromPath('assets/images/envelop.png'))
+                        'header_image'=>$message2->embed(\Swift_Image::fromPath('assets/images/header.jpg')),
+                        'footer_image'=>$message2->embed(\Swift_Image::fromPath('assets/images/footer.jpg')),
+                        'envelop_image'=>$message2->embed(\Swift_Image::fromPath('assets/images/envelop.png'))
                     ));
                     $message2->setBody($toBuyerRendered, 'text/html');
                     $this->_sendMail($message2, "Student2Student : Contacted Seller ", $this->parameters['host_info']['no_reply_email'], $buyerInfo['buyerEmail']);
