@@ -50,14 +50,20 @@ class ResettingController extends BaseController
 
             $url= $host."?secret=".$secret."&response=".$submittedData['key'];
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-            $jsonOutput = curl_exec($ch);
-            curl_close($ch);
+            $mobileDeviceInfo = $this->container->getParameter('mobile_device_config');
+            $mobileApiKey = $mobileDeviceInfo['api_key'];
 
-            $captchaResponse = json_decode($jsonOutput,true);
+            if(!strcmp($mobileApiKey,$submittedData['key'])){
+                $captchaResponse['success']=true;
+            }else {
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                $jsonOutput = curl_exec($ch);
+                curl_close($ch);
 
+                $captchaResponse = json_decode($jsonOutput, true);
+            }
 
             if($captchaResponse['success']){
                 $username = $this->container->get('request')->request->get('username');

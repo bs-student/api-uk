@@ -27,7 +27,9 @@ class UniversityManagementApiController extends Controller
     {
 
 
-        $query = $request->request->get('query');
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+        $query = $data['query'];
         $em = $this->getDoctrine()->getManager();
 
         if ($query == null||$query == "") {

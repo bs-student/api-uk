@@ -81,15 +81,20 @@ class RegistrationController extends BaseController
             $secret = $captchaApiInfo['secret'];
 
             $url= $host."?secret=".$secret."&response=".$submittedData['key'];
+            $mobileDeviceInfo = $this->container->getParameter('mobile_device_config');
+            $mobileApiKey = $mobileDeviceInfo['api_key'];
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-            $jsonOutput = curl_exec($ch);
-            curl_close($ch);
+            if(!strcmp($mobileApiKey,$submittedData['key'])){
+                $captchaResponse['success']=true;
+            }else {
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                $jsonOutput = curl_exec($ch);
+                curl_close($ch);
 
-            $captchaResponse = json_decode($jsonOutput,true);
-
+                $captchaResponse = json_decode($jsonOutput, true);
+            }
 
 
             if($captchaResponse['success']){
@@ -137,7 +142,7 @@ class RegistrationController extends BaseController
 
                     $message = array(
                         'successTitle' => "Registration Successful",
-                        'successDescription' => "A verification Email has been sent to your mail. Please check verify your email to confirm registration."
+                        'successDescription' => "A verification email has been sent to your email. Please check and verify your account."
                     );
 
                     $this->setFlash('fos_user_success', 'registration.flash.user_created');

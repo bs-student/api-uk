@@ -12,10 +12,6 @@ login:
     path:      /login
     defaults:  { _controller: AppBundle:Security:login }
 
-user_homepage:
-    path:      /user/dashboard
-    defaults:  { _controller: AppBundle:Security:userDashboard }
-
 #Reasetting Controller
 reset_password:
     path: /resetting/reset/{token}

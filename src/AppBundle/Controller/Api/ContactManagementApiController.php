@@ -48,7 +48,7 @@ class ContactManagementApiController extends Controller
                     if($bookDealForContact->getSeller()->getId()==$userId){
                         return $this->_createJsonResponse('error', array(
                             'errorTitle' => "Can't contact yourself",
-                            'errorDescription' => "You can't contact for your own textbook deal."
+                            'errorDescription' => "You can't contact yourself. This textbook deal is already yours."
                         ), 400);
                     }
 

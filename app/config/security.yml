@@ -31,7 +31,8 @@ security:
 #                                csrf_provider: false
                                 require_previous_session: false
                                 always_use_default_target_path: false
-                                default_target_path:            /user/dashboard
+                                success_handler: sujit.security.authentication_success_handler
+                                failure_handler: sujit.security.authentication_failure_handler
 
 
                     anonymous:    true
