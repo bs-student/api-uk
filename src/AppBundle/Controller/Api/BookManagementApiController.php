@@ -1331,7 +1331,7 @@ class BookManagementApiController extends Controller
         if(!strcmp($headerData['request-source'][0],$webAppConfig['source_type'])){
             return !strcmp($headerData['header-token'][0], hash_hmac("sha256", base64_encode($headerData['timestamp'][0]), $webAppConfig['api_key']))?true:false;
         }else if(!strcmp($headerData['request-source'][0],$mobileAppConfig['source_type'])){
-            return !strcmp($headerData['header-token'][0], hash_hmac("sha256", base64_encode($headerData['timestamp'][0]), $mobileAppConfig['api_key']))?true:false;
+            return !strcmp($headerData['header-token'][0], (md5(md5($headerData['timestamp'][0]).$mobileAppConfig['api_key'])))?true:false;
         }else{
             return false;
         }
