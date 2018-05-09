@@ -715,7 +715,7 @@ class BookDealManagementApiController extends Controller
                 );
                 $this->_saveLog($logData);
 
-                return $this->_createJsonResponse('success', array("successTitle" => "Book Deal has been updated into you selling List"), 200);
+                return $this->_createJsonResponse('success', array("successTitle" => "Book Deal Updated","successDescription"=>"This book deal has been updated into your selling book list"), 200);
             } else {
                 return $this->_createJsonResponse('error', array("errorData" => $bookDealForm), 400);
 
