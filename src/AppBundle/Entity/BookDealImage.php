@@ -87,4 +87,14 @@ class BookDealImage
     {
         return $this->bookDeal;
     }
+
+    /**
+     * Remove bookDeal
+     *
+     * @return BookDealImage
+     */
+    public function removeBookDeal()
+    {
+        return $this->setBookDeal(null);
+    }
 }

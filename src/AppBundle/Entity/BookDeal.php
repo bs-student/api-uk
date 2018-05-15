@@ -533,6 +533,7 @@ class BookDeal
     public function removeBookDealImage(\AppBundle\Entity\BookDealImage $bookDealImages)
     {
         $this->bookDealImages->removeElement($bookDealImages);
+        $bookDealImages->removeBookDeal();
     }
 
     /**

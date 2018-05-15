@@ -450,7 +450,9 @@ class BookManagementApiController extends Controller
                 } elseif (!strcmp('newSellCustomBook', $bookData['bookType'])) {
 
                     //Insert First Image from files
-                    $bookData['bookImage'] = $bookDealData['bookDealImages'][0]['imageUrl'];
+                    $initialBookImage = array_shift($bookDealData['bookDealImages']);
+                    $bookData['bookImage'] = $initialBookImage['imageUrl'];
+//                    $bookData['bookImage'] = $bookDealData['bookDealImages'][0]['imageUrl'];
 
                 }
 
