@@ -124,7 +124,7 @@ class BookManagementApiController extends Controller
 
 
                 if ($lowestOnlinePrice != 99999999) {
-                    return $this->_createJsonResponse('success', array('successData' => array('bookPriceOnlineLowest' => "£" . $lowestOnlinePrice)), 200);
+                    return $this->_createJsonResponse('success', array('successData' => array('bookPriceOnlineLowest' => "£" . number_format(floatval($lowestOnlinePrice),2))), 200);
                 } else {
                     return $this->_createJsonResponse('error', array('errorTitle' => "No Price Found"), 400);
                 }
@@ -529,7 +529,7 @@ class BookManagementApiController extends Controller
                     'user' => $this->get('security.token_storage')->getToken()->getUser()->getId(),
                     'logType' => "Add Book Deal",
                     'logDateTime' => gmdate('Y-m-d H:i:s'),
-                    'logDescription' => $this->get('security.token_storage')->getToken()->getUser()->getUsername() . " has added a book deal priced $" . $bookDealData['bookPriceSell'],
+                    'logDescription' => $this->get('security.token_storage')->getToken()->getUser()->getUsername() . " has added a book deal priced £" . number_format(floatval($bookDealData['bookPriceSell']),2),
                     'userIpAddress' => $this->container->get('request')->getClientIp(),
                     'logUserType' => in_array("ROLE_ADMIN_USER", $this->get('security.token_storage')->getToken()->getUser()->getRoles()) ? "Admin User" : "Normal User"
                 );
@@ -648,7 +648,7 @@ class BookManagementApiController extends Controller
                 // Getting Campus Lowest Price
                 foreach ($studentBooks as $studentBook) {
                     if (!strcmp(strval($studentBook['bookIsbn10']), strval($booksArray['books'][$i]['bookIsbn']))) {
-                        $booksArray['books'][$i]['bookPriceStudentLowest'] = "£" . $studentBook['bookPriceSell'];
+                        $booksArray['books'][$i]['bookPriceStudentLowest'] = "£" . number_format(floatval($studentBook['bookPriceSell']),2);
                         $booksArray['books'][$i]['bookPriceStudentLowestFound'] = true;
                         break;
                     }
@@ -818,7 +818,7 @@ class BookManagementApiController extends Controller
             $book['bookPublishDate'] = (new \DateTime($book['bookPublishDate']))->format("Y-m-d");
             $book['bookPage'] = $book['bookPages'];
             $book['bookDescription'] = strip_tags($book['bookDescription']);
-            $book['bookAmazonPrice'] = substr($book['bookPriceAmazon'], 2);
+            $book['bookAmazonPrice'] = number_format(floatval(substr($book['bookPriceAmazon'], 2)),2);
 
             $bookForm->submit($book);
 
@@ -880,7 +880,7 @@ class BookManagementApiController extends Controller
             $lowestPriceOnCampus = $bookDealRepo->getLowestDealPriceInCampus($userCampusId, $newBookArray[0]['bookIsbn']);
 
             if ($lowestPriceOnCampus[0][1] != null) {
-                $newBookArray[0]['campusLowestPrice'] = "£" . $lowestPriceOnCampus[0][1];
+                $newBookArray[0]['campusLowestPrice'] = "£" . number_format(floatval($lowestPriceOnCampus[0][1]),2);
 
             }
         }
@@ -984,10 +984,10 @@ class BookManagementApiController extends Controller
                     if (!strcmp($ebayBook['condition'][0]['conditionId'][0], "1000")) {
                         array_push($bookDataArray['New'], array(
                             'storeImage' => $serverInfo->get('HTTP_ORIGIN') . $serverInfo->get('BASE') . "/assets/images/ebay.uk.png",
-                            'shippingPrice' => $ebayBook['shippingInfo'][0]['shippingServiceCost'][0]['__value__'],
+                            'shippingPrice' => number_format(floatval($ebayBook['shippingInfo'][0]['shippingServiceCost'][0]['__value__']),2),
                             'shippingInfo' => $ebayBook['shippingInfo'][0]['shippingType'][0],
-                            'price' => $ebayBook['sellingStatus'][0]['currentPrice'][0]['__value__'],
-                            'totalPrice' => floatval($ebayBook['sellingStatus'][0]['currentPrice'][0]['__value__']) + floatval($ebayBook['shippingInfo'][0]['shippingServiceCost'][0]['__value__']),
+                            'price' => number_format(floatval($ebayBook['sellingStatus'][0]['currentPrice'][0]['__value__']),2),
+                            'totalPrice' => number_format((floatval($ebayBook['sellingStatus'][0]['currentPrice'][0]['__value__']) + floatval($ebayBook['shippingInfo'][0]['shippingServiceCost'][0]['__value__'])),2),
                             'buyLink' => $ebayBook['viewItemURL'][0],
                             'condition' => $ebayBook['condition'][0]['conditionDisplayName'][0]
 
@@ -995,10 +995,10 @@ class BookManagementApiController extends Controller
                     } elseif (!strcmp($ebayBook['condition'][0]['conditionId'][0], "3000") || !strcmp($ebayBook['condition'][0]['conditionId'][0], "2750") || !strcmp($ebayBook['condition'][0]['conditionId'][0], "4000") || !strcmp($ebayBook['condition'][0]['conditionId'][0], "5000") || !strcmp($ebayBook['condition'][0]['conditionId'][0], "6000")) {
                         array_push($bookDataArray['Used'], array(
                             'storeImage' => $serverInfo->get('HTTP_ORIGIN') . $serverInfo->get('BASE') . "/assets/images/ebay.uk.png",
-                            'shippingPrice' => $ebayBook['shippingInfo'][0]['shippingServiceCost'][0]['__value__'],
+                            'shippingPrice' => number_format(floatval($ebayBook['shippingInfo'][0]['shippingServiceCost'][0]['__value__']),2),
                             'shippingInfo' => $ebayBook['shippingInfo'][0]['shippingType'][0],
-                            'price' => $ebayBook['sellingStatus'][0]['currentPrice'][0]['__value__'],
-                            'totalPrice' => floatval($ebayBook['sellingStatus'][0]['currentPrice'][0]['__value__']) + floatval($ebayBook['shippingInfo'][0]['shippingServiceCost'][0]['__value__']),
+                            'price' => number_format(floatval($ebayBook['sellingStatus'][0]['currentPrice'][0]['__value__']),2),
+                            'totalPrice' => number_format((floatval($ebayBook['sellingStatus'][0]['currentPrice'][0]['__value__']) + floatval($ebayBook['shippingInfo'][0]['shippingServiceCost'][0]['__value__'])),2),
                             'buyLink' => $ebayBook['viewItemURL'][0],
                             'condition' => $ebayBook['condition'][0]['conditionDisplayName'][0]
 

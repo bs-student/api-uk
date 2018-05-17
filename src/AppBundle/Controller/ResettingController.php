@@ -101,7 +101,7 @@ class ResettingController extends BaseController
 
                 $data = array(
                     'successTitle'=>"Reset Password Successful",
-                    "successDescription"=>"A mail has been sent to your email address for resetting password"
+                    "successDescription"=>"An email has been sent to your email address for resetting password. Please also check spam or junk if you can't find the email."
                 );
                 return $this->_createJsonResponse('success',$data,200);
             }else{

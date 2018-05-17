@@ -142,7 +142,7 @@ class RegistrationController extends BaseController
 
                     $message = array(
                         'successTitle' => "Registration Successful",
-                        'successDescription' => "A verification email has been sent to your email. Please check and verify your account."
+                        'successDescription' => "A verification email has been sent to your email. Please check your inbox and verify your account. Please also check spam or junk if you can't find the email."
                     );
 
                     $this->setFlash('fos_user_success', 'registration.flash.user_created');
