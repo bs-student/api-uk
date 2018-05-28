@@ -36,7 +36,7 @@ class AuthenticationFailureHandler implements AuthenticationFailureHandlerInterf
         $error = $exception->getMessage();
 
         if(!strcmp($error,"User account is disabled.")){
-            $error.=" Please Check Your Email for the Activation Link.";
+            $error.=" Please Check Your Email for the Activation Link. Please also check spam or junk if you can't find the email.";
         }
 
         if(!strcmp($error,"Bad credentials.")){

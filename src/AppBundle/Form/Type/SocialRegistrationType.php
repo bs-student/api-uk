@@ -51,6 +51,20 @@ class SocialRegistrationType extends AbstractType
             )
         ));
 
+        $builder->add('emailVerified','text',array(
+            'constraints' => array(
+                new NotBlank(),
+
+            )
+        ));
+
+        $builder->add('adminVerified','text',array(
+            'constraints' => array(
+                new NotBlank(),
+
+            )
+        ));
+
 
         $builder->add('googleId','text',array(
             'constraints' => array(

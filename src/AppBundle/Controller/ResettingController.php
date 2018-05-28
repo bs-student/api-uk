@@ -79,6 +79,14 @@ class ResettingController extends BaseController
                     return $this->_createJsonResponse('error',$data,400);
                 }
 
+                if ($user->getAdminApproved()==="No") {
+                    $data = array(
+                        'errorTitle'=>"Cannot Reset Password",
+                        "errorDescription"=>"Your account has been blocked by Admin. Please contact support or create a new account."
+                    );
+                    return $this->_createJsonResponse('error',$data,400);
+                }
+
                 if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
                     $data = array(
                         'errorTitle'=>"Cannot Reset Password",

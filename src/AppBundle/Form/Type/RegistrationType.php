@@ -100,7 +100,25 @@ class RegistrationType extends AbstractType
 
 
         ));
-        $builder->add('adminApproved','text');
+//        $builder->add('adminApproved','text');
+        $builder->add('adminApproved','text',array(
+            'constraints' => array(
+                new NotBlank(),
+
+            )
+        ));
+        $builder->add('emailVerified','text',array(
+            'constraints' => array(
+                new NotBlank(),
+
+            )
+        ));
+        $builder->add('adminVerified','text',array(
+            'constraints' => array(
+                new NotBlank(),
+
+            )
+        ));
         $builder->add('profilePicture','text');
         $builder->add('emailNotification','text');
         $builder->add('registrationDateTime','datetime',array(

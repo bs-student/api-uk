@@ -87,12 +87,24 @@ AppBundle\Entity\User:
             nullable: true
             type: string
             length: '255'
+        emailVerified:
+            column: email_verified
+            type: string
+            length: '20'
+            options:
+                default: 'No'
+        adminVerified:
+            column: admin_verified
+            type: string
+            length: '20'
+            options:
+                default: 'No'
         adminApproved:
             column: admin_approved
             type: string
             length: '20'
             options:
-                default: 'No'
+                default: 'Yes'
         standardHomePhone:
             column: standard_home_phone
             nullable: true

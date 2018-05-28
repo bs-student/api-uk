@@ -72,24 +72,31 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
 
         }elseif($user->getRegistrationStatus()=="complete"){
 
-            $logData = array(
-                'user'=>$user->getId(),
-                'logType'=>"Login",
-                'logDateTime'=>gmdate('Y-m-d H:i:s'),
-                'logDescription'=> $user->getUsername()." has Logged In",
-                'userIpAddress'=>$request->getClientIp(),
-                'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
-            );
-            $this->_saveLog($logData);
+            if($user->getAdminApproved()==="No"){
+                return $this->_createJsonResponse('error',array(
+                    'errorTitle' => "Account Blocked by Admin",
+                    'errorDescription' => "Your account is blocked by admin. Please contact support or try creating a new account."
+                ),400);
+            }elseif ($user->getAdminApproved()==="Yes"){
+                $logData = array(
+                    'user'=>$user->getId(),
+                    'logType'=>"Login",
+                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                    'logDescription'=> $user->getUsername()." has Logged In",
+                    'userIpAddress'=>$request->getClientIp(),
+                    'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                );
+                $this->_saveLog($logData);
 
-            return $this->_createJsonResponse('success',array(
-                'successTitle' => "Hey, welcome ".$user->getUsername(),
-                'successDescription' => "You are logged in",
-                'successData'=>array(
-                    'username'=>$user->getUsername(),
-                    'registrationStatus'=>$user->getRegistrationStatus()
-                )
-            ),200);
+                return $this->_createJsonResponse('success',array(
+                    'successTitle' => "Hey, welcome ".$user->getUsername(),
+                    'successDescription' => "You are logged in",
+                    'successData'=>array(
+                        'username'=>$user->getUsername(),
+                        'registrationStatus'=>$user->getRegistrationStatus()
+                    )
+                ),200);
+            }
 
         }else{
             return $this->_createJsonResponse('error',array(

@@ -116,22 +116,37 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    function getNonApprovedUserSearchResult($searchQuery, $emailQuery, $fullNameQuery, $enabledQuery, $pageNumber, $pageSize, $sort,$typeQuery)
+    function getNonApprovedUserSearchResult($usernameQuery, $emailQuery, $fullNameQuery, $emailVerifiedQuery, $pageNumber, $pageSize, $sort,$typeQuery)
     {
         $firstResult = ($pageNumber - 1) * $pageSize;
         $qb = $this->getEntityManager()
             ->createQueryBuilder('u')
-            ->select('u.id as userId, u.username,u.email,u.fullName,un.universityName,c.campusName,u.enabled,u.roles,u.profilePicture,u.registrationDateTime,u.googleId,u.facebookId')
+            ->select('u.id as userId, 
+                    u.username,
+                    u.email,
+                    u.fullName,
+                    un.universityName,
+                    c.campusName,
+                    u.enabled,
+                    u.roles,
+                    u.profilePicture,
+                    u.registrationDateTime,
+                    u.googleId,
+                    u.facebookId,
+                    u.adminApproved,
+                    u.adminVerified,
+                    u.emailVerified'
+            )
             ->from('AppBundle:User', 'u')
             ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
             ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
-            ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.username LIKE :usernameQuery ')
             ->andwhere('u.email LIKE :emailQuery ')
             ->andwhere('u.fullName LIKE :fullNameQuery ')
 
             ->andwhere('u.roles NOT LIKE :role ')
-            ->andwhere("u.adminApproved= 'No'")
-            ->setParameter('query', '%' . $searchQuery . '%')
+            ->andwhere("u.adminVerified= 'No'")
+            ->setParameter('usernameQuery', '%' . $usernameQuery . '%')
             ->setParameter('emailQuery', '%' . $emailQuery . '%')
             ->setParameter('fullNameQuery', '%' . $fullNameQuery . '%')
 
@@ -146,42 +161,37 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         }elseif ($typeQuery === "Normal") {
             $qb->andwhere("u.password !=''");
         }
-
-        if ($enabledQuery === true) {
-            $qb->andwhere('u.enabled =:enabledQuery')
-                ->setParameter('enabledQuery', $enabledQuery);
-        } elseif ($enabledQuery === false) {
-            $qb->andwhere('u.enabled =:enabledQuery')
-                ->setParameter('enabledQuery', $enabledQuery);
-        }
+        $qb->andwhere('u.emailVerified LIKE :emailVerified')
+            ->setParameter('emailVerified', '%' .$emailVerifiedQuery. '%');
 
         foreach ($sort as $key => $value) {
             $qb->addOrderBy("u." . $key, $value);
         }
+
         return $qb->getQuery()
             ->getResult();
 
     }
 
 
-    public function getNonApprovedUserSearchNumber($searchQuery, $emailQuery, $fullNameQuery, $enabledQuery,$typeQuery)
+    public function getNonApprovedUserSearchNumber($usernameQuery,$emailQuery,$fullNameQuery,$emailVerifiedQuery,$typeQuery)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('u')
             ->select('COUNT(u)')
             ->from('AppBundle:User', 'u')
             ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
             ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
-            ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.username LIKE :usernameQuery ')
             ->andwhere('u.email LIKE :emailQuery ')
             ->andwhere('u.fullName LIKE :fullNameQuery ')
 
             ->andwhere('u.roles NOT LIKE :role ')
-            ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('usernameQuery', '%' . $usernameQuery . '%')
             ->setParameter('emailQuery', '%' . $emailQuery . '%')
             ->setParameter('fullNameQuery', '%' . $fullNameQuery . '%')
 
             ->setParameter('role', '%ROLE_ADMIN_USER%')
-            ->andwhere("u.adminApproved= 'No'");
+            ->andwhere("u.adminVerified= 'No'");
 
         if ($typeQuery === "Facebook") {
             $qb->andwhere('u.facebookId is not null');
@@ -190,30 +200,34 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         }elseif ($typeQuery === "Normal") {
             $qb->andwhere("u.password !=''");
         }
+        $qb->andwhere('u.emailVerified LIKE :emailVerified')
+            ->setParameter('emailVerified', '%' .$emailVerifiedQuery. '%');
 
-        if ($enabledQuery === true) {
-            $qb->andwhere('u.enabled =:enabledQuery')
-                ->setParameter('enabledQuery', $enabledQuery);
-        } elseif ($enabledQuery === false) {
-            $qb->andwhere('u.enabled =:enabledQuery')
-                ->setParameter('enabledQuery', $enabledQuery);
-        }
         return $qb->getQuery()
             ->getSingleScalarResult();
     }
 
 
-    function getAdminUserSearchResult($searchQuery, $emailQuery, $pageNumber, $pageSize, $sort)
+    function getAdminUserSearchResult($usernameQuery, $emailQuery, $pageNumber, $pageSize, $sort)
     {
         $firstResult = ($pageNumber - 1) * $pageSize;
         $qb = $this->getEntityManager()
             ->createQueryBuilder('u')
-            ->select('u.id as userId, u.username,u.email,u.fullName,u.enabled,u.roles,u.profilePicture')
+            ->select('u.id as userId, 
+                    u.username,
+                    u.email,
+                    u.fullName,
+                    u.enabled,
+                    u.roles,
+                    u.profilePicture,
+                    u.adminApproved,
+                    u.adminVerified,
+                    u.emailVerified')
             ->from('AppBundle:User', 'u')
             ->andwhere('u.email LIKE :emailQuery ')
-            ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.username LIKE :usernameQuery ')
             ->andwhere('u.roles LIKE :role ')
-            ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('usernameQuery', '%' . $usernameQuery . '%')
             ->setParameter('emailQuery', '%' . $emailQuery . '%')
             ->setParameter('role', '%ROLE_ADMIN_USER%')
             ->setMaxResults($pageSize)
@@ -229,15 +243,15 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    public function getAdminUserSearchNumber($searchQuery, $emailQuery)
+    public function getAdminUserSearchNumber($usernameQuery, $emailQuery)
     {
         return $this->getEntityManager()->createQueryBuilder('u')
             ->select('COUNT(u)')
             ->from('AppBundle:User', 'u')
-            ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.username LIKE :usernameQuery ')
             ->andwhere('u.email LIKE :emailQuery ')
             ->andwhere('u.roles LIKE :role ')
-            ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('usernameQuery', '%' . $usernameQuery . '%')
             ->setParameter('emailQuery', '%' . $emailQuery . '%')
             ->setParameter('role', '%ROLE_ADMIN_USER%')
             ->getQuery()
@@ -245,23 +259,37 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    function getApprovedUserSearchResult($searchQuery, $emailQuery, $fullNameQuery, $universityNameQuery, $campusNameQuery, $enabledQuery, $pageNumber, $pageSize, $sort,$typeQuery)
+    function getApprovedUserSearchResult($usernameQuery,$emailQuery,$fullNameQuery,$universityNameQuery,$campusNameQuery,$emailVerifiedQuery,$adminApprovedQuery, $pageNumber, $pageSize,$sort,$typeQuery)
     {
         $firstResult = ($pageNumber - 1) * $pageSize;
         $qb = $this->getEntityManager()
             ->createQueryBuilder('u')
-            ->select('u.id as userId, u.username,u.email,u.fullName,un.universityName,c.campusName,u.enabled,u.profilePicture,u.registrationDateTime,u.googleId,u.facebookId')
+            ->select('u.id as userId, 
+                     u.username,
+                     u.email,
+                     u.fullName,
+                     un.universityName,
+                     c.campusName,
+                     u.enabled,
+                     u.profilePicture,
+                     u.registrationDateTime,
+                     u.googleId,
+                     u.facebookId,
+                     u.adminApproved,
+                     u.adminVerified,
+                     u.emailVerified'
+            )
             ->from('AppBundle:User', 'u')
             ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
             ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
-            ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.username LIKE :usernameQuery ')
             ->andwhere('u.email LIKE :emailQuery ')
             ->andwhere('u.fullName LIKE :fullNameQuery ')
             ->andwhere('un.universityName LIKE :universityNameQuery ')
             ->andwhere('c.campusName LIKE :campusNameQuery ')
             ->andwhere('u.roles NOT LIKE :role ')
-            ->andwhere("u.adminApproved= 'Yes'")
-            ->setParameter('query', '%' . $searchQuery . '%')
+            ->andwhere("u.adminVerified= 'Yes'")
+            ->setParameter('usernameQuery', '%' . $usernameQuery . '%')
             ->setParameter('emailQuery', '%' . $emailQuery . '%')
             ->setParameter('fullNameQuery', '%' . $fullNameQuery . '%')
             ->setParameter('universityNameQuery', '%' . $universityNameQuery . '%')
@@ -278,13 +306,11 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             $qb->andwhere("u.password !=''");
         }
 
-        if ($enabledQuery === true) {
-            $qb->andwhere('u.enabled =:enabledQuery')
-                ->setParameter('enabledQuery', $enabledQuery);
-        } elseif ($enabledQuery === false) {
-            $qb->andwhere('u.enabled =:enabledQuery')
-                ->setParameter('enabledQuery', $enabledQuery);
-        }
+        $qb->andwhere('u.emailVerified LIKE :emailVerifiedQuery')
+            ->setParameter('emailVerifiedQuery', '%'.$emailVerifiedQuery.'%');
+
+        $qb->andwhere('u.adminApproved LIKE :adminApprovedQuery')
+            ->setParameter('adminApprovedQuery', '%'.$adminApprovedQuery.'%');
 
         foreach ($sort as $key => $value) {
             $qb->addOrderBy("u." . $key, $value);
@@ -295,26 +321,26 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    public function getApprovedUserSearchNumber($searchQuery, $emailQuery, $fullNameQuery, $universityNameQuery, $campusNameQuery, $enabledQuery,$typeQuery)
+    public function getApprovedUserSearchNumber($usernameQuery,$emailQuery,$fullNameQuery,$universityNameQuery,$campusNameQuery,$emailVerifiedQuery,$adminApprovedQuery,$typeQuery)
     {
         $qb = $this->getEntityManager()->createQueryBuilder('u')
             ->select('COUNT(u)')
             ->from('AppBundle:User', 'u')
             ->innerJoin('AppBundle:Campus', 'c', 'WITH', 'u.campus = c.id')
             ->innerJoin('AppBundle:University', 'un', 'WITH', 'un.id = c.university')
-            ->andwhere('u.username LIKE :query ')
+            ->andwhere('u.username LIKE :usernameQuery ')
             ->andwhere('u.email LIKE :emailQuery ')
             ->andwhere('u.fullName LIKE :fullNameQuery ')
             ->andwhere('un.universityName LIKE :universityNameQuery ')
             ->andwhere('c.campusName LIKE :campusNameQuery ')
             ->andwhere('u.roles NOT LIKE :role ')
-            ->setParameter('query', '%' . $searchQuery . '%')
+            ->setParameter('usernameQuery', '%' . $usernameQuery . '%')
             ->setParameter('emailQuery', '%' . $emailQuery . '%')
             ->setParameter('fullNameQuery', '%' . $fullNameQuery . '%')
             ->setParameter('universityNameQuery', '%' . $universityNameQuery . '%')
             ->setParameter('campusNameQuery', '%' . $campusNameQuery . '%')
             ->setParameter('role', '%ROLE_ADMIN_USER%')
-            ->andwhere("u.adminApproved= 'Yes'");
+            ->andwhere("u.adminVerified= 'Yes'");
 
         if ($typeQuery === "Facebook") {
             $qb->andwhere('u.facebookId is not null');
@@ -324,13 +350,11 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
             $qb->andwhere("u.password !=''");
         }
 
-        if ($enabledQuery === true) {
-            $qb->andwhere('u.enabled =:enabledQuery')
-                ->setParameter('enabledQuery', $enabledQuery);
-        } elseif ($enabledQuery === false) {
-            $qb->andwhere('u.enabled =:enabledQuery')
-                ->setParameter('enabledQuery', $enabledQuery);
-        }
+        $qb->andwhere('u.emailVerified LIKE :emailVerifiedQuery')
+            ->setParameter('emailVerifiedQuery', '%'.$emailVerifiedQuery.'%');
+
+        $qb->andwhere('u.adminApproved LIKE :adminApprovedQuery')
+            ->setParameter('adminApprovedQuery', '%'.$adminApprovedQuery.'%');
 
         return $qb->getQuery()
             ->getSingleScalarResult();
@@ -348,6 +372,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
         $queryBuilderUser
             ->update('AppBundle:User', 'u')
+            ->set('u.adminVerified', "'Yes'")
             ->set('u.adminApproved', "'Yes'");
 
         $orX = $queryBuilderUser->expr()->orX();

@@ -78,7 +78,16 @@ class User extends BaseUser
      *
      */
     private $registrationStatus;
-
+    /**
+     * @var string
+     *
+     */
+    private $emailVerified;
+    /**
+     * @var string
+     *
+     */
+    private $adminVerified;
     /**
      * @var string
      *
@@ -783,5 +792,51 @@ class User extends BaseUser
     public function getLogs()
     {
         return $this->logs;
+    }
+
+    /**
+     * Set emailVerified
+     *
+     * @param string $emailVerified
+     * @return User
+     */
+    public function setEmailVerified($emailVerified)
+    {
+        $this->emailVerified = $emailVerified;
+
+        return $this;
+    }
+
+    /**
+     * Get emailVerified
+     *
+     * @return string 
+     */
+    public function getEmailVerified()
+    {
+        return $this->emailVerified;
+    }
+
+    /**
+     * Set adminVerified
+     *
+     * @param string $adminVerified
+     * @return User
+     */
+    public function setAdminVerified($adminVerified)
+    {
+        $this->adminVerified = $adminVerified;
+
+        return $this;
+    }
+
+    /**
+     * Get adminVerified
+     *
+     * @return string 
+     */
+    public function getAdminVerified()
+    {
+        return $this->adminVerified;
     }
 }

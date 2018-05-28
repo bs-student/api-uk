@@ -67,13 +67,19 @@ class UserType extends AbstractType
             'by_reference' =>false
         ));
 
-        $builder->add('enabled','boolean',array(
+        $builder->add('adminApproved','text',array(
             'constraints' => array(
                 new NotBlank(),
 
             )
         ));
-        $builder->add('adminApproved','text',array(
+        $builder->add('emailVerified','text',array(
+            'constraints' => array(
+                new NotBlank(),
+
+            )
+        ));
+        $builder->add('adminVerified','text',array(
             'constraints' => array(
                 new NotBlank(),
 

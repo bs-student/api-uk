@@ -90,6 +90,7 @@ class SocialRegistrationController extends Controller
                 $userForm->remove('username');
                 $userForm->remove('email');
                 $userForm->remove('adminApproved');
+                $userForm->remove('adminVerified');
                 $userForm->remove('registrationStatus');
                 $userForm->remove('referral');
                 $userForm->remove('campus');
@@ -140,7 +141,7 @@ class SocialRegistrationController extends Controller
                 $data['googleId'] =$profile['id'];
                 $data['googleEmail'] =$profile['emails'][0]['value'];
                 $data['googleToken'] = $accessToken['access_token'];
-
+                $data['emailVerified'] = "Yes";
 
                 $userForm->submit($data);
 
@@ -149,27 +150,37 @@ class SocialRegistrationController extends Controller
                     $em->persist($user);
                     $em->flush();
 
-                    $logData = array(
-                        'user'=>$user->getId(),
-                        'logType'=>"Login",
-                        'logDateTime'=>gmdate('Y-m-d H:i:s'),
-                        'logDescription'=> $user->getUsername()." has Logged In via Google",
-                        'userIpAddress'=>$this->container->get('request')->getClientIp(),
-                        'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
-                    );
-                    $this->_saveLog($logData);
+                    if($user->getAdminApproved()==="No"){
+                        return $this->_createJsonResponse('error',array(
+                                'errorTitle'=>"Account is Blocked by Admin",
+                                'errorDescription'=>"Your account is blocked by the admin. Please contact support or try with another Google account.",
+                                )
+                            ,400);
+                    }elseif ($user->getAdminApproved()==="Yes"){
+                        $logData = array(
+                            'user'=>$user->getId(),
+                            'logType'=>"Login",
+                            'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                            'logDescription'=> $user->getUsername()." has Logged In via Google",
+                            'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                            'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                        );
+                        $this->_saveLog($logData);
 
-                    return $this->_createJsonResponse('success',array(
-                            'successTitle'=>"You account has been merged with Google Account.",
-                            'successData'=>array(
-                                'username'=>$user->getUsername(),
-                                'fullName'=>$user->getFullName(),
-                                'email'=>$user->getEmail(),
-                                'registrationStatus'=>$user->getRegistrationStatus(),
-                                'serviceId'=>$user->getGoogleId(),
-                                'service'=>'google'
-                            ))
-                        ,200);
+                        return $this->_createJsonResponse('success',array(
+                                'successTitle'=>"You account has been merged with Google Account.",
+                                'successData'=>array(
+                                    'username'=>$user->getUsername(),
+                                    'fullName'=>$user->getFullName(),
+                                    'email'=>$user->getEmail(),
+                                    'registrationStatus'=>$user->getRegistrationStatus(),
+                                    'serviceId'=>$user->getGoogleId(),
+                                    'service'=>'google'
+                                ))
+                            ,200);
+                    }
+
+
                 }else{
                     return $this->_createJsonResponse('error',array(
                             'errorTitle'=>"Sorry couldn't merge your data to existed user with mail ".$profile['email'],
@@ -178,26 +189,34 @@ class SocialRegistrationController extends Controller
                         ,400);
                 }
             }else{
-                $logData = array(
-                    'user'=>$user->getId(),
-                    'logType'=>"Login",
-                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
-                    'logDescription'=> $user->getUsername()." has Logged In via Google",
-                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
-                    'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
-                );
-                $this->_saveLog($logData);
-                // Google Data is merged so Return Data to Login
-                return $this->_createJsonResponse('success',array(
-                        'successData'=>array(
-                            'username'=>$user->getUsername(),
-                            'fullName'=>$user->getFullName(),
-                            'email'=>$user->getEmail(),
-                            'registrationStatus'=>$user->getRegistrationStatus(),
-                            'serviceId'=>$user->getGoogleId(),
-                            'service'=>'google'
-                        ))
-                    ,200);
+                if($user->getAdminApproved()==="No"){
+                    return $this->_createJsonResponse('error',array(
+                            'errorTitle'=>"Account is Blocked by Admin",
+                            'errorDescription'=>"Your account is blocked by the admin. Please contact support or try with another Google account.",
+                        )
+                        ,400);
+                }elseif ($user->getAdminApproved()==="Yes") {
+                    $logData = array(
+                        'user' => $user->getId(),
+                        'logType' => "Login",
+                        'logDateTime' => gmdate('Y-m-d H:i:s'),
+                        'logDescription' => $user->getUsername() . " has Logged In via Google",
+                        'userIpAddress' => $this->container->get('request')->getClientIp(),
+                        'logUserType' => in_array("ROLE_ADMIN_USER", $user->getRoles()) ? "Admin User" : "Normal User"
+                    );
+                    $this->_saveLog($logData);
+                    // Google Data is merged so Return Data to Login
+                    return $this->_createJsonResponse('success', array(
+                            'successData' => array(
+                                'username' => $user->getUsername(),
+                                'fullName' => $user->getFullName(),
+                                'email' => $user->getEmail(),
+                                'registrationStatus' => $user->getRegistrationStatus(),
+                                'serviceId' => $user->getGoogleId(),
+                                'service' => 'google'
+                            ))
+                        , 200);
+                }
             }
 
 
@@ -251,7 +270,9 @@ class SocialRegistrationController extends Controller
                 'googleId' =>$profile['id'],
                 'googleEmail' =>$profile['emails'][0]['value'],
                 'googleToken' => $accessToken['access_token'],
-                'adminApproved' =>"No",
+                'adminApproved' =>"Yes",
+                'emailVerified' =>"Yes",
+                'adminVerified' =>"No",
                 'registrationStatus'=>"incomplete",
                 'profilePicture'=>$fileNameDir . $fileSaveName,
                 'emailNotification'=>"On",
@@ -367,6 +388,7 @@ class SocialRegistrationController extends Controller
                 $userForm->remove('username');
                 $userForm->remove('email');
                 $userForm->remove('adminApproved');
+                $userForm->remove('adminVerified');
                 $userForm->remove('registrationStatus');
                 $userForm->remove('referral');
                 $userForm->remove('campus');
@@ -408,6 +430,7 @@ class SocialRegistrationController extends Controller
                 $data['facebookId'] =$profile['id'];
                 $data['facebookEmail'] =$email;
                 $data['facebookToken'] = $accessToken['access_token'];
+                $data['emailVerified'] = "Yes";
 
                 $userForm->submit($data);
 
@@ -415,29 +438,38 @@ class SocialRegistrationController extends Controller
                     $em->persist($user);
                     $em->flush();
 
-                    $logData = array(
-                        'user'=>$user->getId(),
-                        'logType'=>"Login",
-                        'logDateTime'=>gmdate('Y-m-d H:i:s'),
-                        'logDescription'=> $user->getUsername()." has Logged In via Facebook",
-                        'userIpAddress'=>$this->container->get('request')->getClientIp(),
-                        'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
-                    );
-                    $this->_saveLog($logData);
+                    if($user->getAdminApproved()==="No"){
+                        return $this->_createJsonResponse('error',array(
+                                'errorTitle'=>"Account is Blocked by Admin",
+                                'errorDescription'=>"Your account is blocked by the admin. Please contact support or try with another account.",
+                            )
+                            ,400);
+                    }elseif ($user->getAdminApproved()==="Yes") {
+
+                        $logData = array(
+                            'user' => $user->getId(),
+                            'logType' => "Login",
+                            'logDateTime' => gmdate('Y-m-d H:i:s'),
+                            'logDescription' => $user->getUsername() . " has Logged In via Facebook",
+                            'userIpAddress' => $this->container->get('request')->getClientIp(),
+                            'logUserType' => in_array("ROLE_ADMIN_USER", $user->getRoles()) ? "Admin User" : "Normal User"
+                        );
+                        $this->_saveLog($logData);
 
 
-                    return $this->_createJsonResponse('success',array(
-                            'successTitle'=>"You account has been merged with Facebook Account.",
-                            'successData'=>array(
-                                'username'=>$user->getUsername(),
-                                'fullName'=>$user->getFullName(),
-                                'email'=>$user->getEmail(),
-                                'registrationStatus'=>$user->getRegistrationStatus(),
-                                'serviceId'=>$user->getFacebookId(),
-                                'emailNeeded'=>$emailNeeded,
-                                'service'=>'facebook'
-                            ))
-                        ,200);
+                        return $this->_createJsonResponse('success', array(
+                                'successTitle' => "You account has been merged with Facebook Account.",
+                                'successData' => array(
+                                    'username' => $user->getUsername(),
+                                    'fullName' => $user->getFullName(),
+                                    'email' => $user->getEmail(),
+                                    'registrationStatus' => $user->getRegistrationStatus(),
+                                    'serviceId' => $user->getFacebookId(),
+                                    'emailNeeded' => $emailNeeded,
+                                    'service' => 'facebook'
+                                ))
+                            , 200);
+                    }
                 }else{
                     return $this->_createJsonResponse('error',array(
                             'errorTitle'=>"Sorry couldn't merge your data to existed user with mail ".$profile['email'],
@@ -446,26 +478,35 @@ class SocialRegistrationController extends Controller
                         ,400);
                 }
             }else{
-                $logData = array(
-                    'user'=>$user->getId(),
-                    'logType'=>"Login",
-                    'logDateTime'=>gmdate('Y-m-d H:i:s'),
-                    'logDescription'=> $user->getUsername()." has Logged In via Facebook",
-                    'userIpAddress'=>$this->container->get('request')->getClientIp(),
-                    'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
-                );
-                // Google Data is merged so Return Data to Login
-                return $this->_createJsonResponse('success',array(
-                        'successData'=>array(
-                            'username'=>$user->getUsername(),
-                            'fullName'=>$user->getFullName(),
-                            'email'=>$user->getEmail(),
-                            'registrationStatus'=>$user->getRegistrationStatus(),
-                            'serviceId'=>$user->getFacebookId(),
-                            'emailNeeded'=>$emailNeeded,
-                            'service'=>'facebook'
-                        ))
-                    ,200);
+                if($user->getAdminApproved()==="No"){
+                    return $this->_createJsonResponse('error',array(
+                            'errorTitle'=>"Account is Blocked by Admin",
+                            'errorDescription'=>"Your account is blocked by the admin. Please contact support or try with another account.",
+                        )
+                        ,400);
+                }elseif ($user->getAdminApproved()==="Yes") {
+                    $logData = array(
+                        'user' => $user->getId(),
+                        'logType' => "Login",
+                        'logDateTime' => gmdate('Y-m-d H:i:s'),
+                        'logDescription' => $user->getUsername() . " has Logged In via Facebook",
+                        'userIpAddress' => $this->container->get('request')->getClientIp(),
+                        'logUserType' => in_array("ROLE_ADMIN_USER", $user->getRoles()) ? "Admin User" : "Normal User"
+                    );
+                    $this->_saveLog($logData);
+                    // Google Data is merged so Return Data to Login
+                    return $this->_createJsonResponse('success', array(
+                            'successData' => array(
+                                'username' => $user->getUsername(),
+                                'fullName' => $user->getFullName(),
+                                'email' => $user->getEmail(),
+                                'registrationStatus' => $user->getRegistrationStatus(),
+                                'serviceId' => $user->getFacebookId(),
+                                'emailNeeded' => $emailNeeded,
+                                'service' => 'facebook'
+                            ))
+                        , 200);
+                }
             }
 
 
@@ -511,7 +552,9 @@ class SocialRegistrationController extends Controller
                 'facebookId' =>$profile['id'],
                 'facebookEmail' =>$email,
                 'facebookToken' => $accessToken['access_token'],
-                'adminApproved' =>"No",
+                'adminApproved' =>"Yes",
+                'emailVerified' =>"Yes",
+                'adminVerified' =>"No",
                 'registrationStatus'=>"incomplete",
                 'profilePicture'=>$fileNameDir . $fileSaveName,
                 'emailNotification'=>"On",
@@ -593,6 +636,8 @@ class SocialRegistrationController extends Controller
             $userForm = $this->createForm(new SocialRegistrationType(), $user);
             $userForm->remove('fullName');
             $userForm->remove('adminApproved');
+            $userForm->remove('emailVerified');
+            $userForm->remove('adminVerified');
             $userForm->remove('googleId');
             $userForm->remove('googleEmail');
             $userForm->remove('googleToken');

@@ -39,18 +39,18 @@ class AdminUserApiController extends Controller
 
 
             $pageSize = $data["pageSize"];
-            $searchQuery = filter_var($data["searchQuery"], FILTER_SANITIZE_STRING);
+            $usernameQuery = filter_var($data["usernameQuery"], FILTER_SANITIZE_STRING);
             $emailQuery = filter_var($data["emailQuery"], FILTER_SANITIZE_STRING);
             $fullNameQuery = filter_var($data["fullNameQuery"], FILTER_SANITIZE_STRING);
-            $enabledQuery = $data["enabledQuery"];
+            $emailVerifiedQuery = $data["emailVerifiedQuery"];
             $typeQuery = $data["typeQuery"];
             $pageNumber = $data["pageNumber"];
             $sort = $data["sort"];
 
 
 
-            $totalNumber = $userRepo->getNonApprovedUserSearchNumber($searchQuery,$emailQuery,$fullNameQuery,$enabledQuery,$typeQuery);
-            $users = $userRepo->getNonApprovedUserSearchResult($searchQuery,$emailQuery,$fullNameQuery,$enabledQuery, $pageNumber, $pageSize,$sort,$typeQuery);
+            $totalNumber = $userRepo->getNonApprovedUserSearchNumber($usernameQuery,$emailQuery,$fullNameQuery,$emailVerifiedQuery,$typeQuery);
+            $users = $userRepo->getNonApprovedUserSearchResult($usernameQuery,$emailQuery,$fullNameQuery,$emailVerifiedQuery, $pageNumber, $pageSize,$sort,$typeQuery);
 
             for($i=0;$i<count($users);$i++){
                 $users[$i]['registrationDateTime'] =$users[$i]['registrationDateTime']->format('g:i A, d M Y');
@@ -97,20 +97,21 @@ class AdminUserApiController extends Controller
 
 
             $pageSize = $data["pageSize"];
-            $searchQuery = filter_var($data["searchQuery"], FILTER_SANITIZE_STRING);
+            $usernameQuery = filter_var($data["usernameQuery"], FILTER_SANITIZE_STRING);
             $emailQuery = filter_var($data["emailQuery"], FILTER_SANITIZE_STRING);
             $fullNameQuery = filter_var($data["fullNameQuery"], FILTER_SANITIZE_STRING);
             $universityNameQuery = filter_var($data["universityNameQuery"], FILTER_SANITIZE_STRING);
             $campusNameQuery = filter_var($data["campusNameQuery"], FILTER_SANITIZE_STRING);
             $typeQuery = $data["typeQuery"];
-            $enabledQuery = $data["enabledQuery"];
+            $emailVerifiedQuery = $data["emailVerifiedQuery"];
+            $adminApprovedQuery = $data["adminApprovedQuery"];
             $pageNumber = $data["pageNumber"];
             $sort = $data["sort"];
 
 
 
-            $totalNumber = $userRepo->getApprovedUserSearchNumber($searchQuery,$emailQuery,$fullNameQuery,$universityNameQuery,$campusNameQuery,$enabledQuery,$typeQuery);
-            $users = $userRepo->getApprovedUserSearchResult($searchQuery,$emailQuery,$fullNameQuery,$universityNameQuery,$campusNameQuery,$enabledQuery, $pageNumber, $pageSize,$sort,$typeQuery);
+            $totalNumber = $userRepo->getApprovedUserSearchNumber($usernameQuery,$emailQuery,$fullNameQuery,$universityNameQuery,$campusNameQuery,$emailVerifiedQuery,$adminApprovedQuery,$typeQuery);
+            $users = $userRepo->getApprovedUserSearchResult($usernameQuery,$emailQuery,$fullNameQuery,$universityNameQuery,$campusNameQuery,$emailVerifiedQuery,$adminApprovedQuery, $pageNumber, $pageSize,$sort,$typeQuery);
 
             for($i=0;$i<count($users);$i++){
                 $users[$i]['registrationDateTime'] =$users[$i]['registrationDateTime']->format('g:i A, d M Y');
@@ -155,14 +156,14 @@ class AdminUserApiController extends Controller
 
 
             $pageSize = $data["pageSize"];
-            $searchQuery = filter_var($data["searchQuery"], FILTER_SANITIZE_STRING);
+            $usernameQuery = filter_var($data["usernameQuery"], FILTER_SANITIZE_STRING);
             $emailQuery = filter_var($data["emailQuery"], FILTER_SANITIZE_STRING);
             $pageNumber = $data["pageNumber"];
             $sort = $data["sort"];
 
 
-            $totalNumber = $userRepo->getAdminUserSearchNumber($searchQuery,$emailQuery);
-            $users = $userRepo->getAdminUserSearchResult($searchQuery,$emailQuery, $pageNumber, $pageSize,$sort);
+            $totalNumber = $userRepo->getAdminUserSearchNumber($usernameQuery,$emailQuery);
+            $users = $userRepo->getAdminUserSearchResult($usernameQuery,$emailQuery, $pageNumber, $pageSize,$sort);
 
             $data = array(
                 'totalUsers' => $users ,
@@ -187,7 +188,6 @@ class AdminUserApiController extends Controller
 
         $request_data = json_decode($request->getContent(),true);
 
-
         if(in_array('ROLE_ADMIN_USER',$user->getRoles(),true)){
             $editedUser = $userRepo->findOneBy(array("id" => $request_data['userId']));
 
@@ -205,25 +205,43 @@ class AdminUserApiController extends Controller
 
                 } else {
 
-                    $editedUser->setUserName($request_data['username']);
-                    $editedUser->setEnabled($request_data['enabled']);
-                    $editedUser->setAdminApproved('Yes');
-                    $em->persist($editedUser);
-                    $em->flush();
+                    $userForm = $this->createForm(new UserType(), $editedUser);
 
-                    $logData = array(
-                        'user'=>$user->getId(),
-                        'logType'=>"Update User",
-                        'logDateTime'=>gmdate('Y-m-d H:i:s'),
-                        'logDescription'=> $editedUser->isEnabled()?$user->getUsername()." has updated & activated user named ".$editedUser->getUsername():$user->getUsername()." has updated & deactivated user named ".$editedUser->getUsername(),
-                        'userIpAddress'=>$this->container->get('request')->getClientIp(),
-                        'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
-                    );
-                    $this->_saveLog($logData);
+                    $userForm->remove('fullName');
+                    $userForm->remove('email');
+                    $userForm->remove('referral');
+                    $userForm->remove('campus');
+                    $userForm->remove('wishLists');
+                    $userForm->remove('emailVerified');
+                    $userForm->submit(array(
+                        "adminVerified"=>$request_data['adminVerified'],
+                        "adminApproved"=>$request_data['adminApproved'],
+                        "username"=>$request_data['username'],
+                    ));
+                    if($userForm->isValid()){
+                        $em->persist($editedUser);
+                        $em->flush();
 
-                    return $this->_createJsonResponse('success',array(
-                        'successTitle'=>"User Approved",
-                    ),200);
+                        $action = $request_data['adminApproved']==="Yes"? "Approved":"Disapproved";
+                        $logData = array(
+                            'user'=>$user->getId(),
+                            'logType'=>"Update User",
+                            'logDateTime'=>gmdate('Y-m-d H:i:s'),
+                            'logDescription'=> $user->getUsername()." has updated & ".$action." user named ".$editedUser->getUsername(),
+                            'userIpAddress'=>$this->container->get('request')->getClientIp(),
+                            'logUserType'=> in_array("ROLE_ADMIN_USER",$user->getRoles())?"Admin User":"Normal User"
+                        );
+                        $this->_saveLog($logData);
+
+                        return $this->_createJsonResponse('success',array(
+                            'successTitle'=>"User Updated",
+                        ),200);
+                    }else{
+                        return $this->_createJsonResponse('error',array(
+                            'errorTitle'=>"User not Updated",
+                            'errorDescription'=>"Check the form and submit again",
+                        ),200);
+                    }
 
                 }
 
@@ -319,6 +337,7 @@ class AdminUserApiController extends Controller
 
                 $addedUser = $form->getData();
                 $addedUser->addRole("ROLE_ADMIN_USER");
+                $addedUser->setAdminApproved("Yes");
 
                 $em->persist($addedUser);
                 $em->flush();
