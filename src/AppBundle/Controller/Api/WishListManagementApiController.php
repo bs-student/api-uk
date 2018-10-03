@@ -84,6 +84,9 @@ class WishListManagementApiController extends Controller
         $books=array();
         foreach($wishListBooks as $row){
             $bookEntity=$row->getBook();
+
+
+
             $book=array();
 
             $book['bookId']=$bookEntity->getId();
@@ -100,7 +103,6 @@ class WishListManagementApiController extends Controller
             $book['bookIsbn13']=$bookEntity->getBookIsbn13();
             $book['bookImage']=$bookEntity->getBookImage();
             $book['bookAmazonPrice']="£".$bookEntity->getBookAmazonPrice();
-
 
             //Formatting Date
             if ($book['bookPublishDate']!=null) {
